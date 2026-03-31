@@ -1,0 +1,53 @@
+/* 登录按钮样式 */
+#loginBtn {
+    position: absolute;
+    left:35px;
+    width:60px;
+    z-index: 1000;
+    display:none;
+}
+.modal.user{
+    display: none;
+}
+.modal-content.user {
+    max-width: 400px;
+    /* left:100%;
+    top:50px;
+    transform: translate(100%); */
+   
+
+}
+/* 用户信息显示样式 */
+#userInfo {
+    position: absolute;
+    top: 10px;
+    right: 120px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* 后台管理链接样式 */
+#adminLink {
+    position: absolute;
+    top: 10px;
+    right: 250px;
+    z-index: 1000;
+}
+
+#adminLink a {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #8b4513;
+    font-size: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#adminLink a:hover {
+    background: rgba(139, 69, 19, 0.1);
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫微斗数命盘生成器</title>
+    <link rel="stylesheet" href="form_db.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_db.css') }}">
+</head>
+<body>
+    <div id="managementModal" class="modal" style="display: none;">
+        <div class="modal-content db">
+            <div class="modal-header">
+                <h2 class="modal-title">星曜含义管理系统</h2>
+                <button class="close-btn" onclick="closeManagementModal()">×</button>
+            </div>
+            
+            <div class="management-tabs">
+                <button class="tab-btn active" onclick="openTab(this,'listTab')">星曜列表</button>
+                <button class="tab-btn" onclick="openTab(this,'editTab')">添加/编辑</button>
+                <button class="tab-btn" onclick="openTab(this,'importExportTab')">导入/导出</button>
+            </div>
+
+            <!-- 星曜列表标签页 -->
+            <div id="listTab" class="tab-content active">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="搜索星曜名称..." onkeyup="searchStars()">
+                    <button onclick="refreshList()">刷新</button>
+                </div>
+                <div class="stars-list" id="starsList">
+                    <!-- 星曜列表将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+            <!-- 编辑标签页 -->
+            <div id="editTab" class="tab-content">
+                <form id="meaningForm" onsubmit="saveMeaning(event)">
+                    <div class="form-group">
+                        <label>星曜名称:</label>
+                        <input type="text" id="starName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>根本象义:</label>
+                        <textarea id="basicMeaning" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>组合象义:</label>
+                        <textarea id="combinationMeaning" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>扩展象义:</label>
+                        <textarea id="extendedMeaning" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>物质属性:</label>
+                        <textarea id="materialProperty" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>身体健康:</label>
+                        <textarea id="healthImpact" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>感情关系:</label>
+                        <textarea id="relationshipImpact" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>职场事业:</label>
+                        <textarea id="careerImpact" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>财富资产:</label>
+                        <textarea id="wealthImpact" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>精神思维:</label>
+                        <textarea id="mindsetImpact" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit">保存</button>
+                        <button type="button" onclick="clearForm()">清空</button>
+                        <button type="button" onclick="deleteCurrentMeaning()">删除</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 导入导出标签页 -->
+            <div id="importExportTab" class="tab-content">
+                <div class="import-export-section">
+                    <h3>导出数据</h3>
+                    <button onclick="exportData()">导出所有数据</button>
+                    <textarea id="exportDataArea" readonly style="width: 100%; height: 150px; margin-top: 10px;"></textarea>
+                    <button onclick="copyExportData()">复制到剪贴板</button>
+                </div>
+                
+                <div class="import-export-section">
+                    <h3>导入数据</h3>
+                    <textarea id="importDataArea" placeholder="粘贴JSON数据..." style="width: 100%; height: 150px;"></textarea>
+                    <button onclick="importData()">导入数据</button>
+                    <button onclick="resetToDefault()">恢复默认数据</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理按钮 -->
+    <button id="managementBtn" class="management-btn" onclick="openManagementModal()">
+        📊 管理星曜含义
+    </button>
+
+    <script type="text/javascript" src="./common.js"></script>
+    <script type="text/javascript" src="./ziwei_db.js"></script>    
+    <script src="{{ url_for('static', filename='common.js') }}"></script>
+    <script src="{{ url_for('static', filename='ziwei_db.js') }}"></script>
+</body>
+
+</html>
