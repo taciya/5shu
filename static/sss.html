@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫占天地洞察系统 - 中考升学预测</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        <!-- Chosen Palette: Deep Indigo (#312e81), Soft Violet (#ede9fe), and Amber (#f59e0b) for a mystical yet analytical interface. -->
+        <!-- Application Structure Plan: A dashboard-style SPA. Top section displays the core question and divination parameters. Middle section features an interactive 'Hexagram Explorer' (卦象推演盘) allowing users to click through the three layers (Main, 10-Min, Minute) to see detailed star, flying/chasing transformations, and mechanism data without overwhelming text. Bottom section presents a visual energy radar chart and the final 'Heaven & Earth Verdict' using the required pedagogical annotation rules. This flow guides the user from raw data to structural mechanics, and finally to the synthesized conclusion. -->
+        <!-- Visualization & Content Choices: Goal: Show energy balance -> Viz: Radar Chart via Chart.js -> Justification: Perfect for showing multi-dimensional energy (Lu, Quan, Ke, Ji) across different aspects (Child, Parents, Environment) -> Library: Chart.js (Canvas based). Goal: Explain complex 3-layer hexagrams -> Viz: Interactive Tabbed Panel -> Justification: Breaks down dense rules into digestible chunks. -->
+        <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .tab-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .hex-card {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <nav class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">☯</span>
+                    <span class="font-bold text-xl tracking-wider">天地洞察系统 <span class="text-indigo-300 text-sm font-normal">| 紫微斗数三层卦象解析</span></span>
+                </div>
+                <div class="hidden md:block text-sm text-indigo-200">
+                    天地沟通师专属推演界面
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8">
+            <h1 class="text-3xl font-bold text-indigo-900 mb-2">问卦事由：升学预测</h1>
+            <p class="text-xl text-slate-700 font-medium mb-6 bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                “小赵（于女士的儿子），明年的中考能否考上父母所期待的高中？”
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <span class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">主卦 (内心/状态)</span>
+                    <span class="text-2xl font-bold text-indigo-700 mb-2">福德宫</span>
+                    <span class="px-3 py-1 bg-slate-200 text-slate-700 rounded-full text-xs">空宫 / 旬空 / 破碎</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <span class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">十分卦 (环境/执行)</span>
+                    <span class="text-2xl font-bold text-teal-700 mb-2">田宅宫</span>
+                    <span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-xs">天同 / 阴煞</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <span class="text-slate-500 text-sm font-semibold uppercase tracking-wider mb-1">分钟卦 (外缘/变数)</span>
+                    <span class="text-2xl font-bold text-amber-700 mb-2">交友宫</span>
+                    <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs">太阳(陷) / 火星(陷)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-6 bg-slate-50 border-b border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800">三层卦象深度拆解</h2>
+                <p class="text-slate-600 mt-2">点击下方按钮，逐层查看天地星曜的发生机制（飞出）与溯源定位（追入）。</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/4 bg-white border-r border-slate-200 p-4 flex flex-col space-y-3">
+                    <button id="btn-main" class="tab-btn active px-6 py-4 rounded-xl border border-slate-200 text-left font-semibold text-lg hover:bg-indigo-50 shadow-sm focus:outline-none flex justify-between items-center" onclick="switchTab('main')">
+                        主卦 (福德)
+                        <span class="text-xs font-normal text-slate-500">内心之源</span>
+                    </button>
+                    <button id="btn-ten" class="tab-btn px-6 py-4 rounded-xl border border-slate-200 text-left font-semibold text-lg hover:bg-teal-50 shadow-sm focus:outline-none flex justify-between items-center" onclick="switchTab('ten')">
+                        十分卦 (田宅)
+                        <span class="text-xs font-normal text-slate-500">环境执行</span>
+                    </button>
+                    <button id="btn-min" class="tab-btn px-6 py-4 rounded-xl border border-slate-200 text-left font-semibold text-lg hover:bg-amber-50 shadow-sm focus:outline-none flex justify-between items-center" onclick="switchTab('min')">
+                        分钟卦 (交友)
+                        <span class="text-xs font-normal text-slate-500">竞争推力</span>
+                    </button>
+                </div>
+                
+                <div class="lg:w-3/4 p-6 lg:p-8 min-h-[500px]" id="hex-content-area">
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 lg:p-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-indigo-500 pl-3">天地能量流转盘 (四化可视化)</h2>
+                <p class="text-sm text-slate-600 mb-6">展示禄(资源)、权(压力/推动)、科(名义)、忌(症结)在核心宫位的汇聚情况。能量越向外扩，代表该宫位承接的该类四化越重。</p>
+                <div class="chart-container">
+                    <canvas id="energyRadarChart"></canvas>
+                </div>
+                <div class="mt-6 p-4 bg-slate-50 rounded-lg text-sm text-slate-700">
+                    <strong class="text-indigo-800">图表解析：</strong> 父母宫承接了极强的“忌”能（源自交友追忌），说明父母的焦虑和期待是整个事件的压力中枢。疾厄宫汇聚了较多能量，说明身体和执行层面正在超负荷运转。
+                </div>
+            </section>
+
+            <section class="bg-indigo-900 text-white rounded-2xl shadow-lg border border-indigo-800 p-6 lg:p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 text-9xl text-indigo-800 opacity-20">☯</div>
+                <h2 class="text-2xl font-bold mb-6 text-indigo-100 flex items-center">
+                    <span class="mr-3 text-amber-400">⚡</span> 天地起卦·心念感知
+                </h2>
+                <div class="space-y-4 relative z-10">
+                    <p class="text-lg leading-relaxed text-indigo-50">
+                        天地卦象不仅反映未来，更精准映射了起卦者（于女士）当下的心念波动。
+                    </p>
+                    <div class="bg-indigo-800/50 p-5 rounded-xl border border-indigo-700">
+                        <h3 class="font-bold text-amber-400 mb-2">父母的焦虑投射</h3>
+                        <p class="text-indigo-100">卦象中交友宫太阳星化忌【追忌入父母宫】，明确指向了问题的根源：这不是孩子单方面的学习问题，而是<strong>父母的“期待”本身成为了巨大的精神阴影</strong>。太阳本应光明，陷地加忌，代表父母期待的“名校光环”对孩子而言是一种遮蔽心智的重压。</p>
+                    </div>
+                    <div class="bg-indigo-800/50 p-5 rounded-xl border border-indigo-700">
+                        <h3 class="font-bold text-amber-400 mb-2">环境的隐性阻力</h3>
+                        <p class="text-indigo-100">田宅宫（代表家庭环境）出现【阴煞】。这意味着家庭表面为了孩子升学在努力，但背地里存在着看不见的负能量或沟通不畅（可能是唠叨、隐形控制）。孩子在家里无法得到真正的【天同】（放松与愉悦），这种隐性消耗在拖慢孩子的进度。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="bg-white rounded-2xl shadow-sm border-t-8 border-t-amber-500 border-l border-r border-b border-slate-200 p-6 lg:p-10 mb-12">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center">天地裁断：最终结论与破局之道</h2>
+            
+            <div class="space-y-8">
+                <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                    <h3 class="text-xl font-bold text-red-800 mb-4 flex items-center">
+                        <span class="mr-2">❌</span> 当前趋势预判：考上“父母期待”的高中难度极大
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">内在驱动力涣散，心不在焉</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【主卦福德宫空宫｜旬空/破碎被激活】 -> 目标空洞化，当前状态被负面小星打破，无主星托底。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">执行力在家庭环境中被内耗抵消</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【十分卦田宅宫｜天同自化忌 + 阴煞】 -> 本质贪图安逸（天同），且家庭环境充满隐形压力（阴煞），导致自我设限（自化忌）。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">在同辈竞争中感到自卑与压抑的愤怒</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【分钟卦交友宫｜太阳陷 + 火星陷】 -> 在外人/同学面前缺乏光芒（太阳陷），内心存在未能释放的焦虑之火（火星陷）。</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                    <h3 class="text-xl font-bold text-emerald-800 mb-4 flex items-center">
+                        <span class="mr-2">✅</span> 破局与调整建议（顺应天地之机的做法）
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">父母必须降级期待，停止高压输出</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【分钟卦交友宫太阳追忌入父母宫】 -> 压力源头在父母。必须解除这个追忌，停止向孩子传输“必须考上某校”的执念。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">将关注点转移到孩子的身体健康与具体执行步骤上</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【主卦飞出天机禄、太阴忌入疾厄宫】 -> 资源（禄）和问题（忌）都抛给了疾厄（身体/执行）。不要谈宏大理想，只管每天具体的作息和当天的作业（天机逻辑）。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 mr-2 mt-1">▶</span>
+                            <div>
+                                <strong class="text-slate-800">借助外部老师或同伴的力量进行疏导</strong><br>
+                                <span class="text-sm text-slate-600 bg-white px-2 py-1 rounded border border-slate-200 inline-block mt-1">【交友宫左辅追科入兄弟宫】 -> 左辅（贵人/同伴）化科（名义/合理性）入兄弟宫。多让孩子和成绩稳定、心态好的同学交流，或找一位理性的补习老师（兄弟位），比父母亲自说教有效得多。</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mt-6 border-l-4 border-indigo-600 pl-4 py-2 bg-slate-50">
+                    <p class="text-slate-800 font-medium">👉 合并裁断：</p>
+                    <p class="text-slate-600 mt-1">
+                        孩子目前的“升学驱动力”被从“内心自我追求（福德宫空）”转移到了“应付父母高压（太阳追忌父母）”上，导致家庭执行环境被隐性消耗（田宅天同忌）。因此呈现为——<strong class="text-indigo-800">并不是考不上高中，而是以目前这种充斥着父母主观焦虑的轨道，绝对达不到“父母所期待的高维目标”。放下执念，回归具体的陪伴（左辅科），方能平稳落地。</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const hexagramData = {
+            main: {
+                title: "主卦：福德宫 (乙酉) - 内心与起运",
+                baseStars: "无主星",
+                minorStars: "破碎, 天姚, 台辅, 旬空 | <span class='text-xs text-slate-500'>神煞: 吊客, 灾煞, 飞廉</span>",
+                minorDesc: "由于无主星，小星能量被高度激活。<strong class='text-indigo-700'>旬空</strong>代表目标虚无，<strong class='text-indigo-700'>破碎</strong>代表心念不连贯，<strong class='text-indigo-700'>吊客</strong>产生悬而未决的焦虑感。这说明孩子从根本上对中考目标缺乏实心实意的认同，处于一种“被推着走但心不在焉”的状态。",
+                flyOut: [
+                    { target: "疾厄宫", type: "天机禄", desc: "思想(福德)的生机/资源想投入到具体的执行(疾厄)中，用流程和机械的方式去运转。" },
+                    { target: "兄弟宫", type: "天梁权", desc: "试图通过制度或长辈的规则来压制同级关系或个人体质。" },
+                    { target: "财帛宫", type: "紫微科", desc: "精神上追求高价值、唯一的名声面子。" },
+                    { target: "疾厄宫", type: "太阴忌", desc: "思想的症结/烦恼最终也抛给了身体/执行力。导致一边想去干(天机禄)，一边又充满拖延和内耗(太阴忌)。" }
+                ],
+                flyIn: "无 (追入本宫)",
+                verdict: "起心动念之初，目标就是散的。孩子并非没有行动力，而是把大量脑力消耗在了内心拉扯（禄忌同入疾厄）上。"
+            },
+            ten: {
+                title: "十分卦：田宅宫 (丙戌) - 环境与场域",
+                baseStars: "天同 (得)",
+                minorStars: "天喜, 寡宿, 阴煞",
+                minorDesc: "天同代表贪图安逸、享受。值得警惕的是<strong class='text-indigo-700'>阴煞</strong>被激活，代表家庭环境中存在隐性的负面干扰——这种干扰看不见摸不着，大概率是父母那种隐忍但高压的气氛，让孩子感到极度不适。",
+                flyOut: [
+                    { target: "田宅宫", type: "天同禄", desc: "(离心自化禄) 想在家庭环境里寻求舒适和快乐。" },
+                    { target: "疾厄宫", type: "天机权", desc: "家庭场域对身体执行力施加了机械式的规定和要求。" }
+                ],
+                flyIn: [
+                    { source: "田宅宫", type: "追禄", desc: "好处的源头就在家里，想待在舒适圈。" },
+                    { source: "官禄宫", type: "追权", desc: "真正的压力推动方来自学业/学业目标本身。" },
+                    { source: "子女宫", type: "追忌", desc: "问题的根源直指孩子自身（接口不出结果）。" }
+                ],
+                verdict: "家庭本应是避风港，但现在成了施压与逃避并存的矛盾体。自化忌（向心）说明家庭环境正在内耗收缩。"
+            },
+            min: {
+                title: "分钟卦：交友宫 (戊子) - 外部与变数",
+                baseStars: "太阳 (陷), 左辅 (庙)",
+                minorStars: "天魁, 火星 (陷) | <span class='text-xs text-slate-500'>咸池, 天空</span>",
+                minorDesc: "在同侪竞争环境中，<strong class='text-indigo-700'>太阳陷</strong>说明表现黯淡、缺乏自信。加上<strong class='text-indigo-700'>火星陷</strong>被激活，这是一种压抑的烦躁和无名火。孩子在学校或补习班里不仅不拔尖，反而积压了挫败感。<strong class='text-indigo-700'>天空</strong>进一步将这种状态引向虚无。",
+                flyOut: [
+                    { target: "财帛宫", type: "贪狼禄", desc: "外部人际关系将欲望导向了对资源/价值的渴求。" },
+                    { target: "疾厄宫", type: "太阴权", desc: "外部环境强行压迫身体执行力（又一次施压疾厄）。" },
+                    { target: "疾厄宫", type: "天机忌", desc: "外部交往的麻烦和不顺畅，最终导致了执行流程卡壳、死机。" }
+                ],
+                flyIn: [
+                    { source: "父母宫", type: "太阳追忌", desc: "这是最核心的一环！外部竞争的巨大压力和症结，源自父母（父母宫）的强光照射（高期待）。" },
+                    { source: "子女宫", type: "太阳追禄", desc: "外部其实也能给孩子本身带来一些光明。" },
+                    { source: "兄弟宫", type: "左辅追科", desc: "名义/解药存在于同级别的伙伴或制度中。" }
+                ],
+                verdict: "外部环境不仅没有提供助力，反而成了放大父母焦虑的放大镜。频繁的飞化冲击疾厄宫，暗示身体和精力面临极限。"
+            }
+        };
+
+        function switchTab(tabId) {
+            const tabs = ['main', 'ten', 'min'];
+            tabs.forEach(id => {
+                document.getElementById('btn-' + id).classList.remove('active', 'bg-indigo-50', 'bg-teal-50', 'bg-amber-50');
+                if(id === 'main') document.getElementById('btn-' + id).classList.remove('text-indigo-700');
+                if(id === 'ten') document.getElementById('btn-' + id).classList.remove('text-teal-700');
+                if(id === 'min') document.getElementById('btn-' + id).classList.remove('text-amber-700');
+            });
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('active');
+
+            const contentArea = document.getElementById('hex-content-area');
+            const data = hexagramData[tabId];
+
+            let flyOutHtml = data.flyOut === "无" ? "<li class='text-slate-500'>无</li>" : data.flyOut.map(f => `
+                <li class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-2">
+                    <span class="inline-block px-2 py-1 bg-indigo-100 text-indigo-800 rounded text-xs font-bold mr-2">飞出 ${f.type}</span>
+                    <span class="text-sm font-semibold text-slate-700 mr-2">至 ${f.target}:</span>
+                    <span class="text-sm text-slate-600">${f.desc}</span>
+                </li>
+            `).join('');
+
+            let flyInHtml = data.flyIn === "无 (追入本宫)" ? "<li class='text-slate-500 bg-slate-100 p-2 rounded'>无追入能量</li>" : (Array.isArray(data.flyIn) ? data.flyIn.map(f => `
+                <li class="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-2">
+                    <span class="inline-block px-2 py-1 bg-amber-100 text-amber-800 rounded text-xs font-bold mr-2">${f.source}</span>
+                    <span class="text-sm font-semibold text-slate-700 mr-2">${f.type}:</span>
+                    <span class="text-sm text-slate-600">${f.desc}</span>
+                </li>
+            `).join('') : data.flyIn);
+
+
+            const contentHtml = `
+                <div class="hex-card space-y-6">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="text-2xl font-bold text-slate-800">${data.title}</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">本宫主星</h4>
+                                <p class="text-lg font-bold text-indigo-900">${data.baseStars}</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">小星群解读 (微观状态)</h4>
+                                <p class="font-medium text-slate-700 mb-2">${data.minorStars}</p>
+                                <p class="text-sm text-slate-600 leading-relaxed">${data.minorDesc}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-sm font-bold text-indigo-500 uppercase tracking-wider mb-3 flex items-center">
+                                    <span class="mr-2">↗</span> 飞四化 (发生机制层)
+                                </h4>
+                                <ul class="space-y-2">
+                                    ${flyOutHtml}
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-sm font-bold text-amber-500 uppercase tracking-wider mb-3 flex items-center">
+                                    <span class="mr-2">↙</span> 追四化 (溯源定位层)
+                                </h4>
+                                <ul class="space-y-2">
+                                    ${flyInHtml}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mt-6">
+                        <h4 class="font-bold text-indigo-900 mb-1">本宫推演小结：</h4>
+                        <p class="text-slate-700">${data.verdict}</p>
+                    </div>
+                </div>
+            `;
+            contentArea.innerHTML = contentHtml;
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('energyRadarChart').getContext('2d');
+            
+            const data = {
+                labels: ['父母宫 (压力源)', '疾厄宫 (执行力)', '子女宫 (目标人)', '田宅宫 (家庭)', '财帛宫 (资源)'],
+                datasets: [
+                    {
+                        label: '忌能 (症结/压力)',
+                        data: [4, 3, 2, 2, 0],
+                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '禄能 (好处/资源)',
+                        data: [0, 2, 1, 3, 2],
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 13,
+                                    family: "'Segoe UI', sans-serif",
+                                    weight: '600'
+                                },
+                                color: '#334155'
+                            },
+                            ticks: {
+                                display: false,
+                                min: 0,
+                                max: 5
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Segoe UI', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { size: 14 },
+                            bodyFont: { size: 13 },
+                            padding: 10,
+                            cornerRadius: 8
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+        }
+
+        window.onload = () => {
+            switchTab('main');
+            initChart();
+        };
+    </script>
+</body>
+</html>

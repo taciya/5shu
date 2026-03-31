@@ -1,0 +1,395 @@
+.input-section {
+    flex: 1;
+    max-width: 375px;
+    background: #f9f3e9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+    /* 水平居中 */
+    align-items: center; 
+    /* 整体文本居中 */
+    /* text-align: center;  */
+    display:flex;
+    justify-content: space-between;
+}
+h2,hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #8b4513;
+    text-wrap: nowrap;
+    
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+.form-control-name {
+    width: 85%;
+    padding: 8px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+.btn {
+    padding: 10px 15px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    width: 46%;
+    white-space: nowrap; /* 防止换行 */
+
+}
+
+.btn:hover {
+    background-color: #6b3409;
+}
+
+.btn-random {
+    background-color: #035a24;
+}
+
+.btn-random:hover {
+    background-color: #02431c;
+}
+
+.error-message {
+    color: #ff0a0a;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #8b4513;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .input-section.hidden {
+        display: none !important;
+    }
+    
+}
+/* 确保五个输入框在一行中合理分布 */
+.time-input-row .time-input-group:nth-child(1) { flex: 1.2; } /* 年 */
+.time-input-row .time-input-group:nth-child(2) { flex: .8; }   /* 月 */
+.time-input-row .time-input-group:nth-child(3) { flex: .8; }   /* 日 */
+.time-input-row .time-input-group:nth-child(4) { flex: .8; } /* 时 */
+.time-input-row .time-input-group:nth-child(5) { flex: .8; } /* 分 */
+
+/* 时间输入组样式 - 横向排列 */
+.time-input-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.time-input-group {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}
+
+.time-input-group label {
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #8b4513;
+    font-weight: bold;
+}
+
+.time-input-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+    text-align: center;
+    font-size: 14px;
+}
+.info-text {
+
+    font-family: 'Noto Sans SC', sans-serif;
+    text-align: left;
+    font-size: 14px;
+}
+.gan-display {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #8b4513;
+    background: #d2b48c;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+/* 隐藏输入区域 */
+.hidden {
+    display: none !important;
+}
+
+        
+/* 底部导航样式 start------------------------- */
+.bottom-nav {
+    position: relative fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* background: rgba(255, 248, 240, 0.95); */
+    padding: 15px 20px;
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.1);
+    /* border-top: 2px solid #d7ccc8; */
+    z-index: 1000;
+    margin-bottom: 10px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 0 5px;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 5px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.15);
+}
+
+.nav-link i {
+    margin-right: 8px;
+    font-size: 1.3rem;
+}
+
+.nav-link:nth-child(1) {
+    /* background: linear-gradient(45deg, #e8c4a8, #d9b08c); */
+    color: #5d4037;
+}
+
+.nav-link:nth-child(2) {
+    /* background: linear-gradient(45deg, #d9b08c, #c19e7c); */
+    color: #4e342e;
+}
+
+.nav-link:nth-child(3) {
+    /* background: linear-gradient(45deg, #c19e7c, #b08f6e); */
+    color: #3e2723;
+}
+
+.nav-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(139, 69, 19, 0.25);
+}
+
+.nav-link:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .nav-link {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .nav-link {
+        width: 100%;
+    }
+}
+/* 底部导航样式 end------------------------- */
+
+/* 输入区域显示模式 start------------------------- */
+/* 默认隐藏输入区域 */
+.input-section {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #f9f3e9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid #8b4513;
+}
+
+/* 显示状态 */
+.input-section.active {
+    display: block;
+}
+
+/* 调整底部导航在模态框中的样式 */
+.input-section.active .bottom-nav {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 15px;
+    border-top: 1px solid #d2b48c;
+}
+
+.input-section.active .nav-links {
+    justify-content: center;
+    gap: 10px;
+}
+
+.input-section.active .nav-link {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+/* 确保chart-section正常显示 */
+.chart-section {
+    width: 100%;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .input-section.active {
+        width: 95%;
+        padding: 15px;
+        max-height: 85vh;
+    }
+    
+    .input-section.active .nav-links {
+        flex-direction: row;
+        gap: 5px;
+    }
+    
+    .input-section.active .nav-link {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+/* 输入区域显示模式 end------------------------- */
+
+/* trueSolarText 容器样式调整 start------------------------- */
+
+/* 使用特定的类名选择器 */
+.time-input-row.second-row .time-input-group:nth-child(1) {
+    flex: 0 0 25%;
+}
+
+.time-input-row.second-row .time-input-group:nth-child(2) {
+    flex: 0 0 25%;
+}
+
+.time-input-row.second-row .time-input-group:nth-child(3) {
+    flex: 0 0 50%;
+}
+
+
+/* trueSolarText 美化样式 */
+#trueSolarText {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    cursor: pointer;
+    min-height: 1em;
+    text-align: center;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    color: #8b4513;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: #fffaf0;
+    box-shadow: 0 2px 5px rgba(139, 69, 19, 0.2);
+}
+
+
+/* 编辑状态样式 */
+#trueSolarText.editing {
+    /* border: 2px solid #8b4513; */
+    background-color: #fffacd;
+    /* box-shadow: 0 0 10px rgba(139, 69, 19, 0.3); */
+}
+
+/* 真太阳时输入框样式 */
+.true-solar-input {
+    /* width: 100%; */
+    /* padding: 8px; */
+    /* border: 2px solid #8b4513; */
+    /* border-radius: 4px; */
+    margin:-10px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    text-align: center;
+    background-color: #fffacd;
+    box-sizing: border-box;
+}
+
+.true-solar-input:focus {
+    outline: none;
+    /* box-shadow: 0 0 5px rgba(139, 69, 19, 0.5); */
+}
+/* trueSolarText 容器样式调整 end------------------------- */

@@ -1,0 +1,244 @@
+        /* 新增保存和分类相关样式 */
+        .save-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #d2b48c;
+        }
+
+        .save-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .category-select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #d2b48c;
+            border-radius: 4px;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .btn-save {
+            background-color: #035a24;
+        }
+
+        .btn-save:hover {
+            background-color: #02431c;
+        }
+
+        .saved-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #d2b48c;
+            border-radius: 4px;
+            padding: 10px;
+            background: #fff8dc;
+        }
+
+        .saved-item {
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            background: #f5ecd6;
+            border: 1px solid #d2b48c;
+            cursor: pointer;
+        }
+
+        .saved-item:hover {
+            background: #e6d9b8;
+        }
+
+        .saved-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .saved-item-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #8b4513;
+        }
+
+        .saved-item-category {
+            font-size: 12px;
+            color: #556b2f;
+            background: #d2b48c;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .saved-item-details {
+            font-size: 12px;
+            color: #696969;
+        }
+
+        .empty-list {
+            text-align: center;
+            color: #696969;
+            font-style: italic;
+            padding: 15px;
+        }
+
+        /* 删除按钮样式 */
+        .btn-delete {
+            background-color: #ff0a0a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-delete:hover {
+            background-color: #cc0000;
+        }
+        
+        /* 确认删除对话框 */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .confirm-dialog .dialog-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .confirm-dialog .dialog-title {
+            color: #8b4513;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .confirm-dialog .dialog-message {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .confirm-dialog .dialog-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .confirm-dialog .dialog-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .confirm-dialog .dialog-confirm {
+            background: #ff0a0a;
+            color: white;
+        }
+        
+        .confirm-dialog .dialog-cancel {
+            background: #8b4513;
+            color: white;
+        }        
+
+        /* 新分类对话框样式 */
+        .new-category-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .new-category-dialog .new-category-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .new-category-dialog .dialog-title {
+            color: #8b4513;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .new-category-dialog .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .new-category-dialog .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #8b4513;
+        }
+        
+        .new-category-dialog .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d2b48c;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .new-category-dialog .dialog-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .new-category-dialog .dialog-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .new-category-dialog .btn-confirm {
+            background: #035a24;
+            color: white;
+        }
+        
+        .new-category-dialog .btn-confirm:hover {
+            background: #02431c;
+        }
+        
+        .new-category-dialog .btn-cancel {
+            background: #8b4513;
+            color: white;
+        }
+        
+        .new-category-dialog .btn-cancel:hover {
+            background: #6b3409;
+        }        

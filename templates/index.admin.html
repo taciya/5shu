@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统 - 紫微斗数</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-title {
+            color: #8b4513;
+            font-size: 24px;
+        }
+        
+        .user-info {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .admin-nav {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-tab.active {
+            border-bottom-color: #8b4513;
+            color: #8b4513;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .users-table th,
+        .users-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .users-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .user-type-admin {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .user-type-member {
+            color: #28a745;
+        }
+        
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-primary {
+            background: #8b4513;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">后台管理系统</h1>
+            <div class="user-info">
+                <span id="currentUser">管理员</span> | 
+                <a href="/" style="color: #8b4513; margin-left: 10px;">返回首页</a> |
+                <a href="#" id="adminLogout" style="color: #8b4513; margin-left: 10px;">退出</a>
+            </div>
+        </div>
+        
+        <div class="admin-nav">
+            <ul class="nav-tabs">
+                <li class="nav-tab active" data-tab="users">用户管理</li>
+                <li class="nav-tab" data-tab="system">系统设置</li>
+            </ul>
+        </div>
+        
+        <!-- 用户管理标签页 -->
+        <div id="users-tab" class="tab-content active">
+            <h3>用户管理</h3>
+            <div id="usersAlert"></div>
+            
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>用户ID</th>
+                        <th>用户名</th>
+                        <th>用户类型</th>
+                        <th>积分</th>
+                        <th>注册时间</th>
+                        <th>最后登录</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- 用户数据将通过JavaScript动态加载 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 系统设置标签页 -->
+        <div id="system-tab" class="tab-content">
+            <h3>系统设置</h3>
+            <div class="form-group">
+                <label>积分设置</label>
+                <div>
+                    <button class="btn btn-primary" id="addPointsToAll">为所有用户增加10积分</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态
+        async function checkAdminAuth() {
+            try {
+                const response = await fetch('/api/user/current');
+                const data = await response.json();
+                
+                if (!data.success || data.user.user_type !== 'admin') {
+                    window.location.href = '/';
+                    return;
+                }
+                
+                // 显示当前用户信息
+                document.getElementById('currentUser').textContent = 
+                    `${data.user.username} (${data.user.user_type})`;
+                    
+            } catch (error) {
+                window.location.href = '/';
+            }
+        }
+        
+        // 加载用户数据
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const tbody = document.getElementById('usersTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.user_id}</td>
+                            <td>${user.username}</td>
+                            <td>
+                                <select class="user-type-select" data-user-id="${user.user_id}">
+                                    <option value="member" ${user.user_type === 'member' ? 'selected' : ''}>会员</option>
+                                    <option value="admin" ${user.user_type === 'admin' ? 'selected' : ''}>管理员</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" class="points-input" data-user-id="${user.user_id}" value="${user.points}" style="width: 80px;">
+                            </td>
+                            <td>${new Date(user.created_at).toLocaleString()}</td>
+                            <td>${user.last_login ? new Date(user.last_login).toLocaleString() : '从未登录'}</td>
+                            <td>
+                                <button class="btn btn-primary save-user-btn" data-user-id="${user.user_id}">保存</button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    
+                    // 绑定保存按钮事件
+                    document.querySelectorAll('.save-user-btn').forEach(btn => {
+                        btn.addEventListener('click', saveUser);
+                    });
+                }
+            } catch (error) {
+                showAlert('加载用户数据失败', 'error');
+            }
+        }
+        
+        // 保存用户信息
+        async function saveUser(event) {
+            const userId = event.target.dataset.userId;
+            const userType = document.querySelector(`.user-type-select[data-user-id="${userId}"]`).value;
+            const points = document.querySelector(`.points-input[data-user-id="${userId}"]`).value;
+            
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({user_type: userType, points: parseInt(points)})
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    showAlert('用户信息更新成功', 'success');
+                } else {
+                    showAlert('更新失败: ' + data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('保存失败', 'error');
+            }
+        }
+        
+        // 显示提示信息
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('usersAlert');
+            alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => alertDiv.innerHTML = '', 3000);
+        }
+        
+        // 标签页切换
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                
+                // 添加active类到当前标签
+                this.classList.add('active');
+                document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+        
+        // 退出登录
+        document.getElementById('adminLogout').addEventListener('click', async function(e) {
+            e.preventDefault();
+            await fetch('/api/logout', {method: 'POST'});
+            window.location.href = '/';
+        });
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAuth();
+            loadUsers();
+        });
+    </script>
+</body>
+</html>

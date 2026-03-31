@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫微斗数命盘生成器</title>
+    <link rel="stylesheet" href="form_input.css">
+    <link rel="stylesheet" href="form_chart.css">
+    <link rel="stylesheet" href="form_sava_mingpan.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_input.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_chart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_sava_mingpan.css') }}">
+</head>
+<body>
+    <div class="main-container"> 
+         
+        <!-- 左侧输入区域 -->
+        <div class="input-section" id="inputSection">      
+            <!-- 导航 -->
+            <nav class="bottom-nav">
+                <div class="nav-links">
+                    <a href="{{ url_for('static', filename='index.chengxiang.html') }}" class="nav-link" target="_blank">
+                        <i>✨</i> 
+                    </a>
+                    <a href="{{ url_for('static', filename='index.guanzhu.html') }}" class="nav-link" target="_blank">
+                        <i>🔍</i> 
+                    </a>
+                    <a href="{{ url_for('static', filename='index.shuoming.html') }}" class="nav-link" target="_blank">
+                        <i>☯</i> 
+                    </a>
+                </div>
+            </nav>                   
+            <form id="ziweiForm">
+                <div class="form-group">
+                    <label for="name" class="name"></label>
+                    <label for="name" class="name">姓 名 : </label>
+                    <input type="text" id="name" class="form-control-name" placeholder="请输入姓名">
+                </div>
+                <!-- 时间输入行 -->
+                <div class="time-input-row">
+                    <div class="time-input-group">
+                        <label for="birthYear">年</label>
+                        <input type="number" id="birthYear" class="form-control" min="1" max="9999" required>
+                        <span class="gan-display" id="yearGan"></span>
+                    </div>
+                    
+                    <div class="time-input-group">
+                        <label for="birthMonth">月</label>
+                        <input type="number" id="birthMonth" class="form-control" min="1" max="12" required>
+                        <span class="gan-display" id="monthGan"></span>
+                    </div>
+                    
+                    <div class="time-input-group">
+                        <label for="birthDay">日</label>
+                        <input type="number" id="birthDay" class="form-control" min="1" max="31" required>
+                        <span class="gan-display" id="dayGan"></span>
+                    </div>
+                    
+                    <div class="time-input-group">
+                        <label for="birthHour">时</label>
+                        <input type="number" id="birthHour" class="form-control" min="0" max="23.5" step="0.05" required>
+                        <span class="gan-display" id="hourGan"></span>
+                    </div>
+                </div>
+                <div class="time-input-row">    
+                    <div class="time-input-group">
+                        <label for="gender">性 别</label>
+                        <select id="gender" class="form-control" required>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                    <div class="time-input-group">
+                        <label for="birthPlace">出生地</label>
+                        <input type="text" id="birthPlace" class="form-control" placeholder="例如：北京" required value="北京">
+                        
+                    </div>
+                </div>
+                <div class="info-text" id="solarTimeInfo" ></div>
+                <div class="info-text" id="lunarDateInfo" ></div>
+                <hr/>
+                <div class="form-group">
+                    <button type="button" id="randomTimeBtn" class="btn btn-random">随机时间</button>
+                    <button type="submit" id="submitBtn" class="btn">生成命盘</button>
+                </div>
+            </form>
+
+            <!-- 新增保存和分类区域 -->
+            <div class="save-section">
+                <div class="save-controls">
+                    <button type="button" id="saveBtn" class="btn btn-save">保存命盘</button>
+                    <select id="categorySelect" class="category-select">
+                        <option value="all">全部</option>
+                        <option value="new">新分类</option>
+                        <!-- 其他分类将从服务器动态加载 -->
+                    </select>
+                </div>
+                <div id="savedList" class="saved-list">
+                    <div class="empty-list">暂无保存的命盘</div>
+                </div>
+            </div>            
+        
+            <div class="loading" id="loadingIndicator">
+                <div class="loading-spinner"></div>
+                <p>正在计算命盘，请稍候...</p>
+            </div>
+
+          
+        </div>
+        
+        <!-- 右侧命盘显示区域 -->
+        <div class="chart-section">
+            <div class="container">                        
+                <svg id="connection-lines" xmlns="http://www.w3.org/2000/svg"></svg>
+                <div class="legend">
+                    <div class="legend-grid">
+                        <div class="sihua-symbols-container">
+                            <svg width="40" height="40" viewBox="0 0 40 40" id="toggleSihua" class="sihua-symbols">
+                                <!-- 禄权科忌四化符号 -->
+                                <g transform="translate(0,0)">
+                                    <!-- 禄 -->
+                                    <circle cx="10" cy="10" r="8" class="sihua sihua-lu"/>
+                                    <text x="10" y="12" font-size="8" text-anchor="middle">禄</text>
+                                    
+                                    <!-- 权 -->
+                                    <circle cx="30" cy="10" r="8" class="sihua sihua-quan"/>
+                                    <text x="30" y="12" font-size="8" text-anchor="middle">权</text>
+                                    
+                                    <!-- 科 -->
+                                    <circle cx="10" cy="30" r="8" class="sihua sihua-ke"/>
+                                    <text x="10" y="32" font-size="8" text-anchor="middle">科</text>
+                                    
+                                    <!-- 忌 -->
+                                    <circle cx="30" cy="30" r="8" class="sihua sihua-ji"/>
+                                    <text x="30" y="32" font-size="8" text-anchor="middle">忌</text>
+                                </g>
+                                
+                                <!-- 连接线路径 - 所有坐标和尺寸缩小到40% -->
+                                <path d="M18,10 L22,10 M18,30 L22,30 M10,18 L10,22 M30,18 L30,22" 
+                                    stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>                  
+                        <div class="legend-item" id="toggleLu"><span class="sihua sihua-lu">禄</span> 化禄</div>
+                        <div class="legend-item" id="toggleQuan"><span class="sihua sihua-quan">权</span> 化权</div>
+                        <div class="legend-item" > </div>
+                        <div class="legend-item" id="toggleKe"><span class="sihua sihua-ke">科</span> 化科</div>
+                        <div class="legend-item" id="toggleJi"><span class="sihua sihua-ji">忌</span> 化忌</div>                
+            
+
+                    </div>    
+                </div>
+                <button id="exportBtn" class="export-btn">占</button>
+                <button class="btn-toggle" id="toggleButton">☰</button>
+                <div class="tooltip tooltip-top">
+                    <h3>
+                        <!-- <i>☰</i> -->
+                        隐藏
+                        /显示左侧区域
+                    </h3>
+                    <!-- <ul>
+                        <li><strong></strong> </li>
+                    </ul> -->
+                </div>                 
+                <div class="chart-grid" id="chartGrid">
+                    <!-- 宫位将由JavaScript动态生成 -->
+                   
+                </div>               
+            </div>    
+        </div>
+    </div>
+    <!-- 确认删除对话框 -->
+    <div id="confirmDeleteDialog" class="confirm-dialog" style="display: none;">
+        <div class="dialog-content">
+            <div class="dialog-title">确认删除</div>
+            <div class="dialog-message" id="deleteMessage">您确定要删除此命盘记录吗？此操作不可恢复。</div>
+            <div class="dialog-buttons">
+                <button id="confirmDeleteBtn" class="dialog-btn dialog-confirm">确认删除</button>
+                <button id="cancelDeleteBtn" class="dialog-btn dialog-cancel">取消</button>
+            </div>
+        </div>
+    </div>
+    <!-- 新分类对话框 -->
+    <div id="newCategoryDialog" class="new-category-dialog" style="display: none;">
+        <div class="new-category-content">
+            <div class="dialog-title">创建新分类</div>
+            <div class="form-group">
+                <label for="newCategoryName" class="form-label">新分类名称：</label>
+                <input type="text" id="newCategoryName" class="form-input" placeholder="请输入新分类名称">
+            </div>
+            <div class="dialog-buttons">
+                <button id="confirmNewCategory" class="dialog-btn btn-confirm">创建</button>
+                <button id="cancelNewCategory" class="dialog-btn btn-cancel">取消</button>
+            </div>
+        </div>
+    </div>    
+    <!-- 导出模态框 -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">紫微占卜</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            
+            <!-- 新增问卦内容区域 -->
+            <div class="divination-section">
+                <!-- 提示内容 -->
+                <div id="divinationPrompt" class="divination-prompt">
+                问卦示例：    xxx先生/女士，xxxx年生，请问xxxxxxxx？
+                </div>
+                <div class="form-group">
+                    <label for="divinationContent">问卦内容：</label>
+                    <input type="text" id="divinationContent" class="form-control" placeholder="请输入问卦内容">
+                </div>
+                
+
+                
+                <div class="form-group">
+                    <button id="divinationBtn" class="divination-btn">占卜</button>
+                </div>
+            </div>
+            <div class="response-area" id="responseArea">
+                <div id="aiResponse"></div>
+            </div>            
+            <!-- 使用pre元素保留换行效果 -->
+            <pre id="exportText" class="export-text"></pre>
+            <div class="modal-footer">
+                <button id="copyBtn" class="copy-btn">复制到剪贴板</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./common.js"></script>
+    <script type="text/javascript" src="./ziwei_chart.js"></script>
+    <script type="text/javascript" src="./ziwei_input.js"></script>
+    <script type="text/javascript" src="./ziwei_form.js"></script>
+    <script type="text/javascript" src="./ziwei_save_mingpan.js"></script>
+    
+    <script src="{{ url_for('static', filename='common.js') }}"></script>
+    <script src="{{ url_for('static', filename='ziwei_chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='ziwei_input.js') }}"></script>
+    <script src="{{ url_for('static', filename='ziwei_form.js') }}"></script>
+    <script src="{{ url_for('static', filename='ziwei_save_mingpan.js') }}"></script>
+</body>
+
+</html>

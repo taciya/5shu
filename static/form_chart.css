@@ -1,0 +1,1781 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background-color: #f0e6d2;
+    color: #333;
+    line-height: 1.2;
+    padding: 10px;
+
+    /* 关键咒语 ↓ */
+    color-scheme: light only; /* 封印深色模式 */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* 破除iOS魔法反噬 */
+}
+
+.container {
+    width:100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border: 2px solid #8b4513;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    position: relative;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #8b4513;
+}
+
+h1 {
+    color: #8b4513;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.upload-section {
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    background: #f5ecd6;
+    border-radius: 5px;
+    border: 1px solid #d2b48c;
+}
+
+.personal-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.info-item {
+    background: #f5ecd6;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    border: 1px solid #d2b48c;
+}
+
+/* 命盘表格布局 */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    /* gap: 2px; */
+    width: 100%;
+    aspect-ratio: 1/1.1;
+    margin: 0 auto;
+    background-color: #8b4513;
+    border: 1px solid #8b4513;
+}
+
+.palace {
+    background: #fff8dc;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border: 1px solid #8b4513;
+    width: 100%; /* 确保占用完整的grid-area */
+    height: 100%; /* 确保占用完整的grid-area */
+}
+
+/* 飞星高亮+连线 */FFFFFF
+/* 宫位高亮样式 */
+.palace.source-highlighted {
+    background-color: #f5b6b6;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    border: 1px solid #FF0000;
+    z-index: 100;
+}
+
+.palace.target-highlighted {
+    background-color: #f9f3e9;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    z-index: 90;
+}
+
+/* 连接线容器 */
+#connection-lines {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 200;
+}
+
+/* 连接线样式 */
+.connection-line {
+    /* stroke: #8b4513; */
+    stroke-width: 1;
+    stroke-dasharray: 5, 5;
+    fill: none;
+}
+
+/* 连接点样式 */
+.connection-dot {
+    /* stroke: #fff; */
+    stroke-width: 1;
+    r: 7;
+}
+
+/* 终点圆点样式 - 根据四化类型设置颜色 */
+.connection-dot.end.禄 {
+    fill: #035a24; /* 禄 - 绿色 */
+    r: 0;
+}
+
+.connection-dot.end.权 {
+    fill: #430450; /* 权 - 紫色 */
+    r: 0;
+}
+
+.connection-dot.end.科 {
+    fill: #4169e1; /* 科 - 蓝色 */
+    r: 0;
+}
+
+.connection-dot.end.忌 {
+    fill: #ff0a0a; /* 忌 - 红色 */
+    r: 0;
+}
+
+
+/* 连接标签样式 */
+.connection-label {
+    font-size: 10px;
+    font-weight: bold;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    margin-left: -4px;
+    /* 确保文本在背景之上 */
+    z-index: 10;
+    position: relative;
+}
+/* 太极点 */
+.taiji {
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    /* 确保文本在背景之上 */
+    z-index: 10;
+    position: relative;
+}
+/* 修改.center-cell样式 */
+.center-cell {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+    background: #f9f3e9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
+    padding: 10px;
+    text-align: center; /* 整体文本居中 */
+    border: 1px solid #8b4513;
+}
+
+/* 内部容器 */
+.center-content {
+    /* text-align: left; */ /* 内部文本左对齐 */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* 元素间距 */
+    align-items:center;
+    justify-content:center;
+}
+
+/* 调整.center-title和.center-info的样式 */
+.center-title {
+    width: 100%;
+    font-weight: bold;
+    color: #8b4513;
+    margin-bottom: 5px;
+    font-size: 13px;
+    text-align: center; /* 确保标题左对齐 */
+}
+/* 新增通用容器样式 */
+.center-content {
+    text-align: center;       /* 让容器内的子元素水平居中 */
+    display: flex;            /* 启用Flex布局 */
+    flex-direction: column;   /* 子元素垂直排列 */
+    align-items: center;      /* 主轴方向（垂直）居中 */
+}
+.center-info {
+    margin: 3px 0;
+    font-size: 12px;
+    text-align: left; /* 确保信息左对齐 */
+    /* display: table-cell; */
+    /* vertical-align:middle; */
+    /* line-height: 1.3; */
+    /* 纵向居中 */
+    /* align-items: center; */
+    /* 垂直居中 */
+    /* justify-content:center; */
+    width:85%;
+    white-space:nowrap;
+
+
+}
+
+.center-info .sizhu {
+    padding: 0px 0px ;
+    font-size: 12px;
+    color: #8b0000;
+    writing-mode: vertical-rl;
+    /* text-orientation: upright; */
+    line-height: 1;
+    letter-spacing: 3px;
+    min-width:13%;
+    max-height:30px;
+    white-space: nowrap; /* 防止换行 */
+
+}
+.center-info.center {
+    text-align: center;
+    min-width:160px;
+
+}
+/* 主星和辅星容器 - 横向排列 */
+.main-stars-container {
+    position: absolute;
+    top: 5px;
+    /* left: 2px; */
+    display: flex;
+    /* gap: 2px; */
+    /* 添加宽度自适应 */
+    width: auto;
+    /* 限制最大宽度防止溢出 */
+    max-width: auto;
+    /* 设置CSS变量用于计算 */
+    --main-stars-count: 0; /* 默认值，需要通过JS动态设置 */
+}
+/* 辅星容器 - 紧贴主星右侧 */
+.minor-stars-container {
+    position: absolute;
+    top: 5px;
+    /* 动态计算位置：主星容器宽度 + 5px */
+    left: var(--main-stars-width, 74px) ;
+    /* left: calc(72px + 5px); */
+    display: flex;
+
+    /* gap: 2px; */
+    /* 限制最大宽度防止溢出 */
+    max-width: auto;
+    /* 设置CSS变量用于计算 */
+    --minor-stars-count: 0; /* 默认值，需要通过JS动态设置 */
+}
+
+.star-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* 固定宽度，防止主星过多时撑开布局 */
+    /* width:18px;  */
+    position: relative; /* 设置为相对定位，以便子元素可以相对于它定位 */
+    width: 13px; /* 固定宽度 */
+    min-width: 13px; /* 确保最小宽度 */
+    max-width: 13px; /* 确保最大宽度 */
+}
+/* 确保星曜单元内的所有元素都遵守宽度限制 */
+.star-unit > * {
+    max-width: 13px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center; /* 居中显示 */
+    justify-content: stretch; /* 均匀排列每个元素'auto'-sized 的元素会被拉伸以适应容器的大小 */
+}
+.main-star {
+    margin-top:2px;   /* 新增向下移动 */
+    font-weight: bold;
+    font-size: 12px;
+    color: #8b0000;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* line-height: 1.1; */
+    letter-spacing: 3px;
+    white-space: nowrap; /* 防止换行 */
+    /* 光晕 */
+    /* text-shadow: 0 0 1px #8b0000; */
+    order: -1; /* 确保在最上方 */
+    width: 100%; /* 确保占满父容器 */
+    /* align-items: left;
+    text-align: left;  */
+}
+/* 当主星容器为空时，辅星容器定位到主星位置 */
+.main-stars-container:empty + .minor-stars-container {
+    left: 2px;
+}
+.minor-star {
+    margin-top: 2px; /* 新增向下移动 */
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* line-height: 1.1; */
+    letter-spacing: 3px;
+    white-space: nowrap; /* 防止换行 */
+    order: -1; /* 确保在最上方 */
+}
+
+/* 吉星样式 - 亮紫色 */
+.minor-star.lucky {
+    color: rgba(255, 0, 255, 0.5); /* 亮紫色文字 */
+    /* 淡紫色背景 */
+    /* background-color: rgba(255, 0, 255, 0.1);  */
+    /* 紫色光晕 */
+    /* text-shadow: 0 0 2px rgba(255, 0, 255, 0.5);  */
+}
+
+/* 凶星样式 - 水蓝色 */
+.minor-star.unlucky {
+    color: #0011ff; /* 水蓝色文字 */
+    /* 淡蓝色背景 */
+    /* background-color: rgba(0, 255, 255, 0.1);  */
+    /* 蓝色光晕 */
+    /* text-shadow: 0 0 2px rgba(0, 255, 255, 0.5);  */
+
+}
+
+/* 亮度容器样式 */
+.brightness-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: normal;
+    color: #fa0404;
+    background-color: rgba(244, 244, 200, 0.8);
+    /* padding-top: 1px; */
+    /* border-radius: 3px; */
+    white-space: nowrap;
+    z-index: 5;
+    align-items: center;
+    text-align: center;
+    justify-content: stretch;
+}
+/* 确保主星和辅星容器有明确的高度 */
+.main-star,
+.minor-star {
+    min-height: 26px; /* 与.xiaoxing-stars-container保持一致 */
+    height: auto; /* 自适应内容高度 */
+}
+
+/* 小星容器  */
+.xiaoxing-stars-container {
+    position: absolute;
+    margin-top: 0px; /* 新增向下移动 */
+    top: 5px;
+    right: 2px;
+    /* 动态计算宽度：(.palace宽度/4) - (主星+辅星容器宽度) - 2px */
+    width: calc((100% / 4) - var(--main-stars-width, 0px) - var(--minor-stars-width, 0px) - 5px);
+    min-width: 20px; /* 最小宽度保证可读性 */
+    min-height: 26px; /* 设置最小高度，避免内容过少时高度太小 */
+    /* 最大不超过容器一半 */
+    /* max-width: 50%;  */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1px; /* 元素间距 */
+    /* 确保从行尾开始排列 */
+    flex-direction: row; /* 改为正常方向 */
+    align-items: flex-start !important;    /* 向上对齐 */
+    align-content: flex-start !important; /* 多行时向上对齐 */
+    /* 新增：自动计算行高 */
+    line-height: 1.2;
+}
+
+
+.xiaoxing-star {
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: #556b2f;
+    /* line-height: 1.1; */
+    letter-spacing: 1px;
+    font-weight: normal;
+    /* 确保每个小星有固定宽度 */
+    width: 12px;
+    min-width: 12px;
+    max-width: 12px;
+    text-align: center;
+    /* 换行时保持间距 */
+    /* margin: 4px 0 0 0; */
+    padding: 0;
+    /* 新增：确保元素本身右对齐 */
+    /* align-self: flex-end;     */
+    align-self: flex-start !important;    /* 每个小星都向上对齐 */
+    margin-top: 0;                       /* 移除顶部外边距 */
+}
+
+/* 神煞星容器 */
+.shensha-container {
+    position: absolute;
+    bottom: 20px;
+    left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:1px;
+}
+
+.shensha-star {
+    font-size: 12px;
+    text-orientation: upright;
+    color: #696969;
+    /* line-height: 1.1; */
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+/* 长生容器 */
+.changsheng-container {
+    position: absolute;
+    bottom: 20px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.changsheng-star {
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: #696969;
+    /* line-height: 1.2; */
+    letter-spacing: 1px;
+}
+
+/* 宫位底部信息 */
+.palace-footer {
+    display: flex;
+    justify-content: space-between;/* 左右对齐 */
+    font-size: 12px;
+    color: #696969;
+    position: absolute;
+    bottom: 1px;
+    left: 5px;
+    right: 5px;
+    /* 新增：确保容器高度合适 */
+    align-items: flex-end; /* 确保所有子元素底部对齐 */
+    height: auto;
+    min-height: 20px; /* 设置最小高度 */
+}
+
+.ganzhi {
+    color: #0a0a0a;
+    font-weight: bold;
+    text-align: left;
+    width: 25%;
+    white-space: nowrap; /* 防止换行 */
+    /* 新增：确保左下对齐 */
+    display: flex;
+    align-items: flex-end; /* 垂直方向底部对齐 */
+    justify-content: flex-start; /* 水平方向左对齐 */
+    align-self: flex-end; /* 在flex容器中底部对齐 */
+    margin-bottom: 0; /* 移除底部边距 */
+    padding-bottom: 0; /* 移除底部内边距 */
+}
+/* 将::first-letter应用于内部的span元素 */
+.ganzhi span {
+    display: inline-block; /* 确保::first-letter有效 */
+}
+
+.ganzhi span::first-letter {
+    color: #ff0000;
+}
+
+.palace-name {
+    font-weight: bold;
+    color: #8b4513;
+    font-size: 15px;
+    text-align: center;
+    width: 25%;
+    white-space: nowrap; /* 防止换行 */
+    /* 新增：确保垂直居中 */
+    display: flex;
+    align-items: flex-end; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    align-self: flex-end; /* 在flex容器中底部对齐 */
+}
+
+.age-range {
+    text-align: right;
+    font-weight: 400;
+    width: 50%;
+    white-space: nowrap; /* 防止换行 */
+    /* 新增：确保右下对齐 */
+    display: flex;
+    align-items: flex-end; /* 垂直方向底部对齐 */
+    justify-content: flex-end; /* 水平方向右对齐 */
+    align-self: flex-end; /* 在flex容器中底部对齐 */
+    margin-bottom: 0; /* 移除底部边距 */
+    padding-bottom: 0; /* 移除底部内边距 */
+}
+
+/* 身宫 */
+.shengong-mark,
+/* 来因 */
+.laiyin-mark {
+    position: absolute;
+    top: 45%; /* 垂直居中 */
+    right: 3px; /* 与changsheng-container右对齐 */
+    width: 20px;
+    height: 20px;
+    background-color: #8b4513;
+    color: white;
+    border-radius: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    /* font-weight: bold; */
+    border: 1px solid #fcfbfa;
+    z-index: 10;
+    /* writing-mode: vertical-rl; */
+    padding-bottom: 2px;
+    padding-top: 1px;
+}
+.laiyin-mark {
+    background-color: #e43434;
+    border-radius: 50%;
+    top: 55%; /* 垂直居中 */
+    right: 45%;
+}
+.laiyin-mark.zhu {
+    transform: translateX(0px);
+}
+.laiyin-mark.ci {
+    transform: translateX(-20px);
+}
+.laiyin-mark.san {
+    transform: translateX(20px);
+}
+
+/* 流年 */
+.ages {
+    position: absolute;
+    top: 45%; /* 垂直居中 */
+    left: 10%; /* 与changsheng-container右对齐 */
+    width: 80%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+
+    z-index: 10;
+    /* writing-mode: vertical-lr; */
+}
+/* 太极12宫 */
+.new-palace-name {
+    position: absolute;
+    top: 18px;
+    left: 3px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #bdbabc;
+    font-weight: bold;
+}
+/* 四化标记 */
+.sihua {
+    display: inline-block;
+    width: 13px; /* 固定宽度 */
+    min-width: 13px;
+    max-width: 13px;
+    height: 15px;
+    border-radius: 20%;
+    text-align: center;
+    line-height: 13px;
+    font-size: 11px;
+    padding-top: 1px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+.sihua-lu {
+    background-color: #035a24;
+    color: #fff;
+    fill:#035a24;
+    stroke:#fff;
+    stroke-width:1
+/* fill="#e74c3c" stroke="#c0392b"     */
+}
+
+.sihua-quan {
+    background-color: #430450;
+    color: #fff;
+    fill:#430450;
+    stroke:#fff;
+    stroke-width:1
+}
+
+.sihua-ke {
+    background-color: #4169e1;
+    color: #fff;
+    fill:#4169e1;
+    stroke:#fff;
+    stroke-width:1
+}
+
+.sihua-ji {
+    background-color: #ff0a0a;
+    color: #fff;
+    fill:#ff0a0a;
+    stroke:#fff;
+    stroke-width:1
+}
+
+
+
+
+/* 图例 */
+.legend {
+  margin-top: 0;
+  margin-bottom: 5px;
+  text-align: center;
+  position: relative; /* 为绝对定位的子元素提供参照 */
+  min-height: 20px; /* 确保有最小高度 */
+}
+
+/* Grid布局容器 */
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5列布局 */
+  grid-template-rows: auto; /* 行高自适应内容 */
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+  z-index: 1; /* 确保在符号容器之上 */
+  width: 50%; /* 限制宽度使项目更集中 */
+  margin: 0 auto; /* 居中显示 */
+}
+
+/* 四化符号容器 - 使用绝对定位脱离文档流 */
+.sihua-symbols-container {
+  position: absolute;
+  margin-left:6px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3; /* 置于底层 */
+  pointer-events: auto; /* 允许点击事件 */
+}
+
+.sihua-symbols {
+  position: relative; /* 保持相对定位 */
+  opacity: 1; /* 适当降低透明度避免干扰 */
+}
+.sihua-symbols svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+/* 四化符号文字默认样式 */
+.sihua-symbols text {
+  fill: white; /* 默认白色 */
+  transition: fill 0.3s ease; /* 添加过渡效果 */
+}
+
+/* 灰色文本状态 */
+.sihua-symbols text.gray-text {
+    fill: #636262;
+}
+/* 白色文本状态 */
+.sihua-symbols text.white-text {
+    fill: white;
+}
+
+/* 图例项样式 */
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+  /* 半透明背景 */
+  /* background-color: rgba(255, 255, 255, 0.8);  */
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 2; /* 确保在图例符号之上 */
+  position: relative;
+}
+
+/* 地支位置 */
+#巳宫 { grid-area: 1 / 1; }
+#午宫 { grid-area: 1 / 2; }
+#未宫 { grid-area: 1 / 3; }
+#申宫 { grid-area: 1 / 4; }
+#辰宫 { grid-area: 2 / 1; }
+#酉宫 { grid-area: 2 / 4; }
+#卯宫 { grid-area: 3 / 1; }
+#戌宫 { grid-area: 3 / 4; }
+#寅宫 { grid-area: 4 / 1; }
+#丑宫 { grid-area: 4 / 2; }
+#子宫 { grid-area: 4 / 3; }
+#亥宫 { grid-area: 4 / 4; }
+
+
+/* 改进后的四化容器样式 */
+.sihua-container {
+    display: flex;
+    order: 1; /* 确保在亮度容器下方 */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1px;
+    width: 100%; /* 继承父容器宽度 */
+    max-width: 13px; /* 限制最大宽度 */
+}
+
+/* 四化箭头样式 */
+.sihua-arrow {
+    width: 13px; /* 固定宽度 */
+    min-width: 13px;
+    max-width: 13px;
+    height: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1px 0;
+    box-sizing: border-box; /* 包含内边距和边框 */
+}
+
+
+/* 亮度容器移动到星曜正下方 */
+.star-unit .brightness-container,
+.minor-star .brightness-container {
+    position: static; /* 移除绝对定位 */
+    transform: none;
+    margin-top: 0px; /* 与星曜的距离 */
+    margin-bottom: 0px; /* 与四化标记的距离 */
+    width: 100%; /* 占满父容器 */
+    max-width: 13px; /* 限制宽度 */
+    font-size: 12px; /* 适当调整字体大小 */
+    padding: 0 0px; /* 上下/左右 减少内边距 */
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center; /* 新增：确保文本居中 */
+    /* left: 50%;
+    transform: translateX(-50%);     */
+}
+
+
+/* 向心四化箭头 - 向上 */
+/*
+.xiangxin-sihua-arrow::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 12px solid;
+}
+*/
+/* 向心四化箭头 - 使用字符➤➥并旋转朝上 */
+.xiangxin-sihua-arrow::after {
+    content: '➥'; /* Unicode向右箭头字符 */
+    display: inline-block;
+    transform: rotate(-113deg); /* 旋转-90度使箭头朝上 */
+    font-size: 11px; /* 调整字体大小以匹配原箭头尺寸 */
+    line-height: 13px; /* 确保行高正常，避免偏移 */
+    vertical-align: middle; /* 垂直对齐方式 */
+}
+
+/* 离心四化箭头 - 向下 */
+/*
+.lixin-sihua-arrow::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 12px solid;
+}
+*/
+/* 离心四化箭头 - 使用字符↻ */
+.lixin-sihua-arrow::after {
+    content: '↻'; /* Unicode顺时针旋转符号 */
+    display: inline-block;
+    transform: rotate(45deg); /* 旋转-90度使箭头朝上 */
+    font-size: 11px; /* 保持与向心箭头一致的尺寸 */
+    line-height: 13px;
+    vertical-align: middle;
+    /* 使用text-shadow增加粗细：添加四个方向的阴影模拟粗体 */
+    text-shadow:
+        1px 0px 0px currentColor,
+        -1px 0px 0px currentColor,
+        0px 1px 0px currentColor,
+        0px -1px 0px currentColor;
+    /* 调整阴影偏移值可以控制粗细程度，例如使用0.5px或2px */
+}
+
+/* 根据四化类型设置箭头颜色 */
+.xiangxin-sihua-arrow.lu::after { border-bottom-color: #035a24;color:#035a24; }
+.xiangxin-sihua-arrow.quan::after { border-bottom-color: #430450;color:#430450;  }
+.xiangxin-sihua-arrow.ke::after { border-bottom-color: #4169e1;color:#4169e1;  }
+.xiangxin-sihua-arrow.ji::after { border-bottom-color: #ff0a0a;color:#ff0a0a;  }
+
+.lixin-sihua-arrow.lu::after { border-top-color: #035a24;color:#035a24;  }
+.lixin-sihua-arrow.quan::after { border-top-color: #430450;color:#430450;  }
+.lixin-sihua-arrow.ke::after { border-top-color: #4169e1;color:#4169e1;  }
+.lixin-sihua-arrow.ji::after { border-top-color: #ff0a0a;color:#ff0a0a;  }
+
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.chart-section {
+    flex: 2;
+}
+
+/* 四化图标隐藏类 */
+.sihua-hidden {
+    display: none !important;
+}
+.sihua-gray {
+    color: #d6d4d4;
+}
+/* 隐藏输入区域 */
+.btn-toggle {
+    left:2px;
+    top:0;
+    /* width: 70px;
+    height: 70px; */
+    padding: 5px 10px;/*上下 左右*/
+    background: linear-gradient(45deg, #3498db, #2c3e50);
+    border: none;
+    border-radius: 25%;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: translateY(2px);
+    z-index: 10;
+}
+
+.btn-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+}
+
+.btn-toggle:focus {
+    outline: none;
+}
+
+/* 吹出框 Begin--------------------- */
+.tooltip {
+    position: absolute;
+    background: white;
+    color: #2c3e50;
+    padding: 0px 15px;
+    border-radius: 10px;
+    /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); */
+    width: auto;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 5;
+    transform: translateY(20px);
+}
+.tooltip-top {
+    top: 15%;
+    margin-left: 10px;
+    padding:10px;
+    opacity: 0;
+    visibility: hidden;
+    right: 99%; /* 移动到按钮的左侧 */
+    left: auto; /* 覆盖原有的left:0 */
+    transform: translateY(-50%) translateX(-5px); /* 初始位置：垂直居中并向左偏移20px（部分隐藏） */
+    text-align: center; /* 保持文本居中 */
+}
+
+/* 三角指示 */
+.tooltip-top::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    /* border-right-color: white; */
+    right: -25px; /* 定位到tooltip的右侧边缘 */
+    left: auto; /* 覆盖原有的left:50% */
+    transform: translateY(-50%); /* 垂直调整 */
+    border: 15px solid transparent;
+    border-left-color: white; /* 指向右侧的三角形（使用border-left-color） */
+}
+
+/* 菜单按钮，鼠标靠近 显示提示内容 */
+/*
+.btn-toggle:hover + .tooltip-top{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-5px);
+}
+*/
+
+
+.tooltip h3 {
+    color: #3498db;
+    /* margin: 10px; */
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.tooltip h3 i {
+    margin-right: 10px;
+    font-size: 1.8rem;
+}
+
+.tooltip p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.tooltip ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.tooltip li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.tooltip li strong {
+    color: #e74c3c;
+}
+/* 吹出框 End--------------------- */
+
+/* 导出按钮 Start--------------------- */
+.export-btn {
+    background-color: #f8da9d;
+    padding: 5px 10px;
+    color: rgb(38, 41, 38);
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+    position: absolute;
+    top:3px;
+    right: 3px;
+    border-radius: 50%;
+    font-weight:600;
+}
+
+.export-btn:hover {
+    background-color: #f9f3e9;
+}
+/* 导出按钮 End--------------------- */
+
+/* 模态框样式  Start---------------------*/
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff8dc;
+    border: 2px solid #8b4513;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d2b48c;
+    padding-bottom: 10px;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8b4513;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #8b4513;
+}
+
+/* 保留换行效果的文本容器 */
+.export-text {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.1;
+    background-color: #f9f3e9;
+    white-space: pre-wrap; /* 保留空白和换行 */
+    overflow: auto;
+    max-height: 400px;
+    /* 默认隐藏 */
+    /* display: none;  */
+}
+
+.modal-footer {
+    margin-top: 15px;
+    text-align: right;
+    /* 默认隐藏 */
+    /* display: none;  */
+}
+
+.copy-btn {
+    padding: 8px 15px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+.copy-btn:hover {
+    background-color: #6b3409;
+}
+
+/* 问卦内容区域样式 */
+.divination-section {
+    padding: 15px;
+    background-color: #f9f3e9;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.divination-prompt {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.divination-btn {
+    padding: 8px 15px;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    width: 100%;
+}
+
+.divination-btn:hover {
+    background-color: #6b3409;
+}
+
+/* 统一的 star-tooltip 样式 */
+#star-tooltip {
+    position: relative !important;
+    display: none;
+    background: rgba(249, 243, 233, 0.98) !important;    /* 修改背景颜色 */
+    /* border: 3px solid #8b4513 !important; */
+    border-radius: 8px;
+    padding: 5px;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 200px;
+    overflow-y: auto;
+    z-index: 1 !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-size: 12px;
+    line-height: 1.4;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+    top: 10px !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    margin: 10px auto;
+}
+
+/* 内部内容样式 */
+#star-tooltip div {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+#star-tooltip div.label {
+    font-weight: bold;
+    color: #8b4513;
+    /* border-bottom: 1px solid #d2b48c; */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* 添加平滑滚动效果 */
+#star-tooltip {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Star tooltip 滚动条样式 */
+#star-tooltip::-webkit-scrollbar {
+    width: 6px;
+}
+
+#star-tooltip::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#star-tooltip::-webkit-scrollbar-thumb {
+    background: #8b4513;
+    border-radius: 3px;
+}
+
+#star-tooltip::-webkit-scrollbar-thumb:hover {
+    background: #6b3409;
+}
+/* 响应式设计 - 移动设备适配 */
+@media (max-width: 768px) {
+    /* 整体布局调整 */
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        padding: 8px;
+        max-width: 700px;
+        /* margin: 10px auto; */
+        border-width: 1px;
+    }
+
+    .legend-grid {
+        grid-template-columns: repeat(5, 1fr); /* 小屏幕改为2列 */
+        gap: 4px;
+    }
+
+    .legend-item {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+    .tracking-marks-container {
+        right: 2px;
+        width: 18px;
+    }
+
+    .tracking-mark {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+        margin-bottom: 1px;
+    }
+    /* 标题和文字大小调整 */
+    h1 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    /* 命盘网格调整 */
+    .chart-grid {
+        gap: 1px;
+        border-width: 1px;
+    }
+
+    .palace {
+        padding: 2px;
+    }
+
+    /* 星曜文字大小调整 */
+    .main-star {
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+
+    .minor-star {
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+
+    .xiaoxing-stars-container {
+        width: calc((100% / 4) - var(--main-stars-width, 0px) - var(--minor-stars-width, 0px) - 3px);
+        min-width: 13px;
+        min-height: 26px;
+        /* max-width: 40%; */
+        gap: 2px;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    .xiaoxing-star {
+        font-size: 11px;
+        width: 11px;
+        min-width: 11px;
+        max-width: 11px;
+        letter-spacing: 1px;
+    }
+
+
+    .shensha-star {
+        font-size: 10px;
+    }
+
+    .changsheng-star {
+        font-size: 10px;
+    }
+
+    /* 宫位底部信息调整 */
+    .palace-footer {
+        font-size: 10px;
+        left: 3px;
+        right: 3px;
+    }
+
+    .palace-name {
+        font-size: 12px;
+    }
+
+    .ganzhi, .age-range {
+        font-size: 9px;
+    }
+
+    /* 中心区域调整 */
+    .center-cell {
+        padding: 5px;
+    }
+
+    .center-title {
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+
+    .center-info {
+        font-size: 10px;
+        margin: 2px 0;
+    }
+
+    .center-info .sizhu {
+        font-size: 10px;
+        padding: 0 3px;
+        letter-spacing: 2px;
+    }
+
+    /* 四化标记调整 */
+    .sihua {
+        font-size: 9px;
+    }
+
+    /* 图例调整 */
+    .legend {
+        margin-top: 10px;
+        margin-bottom: 3px;
+    }
+
+    .legend-item {
+        margin: 0 5px;
+        font-size: 10px;
+    }
+
+    /* 按钮调整 */
+    .btn-toggle {
+        padding: 3px 6px;
+        font-size: 14px;
+        transform: translateY(1px);
+    }
+
+    .export-btn {
+        padding: 3px 6px;
+        font-size: 14px;
+    }
+
+    /* 身宫和来因标记调整 */
+    .shengong-mark,
+    .laiyin-mark {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+    }
+    .laiyin-mark.zhu {
+        transform: translateX(8px);
+    }
+    .laiyin-mark.ci {
+        transform: translateX(-7px);
+    }
+    .laiyin-mark.san {
+        transform: translateX(23px);
+    }
+    /* 流年显示调整 */
+    .ages {
+        font-size: 10px;
+        width: 90%;
+    }
+
+    /* 亮度容器移动到星曜正下方 */
+    .star-unit .brightness-container,
+    .minor-star .brightness-container {
+        font-size: 10px; /* 适当调整字体大小 */
+    }
+
+    /* 连接线调整 */
+    .connection-line {
+        stroke-width: 0.5;
+    }
+
+
+    .connection-label {
+        font-size: 9px;
+        transform: translateY(4px);
+
+    }
+    .connection-label-bg {
+        transform: translateY(4px);
+
+    }
+    /* 新增：隐藏流年显示 */
+    .ages {
+        display: none !important;
+        font-size: 8px;
+    }
+
+    .chart-grid {
+        aspect-ratio: 1/1.4;
+    }
+}
+
+/* 超小屏幕设备 (手机竖屏) */
+@media (max-width: 480px) {
+    body {
+        padding: 3px;
+    }
+
+    .container {
+        padding: 5px;
+        margin: 5px auto;
+        /* min-width: 450px; */
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    /* 进一步缩小星曜文字 */
+    .main-star {
+        font-size: 10px;
+    }
+
+    .minor-star {
+        font-size: 10px;
+    }
+
+    /* 宫位信息进一步缩小 */
+    .palace-footer {
+        font-size: 9px;
+    }
+
+    .palace-name {
+        font-size: 10px;
+    }
+
+    /* 中心区域内容调整 */
+    .center-content {
+        gap: 2px;
+    }
+
+    .center-info {
+        font-size: 9px;
+    }
+
+    .center-info .sizhu {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .xiaoxing-stars-container {
+        width: calc((100% / 4)- var(--main-stars-width, 0px) - var(--minor-stars-width, 0px) - 2px);
+        min-width: 12px;
+        min-height: 24px;
+        /* max-width: 35%; */
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    .xiaoxing-star {
+        font-size: 10px;
+        width: 10px;
+        min-width: 10px;
+        max-width: 10px;
+        letter-spacing: 1px;
+    }
+    /* 控制次要元素显示 */
+    .xiaoxing-stars-container,
+    .shensha-container,
+    .changsheng-container {
+        display: flex;
+    }
+    /* 神煞星容器 */
+    .shensha-container {
+        bottom: 15px;
+    }
+    .changsheng-container{
+        bottom:15px;
+    }
+    /* 调整按钮位置和大小 */
+    .btn-toggle {
+        top: 5px;
+        left: 5px;
+        padding: 2px 4px;
+        font-size: 12px;
+    }
+
+    .export-btn {
+        top: 5px;
+        right: 5px;
+        padding: 2px 4px;
+        font-size: 12px;
+    }
+
+    .chart-grid {
+        aspect-ratio: 1/1.5;
+    }
+    .tracking-marks-container {
+        right: 1px;
+        width: 16px;
+    }
+
+    .tracking-mark {
+        width: 16px;
+        height: 16px;
+        font-size: 8px;
+        margin-bottom: 1px;
+    }
+
+    /* 在超小屏幕上隐藏部分追踪标记（保留前3个） */
+    .tracking-mark:nth-child(n+4) {
+        display: none;
+    }
+
+    /* 亮度容器移动到星曜正下方 */
+    .star-unit .brightness-container,
+    .minor-star .brightness-container {
+        font-size: 9px; /* 适当调整字体大小 */
+    }
+
+}
+
+/* 确保在横屏模式下也有良好表现 */
+@media (max-width: 768px) and (orientation: landscape) {
+
+
+}
+
+
+/* 平板设备横向布局 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 700px;
+    }
+
+    /* 适当调整字体大小 */
+    .main-star {
+        font-size: 12px;
+    }
+
+    .minor-star {
+        font-size: 12px;
+    }
+
+    .palace-name {
+        font-size: 14px;
+    }
+
+    /* 中心区域调整 */
+    .center-info {
+        font-size: 11px;
+    }
+    /* 亮度容器移动到星曜正下方 */
+    .star-unit .brightness-container,
+    .minor-star .brightness-container {
+        font-size: 10px; /* 适当调整字体大小 */
+    }
+}
+
+/* 大屏幕设备优化 */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 900px;
+    }
+
+    /* 增大命盘尺寸 */
+    .chart-grid {
+        /* max-width: 800px; */
+        margin: 0 auto;
+    }
+
+    /* 增大字体提高可读性 */
+    .main-star {
+        font-size: 12px;
+    }
+
+    .minor-star {
+        font-size: 12px;
+    }
+    /* 亮度容器移动到星曜正下方 */
+    .star-unit .brightness-container,
+    .minor-star .brightness-container {
+        font-size: 11px; /* 适当调整字体大小 */
+    }
+    .palace-name {
+        font-size: 16px;
+    }
+
+    .center-title {
+        font-size: 15px;
+    }
+
+    .center-info {
+        font-size: 13px;
+    }
+}
+
+/* 高DPI屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* 增强边框和阴影效果 */
+    .container {
+        border-width: 1.5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .palace {
+        border-width: 0.5px;
+    }
+
+    /* 增强文字渲染 */
+    .main-star,
+    .minor-star,
+    .palace-name {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .container {
+        border: none;
+        box-shadow: none;
+        padding: 10px;
+    }
+
+    /* 隐藏交互元素 */
+    .btn-toggle,
+    .export-btn,
+    .legend-item {
+        display: none;
+    }
+
+    /* 优化打印颜色 */
+    .palace {
+        background: #fff !important;
+        border: 1px solid #000 !important;
+    }
+
+    .main-star {
+        color: #000 !important;
+    }
+
+    /* 确保所有文字黑色 */
+    .palace-name,
+    .ganzhi,
+    .age-range,
+    .center-title,
+    .center-info {
+        color: #000 !important;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .btn-toggle:hover {
+        transform: none;
+    }
+
+    .tooltip {
+        transition: none;
+    }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #f0e6d2 !important; /* 破除黑暗的圣光 */
+    color: #333 !important; /* 保护文字不被反转 */
+  }
+  .container {
+    border-color: #cda344; /* 月光镀金边框 */
+  }
+}
+
+
+/* 追踪标记样式-------------------------start  */
+.tracking-marks-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;  /* 水平排列 */
+    flex-wrap: nowrap;     /* 不允许换行 */
+    top:70%;
+    right: 20px;
+    z-index: 10;
+}
+.tracking-mark {
+    position: static;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 0;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+/* 四化类型颜色 */
+.tracking-mark.lu {
+    border: 2px solid #035a24;
+    color: #035a24;
+}
+
+.tracking-mark.quan {
+    border: 2px solid #430450;
+    color: #430450;
+}
+
+.tracking-mark.ke {
+    border: 2px solid #4169e1;
+    color: #4169e1;
+}
+
+.tracking-mark.ji {
+    border: 2px solid #ff0a0a;
+    color: #ff0a0a;
+}
+
+/* 宫位高亮样式 */
+.palace.tracking-highlight {
+    background-color: rgba(255, 247, 230, 0.9);
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+    z-index: 5;
+}
+
+
+
+/* 响应式调整 - 超小屏幕设备 */
+@media (max-width: 320px) {
+    .tracking-marks-container {
+        width: 14px;
+    }
+
+    .tracking-mark {
+        width: 14px;
+        height: 14px;
+        font-size: 7px;
+    }
+}
+
+/* 宫位高亮样式 */
+.palace.tracking-highlight {
+    background-color: rgba(255, 247, 230, 0.9);
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.3);
+    z-index: 5;
+}
+
+/* 打印样式调整 */
+@media print {
+    .tracking-mark {
+        background-color: white !important;
+        border-width: 1px !important;
+        box-shadow: none !important;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .tracking-mark {
+        transition: none;
+    }
+}
+/* 追踪标记样式-------------------------end  */
+
+
+dl{
+    display: grid;
+    /* grid-template-columns: repeat(4, 1fr); */ /* 4列等宽 */
+    grid-template-columns: 1fr 3fr 3fr;
+    gap: 1px;
+    margin:0;
+    padding:0;
+    /* 关键：控制网格项的自动排列方式 */
+    grid-auto-flow: row; /* 默认值，按行排列 */
+    /* 或者明确设置行高 */
+    grid-auto-rows: auto; /* 行高自适应内容 */
+}
