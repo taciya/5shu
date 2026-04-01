@@ -86,7 +86,6 @@ async function submitForm() {
         
         // 渲染命盘
         renderChart(data);
-        clearConnectionLines(); // 清除连接线
         // 成功生成命盘后隐藏输入区域
         hideInputSection();        
 
