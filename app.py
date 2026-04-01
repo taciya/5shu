@@ -419,6 +419,104 @@ def get_star(star_name):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/sihuas/<gan>', methods=['GET'])
+# @login_required  # 如果你的系统需要登录才能查看，可以把注释解开
+def get_sihua(gan):
+    """
+    根据宫干获取飞出四化的星曜及解读（按需获取，防止业务核心字典外泄）
+    请求参数: 
+      - gan: 宫干 (例如 '甲', '乙')
+    """
+    try:
+        
+        if not gan:
+            return jsonify({'success': False, 'message': '缺少参数: gan(宫干)'}), 400
+            
+        source_palace = request.args.get('source')  # 飞出的 A 宫 (例如: "命宫")
+        targets_str = request.args.get('targets')   # 飞入的 B 宫及星曜参数 JSON 串
+        password = request.args.get('password')  # 可选的访问密码参数
+        if password == '':  # 简单的访问密码验证
+            return jsonify({'success': False, 'message': '当前账户没有登陆'}), 401
+        
+        if not source_palace or not targets_str:
+            return jsonify({'success': False, 'message': '缺少必要参数: source 或 targets'}), 400
+
+        # 从后端的常量库中引入核心映射表（确保 constants.py 中已定义这两个字典）
+        from constants import TIANGAN_SIHUA, STAR_SIHUA_MAP,BRIGHTNESS_LEVEL_MAP,PALACE_SIHUA_MAP
+        import json
+        targets = json.loads(targets_str)  # 解析飞入的 B 宫及星曜参数
+
+        if gan not in TIANGAN_SIHUA:
+            return jsonify({'success': False, 'message': f'无效的宫干: {gan}'}), 400
+            
+        # 1. 获取该宫干触发的四化星曜，例如甲干返回 {'禄':'廉贞', '权':'破军', '科':'武曲', '忌':'太阳'}
+        sihua_stars = TIANGAN_SIHUA[gan]
+        
+        # 2. 组装返回数据，带上对应的核心解读
+        sihua_data = {}
+
+        # 获取 A宫 动机（如果常量文件没配全，使用兜底字符）
+        source_motive = PALACE_SIHUA_MAP.get('PALACE_SOURCE', {}).get(f"{source_palace}宫", f"{source_palace}的能量运作")
+        
+        for sihua_type, target_info in targets.items():
+            star_name = target_info.get('star')
+            target_palace = target_info.get('palace')
+            brightness = target_info.get('brightness', 'mid')
+            
+            # 1. 亮度映射（获取 high/mid/low）
+            level = BRIGHTNESS_LEVEL_MAP.get(brightness, 'mid')
+            
+            # 2. 提取动作与 B宫 结果
+            action = PALACE_SIHUA_MAP.get('SIHUA_ACTION', {}).get(sihua_type, "作用于").get(level, "X")
+            result_face = PALACE_SIHUA_MAP.get('PALACE_TARGET', {}).get(target_palace, f"{target_palace}的领域")
+            
+            # 3. 获取底层星曜四化解释
+            star_explanations = STAR_SIHUA_MAP.get(star_name, {}).get(sihua_type, {})
+            # 兼容带有方块 □ 的默认配置，或者回退到纯文字默认
+            star_meaning = star_explanations.get(level, star_explanations.get('mid', f"关于【{star_name}】的特殊显化"))
+            
+            # 4. 拼装神级断语文案（HTML格式）
+            logic_text = f"<br/><b>{source_palace}[{source_motive}]</b> ➔ <b>[{action}]</b> ➔ <b>{target_palace}[{result_face}]</b> "
+            result_text = f"表现为：<b>“{star_meaning}”</b>。"
+            
+            sihua_data[sihua_type] = {
+                'star': star_name,
+                'target_palace': target_palace,
+                'brightness': brightness,
+                # 'logic_text': logic_text,
+                # 'result_text': result_text,
+                'logic_sihua1': PALACE_SIHUA_MAP.get('SIHUA_ACTION', {}).get(sihua_type, "作用于").get("X"),
+                'logic_source': source_motive,
+                'logic_sihua2': action,
+                'logic_target': result_face
+            }
+            
+
+        # for sihua_type, star_name in sihua_stars.items():
+        #     # 从核心业务字典中提取该星曜对应这种四化的全部能级解释 (high/mid/low)
+        #     star_explanations = STAR_SIHUA_MAP.get(star_name, {}).get(sihua_type, {
+        #         # 兜底解释，防止字典配漏
+        #         'high': f'关于【{star_name}】的高阶显化',
+        #         'mid': f'关于【{star_name}】的常规显化',
+        #         'low': f'关于【{star_name}】的低阶显化'
+        #     })
+            
+        #     sihua_data[sihua_type] = {
+        #         'star': star_name,
+        #         'explanations': star_explanations
+        #     }
+            
+        return jsonify({
+            'success': True,
+            'gan': gan,
+            'data': sihua_data
+        })
+        
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'message': '服务器内部错误'}), 500
+    
 @app.route('/api/stars', methods=['POST'])
 def save_star():
     """保存星曜数据（创建或更新）"""
@@ -869,4 +967,6 @@ if __name__ == '__main__':
     init_db()
     init_user_db()  # 新增用户表初始化
     app.secret_key = 'f#1321DDsa@s3)_E(#d'  # 设置session密钥
+    # 设置session密钥
+
     app.run(debug=True, port=5001)

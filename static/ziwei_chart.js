@@ -2197,8 +2197,13 @@ const palaceMeaningMap = {
         }
     }
 };
+let palaceMeaningRequestController = null; // 用于追踪当前的请求控制器
 // 显示宫位详细信息
-function showPalaceMeaning(palaceName, element) {
+async function showPalaceMeaning(palaceName,palaceGan, sihuaData,element) {
+    // 取消之前的请求（如果存在）
+    if (palaceMeaningRequestController) {
+        palaceMeaningRequestController.abort();
+    }
     const tooltip = document.getElementById('star-tooltip') || createStarTooltip();
     const meaning = palaceMeaningMap[palaceName] || {
         title: `${palaceName}宫 - 详细信息`,
@@ -2244,17 +2249,82 @@ function showPalaceMeaning(palaceName, element) {
     }
 
     // 添加四化影响说明
-    content += `
-        <div style="margin-bottom:5px;">
-            <div style="font-weight:bold; color:#2c3e50; margin-bottom:3px;">🎯 四化影响：</div>
-            <div style="font-size:11px; line-height:1.3; color:#7f8c8d;">
-                <span style="color:#035a24;">禄</span>=资源、缘分、生机往哪里送？（为了什么而动） • <br>
-                <span style="color:#430450;">权</span>=力量、控制、压力往哪里推？（执行力在哪） • <br>
-                <span style="color:#4169e1;">科</span>=名义、缓冲、理由在哪里找？（合理性在哪） • <br>
-                <span style="color:#ff0a0a;">忌</span>=问题、结局、欠债往哪里抛？（压力最终落在谁身上）
-            </div>
-        </div>
+    const sihua = document.createElement('div');
+    sihua.id = 'sihua-loading-area';
+    sihua.style.cssText = `
+        font-size:11px; 
+        line-height:1.3; 
+        color:#7f8c8d;
     `;
+    // 如果该宫有宫干，则向后端请求核心四化数据
+    if (palaceGan && Object.keys(sihuaData).length > 0) {
+        try {
+            // 创建新的AbortController用于本次请求
+            palaceMeaningRequestController = new AbortController();      
+               
+            
+            // 检查今天是否已经验证过
+            let passwordInfo;
+            if (isPasswordVerifiedToday()) {
+                // 自动使用当前日期的密码
+                passwordInfo = {
+                    password: getCurrentMMDDPassword(),
+                    remember: true,
+                    autoFilled: true
+                };
+            } 
+            // 将数据转换为 URL 查询参数
+            const queryParams = new URLSearchParams({
+                source: palaceName,
+                password: passwordInfo ? passwordInfo.password : '',
+                targets: JSON.stringify(sihuaData) // 将 B宫与星曜信息 JSON 序列化
+            });   
+            // 发起请求给后端 get_sihua
+            const response = await fetch(getApiBaseUrl()+`/api/sihuas/${encodeURIComponent(palaceGan)}?${queryParams.toString()}`, {
+                method: 'GET',
+                signal: palaceMeaningRequestController.signal,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const result = await response.json();
+
+            if (result.success && result.data) {
+                let html = `<ul class="sihua-list">`;
+
+                // 遍历后台返回的拼装结果
+                for (const [sihuaType, info] of Object.entries(result.data)) {
+                    html += `
+                        <li class="sihua-item">
+                            <div class="desc-logic" style="color: #555;margin-left: 10px;">
+                                🚀${palaceName}宫 : ${info.logic_source} <br/>
+                                <span class="sihua-${sihuaMap[sihuaType] || sihuaType}">
+                                    卐【${sihuaType}】${info.star}(${info.brightness})  : ${info.logic_sihua1} > ${info.logic_sihua2} <br/>
+                                </span>
+                                ☯ ${info.target_palace} : ${info.logic_target}
+                            </div>
+                        </li>
+                    `;
+                }
+                html += `</ul>`;
+                
+                // 将加载中的文案替换为真实的四化数据
+                sihua.innerHTML =  html;
+            } else {
+                sihua.innerHTML = `<p class="error-text">获取四化机制失败：${result.message}</p>`;
+            }
+        } catch (error) {
+            console.error("获取四化数据出错:", error);
+            sihua.innerHTML = `<p class="error-text">网络或服务器错误，无法获取天地感应数据。</p>`;
+        }
+        content += `
+            <div style="margin-bottom:5px;">
+                <div style="font-weight:bold; color:#2c3e50; margin-bottom:3px;">🎯 四化影响：</div>
+        ` + sihua.outerHTML + `
+            </div>
+            </div>
+        `;
+    }
 
     tooltip.innerHTML = content;
     tooltip.style.display = 'block';
@@ -2264,7 +2334,81 @@ function showPalaceMeaning(palaceName, element) {
     element.style.cursor = 'pointer';
 }
 
-
+/**
+ * 通过页面实际 DOM 结构反查星曜所在的宫位及亮度
+ * @param {string} starName - 需要查找的星曜名称 (如 '紫微', '地空', '天福')
+ * @returns {object|null} 返回找到的宫位信息，未找到返回 null
+ */
+function findPalaceByStar(starName) {
+    // 1. 获取所有的宫位容器
+    const palaces = document.querySelectorAll('.palace'); 
+    
+    // 2. 遍历每个宫位进行查找
+    for (let i = 0; i < palaces.length; i++) {
+        const palaceEl = palaces[i];
+        
+        // 3. 定义可能包含星曜名称的 CSS 类名
+        // 根据你的结构，主星、辅星、小星、神煞都有各自的容器或类名
+        const starSelectors = [
+            '.main-star',      // 假设主星的类名是这个
+            '.minor-star',     // 辅星 (如你给的地空)
+            '.xiaoxing-star',  // 小星 (如天福)
+            '.shensha-star',   // 神煞 (如病符)
+            '.changsheng-star' // 长生 (如病)
+        ];
+        
+        let foundStarEl = null;
+        let brightness = '平'; // 默认星情兜底
+        
+        // 4. 在当前宫位中，寻找匹配的星曜文本
+        for (const selector of starSelectors) {
+            const stars = palaceEl.querySelectorAll(selector);
+            for (const starEl of stars) {
+                // 如果文本内容匹配（去除首尾空格防止误判）
+                if (starEl.textContent.trim() === starName) {
+                    foundStarEl = starEl;
+                    
+                    // 5. 尝试提取亮度 (基于你的 .star-unit > .brightness-container 结构)
+                    const starUnit = starEl.closest('.star-unit');
+                    if (starUnit) {
+                        const brightnessEl = starUnit.querySelector('.brightness-container');
+                        if (brightnessEl && brightnessEl.textContent.trim() !== '') {
+                            brightness = brightnessEl.textContent.trim();
+                        }
+                    }
+                    break;
+                }
+            }
+            if (foundStarEl) break; // 找到了就跳出当前宫位的选择器循环
+        }
+        
+        // 6. 如果在当前宫位找到了该星曜，提取宫位基本信息并返回
+        if (foundStarEl) {
+            // 提取宫位名称 (例如 "财帛")，并补全 "宫" 字确保格式统一
+            let palaceName = palaceEl.querySelector('.palace-footer .palace-name').textContent.trim();
+            if (!palaceName.endsWith('宫')) palaceName += '宫';
+            
+            // 提取地支 (根据干支 <span> 内的文本，如 "丙寅" 取第二个字 "寅")
+            // 也可以通过 id="寅宫" 提取，这里采用解析干支的方式更加严谨
+            const ganzhi = palaceEl.querySelector('.palace-footer .ganzhi span').textContent.trim();
+            const zhi = ganzhi.length >= 2 ? ganzhi.charAt(1) : palaceEl.id.replace('宫', '').trim();
+            
+            return {
+                name: palaceName,  // 最终输出如: '财帛宫'
+                zhi: zhi,          // 最终输出如: '寅'
+                stars: [
+                    {
+                        name: starName,
+                        brightness: brightness
+                    }
+                ]
+            };
+        }
+    }
+    
+    // 如果遍历完 12 个宫位都没找到该星曜
+    return null; 
+}
 
 // 隐藏宫位信息
 function hidePalaceMeaning() {
@@ -2275,6 +2419,18 @@ function hidePalaceMeaning() {
     }
 }
 
+const TIANGAN_SIHUA = {
+    "甲": {"禄": "廉贞", "权": "破军", "科": "武曲", "忌": "太阳"},
+    "乙": {"禄": "天机", "权": "天梁", "科": "紫微", "忌": "太阴"},
+    "丙": {"禄": "天同", "权": "天机", "科": "文昌", "忌": "廉贞"},
+    "丁": {"禄": "太阴", "权": "天同", "科": "天机", "忌": "巨门"},
+    "戊": {"禄": "贪狼", "权": "太阴", "科": "右弼", "忌": "天机"},
+    "己": {"禄": "武曲", "权": "贪狼", "科": "天梁", "忌": "文曲"},
+    "庚": {"禄": "太阳", "权": "武曲", "科": "太阴", "忌": "天同"},
+    "辛": {"禄": "巨门", "权": "太阳", "科": "文曲", "忌": "文昌"},
+    "壬": {"禄": "天梁", "权": "紫微", "科": "左辅", "忌": "武曲"},
+    "癸": {"禄": "破军", "权": "巨门", "科": "太阴", "忌": "贪狼"}
+}
 // 绑定宫位名称点击事件
 function bindPalaceNameEvents() {
     // 获取所有宫位名称元素
@@ -2286,11 +2442,11 @@ function bindPalaceNameEvents() {
     });
 
     // 重新获取元素并绑定事件
-    const newPalaceNameElements = document.querySelectorAll('.palace-name');
+    const newPalaceNameElements = document.querySelectorAll('.palace-name');    
     
     newPalaceNameElements.forEach(element => {
         const palaceName = element.textContent.replace('宫', '').trim();
-        
+        const ganzhiElement = element.previousSibling ? element.previousSibling.querySelector('.ganzhi span') : null;
         // 点击事件
         element.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -2299,8 +2455,27 @@ function bindPalaceNameEvents() {
             if (currentDisplayedStar === `palace_${palaceName}`) {
                 return;
             }
+            const palaceGan = ganzhiElement ? ganzhiElement.textContent.trim().charAt(0) : '';
+
+            // 2. 锁定并组装 B宫（飞入宫位）的数据映射包
+            const sihuaData = {};
+            // 确保配置已经正确注入到前端
+            const flyStars = TIANGAN_SIHUA[palaceGan];
             
-            showPalaceMeaning(palaceName, element);
+            // 遍历当前宫干触发的 禄、权、科、忌
+            for (const [sihuaType, starName] of Object.entries(flyStars)) {
+                // 利用“DOM爬虫”函数直接从页面上找这颗星
+                const targetInfo = findPalaceByStar(starName);
+                if (targetInfo) {
+                    sihuaData[sihuaType] = {
+                        star: starName,
+                        palace: targetInfo.name,          // 飞入的B宫
+                        brightness: targetInfo.stars[0].brightness // 星情亮度
+                    };
+                }
+            }
+            
+            showPalaceMeaning(palaceName, palaceGan,sihuaData,element);
         });
 
         // 触摸事件
