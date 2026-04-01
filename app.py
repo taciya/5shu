@@ -869,4 +869,6 @@ if __name__ == '__main__':
     init_db()
     init_user_db()  # 新增用户表初始化
     app.secret_key = 'f#1321DDsa@s3)_E(#d'  # 设置session密钥
+    # 设置session密钥
+
     app.run(debug=True, port=5001)

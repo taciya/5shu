@@ -930,7 +930,6 @@ class ElementSize {
 //     window.DOMUtils = { ElementSize };
 // }
 
-// 在文件顶部添加常量定义
 const STORAGE_KEYS = {
     PASSWORD_VERIFIED: 'password_verified_date',
     LAST_PASSWORD: 'last_valid_password',
