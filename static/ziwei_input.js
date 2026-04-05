@@ -38,36 +38,43 @@ function formatHourWithMinutes(hour, minute) {
     const m = minute.toString().padStart(2, '0');
     return `${h}:${m}`;
 }
+
 // 解析真太阳时文本为日期时间组件
+// 解析真太阳时文本为日期时间组件 (支持 YYYY/MM/DD 和 YYYY-MM-DD)
 function parseTrueSolarText(text) {
-    // 格式: "YYYY/MM/DD HH:MM" 或 "YYYY/MM/DD HH"
-    const parts = text.split(' ');
-    if (parts.length !== 2) {
-        throw new Error('格式错误，应为 "年/月/日 小时:分钟"');
+    // 1. 预处理：将字符串按空格拆分为日期部分和时间部分
+    const parts = text.trim().split(/\s+/);
+    if (parts.length < 2) {
+        throw new Error('格式错误，应为 "日期 时间"');
     }
 
-    const datePart = parts[0].split('/');
-    const timePart = parts[1];
+    const dateStr = parts[0];
+    const timeStr = parts[1];
+
+    // 2. 解析日期：支持 / 或 - 作为分隔符
+    // 使用正则表达式 [/-] 进行分割
+    const datePart = dateStr.split(/[/-]/);
 
     if (datePart.length !== 3) {
-        throw new Error('日期格式错误');
+        throw new Error('日期格式错误，支持 YYYY/MM/DD 或 YYYY-MM-DD');
     }
 
     const year = parseInt(datePart[0]);
     const month = parseInt(datePart[1]);
     const day = parseInt(datePart[2]);
 
+    // 3. 解析时间：支持 HH:MM 或 只有 HH
     let hour, minute;
-    if (timePart.includes(':')) {
-        const timeParts = timePart.split(':');
+    if (timeStr.includes(':')) {
+        const timeParts = timeStr.split(':');
         hour = parseInt(timeParts[0]);
         minute = parseInt(timeParts[1]) || 0;
     } else {
-        hour = parseInt(timePart);
+        hour = parseInt(timeStr);
         minute = 0;
     }
 
-    // 验证范围
+    // 4. 验证数值有效范围
     if (isNaN(year) || year < 1 || year > 9999) {
         throw new Error('年份无效');
     }

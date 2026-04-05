@@ -377,7 +377,7 @@ function renderChart(data) {
 
     // 获取三层卦象
     feigong_str=''
-    feigong_str=feigong_str+`问卦编号：${birth.true_solar_time}`+'\n'
+    // feigong_str=feigong_str+`问卦编号：${birth.true_solar_time}`+'\n'
     feigong_str=feigong_str+`问卦占事：${data.name?data.name:'XXXXXX'}`+'\n'
     // feigong_str=feigong_str+`基本信息：${data.name} ${genderText} ${birth.gan_zhi}年生，当前是${currentYear}年`+'\n'
     feigong_str=feigong_str+`三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${rue_solar_time_fenzhong}]`+'\n'
@@ -1748,72 +1748,7 @@ function showSihuaTracking(currentPalace) {
         });
     });
 }
-// 已移植到后端
-// function findSihuaTracking2(currentPalace,three_level) {
-//     const hexagram={
-//         'zhu':"追四化-主卦(xxx)",
-//         'ci':"追四化-十分卦(xxx)",
-//         'san':"追四化-分钟卦(xxx)"
-//     }
-//     feigong_str=feigong_str+'\n'+`${hexagram[three_level].replace("xxx",currentPalace.name)} ：`+'\n'
-//     // 为每个星曜显示追踪信息
-//     currentPalace.main_stars.forEach(starName => {
-//         const sources = getSihuaSources(starName, currentPalace);
-//         sources.forEach(source => {
-//             const palaces=findPalacesByTianGan(source.palace)
-//             palaces_str=''
-//             palaces.forEach(palace=>{
-//                 palace.querySelectorAll('.palace-footer').forEach(div=>{
-//                     temp_str=div.textContent.trim().substring(0,4)
-//                     palaces_str=palaces_str+` ${temp_str.substring(2,4)}宫 (${temp_str.substring(0,2)})`+' '
-//                 })
-//             })
-//             feigong_str=feigong_str+` 追${source.sihuaType}(${source.fullName}) : ${palaces_str}`+'\n'
-//         });
 
-//     });
-//     currentPalace.minor_stars.forEach(starName => {
-//         const sources = getSihuaSources(starName, currentPalace);
-//         sources.forEach(source => {
-//             const palaces=findPalacesByTianGan(source.palace)
-//             palaces_str=''
-//             palaces.forEach(palace=>{
-//                 palace.querySelectorAll('.palace-footer').forEach(div=>{
-//                     temp_str=div.textContent.trim().substring(0,4)
-//                     palaces_str=palaces_str+` ${temp_str.substring(2,4)}宫 (${temp_str.substring(0,2)})`+' '
-//                 })
-//             })
-//             feigong_str=feigong_str+` 追${source.sihuaType}(${source.fullName}) : ${palaces_str}`+'\n'
-//         });
-
-//     });
-// }
-// 已移植到后端
-// palace,data.three_level_hexagram
-// currentPalace,three_level
-// function findSihuaTracking(palace) {
-
-//     const zhu=document.getElementById('chartGrid').querySelector('.laiyin-mark.zhu').parentNode;
-//     const zhu_palace_name=zhu.querySelector('.palace-footer').textContent.trim().substring(2,4);
-//     const ci=document.getElementById('chartGrid').querySelector('.laiyin-mark.ci').parentNode;
-//     const ci_palace_name=ci.querySelector('.palace-footer').textContent.trim().substring(2,4);
-//     const san=document.getElementById('chartGrid').querySelector('.laiyin-mark.san').parentNode;
-//     const san_palace_name=san.querySelector('.palace-footer').textContent.trim().substring(2,4);
-//     if (palace.name.substring(0,2).trim() === zhu_palace_name.trim()) {
-//         findSihuaTracking2(palace,'zhu');
-//     }
-//     if (palace.name.substring(0,2).trim() === ci_palace_name.trim()) {
-//         findSihuaTracking2(palace,'ci');
-//     }
-//     if (palace.name.substring(0,2).trim() === san_palace_name.trim()) {
-//         findSihuaTracking2(palace,'san');
-//     }
-
-
-
-
-
-// }
 
 // 3. 新增获取四化来源函数（优化算法）
 function getSihuaSources(starName, currentPalace) {

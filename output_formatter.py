@@ -337,7 +337,7 @@ class OutputFormatter:
                     tracking_sections.append(tracking_info)
         
         # 如果有追四化信息，将其添加到 feigong_str_lines 的末尾
-        if tracking_sections:
+        if tracking_sections and False: # 目前先不添加追四化信息到飞宫字符串中，后续可以根据需要开启
             # 添加分隔线
             if isinstance(feigong_str_lines, list):
                 

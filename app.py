@@ -105,7 +105,6 @@ def export_feigong():
         # 将列表转换为字符串
         # feigong_str = '\n'.join(feigong_str_lines) if isinstance(feigong_str_lines, list) else str(feigong_str_lines)
         feigong_str=feigong_str_lines
-        print('生成的飞宫字符串:', feigong_str)  # 输出生成的飞宫字符串到控制台
         
         return jsonify({
             'success': True,
