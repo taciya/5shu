@@ -467,7 +467,7 @@ def get_sihua(gan):
             level = BRIGHTNESS_LEVEL_MAP.get(brightness, 'mid')
             
             # 2. 提取动作与 B宫 结果
-            action = PALACE_SIHUA_MAP.get('SIHUA_ACTION', {}).get(sihua_type, "作用于").get(level, "X")
+            action = STAR_SIHUA_MAP.get(star_name, {}).get(sihua_type, "作用于").get(level, "X")
             result_face = PALACE_SIHUA_MAP.get('PALACE_TARGET', {}).get(target_palace, f"{target_palace}的领域")
             
             # 3. 获取底层星曜四化解释
