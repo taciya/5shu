@@ -370,34 +370,7 @@ function renderChart(data) {
     centerCell.className = 'center-cell';
     const birth = data.birth_info;
     const genderText = birth.gender === 'male' ? '男' : '女';
-    const currentYear = new Date().getFullYear();
-    const true_solar_time = `${birth.true_solar_time}`+"";
-    const rue_solar_time_fenzhong = true_solar_time.split(':')[1] % 12;
 
-
-    // // 获取三层卦象
-    // feigong_str=''
-    // // feigong_str=feigong_str+`问卦编号：${birth.true_solar_time}`+'\n'
-    // feigong_str=feigong_str+`问卦占事：${data.name?data.name:'XXXXXX'}`+'\n'
-
-    // // --- 新增：提取基本信息 ---
-    // // 1. 获取来因宫（从 data.palaces 中查找名称匹配主卦的宫位）
-    // const laiyinPalace = data.palaces.find(p => p.name === data.three_level_hexagram['main_hexagram']);
-    // const laiyinInfo = laiyinPalace ? `${laiyinPalace.gan}${laiyinPalace.dizhi}（${laiyinPalace.name}）` : '未知';
-
-    // // 2. 获取当前大运（假设数据中有当前大运标识，或通过逻辑定位）
-    // // 这里根据通用逻辑，从 data 中直接读取或从宫位信息中匹配
-    // const dayunInfo = data.current_dayun ? `${data.current_dayun.gan}${data.current_dayun.dizhi}（${data.current_dayun.name}）<${data.current_dayun.age_range}>` : '暂无大运数据';
-
-    // // 3. 获取流年（通常对应当前年份的干支和所在的宫位）
-    // const liunianInfo = data.current_liunian ? `${data.current_liunian.gan}${data.current_liunian.dizhi}（${data.current_liunian.name}）` : '暂无流年数据';
-    // // 拼接基本信息行
-    // feigong_str = feigong_str + `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianInfo}` + '\n';
-
-    // feigong_str=feigong_str+`三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${rue_solar_time_fenzhong}]`+'\n'
-    // feigong_str=feigong_str+'命盘信息：'+'\n'
-    // // feigong_str=feigong_str+data.feigong_str.join('\n'); //将飞宫字符串赋值给全局变量 已移植到后端
- 
     feigong_str=generateFeigongString(data, birth); // 生成飞宫字符串
 
     centerCell.innerHTML = `
@@ -454,7 +427,7 @@ function renderChart(data) {
  */
 function generateFeigongString(data, birth) {
     let feigong_str = '';
-    feigong_str += `问卦占事：${data.name ? data.name : 'XXXXXX'}\n`;
+    feigong_str += `问卦占事/占命：${data.name ? data.name : 'XXXXXX'}\n`;
 
     // --- 1. 定义目标年份 ---
     // 注意：这里需要根据你的需求定义 targetYear。
@@ -489,7 +462,7 @@ function generateFeigongString(data, birth) {
         `${dayunPalace.gan}${dayunPalace.dizhi}（${dayunPalace.name}）<${dayunPalace.age_range}>` : '未找到';
 
     // --- 5. 组装输出 ---
-    feigong_str += `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianStr}\n`;
+    feigong_str += `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianStr} , 当前年份=${targetYear}\n`;
 
     const fenzhong_yu = birth.true_solar_time_fenzhong || 0;
     feigong_str += `三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${fenzhong_yu}]\n`;
