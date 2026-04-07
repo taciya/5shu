@@ -375,14 +375,30 @@ function renderChart(data) {
     const rue_solar_time_fenzhong = true_solar_time.split(':')[1] % 12;
 
 
-    // 获取三层卦象
-    feigong_str=''
-    // feigong_str=feigong_str+`问卦编号：${birth.true_solar_time}`+'\n'
-    feigong_str=feigong_str+`问卦占事：${data.name?data.name:'XXXXXX'}`+'\n'
-    // feigong_str=feigong_str+`基本信息：${data.name} ${genderText} ${birth.gan_zhi}年生，当前是${currentYear}年`+'\n'
-    feigong_str=feigong_str+`三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${rue_solar_time_fenzhong}]`+'\n'
-    feigong_str=feigong_str+'命盘信息：'+'\n'
-    // feigong_str=feigong_str+data.feigong_str.join('\n'); //将飞宫字符串赋值给全局变量 已移植到后端
+    // // 获取三层卦象
+    // feigong_str=''
+    // // feigong_str=feigong_str+`问卦编号：${birth.true_solar_time}`+'\n'
+    // feigong_str=feigong_str+`问卦占事：${data.name?data.name:'XXXXXX'}`+'\n'
+
+    // // --- 新增：提取基本信息 ---
+    // // 1. 获取来因宫（从 data.palaces 中查找名称匹配主卦的宫位）
+    // const laiyinPalace = data.palaces.find(p => p.name === data.three_level_hexagram['main_hexagram']);
+    // const laiyinInfo = laiyinPalace ? `${laiyinPalace.gan}${laiyinPalace.dizhi}（${laiyinPalace.name}）` : '未知';
+
+    // // 2. 获取当前大运（假设数据中有当前大运标识，或通过逻辑定位）
+    // // 这里根据通用逻辑，从 data 中直接读取或从宫位信息中匹配
+    // const dayunInfo = data.current_dayun ? `${data.current_dayun.gan}${data.current_dayun.dizhi}（${data.current_dayun.name}）<${data.current_dayun.age_range}>` : '暂无大运数据';
+
+    // // 3. 获取流年（通常对应当前年份的干支和所在的宫位）
+    // const liunianInfo = data.current_liunian ? `${data.current_liunian.gan}${data.current_liunian.dizhi}（${data.current_liunian.name}）` : '暂无流年数据';
+    // // 拼接基本信息行
+    // feigong_str = feigong_str + `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianInfo}` + '\n';
+
+    // feigong_str=feigong_str+`三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${rue_solar_time_fenzhong}]`+'\n'
+    // feigong_str=feigong_str+'命盘信息：'+'\n'
+    // // feigong_str=feigong_str+data.feigong_str.join('\n'); //将飞宫字符串赋值给全局变量 已移植到后端
+ 
+    feigong_str=generateFeigongString(data, birth); // 生成飞宫字符串
 
     centerCell.innerHTML = `
         <div class="center-content">
@@ -432,8 +448,81 @@ function renderChart(data) {
 
 
 }
+/**
+ * 修正后的基本信息生成逻辑
+ * 案例验证：1979/10/20 出生，在 1986 年的流年应为 丙寅（命宫）
+ */
+function generateFeigongString(data, birth) {
+    let feigong_str = '';
+    feigong_str += `问卦占事：${data.name ? data.name : 'XXXXXX'}\n`;
 
+    // --- 1. 定义目标年份 ---
+    // 注意：这里需要根据你的需求定义 targetYear。
+    // 如果是看“今年”，用 new Date().getFullYear()；
+    // 如果是测试 1986 年，则设为 1986。
+    const targetYear = new Date().getFullYear(); // 或者 const targetYear = 1986;
 
+    // --- 2. 计算虚岁 ---
+    // 1979年出生，1979年是1岁，1986年是 1986-1979+1 = 8岁
+    const birthYear = new Date(birth.true_solar_time).getFullYear();
+    const currentAge = targetYear - birthYear + 1;
+
+    // --- 3. 精确计算流年干支 (以公元4年甲子为基准) ---
+    const liunianInfo = getLiunianGZ(targetYear);
+    // C. 匹配流年：寻找地支为“寅”的宫位
+    const liunianPalace = data.palaces.find(p => p.gan === liunianInfo.gan);
+    console.log('流年干支:', liunianInfo.gz, '对应宫位:', liunianPalace ? liunianPalace.name : '未找到');
+    const liunianStr = `${liunianPalace.gan}${liunianPalace.dizhi}（${liunianPalace ? liunianPalace.name : '未知'}）`;
+    // --- 4. 匹配命盘宫位 ---
+
+    // A. 匹配来因宫：从 data.three_level_hexagram['main_hexagram'] 获取主卦宫位名
+    const laiyinPalace = data.palaces.find(p => p.name === data.three_level_hexagram['main_hexagram']);
+    const laiyinInfo = laiyinPalace ? `${laiyinPalace.gan}${laiyinPalace.dizhi}（${laiyinPalace.name}）` : '未知';
+
+    // B. 匹配大运：寻找 age_range 包含 currentAge (8岁) 的宫位
+    const dayunPalace = data.palaces.find(p => {
+        if (!p.age_range) return false;
+        const [start, end] = p.age_range.split('-').map(Number);
+        return currentAge >= start && currentAge <= end;
+    });
+    const dayunInfo = dayunPalace ? 
+        `${dayunPalace.gan}${dayunPalace.dizhi}（${dayunPalace.name}）<${dayunPalace.age_range}>` : '未找到';
+
+    // --- 5. 组装输出 ---
+    feigong_str += `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianStr}\n`;
+
+    const fenzhong_yu = birth.true_solar_time_fenzhong || 0;
+    feigong_str += `三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${fenzhong_yu}]\n`;
+    feigong_str += '命盘信息：\n';
+
+    return feigong_str;
+}
+/**
+ * 精确计算流年干支
+ * 基准：2026年为丙午年
+ */
+function getLiunianGZ(targetYear) {
+    const gans = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+    const zhis = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+
+    // 2026年是丙午年
+    // 天干：丙在 gans 索引为 2
+    // 地支：午在 zhis 索引为 6
+    
+    // 计算天干索引：(targetYear - 2026 + 2) % 10，考虑负数加10
+    let ganIdx = (targetYear - 2026 + 2) % 10;
+    if (ganIdx < 0) ganIdx += 10;
+
+    // 计算地支索引：(targetYear - 2026 + 6) % 12，考虑负数加12
+    let zhiIdx = (targetYear - 2026 + 6) % 12;
+    if (zhiIdx < 0) zhiIdx += 12;
+
+    return {
+        gan: gans[ganIdx],
+        zhi: zhis[zhiIdx],
+        gz: gans[ganIdx] + zhis[zhiIdx]
+    };
+}
 // 查找星曜
 function findStarByName(palaces, starName) {
     if (!palaces || !Array.isArray(palaces)) return null;
