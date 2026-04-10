@@ -371,7 +371,7 @@ function renderChart(data) {
     const birth = data.birth_info;
     const genderText = birth.gender === 'male' ? '男' : '女';
 
-    feigong_str=generateFeigongString(data, birth); // 生成飞宫字符串
+    // feigong_str=generateFeigongString(); // 生成飞宫字符串
 
     centerCell.innerHTML = `
         <div class="center-content">
@@ -495,7 +495,7 @@ function renderChart(data) {
  * 修正后的基本信息生成逻辑
  * 案例验证：1979/10/20 出生，在 1986 年的流年应为 丙寅（命宫）
  */
-function generateFeigongString(data, birth) {
+function generateFeigongString_bak(data, birth) {
     let feigong_str = '';
     feigong_str += `问卦占事/占命：${data.name ? data.name : 'XXXXXX'}\n`;
 
@@ -539,6 +539,104 @@ function generateFeigongString(data, birth) {
     feigong_str += '命盘信息：\n';
 
     return feigong_str;
+}
+function generateFeigongString() {
+
+    // 1. 获取DOM元素（天地显化层）
+    const neirong = document.querySelector('.center-title'); // 获取命主名称元素
+    const dayunSelector = document.getElementById('dayunSelector');
+    const liunianSelector = document.getElementById('liunianSelector');
+    const palaces = document.querySelectorAll('.palace'); // 所有宫位元素
+
+    // 2. 提取大运信息（若选中）
+    let dayunInfo = '未选';
+    if (dayunSelector.value) {
+        const selectedRange = dayunSelector.value;
+        // 遍历宫位元素，找到age_range匹配的宫位
+        const dayunPalace = Array.from(palaces).find(p => {
+            const ageRangeEl = p.querySelector('.age-range'); // 假设年龄范围元素有.age-range类
+            return ageRangeEl && ageRangeEl.textContent === selectedRange;
+        });
+        if (dayunPalace) {
+            const name = dayunPalace.querySelector('.palace-name').textContent.trim();
+            const dizhi = dayunPalace.id.replace('宫', ''); // 假设宫位id为“寅宫”格式
+            const ganzhi = dayunPalace.querySelector('.ganzhi').textContent.trim();
+            dayunInfo = `${name}宫（${ganzhi}）<${selectedRange}>`;
+        }
+    }
+
+    // 3. 提取流年信息（若选中）
+    let liunianStr = '未选';
+    if (liunianSelector.value) {
+        const selectedYear = liunianSelector.value;
+        // 遍历宫位元素，找到地支匹配的宫位（流年地支=宫位id地支）
+        const liunianPalace = Array.from(palaces).find(p => {
+            const dizhi = p.id.replace('宫', '');
+            return getLiunianGZ(selectedYear).zhi === dizhi; // 用流年地支匹配宫位
+        });
+        if (liunianPalace) {
+            const name = liunianPalace.querySelector('.palace-name').textContent.trim();
+            const dizhi = liunianPalace.id.replace('宫', '');
+            const ganzhi = liunianPalace.querySelector('.ganzhi').textContent.trim();
+            liunianStr = `${name}宫（${ganzhi}）`;
+        }
+    }
+
+    // 4. 生成fullContent（完全基于DOM显化内容）
+    let fullContent = "";
+    fullContent += `问卦占事/占命：${neirong.textContent.trim()}\n`;
+    fullContent += `基本信息：来因宫=${getLaiyinPalace(palaces).isLaiyin.trim()} , 大运=${dayunInfo || '未找到'} , 流年=${liunianStr || '未找到'} , 当前年份=${new Date().getFullYear()}\n`;
+    fullContent += `三层卦象：主卦(${getLaiyinPalace(palaces).isLaiyin.trim()})，十分卦(${getShifenPalace(palaces).isShifen.trim()})，分钟卦(${getFenzhongPalace(palaces).isFenzhong.trim()})\n`;
+    fullContent += `命盘信息：\n`;
+    return fullContent;
+}
+function getLaiyinPalace(palaces) {
+    // 1. 遍历宫位集合，查找isLaiyin属性不为空的宫位（天地显化层）
+    const laiyinPalace = Array.from(palaces).find(palace => {
+        // 检查isLaiyin属性是否存在且不为空（来因宫的标记）
+        return palace.isLaiyin && palace.isLaiyin !== "";
+    });
+
+    // 2. 裁断结论（天地规则）：
+    //    - 若找到标记为来因宫的宫位，返回其DOM元素（来源：palace.isLaiyin属性）
+    //    - 若未找到，返回第一个宫位（默认来因宫，来源：palaces[0]）或null（无宫位时）
+    return laiyinPalace || (palaces.length > 0 ? palaces[0] : null);
+}
+function getShifenPalace(palaces) {
+    // 1. 遍历宫位集合，查找isLaiyin属性不为空的宫位（天地显化层）
+    const laiyinPalace = Array.from(palaces).find(palace => {
+        // 检查isLaiyin属性是否存在且不为空（来因宫的标记）
+        return palace.isShifen && palace.isShifen !== "";
+    });
+
+    // 2. 裁断结论（天地规则）：
+    //    - 若找到标记为来因宫的宫位，返回其DOM元素（来源：palace.isLaiyin属性）
+    //    - 若未找到，返回第一个宫位（默认来因宫，来源：palaces[0]）或null（无宫位时）
+    return laiyinPalace || (palaces.length > 0 ? palaces[0] : null);
+}
+function getFenzhongPalace(palaces) {
+    // 1. 遍历宫位集合，查找isLaiyin属性不为空的宫位（天地显化层）
+    const laiyinPalace = Array.from(palaces).find(palace => {
+        // 检查isLaiyin属性是否存在且不为空（来因宫的标记）
+        return palace.isFenzhong && palace.isFenzhong !== "";
+    });
+
+    // 2. 裁断结论（天地规则）：
+    //    - 若找到标记为来因宫的宫位，返回其DOM元素（来源：palace.isLaiyin属性）
+    //    - 若未找到，返回第一个宫位（默认来因宫，来源：palaces[0]）或null（无宫位时）
+    return laiyinPalace || (palaces.length > 0 ? palaces[0] : null);
+}
+function getDayunPalace(palaces) {
+    const laiyinPalace = Array.from(palaces).find(palace => {
+        return palace.dayunName=="大运命宫"  && palace.dayunName  !== "";
+    });
+    return laiyinPalace || (palaces.length > 0 ? palaces[0] : null);
+}
+function getLiunianPalace(palaces) {
+    const laiyinPalace = Array.from(palaces).find(palace => {
+        return palace.liunianName=="流年命宫"  && palace.liunianName  !== "";
+    });
+    return laiyinPalace || (palaces.length > 0 ? palaces[0] : null);
 }
 /**
  * 精确计算流年干支
@@ -714,12 +812,17 @@ function createPalaceElement(palace,three_level_hexagram) {
     }
 
     // 创建卦象标记
-
+    palaceElement.isLaiyin = ""; // 标记来因宫
+    palaceElement.isShifen = ""; // 标记十分卦
+    palaceElement.isFenzhong = ""; // 标记分钟卦
+    palaceElement.dayunName = ""; // 标记大运名称
+    palaceElement.liunianName = ""; // 标记流年名称
     if (palace.name === three_level_hexagram['main_hexagram']) {
 
         const laiyinMark = document.createElement('div');
         laiyinMark.className = 'laiyin-mark zhu';
         laiyinMark.textContent = '因';
+        palaceElement.isLaiyin = palace.name; // 标记来因宫
         palaceElement.appendChild(laiyinMark);
 
     }
@@ -728,6 +831,7 @@ function createPalaceElement(palace,three_level_hexagram) {
         const laiyinMark = document.createElement('div');
         laiyinMark.className = 'laiyin-mark ci';
         laiyinMark.textContent = '2';
+        palaceElement.isShifen = palace.name; // 标记十分卦
         palaceElement.appendChild(laiyinMark);
 
     }
@@ -736,6 +840,7 @@ function createPalaceElement(palace,three_level_hexagram) {
         const laiyinMark = document.createElement('div');
         laiyinMark.className = 'laiyin-mark san';
         laiyinMark.textContent = '3';
+        palaceElement.isFenzhong = palace.name; // 标记分钟卦
         palaceElement.appendChild(laiyinMark);
 
     }
@@ -1377,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 (chartParams.birthHour+"").padStart(2, '0') + ":" +
                 ((chartParams.birthMinute+"") || '00').padStart(2, '0') + "\n";
             
-            const fullContent = yyyymmddhhmm +feigong_str + data.feigong_str;
+            const fullContent = yyyymmddhhmm + generateFeigongString() + data.feigong_str;
 
             // 使用新的剪贴板助手
             const result = await clipboardHelper.copyText(fullContent);
