@@ -440,7 +440,7 @@ function renderChart(data) {
         .sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]));
     
     // 填充大运选项
-    dayunSelector.innerHTML = '<option value="">选择大运</option>';
+    dayunSelector.innerHTML = '<option value="">大运</option>';
     ageRanges.forEach(range => {
         const option = document.createElement('option');
         option.value = range;
@@ -2498,6 +2498,50 @@ const TIANGAN_SIHUA = {
     "壬": {"禄": "天梁", "权": "紫微", "科": "左辅", "忌": "武曲"},
     "癸": {"禄": "破军", "权": "巨门", "科": "太阴", "忌": "贪狼"}
 }
+
+const SIHUA_START_MAP = {
+    "廉贞": "廉", 
+    "天机": "机", 
+    "天同": "同", 
+    "太阴": "阴", 
+    "贪狼": "贪", 
+    "武曲": "武", 
+    "太阳": "阳", 
+    "巨门": "巨", 
+    "天梁": "梁", 
+    "破军": "破", 
+    "破军": "破",
+    "天梁": "梁",
+    "天机": "机",
+    "天同": "同",
+    "太阴": "阴",
+    "贪狼": "贪",
+    "武曲": "武",
+    "太阳": "阳",
+    "紫微": "紫",
+    "巨门": "巨",
+    "武曲": "武",
+    "紫微": "紫",
+    "文昌": "昌",
+    "天机": "机",
+    "右弼": "右",
+    "天梁": "梁",
+    "太阴": "阴",
+    "文曲": "曲",
+    "左辅": "左",
+    "太阴": "阴",
+    "太阳": "阳",
+    "太阴": "阴",
+    "廉贞": "廉",
+    "巨门": "巨",
+    "天机": "机",
+    "文曲": "曲",
+    "天同": "同",
+    "文昌": "昌",
+    "武曲": "武",
+    "贪狼": "贪"
+
+}
 // 绑定宫位名称点击事件
 function bindPalaceNameEvents() {
     // 获取所有宫位名称元素
@@ -2949,7 +2993,7 @@ function generateDayunSihua(data, dayunPalace) {
         // 5.4 格式化星曜名（用颜色标记四化类型）
         const starElements = stars.map(starInfo => {
             const span = document.createElement('span');
-            span.textContent = starInfo.star; // 星曜名（如“天梁”）
+            span.textContent = SIHUA_START_MAP[starInfo.star] || starInfo.star; // 星曜名（如“天梁”）
             
             // 根据四化类型设置颜色（天地象义：禄=绿、权=紫、科=蓝、忌=红）
             let color;
@@ -2990,18 +3034,6 @@ function generateDayunSihua(data, dayunPalace) {
     });
 }
 
-/**
- * 辅助函数：获取落点宫位的大运名称（如“大子”）
- * 遵循文档中`updatePalaceDayunName`的`dayunNames`顺序（命→兄→夫→子→财→疾→迁→友→官→田→福→父）
- */
-function getDayunName(targetDizhi, data) {
-    const palace = data.palaces.find(p => p.dizhi === targetDizhi);
-    if (!palace) return '未知';
-    const dayunNames = ['大命', '大兄', '大夫', '大子', '大财', '大疾', '大迁', '大友', '大官', '大田', '大福', '大父'];
-    const sortedPalaces = [...data.palaces].filter(p => p.age_range).sort((a, b) => parseInt(a.age_range.split('-')[0]) - parseInt(b.age_range.split('-')[0]));
-    const index = sortedPalaces.findIndex(p => p.dizhi === targetDizhi);
-    return dayunNames[index] || '未知';
-}
 
 // 清空大运显示（天地归墟逻辑）
 function clearDayunDisplays() {
@@ -3016,7 +3048,7 @@ function clearDayunDisplays() {
 // 生成流年选项
 function generateLiunianOptions(dayunPalace, birthYear) {
   const liunianSelector = document.getElementById('liunianSelector');
-  liunianSelector.innerHTML = '<option value="">选择流年</option>';
+  liunianSelector.innerHTML = '<option value="">流年</option>';
   
   // 计算10年流年范围（大运年龄范围）
   const [startAge, endAge] = dayunPalace.age_range.split('-').map(Number);
@@ -3139,9 +3171,6 @@ function generateLiunianSihua(data, selectedYear, liunianPalace) {
     const liunianGan = liunianGZ.gan; // 流年天干（如“甲”）
     // const liunianZhi = liunianGZ.zhi; // 流年地支（如“辰”）
     
-    // 2. 获取流年天干的四化规则（文档中TIANGAN_SIHUA映射）
-    const sihuaRules = TIANGAN_SIHUA[liunianGan];
-    if (!sihuaRules) return; // 无四化规则则终止
     
     // 3. 获取流年宫位的飞宫图（源宫位=流年地支）
     const feigongMap = data.feigong_map;
@@ -3151,19 +3180,20 @@ function generateLiunianSihua(data, selectedYear, liunianPalace) {
     // 4. 收集流年四化的落点星曜（仅处理流年天干对应的四化）
     const targetPalaceMap = {};
     Object.entries(flySihua).forEach(([sihuaType, sihuaInfo]) => {
-        // 过滤条件：四化类型在sihuaRules中，且星曜匹配流年天干的四化星
-        if (sihuaRules[sihuaType] && sihuaInfo.star === sihuaRules[sihuaType]) {
-            const targetDizhi = sihuaInfo.target; // 落点宫位地支（如“午”）
-            const targetStar = sihuaInfo.star;     // 四化星曜（如“廉贞”）
-            
-            if (!targetPalaceMap[targetDizhi]) {
-                targetPalaceMap[targetDizhi] = [];
-            }
-            targetPalaceMap[targetDizhi].push({
-                star: targetStar,
-                sihuaType: sihuaType
-            });
+
+        // 过滤无效四化（如无落点宫位）
+        if (!sihuaInfo || !sihuaInfo.target || !sihuaInfo.star) return;  
+        
+        const targetDizhi = sihuaInfo.target; // 落点宫位地支（如“午”）
+        const targetStar = sihuaInfo.star;     // 四化星曜（如“廉贞”）
+        
+        if (!targetPalaceMap[targetDizhi]) {
+            targetPalaceMap[targetDizhi] = [];
         }
+        targetPalaceMap[targetDizhi].push({
+            star: targetStar,
+            sihuaType: sihuaType
+        });
     });
     
     // 5. 在落点宫位显示流年四化（仿照大运的彩色星曜逻辑）
@@ -3178,7 +3208,7 @@ function generateLiunianSihua(data, selectedYear, liunianPalace) {
         const starElements = stars.map(starInfo => {
             const span = document.createElement('span');
             span.className = 'liunian-sihua-star';
-            span.textContent = starInfo.star;
+            span.textContent = SIHUA_START_MAP[starInfo.star] || starInfo.star; 
             // 根据四化类型设置颜色（天地象义：禄=绿、权=紫、科=蓝、忌=红）
             let color;
             switch (starInfo.sihuaType) {
