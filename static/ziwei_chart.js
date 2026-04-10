@@ -457,7 +457,7 @@ function renderChart(data) {
             clearLiunianDisplays(); // 清空流年选项与名称
             return;
         }
-        
+        clearLiunianDisplays(); // 清空流年选项与名称
         // 1. 找到对应大运宫位
         const dayunPalace = data.palaces.find(p => p.age_range === selectedRange);
         if (!dayunPalace) return;
