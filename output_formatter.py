@@ -191,7 +191,7 @@ class OutputFormatter:
             "shenzhu": self.ziwei_chart.shenzhu,
             "palaces": palaces_json,
             "yin_yang": self.ziwei_chart.yin_yang,
-            "feigong_str":self.print_all_palaces(),
+            # "feigong_str":self.print_all_palaces(),
             "three_level_hexagram": self.utils.calculate_three_level_hexagram(self.ziwei_chart),
             "feigong_map": self.ziwei_chart.feigong_map  # 追加的飞四化映射
 
@@ -222,10 +222,15 @@ class OutputFormatter:
         feigong_with_tracking = self.add_sihua_tracking_to_feigong(feigong_lines)
         
         # 返回字符串格式
-        if isinstance(feigong_with_tracking, list):
-            return '\n'.join(feigong_with_tracking)
+        # if isinstance(feigong_with_tracking, list):
+        #     return '\n'.join(feigong_with_tracking)
+        # else:
+        #     return feigong_with_tracking
+        # 返回字符串格式
+        if isinstance(basic_feigong, list):
+            return '\n'.join(basic_feigong)
         else:
-            return feigong_with_tracking
+            return basic_feigong
 
     def save_to_file(self, filename="ziwei.json"):
         """

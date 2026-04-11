@@ -685,6 +685,8 @@ function createPalaceElement(palace,three_level_hexagram) {
             mainStarsContainer.appendChild(starUnit);
         });
     }
+    palaceElement.main_stars=palace.main_stars || [];
+    palaceElement.main_stars_brightness = palace.main_stars_brightness || [];
     palaceElement.appendChild(mainStarsContainer);
 
     const jixing=['文昌','文曲','左辅','右弼','天魁','天钺','禄存','天马']
@@ -718,6 +720,8 @@ function createPalaceElement(palace,three_level_hexagram) {
             minorStarsContainer.appendChild(minorStar);
         });
     }
+    palaceElement.minor_stars=palace.minor_stars || [];
+    palaceElement.minor_stars_brightness = palace.minor_stars_brightness || [];
     palaceElement.appendChild(minorStarsContainer);
 
     // 小星 - 使用原来minor_stars的样式
@@ -731,6 +735,7 @@ function createPalaceElement(palace,three_level_hexagram) {
             xiaoxingStarsContainer.appendChild(xiaoxingStar);
         });
     }
+    palaceElement.xiaoxing_stars=palace.xiaoxing_stars || [];
     palaceElement.appendChild(xiaoxingStarsContainer);
 
     // 神煞星
@@ -744,6 +749,7 @@ function createPalaceElement(palace,three_level_hexagram) {
             shenshaContainer.appendChild(shenshaStar);
         });
     }
+    palaceElement.shensha_stars=palace.shensha_stars || [];
     palaceElement.appendChild(shenshaContainer);
 
     // 长生十二神
@@ -757,6 +763,7 @@ function createPalaceElement(palace,three_level_hexagram) {
             changshengContainer.appendChild(changshengStar);
         });
     }
+    palaceElement.changsheng_stars=palace.changsheng_stars || [];
     palaceElement.appendChild(changshengContainer);
 
     // 创建身宫标记
@@ -766,7 +773,7 @@ function createPalaceElement(palace,three_level_hexagram) {
         shenggongMark.textContent = '身';
         palaceElement.appendChild(shenggongMark);
     }
-
+    palaceElement.shengong_flg = palace.shengong_flg || false; // 标记身宫状态
     // 创建卦象标记
     palaceElement.isLaiyin = ""; // 标记来因宫
     palaceElement.isShifen = ""; // 标记十分卦
@@ -805,6 +812,7 @@ function createPalaceElement(palace,three_level_hexagram) {
     const ages = document.createElement('div');
     ages.className = 'ages';
     ages.textContent = palace.ages;
+    palaceElement.ages=palace.ages || '';
     palaceElement.appendChild(ages);
 
     // 宫位底部信息
@@ -815,6 +823,7 @@ function createPalaceElement(palace,three_level_hexagram) {
     ganzhi.className = 'ganzhi';
     const ganzhiSpan = document.createElement('span');
     ganzhiSpan.textContent = palace.gan + palace.dizhi;
+
     ganzhi.appendChild(ganzhiSpan);
 
     const palaceName = document.createElement('div');
@@ -825,13 +834,18 @@ function createPalaceElement(palace,three_level_hexagram) {
     ageRange.className = 'age-range';
     ageRange.textContent = palace.age_range;
 
-
-
+    palaceElement.gan = palace.gan || '';
+    palaceElement.zhi = palace.dizhi || '';
+    palaceElement.ganzhi = palace.gan + palace.dizhi;
     palaceFooter.appendChild(ganzhi);
+    palaceElement.palaceName = palace.name || '';
     palaceFooter.appendChild(palaceName);
+    palaceElement.age_range = palace.age_range || '';
     palaceFooter.appendChild(ageRange);
 
-
+    palaceElement.sihua = palace.sihua || [];
+    palaceElement.xiangxin_sihua = palace.xiangxin_sihua || [];
+    palaceElement.lixin_sihua = palace.lixin_sihua || [];
     palaceElement.appendChild(palaceFooter);
 
 
