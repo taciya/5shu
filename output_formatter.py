@@ -108,7 +108,7 @@ class OutputFormatter:
                 entry=self.ziwei_chart.feigong_map[dizhi]
                 feigong_arr = []
                 for sihua_type in ['禄', '权', '科', '忌']:
-                    feigong_arr.append(f" 飞出<{entry[sihua_type]['star']}{sihua_type}{STAR_BRIGHTNESS_TABLE.get(sihua_type, {}).get(entry[sihua_type]['target'], '□')}%>到<{entry[sihua_type]['target_palace_name']}>")
+                    feigong_arr.append(f"飞出<{entry[sihua_type]['star']}{sihua_type}{STAR_BRIGHTNESS_TABLE.get(sihua_type, {}).get(entry[sihua_type]['target'], '□')}%>到<{entry[sihua_type]['target_palace_name']}>")
 
                 # 获取飞入四化信息
                 feiru_arr = []

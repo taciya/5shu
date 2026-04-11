@@ -396,12 +396,12 @@ function renderChart(data) {
                 本宫自化 <span class="lixin-sihua-arrow"></span>
             </div>
 
-            <div class="control-group dayun-group" style="position: absolute; bottom: 10px; left: 10px;">
+            <div class="control-group dayun-group" style="position: absolute; bottom: 10px; left: 5px;">
                 <label for="dayunSelector">大运</label>
                 <select id="dayunSelector" class="control-select"></select>
             </div>
 
-            <div class="control-group liunian-group" style="position: absolute; bottom: 10px; right: 10px;">
+            <div class="control-group liunian-group" style="position: absolute; bottom: 10px; right: 5px;">
                 <label for="liunianSelector">流年</label>
                 <select id="liunianSelector" class="control-select" disabled></select>
             </div>
@@ -1482,8 +1482,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 (chartParams.birthHour+"").padStart(2, '0') + ":" +
                 ((chartParams.birthMinute+"") || '00').padStart(2, '0') + "\n";
             
-            const fullContent = yyyymmddhhmm + generateFeigongString() + data.feigong_str;
-
+            const fullContent = yyyymmddhhmm + generateFeigongString() + editFeigongstr(data.feigong_str);
             // 使用新的剪贴板助手
             const result = await clipboardHelper.copyText(fullContent);
             
@@ -3023,7 +3022,8 @@ function updatePalaceDayunName(data, dayunData) {
         // 4.2 计算大运名称（天地偏移逻辑）
         const offset = (sortedIndex - selectedIndex + 12) % 12; // 环形偏移（确保正数）
         const dayunName = dayunNames[offset]; // 选中宫位→offset=0→“大命”，其他按偏移取名称
-        palace.dayunname=dayunNames2[offset]; // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
+        palaceEl.dayunName=dayunNames2[offset]; // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
+
         // 4.3 设置大运名称与样式（星曜显化规则）
         dayunEl.textContent = "["+dayunName+"]";
         dayunEl.style.cssText = `
@@ -3242,7 +3242,7 @@ function updatePalaceLiunianName(data, liunianData) {
         // 4.2 计算流年名称（天地偏移逻辑，同大运的`offset`）
         const offset = (sortedIndex - selectedIndex + 12) % 12; // 环形偏移（确保正数）
         const liunianName = liunianNames[offset]; // 选中宫位→offset=0→“流命”，其他按偏移取名称
-        palace.liunianname = liunianNames2[offset]; // 存储流年全称（如“流年命宫”）
+        palaceEl.liunianName = liunianNames2[offset]; // 存储流年全称（如“流年命宫”）
 
         // 4.3 设置流年名称与样式（同大运的样式逻辑，用红色系区分）
         liunianEl.textContent = `[${liunianName}]`;
@@ -3383,5 +3383,72 @@ function getDizhiByGan(data, targetGan) {
     
     // 返回该宫位的地支，若未找到则返回 null
     return foundPalace ? foundPalace.dizhi : null;
+}
+
+function editFeigongstr(feigongstr) {
+    // 获取所有宫位元素（DOM层）
+    const palaceElements = document.querySelectorAll('.palace');
+    // 存储宫位名称与对应的大运/流年信息（键值对：宫位名称→{dayunName, liunianName}）
+    const palaceInfoMap = new Map();
+
+    palaceElements.forEach(palaceEl => {
+        // 提取宫位名称（如“财帛宫”，来自.palace-name元素）
+        const ageRange = palaceEl.querySelector('.age-range').textContent.trim();
+        // 提取大运名称（来自palaceEl的dayunName属性，由updatePalaceDayunName设置）
+        const dayunName = palaceEl.dayunName || '无';
+        // 提取流年名称（来自palaceEl的liunianName属性，由updatePalaceLiunianName设置）
+        const liunianName = palaceEl.liunianName || '无';
+        // 存入Map（键：宫位名称，值：大运/流年信息）
+        palaceInfoMap.set(ageRange, { dayunName, liunianName });
+    }); 
+
+    const blocks = [];
+    let currentBlock = '';
+    feigongstr.split('\n').forEach(line => {
+        // 如果行匹配宫位块开头（如“财帛宫 (乙卯) [86-95岁]:”），则开始新块
+        if (line.match(/^[^\()]+? \([^)]+\) \[[^\]]+\]:$/)) {
+            if (currentBlock) blocks.push(currentBlock);
+            currentBlock = line + '\n';
+        } else {
+            currentBlock += line + '\n';
+        }
+    });
+    if (currentBlock) blocks.push(currentBlock); // 添加最后一个块
+
+    // 遍历所有宫位块，修改内容
+    const updatedBlocks = blocks.map(block => {
+        // 提取宫位名称（如“财帛宫”，从块的第一行获取）
+        const firstLine = block.split('\n')[0];
+
+        const ageRangeMatch = firstLine.match(/\[(.+)岁\]/); // 匹配“age-range”部分
+        if (!ageRangeMatch) return block; // 无法识别，跳过
+        const ageRange = ageRangeMatch[1]; // 年龄范围（如“86-95”）
+
+        // 从Map中获取该宫位的大运/流年信息
+        const { dayunName, liunianName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无' };
+        
+        // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
+        const insertLines = [
+            `  大运宫位: ${dayunName}`,  // 前缀2空格
+            `  流年宫位: ${liunianName}`   // 前缀2空格
+        ];
+        const insertContent = insertLines.join('\n'); // 用换行符拼接
+
+        // 在块的末尾（身宫标记之后）插入内容
+        // 找到“身宫标记: ”的行，在其后添加insertContent
+        const lines = block.split('\n');
+        const shengongLineIndex = lines.findIndex(line => line.startsWith('  身宫标记: '));
+        if (shengongLineIndex !== -1) {
+            // 在身宫标记行之后插入
+            lines.splice(shengongLineIndex + 1, 0, insertContent.split('\n')[0], insertContent.split('\n')[1]);
+            // 或者用更简单的方式：直接在块末尾添加（假设身宫标记是最后一行）
+            // lines.push(insertContent.trim().split('\n')[0], insertContent.trim().split('\n')[1]);
+        }
+        
+        // 重组块内容
+        return lines.join('\n');
+    });
+
+    return updatedBlocks.join('\n'); // 将所有块重新组合成完整的字符串
 }
 // <<<<<<<<<<<<<<<<<<大运 + 流年

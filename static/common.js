@@ -1379,3 +1379,18 @@ function showError(message) {
         errorDiv.style.display = 'none';
     }, 3000);
 }
+
+
+
+/**
+ * 替换字符串中的普通空格（半角空格）
+ * @param {string} str - 待处理字符串
+ * @param {string} [replacement=''] - 替换字符（默认空字符串，即去除空格）
+ * @returns {string} 替换后的字符串
+ */
+function replaceSpaces(str, replacement = '') {
+  // 边界处理：非字符串输入直接返回原值
+  if (typeof str !== 'string') return str;
+  // 正则匹配所有普通空格（/ /g），全局替换为目标字符
+  return str.replace(/ /g, replacement);
+}

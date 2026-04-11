@@ -262,7 +262,7 @@ h1 {
   color: #8b4513;
 }
 .control-select {
-  padding: 2px 5px;
+  padding: 2px 2px;
   border: 1px solid #8b4513;
   border-radius: 3px;
   background: #f9f3e9;
@@ -284,7 +284,7 @@ h1 {
     position: absolute;
     pointer-events: auto; /* 恢复控制组的鼠标事件 */
     background: rgba(255, 255, 255, 0.95);
-    padding: 4px 8px;
+    padding: 4px 3px;
     border-radius: 4px;
     font-size: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
@@ -296,26 +296,26 @@ h1 {
 /* 大运选择器：固定在左下角 */
 .control-group-dayun {
     bottom: 5px;
-    left: 5px;
+    left: 0px;
     border: 1px solid #8b4513;
 }
 
 /* 流年选择器：固定在右下角 */
 .control-group-liunian {
     bottom: 5px;
-    right: 5px;
+    right: 0px;
     border: 1px solid #4169e1;
 }
 
 /* 统一样式下拉框 */
 .control-select {
-    padding: 2px 4px;
+    padding: 2px 3px;
     border: 1px solid #ccc;
     border-radius: 3px;
     background: #fff;
     font-size: 12px;
     color: #333;
-    min-width: 43px;
+    min-width: 41px;
 }
 
 .control-select:disabled {
