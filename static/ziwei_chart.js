@@ -491,55 +491,7 @@ function renderChart(data) {
     });    
 
 }
-/**
- * 修正后的基本信息生成逻辑
- * 案例验证：1979/10/20 出生，在 1986 年的流年应为 丙寅（命宫）
- */
-function generateFeigongString_bak(data, birth) {
-    let feigong_str = '';
-    feigong_str += `问卦占事/占命：${data.name ? data.name : 'XXXXXX'}\n`;
 
-    // --- 1. 定义目标年份 ---
-    // 注意：这里需要根据你的需求定义 targetYear。
-    // 如果是看“今年”，用 new Date().getFullYear()；
-    // 如果是测试 1986 年，则设为 1986。
-    const targetYear = new Date().getFullYear(); // 或者 const targetYear = 1986;
-
-    // --- 2. 计算虚岁 ---
-    // 1979年出生，1979年是1岁，1986年是 1986-1979+1 = 8岁
-    const birthYear = new Date(birth.true_solar_time).getFullYear();
-    const currentAge = targetYear - birthYear + 1;
-
-    // --- 3. 精确计算流年干支 (以公元4年甲子为基准) ---
-    const liunianInfo = getLiunianGZ(targetYear);
-    // C. 匹配流年：寻找地支为“寅”的宫位
-    const liunianPalace = data.palaces.find(p => p.gan === liunianInfo.gan);
-
-    const liunianStr = `${liunianPalace.gan}${liunianPalace.dizhi}（${liunianPalace ? liunianPalace.name : '未知'}）`;
-    // --- 4. 匹配命盘宫位 ---
-
-    // A. 匹配来因宫：从 data.three_level_hexagram['main_hexagram'] 获取主卦宫位名
-    const laiyinPalace = data.palaces.find(p => p.name === data.three_level_hexagram['main_hexagram']);
-    const laiyinInfo = laiyinPalace ? `${laiyinPalace.gan}${laiyinPalace.dizhi}（${laiyinPalace.name}）` : '未知';
-
-    // B. 匹配大运：寻找 age_range 包含 currentAge (8岁) 的宫位
-    const dayunPalace = data.palaces.find(p => {
-        if (!p.age_range) return false;
-        const [start, end] = p.age_range.split('-').map(Number);
-        return currentAge >= start && currentAge <= end;
-    });
-    const dayunInfo = dayunPalace ? 
-        `${dayunPalace.gan}${dayunPalace.dizhi}（${dayunPalace.name}）<${dayunPalace.age_range}>` : '未找到';
-
-    // --- 5. 组装输出 ---
-    feigong_str += `基本信息：来因宫=${laiyinInfo} , 大运=${dayunInfo} , 流年=${liunianStr} , 当前年份=${targetYear}\n`;
-
-    const fenzhong_yu = birth.true_solar_time_fenzhong || 0;
-    feigong_str += `三层卦象：主卦(${data.three_level_hexagram['main_hexagram']})，十分卦(${data.three_level_hexagram['second_hexagram']})，分钟卦(${data.three_level_hexagram['third_hexagram']})[余数=${fenzhong_yu}]\n`;
-    feigong_str += '命盘信息：\n';
-
-    return feigong_str;
-}
 function generateFeigongString() {
 
     // 1. 获取DOM元素（天地显化层）
@@ -584,9 +536,13 @@ function generateFeigongString() {
 
     // 4. 生成fullContent（完全基于DOM显化内容）
     let fullContent = "";
-    fullContent += `问卦占事/占命：${neirong.textContent.trim()}\n`;
-    fullContent += `基本信息：来因宫=${getLaiyinPalace(palaces).isLaiyin.trim()} , 大运=${dayunInfo || '未找到'} , 流年=${liunianStr || '未找到'} , 当前年份=${new Date().getFullYear()}\n`;
-    fullContent += `三层卦象：主卦(${getLaiyinPalace(palaces).isLaiyin.trim()})，十分卦(${getShifenPalace(palaces).isShifen.trim()})，分钟卦(${getFenzhongPalace(palaces).isFenzhong.trim()})\n`;
+    if (dayunInfo !== '未选') {
+        fullContent += `问卦占命：${neirong.textContent.trim()}\n`;
+        fullContent += `基本信息：来因宫=${getLaiyinPalace(palaces).isLaiyin.trim()} , 大运=${dayunInfo || '未找到'} , 流年=${liunianStr || '未找到'} , 当前年份=${new Date().getFullYear()}\n`;
+    } else {
+        fullContent += `问卦占事：${neirong.textContent.trim()}\n`;
+        fullContent += `三层卦象：主卦(${getLaiyinPalace(palaces).isLaiyin.trim()})，十分卦(${getShifenPalace(palaces).isShifen.trim()})，分钟卦(${getFenzhongPalace(palaces).isFenzhong.trim()})\n`;
+    }
     fullContent += `命盘信息：\n`;
     return fullContent;
 }
