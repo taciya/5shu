@@ -41,61 +41,48 @@
                 </div>
                 <!-- 时间输入行 -->
                 <div class="time-input-row">
-                    <div class="time-input-group">
-                        <label for="birthYear">年</label>
-                        <input type="number" id="birthYear" class="form-control" min="1" max="9999" maxlength="4" required>
-                        <span class="gan-display" id="yearGan"></span>
-                    </div>
-                    
-                    <div class="time-input-group">
-                        <label for="birthMonth">月</label>
-                        <input type="number" id="birthMonth" class="form-control" min="1" max="12" maxlength="2" required>
-                        <span class="gan-display" id="monthGan"></span>
-                    </div>
-                    
-                    <div class="time-input-group">
-                        <label for="birthDay">日</label>
-                        <input type="number" id="birthDay" class="form-control" min="1" max="31" maxlength="2" required>
-                        <span class="gan-display" id="dayGan"></span>
-                    </div>
-                    
-                    <div class="time-input-group">
-                        <label for="birthHour">时</label>
-                        <input type="number" id="birthHour" class="form-control" min="0" max="23" step="1" maxlength="2" required>
-                        <span class="gan-display" id="hourGan"></span>
+                    <div class="time-input-group" style="flex: 1;">
+                        <label for="birthTime">⭐天地時間</label>
+                        <input type="text" id="birthTime" class="form-control" placeholder="YYYY/MM/DD HH:MM" required>
+                        <span class="gan-display" id="birthGan"></span>
                     </div>
 
-                    <div class="time-input-group">
-                        <label for="birthMinute">分</label>
-                        <input type="number" id="birthMinute" class="form-control" min="0" max="59" step="1" maxlength="2" required value="0">
-                        <span class="gan-display" id="minuteGan"></span>
-                    </div>                    
+                    <div class="time-input-group" style="flex: 1;">
+                        <label for="natalTime">原局時間</label>
+                        <input type="text" id="natalTime" class="form-control" placeholder="YYYY/MM/DD HH:MM" >
+                        <span class="gan-display" id="natalGan"></span>
+                    </div>
                 </div>
+                <div class="time-input-row second-row"> 
+                    <div class="time-input-group" style="flex: 1;">
+                        <label for="trueSolarText">⭐真太阳时</label>
+                        <div id="trueSolarText" class="form-control" style="font-size: 12px; min-height: 38px; display: flex; align-items: center; justify-content: center;"></div>
+                    </div>                      
+                    <div class="time-input-group" style="flex: 1;">
+                        <label for="natalTrueSolarText">原局真太阳</label>
+                        <div id="natalTrueSolarText" class="form-control" style="background-color: #f0f4f8; font-size: 12px; min-height: 38px; display: flex; align-items: center; justify-content: center;"></div>
+                    </div>              
+                </div>
+
                 <div class="time-input-row second-row">    
-                    <div class="time-input-group">
+                    <div class="time-input-group" style="flex: 1;">
                         <label for="gender">性 别</label>
                         <select id="gender" class="form-control" required>
                             <option value="male">男</option>
                             <option value="female">女</option>
                         </select>
                     </div>
-                    <div class="time-input-group">
+                    <div class="time-input-group" style="flex: 1;">
                         <label for="birthPlace">出生地</label>
-                        <input type="text" id="birthPlace" class="form-control" placeholder="例如：北京" required value="北京">
+                        <input type="text" id="birthPlace" class="form-control" placeholder="例如：北京" required value="吉林">
                     </div>
-                    <div class="time-input-group">
-                        <label for="trueSolarText">真太阳时</label>
-                        <div id="trueSolarText" class="form-control"></div>
-                    </div>                  
+                    <div class="time-input-group" style="flex: 2; display: flex; align-items: center; justify-content: flex-end;">
+                        <button type="button" id="randomTimeBtn" class="btn btn-random btn-jiagao">随机时间</button>
+                        &nbsp;
+                        <button type="submit" id="submitBtn" class="btn btn-jiagao">生成命盘</button>
+                    </div>
                 </div>
-                <hr/>
-                <div class="form-group">
-                    <button type="button" id="randomTimeBtn" class="btn btn-random">随机时间</button>
-                    <!-- 新增的时间输入框 -->
-                    <input type="text" id="natalTime" class="form-control natal-time-input" 
-                        placeholder="YYYY/MM/DD HH:MM" title="原局命盘输入，格式：YYYY/MM/DD HH:MM">
-                    <button type="submit" id="submitBtn" class="btn">生成命盘</button>
-                </div>
+ 
             </form>
 
             <!-- 新增保存和分类区域 -->

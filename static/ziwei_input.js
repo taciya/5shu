@@ -1,5 +1,5 @@
 // 更新真太阳时
-function updateTrueSolar() {
+function updateTrueSolar_bak() {
     const year = parseInt(document.getElementById('birthYear').value) || 0;
     const month = parseInt(document.getElementById('birthMonth').value) || 0;
     const day = parseInt(document.getElementById('birthDay').value) || 0;
@@ -30,6 +30,59 @@ function updateTrueSolar() {
         }
     } else {
         trueSolarText.innerText = '';
+    }
+}
+
+/**
+ * 真太陽時の表示を更新する (メインと原局の両方)
+ */
+function updateTrueSolar() {
+    const birthPlace = document.getElementById('birthPlace').value;
+    if (!birthPlace) return;
+
+    // 1. メインの出生時間 (birthTime) の処理
+    const dt = getDateTimeFromInput('birthTime');
+    const trueSolarText = document.getElementById('trueSolarText');
+    
+    if (dt) {
+        const trueSolar = calculateTrueSolarTime(dt.year, dt.month, dt.day, dt.hour, dt.minute, birthPlace);
+        trueSolarText.innerText = `${trueSolar.year}/${trueSolar.month}/${trueSolar.day} ${trueSolar.hour}:${trueSolar.minute}`;
+    } else {
+        trueSolarText.innerText = '';
+    }
+
+    // 2. 原局命盤入力 (natalTime) の処理
+    const natalDt = getDateTimeFromInput('natalTime');
+    const natalTrueSolarDisplay = document.getElementById('natalTrueSolarText');
+    
+    if (natalDt) {
+        const natalTrueSolar = calculateTrueSolarTime(natalDt.year, natalDt.month, natalDt.day, natalDt.hour, natalDt.minute, birthPlace);
+        natalTrueSolarDisplay.innerText = `${natalTrueSolar.year}/${natalTrueSolar.month}/${natalTrueSolar.day} ${natalTrueSolar.hour}:${natalTrueSolar.minute}`;
+    } else {
+        natalTrueSolarDisplay.innerText = '';
+    }
+}
+/**
+ * 統合された入力から日時オブジェクトを取得する
+ */
+function getDateTimeFromInput(inputId) {
+    const val = document.getElementById(inputId).value;
+    try {
+        // 既存の parseTrueSolarText 関数を活用
+        return parseTrueSolarText(val);
+    } catch (e) {
+        return null;
+    }
+}
+/**
+ * 格式化显示：将输入转换为 YYYY/MM/DD HH:MM
+ */
+function formatToStandard(inputId) {
+    const input = document.getElementById(inputId);
+    const dt = parseDateTimeString(input.value);
+    if (dt) {
+        const formatted = `${dt.year}/${String(dt.month).padStart(2, '0')}/${String(dt.day).padStart(2, '0')} ${String(dt.hour).padStart(2, '0')}:${String(dt.minute).padStart(2, '0')}`;
+        input.value = formatted;
     }
 }
 // 新增：格式化小时和分钟显示
@@ -190,12 +243,12 @@ function enableTrueSolarEdit() {
             const meanMinute = Math.round(meanSolarTotalMinutes % 60);
 
             // 更新对应的输入框为平太阳时（出生时间）
-            document.getElementById('birthYear').value = meanYear;
-            document.getElementById('birthMonth').value = meanMonth;
-            document.getElementById('birthDay').value = meanDay;
-            document.getElementById('birthHour').value = meanHour;
-            document.getElementById('birthMinute').value = meanMinute;
-
+            // document.getElementById('birthYear').value = meanYear;
+            // document.getElementById('birthMonth').value = meanMonth;
+            // document.getElementById('birthDay').value = meanDay;
+            // document.getElementById('birthHour').value = meanHour;
+            // document.getElementById('birthMinute').value = meanMinute;
+            document.getElementById('birthTime').value = `${meanYear}/${meanMonth}/${meanDay} ${meanHour.toString().padStart(2, '0')}:${meanMinute.toString().padStart(2, '0')}`;
             // 触发真太阳时更新（会重新计算并显示真太阳时，应与用户输入一致）
             updateTrueSolar();
         } catch (error) {
@@ -221,13 +274,57 @@ function enableTrueSolarEdit() {
         }
     });
 }
+function updateNatalTrueSolarDisplay() {
+    const natalTimeStr = document.getElementById('natalTime').value;
+    const birthPlace = document.getElementById('birthPlace').value;
+    const displayElement = document.getElementById('natalTrueSolarText');
+    
+    if (!displayElement) return;
 
+    const dt = parseDateTimeString(natalTimeStr);
+    if (dt && birthPlace) {
+        try {
+            const trueSolar = calculateTrueSolarTime(dt.year, dt.month, dt.day, dt.hour, dt.minute, birthPlace);
+            displayElement.innerText = `${trueSolar.year}/${trueSolar.month}/${trueSolar.day} ${trueSolar.hour}:${trueSolar.minute}`;
+        } catch (e) {
+            displayElement.innerText = '--';
+        }
+    } else {
+        displayElement.innerText = '';
+    }
+}
 
 // 页面加载时初始化
 window.onload = function() {
-    // 设置当前年份为默认值
-    const currentYear = new Date().getFullYear();
-    document.getElementById('birthYear').value = currentYear - 30;
+
+
+    // 为时间输入框添加事件监听器
+    // document.getElementById('birthYear').addEventListener('input', updateTrueSolar);
+    // document.getElementById('birthMonth').addEventListener('input', updateTrueSolar);
+    // document.getElementById('birthDay').addEventListener('input', updateTrueSolar);
+    // document.getElementById('birthHour').addEventListener('input', updateTrueSolar);
+    // document.getElementById('birthMinute').addEventListener('input', updateTrueSolar);
+    // イベントリスナーの設定
+    const inputs = ['birthTime', 'natalTime'];
+    
+    inputs.forEach(id => {
+        const el = document.getElementById(id);        
+        if (!el) return;
+
+        // 输入完毕（失去焦点）后自动转换格式
+        el.addEventListener('blur', () => {
+            formatToStandard(id);
+            updateTrueSolar(); // 触发真太阳时更新
+        });
+
+        // 原局时间改变时更新 natalTrueSolarText (只读显示)
+        if (id === 'natalTime') {
+            el.addEventListener('input', updateNatalTrueSolarDisplay);
+        }
+
+        // 入力中も真太陽時を計算（オプション）
+        el.addEventListener('input', updateTrueSolar);
+    });
 
     // 添加事件监听器
     document.getElementById('randomTimeBtn').addEventListener('click', generateRandomTime);
@@ -236,17 +333,8 @@ window.onload = function() {
         clearConnectionLines();
         submitForm();
     });
-
-    // 为时间输入框添加事件监听器
-    document.getElementById('birthYear').addEventListener('input', updateTrueSolar);
-    document.getElementById('birthMonth').addEventListener('input', updateTrueSolar);
-    document.getElementById('birthDay').addEventListener('input', updateTrueSolar);
-    document.getElementById('birthHour').addEventListener('input', updateTrueSolar);
-    document.getElementById('birthMinute').addEventListener('input', updateTrueSolar);
-
     // // 添加出生地监听器
     document.getElementById('birthPlace').addEventListener('input', updateTrueSolar);
-
     // 为trueSolarText添加双击编辑功能
     document.getElementById('trueSolarText').addEventListener('dblclick', enableTrueSolarEdit);
 
@@ -331,15 +419,15 @@ function generateRandomTime() {
     const hour = Math.floor(Math.random() * 24);
     const minute = Math.floor(Math.random() * 60);
 
-    document.getElementById('birthYear').value = year;
-    document.getElementById('birthMonth').value = month;
-    document.getElementById('birthDay').value = day;
-    document.getElementById('birthHour').value = hour;
-    document.getElementById('birthMinute').value = minute;
+    const formatted = `${String(year).padStart(4, '0')}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+    document.getElementById('birthTime').value = formatted;
     // document.getElementById('name').value = '随机'+ new Date().getTime().toString().slice(-4);
 
-    // 更新真太阳时
-    updateTrueSolar();
+
+    // 触发相关更新逻辑（如真太阳时计算）
+    if (typeof updateTrueSolar === 'function') {
+        updateTrueSolar();
+    }
     // 同时生成命盘
     submitForm();
 }

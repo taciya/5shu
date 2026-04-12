@@ -1433,3 +1433,64 @@ function parseNatalTime(natalTimeStr) {
     
     throw new Error('时间格式错误，请使用 YYYY/MM/DD HH:MM 格式');
 }
+
+/**
+ * 文字列を YYYY/MM/DD HH:MM 形式に正規化する
+ * yyyymmddhhmm などの形式に対応
+ */
+function normalizeDateTimeString(value) {
+    // 数字以外を除去
+    const digits = value.replace(/\D/g, '');
+    
+    if (digits.length >= 12) {
+        // YYYY MM DD HH MM (12桁)
+        return `${digits.slice(0, 4)}/${digits.slice(4, 6)}/${digits.slice(6, 8)} ${digits.slice(8, 10)}:${digits.slice(10, 12)}`;
+    } else if (digits.length >= 8) {
+        // YYYY MM DD (8桁)
+        return `${digits.slice(0, 4)}/${digits.slice(4, 6)}/${digits.slice(6, 8)} 00:00`;
+    }
+    return value; // 変換できない場合はそのまま
+}
+/**
+ * 核心解析函数：支持多种格式，包括 yyyymmddhhmm
+ */
+function parseDateTimeString(val) {
+    if (!val) return null;
+    
+    // 去除非数字字符，检查是否为纯数字序列 (12位)
+    const pureDigits = val.replace(/\D/g, '');
+    if (pureDigits.length === 12) {
+        return {
+            year: parseInt(pureDigits.substring(0, 4)),
+            month: parseInt(pureDigits.substring(4, 6)),
+            day: parseInt(pureDigits.substring(6, 8)),
+            hour: parseInt(pureDigits.substring(8, 10)),
+            minute: parseInt(pureDigits.substring(10, 12))
+        };
+    }
+
+    // 回退到原有的正则解析 (YYYY/MM/DD HH:MM 等)
+    const regex = /(\d{4})[/-](\d{1,2})[/-](\d{1,2})\s+(\d{1,2}):(\d{1,2})/;
+    const match = val.match(regex);
+    if (match) {
+        return {
+            year: parseInt(match[1]),
+            month: parseInt(match[2]),
+            day: parseInt(match[3]),
+            hour: parseInt(match[4]),
+            minute: parseInt(match[5])
+        };
+    }
+    return null;
+}
+/**
+ * 格式化显示：将输入转换为 YYYY/MM/DD HH:MM
+ */
+function formatToStandard(inputId) {
+    const input = document.getElementById(inputId);
+    const dt = parseDateTimeString(input.value);
+    if (dt) {
+        const formatted = `${dt.year}/${String(dt.month).padStart(2, '0')}/${String(dt.day).padStart(2, '0')} ${String(dt.hour).padStart(2, '0')}:${String(dt.minute).padStart(2, '0')}`;
+        input.value = formatted;
+    }
+}

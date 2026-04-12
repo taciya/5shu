@@ -1,10 +1,17 @@
 // 验证表单数据
 function validateForm() {
-    const year = parseInt(document.getElementById('birthYear').value);
-    const month = parseInt(document.getElementById('birthMonth').value);
-    const day = parseInt(document.getElementById('birthDay').value);
-    const hour = parseInt(document.getElementById('birthHour').value);
-    const minute = parseInt(document.getElementById('birthMinute').value);
+    const birthTimeStr = document.getElementById('birthTime').value.trim();
+    
+    // 使用 parseTrueSolarText 或自定义逻辑解析字符串
+    // 假设 parseTrueSolarText 返回 {year, month, day, hour, minute} 或 null
+    const dt = parseTrueSolarText(birthTimeStr);
+
+    if (!dt) {
+        showError('请输入正确的出生时间格式 (如: 2023/10/01 12:00 或 202310011200)');
+        return false;
+    }
+
+    const { year, month, day, hour, minute } = dt;
     
     if (year < 1 || year > 9999) {
         showError('出生年份必须在1-9999之间');
@@ -16,8 +23,10 @@ function validateForm() {
         return false;
     }
     
-    if (day < 1 || day > 31) {
-        showError('出生日期必须在1-31之间');
+    // 简单的日期合法性检查
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) {
+        showError(`出生日期在${month}月必须在1-${daysInMonth}之间`);
         return false;
     }
     
@@ -38,21 +47,18 @@ function validateForm() {
 async function submitForm() {
     if (!validateForm()) return;
     
-    const year = parseInt(document.getElementById('birthYear').value);
-    const month = parseInt(document.getElementById('birthMonth').value);
-    const day = parseInt(document.getElementById('birthDay').value);
-    const hour = parseInt(document.getElementById('birthHour').value);
-    const minute = parseInt(document.getElementById('birthMinute').value);
+    const birthTime = document.getElementById('birthTime').value.trim();    
+    const birthData = parseNatalTime(birthTime) || { year: null, month: null, day: null, hour: null, minute: null }; // 解析 natalTime，若无效则使用默认值
     const birthPlace = document.getElementById('birthPlace').value;
     // 新增：检查是否有 natalTime
     const natalTime = document.getElementById('natalTime').value.trim();    
     const natalData = parseNatalTime(natalTime) || { year: null, month: null, day: null, hour: null, minute: null }; // 解析 natalTime，若无效则使用默认值
 
     // 将小时和分钟合并为小数小时格式，保持向后兼容
-    const decimalHour = hour + minute / 60;
+    const decimalHour = birthData.hour + birthData.minute / 60;
     
     // 计算真太阳时（包含日期）
-    const trueSolarTime = calculateTrueSolarTime(year, month, day, hour, minute, birthPlace);
+    const trueSolarTime = calculateTrueSolarTime(birthData.year, birthData.month, birthData.day, birthData.hour, birthData.minute, birthPlace);
     const trueSolarNatalTime = calculateTrueSolarTime(natalData.year, natalData.month, natalData.day, natalData.hour, natalData.minute, birthPlace);
     const formData = {
         name: document.getElementById('name').value,
