@@ -3372,7 +3372,6 @@ function editFeigongstr(feigongstr) {
 
     // 遍历所有宫位块，修改内容
     const updatedBlocks = blocks.map(block => {
-        console.log(`Processing block:\n${block}\n---`); // 调试输出当前块内容
         // 提取宫位名称（如“财帛宫”，从块的第一行获取）
         const firstLine = block.split('\n')[0];
 
@@ -3382,7 +3381,6 @@ function editFeigongstr(feigongstr) {
 
         // 从Map中获取该宫位的大运/流年信息
         const { dayunName, liunianName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无' };
-        console.log(`Processing block for age range: ${ageRange}, dayunName: ${dayunName}, liunianName: ${liunianName}`);
         // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
         const insertLines = [
             `  大运宫位: ${dayunName}`,  // 前缀2空格
