@@ -3398,14 +3398,11 @@ function editFeigongstr(feigongstr) {
 
         // 从Map中获取该宫位的大运/流年信息
         const { dayunName, liunianName,natalPalaceName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无', natalPalaceName: '无' };
-        if (natalPalaceName !== '无') {
-            natalPalaceName = `原局${natalPalaceName||'无'}`;
-        }
         // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
         const insertLines = [
             `  大运宫位: ${dayunName}`,  // 前缀2空格
             `  流年宫位: ${liunianName}`,   // 前缀2空格
-            `  原局宫位: 原局${natalPalaceName||'无'}` // 前缀2空格
+            `  原局宫位: ${natalPalaceName && natalPalaceName !== '无' ? `原局${natalPalaceName}` : '无'}` // 前缀2空格
         ];
         const insertContent = insertLines.join('\n'); // 用换行符拼接
 
