@@ -3402,7 +3402,7 @@ function editFeigongstr(feigongstr) {
         const insertLines = [
             `  大运宫位: ${dayunName}`,  // 前缀2空格
             `  流年宫位: ${liunianName}`,   // 前缀2空格
-            `  原局宫位: ${natalPalaceName||'无'}` // 前缀2空格
+            `  原局宫位: 原局${natalPalaceName||'无'}` // 前缀2空格
         ];
         const insertContent = insertLines.join('\n'); // 用换行符拼接
 
