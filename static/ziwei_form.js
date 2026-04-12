@@ -85,7 +85,7 @@ async function submitForm() {
         data.shichen = convertTimeFormat(decimalHour); // 使用合并后的小时
         
         // 渲染命盘
-        renderChart(data);
+        renderChart(data, formData);
         // 成功生成命盘后隐藏输入区域
         hideInputSection();        
 

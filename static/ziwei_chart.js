@@ -355,8 +355,7 @@ function copyToClipboard(text) {
     });
 }
 // 渲染命盘
-function renderChart(data) {
-
+function renderChart(data,formData) {
     // 清空现有宫位
     const chartGrid = document.getElementById('chartGrid');
     if (!chartGrid) {
@@ -490,6 +489,8 @@ function renderChart(data) {
         generateLiunianSihua(data, selectedYear, liunianPalace); // 生成流年四化（新增selectedYear参数）
     });    
 
+    const exportBtn = document.getElementById('exportBtn');
+    exportBtn.formData = JSON.stringify(formData); // 将formData附加到导出按钮，供导出功能使用
 }
 
 function generateFeigongString() {
@@ -1350,6 +1351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 导出按钮点击事件
     exportBtn.addEventListener('click', async function() {
         const exportBtn = this;
+        const formData = JSON.parse(exportBtn.formData); // 从按钮属性获取命盘参数
         const originalText = exportBtn.textContent;
         // 填充文本内容
         // exportText.textContent = feigong_str;
@@ -1384,41 +1386,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-
-            // // 第一步：弹出密码输入框
-            // const password = await showPasswordModal();
-
-            // if (!password) {
-            //     // 用户取消输入
-            //     exportBtn.textContent = originalText;
-            //     exportBtn.disabled = false;
-            //     return;
-            // }
-            const year = parseInt(document.getElementById('birthYear').value);
-            const month = parseInt(document.getElementById('birthMonth').value);
-            const day = parseInt(document.getElementById('birthDay').value);
-            const hour = parseInt(document.getElementById('birthHour').value);
-            const minute = parseInt(document.getElementById('birthMinute').value);
-            const birthPlace = document.getElementById('birthPlace').value;
-            
-            // // 将小时和分钟合并为小数小时格式，保持向后兼容
-            const decimalHour = hour + minute / 60;
-            
-            // // 计算真太阳时（包含日期）
-            const trueSolarTime = calculateTrueSolarTime(year, month, day, hour, minute, birthPlace);            
-
-            // 获取当前命盘参数
             const chartParams = {
-                birthYear: trueSolarTime.year,
-                birthMonth: trueSolarTime.month,
-                birthDay: trueSolarTime.day,
-                birthHour: trueSolarTime.hour, 
-                birthMinute: trueSolarTime.minute, 
-                birthHour_decimal: decimalHour, // 保持小数小时格式
-                birthPlace: birthPlace,
+                birthYear: formData.birthYear,
+                birthMonth: formData.birthMonth,
+                birthDay: formData.birthDay,
+                birthHour: formData.birthHour,
+                birthMinute: formData.birthMinute,
+                birthHour_decimal: formData.birthHour_decimal, // 保持小数小时格式
+                birthPlace: formData.birthPlace,
                 password: passwordInfo.password
-            };
-            
+            };            
             // 验证必填参数
             if (!chartParams.birthYear || !chartParams.birthMonth || !chartParams.birthDay) {
                 throw new Error('请先输入完整的出生信息');
@@ -1469,45 +1446,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 clipboardHelper.showCopyFallback(fullContent);
             }
-            // // 复制到剪贴板
-            // const tempTextArea = document.createElement('textarea');
-            // tempTextArea.value = fullContent;
-            // console.log("复制到剪贴板");
-            // document.body.appendChild(tempTextArea);
-            // tempTextArea.select();
-            // // 复制
-            // document.execCommand('copy');
-            // document.body.removeChild(tempTextArea);
-            // // 显示复制成功提示
-            // const originalText = copyBtn.textContent;
-            // copyBtn.textContent = '已复制！';
-
-            // // 2秒后恢复原文本
-            // setTimeout(() => {
-            //     exportBtn.textContent = originalText;
-            //     exportBtn.disabled = false;
-            // }, 2000);
-
-            // let copySuccess = false;
-            // try {
-            //     copySuccess = document.execCommand('copy');
-            // } catch (err) {
-            //     console.warn('复制命令失败:', err);
-            // }
-
-            // if (copySuccess) {
-            //     exportBtn.textContent = '已复制';
-            // } else {
-            //     // 如果复制失败，提供手动选择方案
-            //     exportBtn.textContent = '请手动选择复制';
-            //     setTimeout(() => {
-            //         exportBtn.textContent = originalText;
-            //         exportBtn.disabled = false;
-            //     }, 2000);
-            //     // 可以在这里添加文本区域显示内容，让用户手动复制
-            //     // showManualCopyDialog(fullContent);
-            // }
-            
+             
         } catch (error) {
             console.error('导出失败:', error);
             exportBtn.textContent = '导出失败';
@@ -1536,29 +1475,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 复制按钮点击事件
-    // copyBtn.addEventListener('click', function() {
-    //     // 创建临时文本区域
-    //     const tempTextArea = document.createElement('textarea');
-    //     tempTextArea.value = feigong_str;
-    //     document.body.appendChild(tempTextArea);
-
-    //     // 选择并复制文本
-    //     tempTextArea.select();
-    //     document.execCommand('copy');
-
-    //     // 移除临时元素
-    //     document.body.removeChild(tempTextArea);
-
-    //     // 显示复制成功提示
-    //     const originalText = copyBtn.textContent;
-    //     copyBtn.textContent = '已复制！';
-
-    //     // 2秒后恢复原文本
-    //     setTimeout(() => {
-    //         copyBtn.textContent = originalText;
-    //     }, 2000);
-    // });
 });
 
 
