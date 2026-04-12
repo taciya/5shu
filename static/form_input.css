@@ -393,3 +393,19 @@ h2,hr{
     /* box-shadow: 0 0 5px rgba(139, 69, 19, 0.5); */
 }
 /* trueSolarText 容器样式调整 end------------------------- */
+
+
+/* 新增快速时间输入框样式 */
+.natal-time-input {
+    padding: 10px 2px;
+    margin: 0 10px;
+    text-align: center;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
+    background-color: #fffaf0;
+    color: #8b4513;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}

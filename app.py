@@ -38,7 +38,14 @@ def generate_ziwei():
         birth_day = data.get('birthDay')
         birth_hour = data.get('birthHour')
         birth_minute = data.get('birthMinute')
-        birth_hour_decimal = data.get('birthHour_decimal')
+
+        Natal_year = data.get('NatalYear')
+        Natal_month = data.get('NatalMonth')
+        Natal_day = data.get('NatalDay')
+        Natal_hour = data.get('NatalHour')
+        Natal_minute = data.get('NatalMinute')
+
+        # birth_hour_decimal = data.get('birthHour_decimal')
         gender = data.get('gender', 'male')
 
         # print(birth_year,birth_month,birth_day,birth_hour,gender )  #<<<<<<<<<
@@ -52,6 +59,17 @@ def generate_ziwei():
 
         # 获取JSON格式的命盘数据
         json_output = chart.to_json()
+        if Natal_year>0 and Natal_month>0 and Natal_day>0:
+            chartNatal = ZiweiChart(Natal_year, Natal_month, Natal_day, Natal_hour, Natal_minute, gender)
+            json_output_natal = chartNatal.to_json()
+        else:
+            
+            json_output_natal = json.dumps(
+                {'palaces': []},
+                ensure_ascii=False,  # 允许中文字符直接显示
+                indent=2,            # 缩进使输出更易读
+                sort_keys=False      # 保持字典原有顺序
+            )  # 如果原局时间无效，返回空对象
         # 将命盘数据缓存到session，避免重复计算
         # session['current_chart_params'] = {
         #     'birth_year': birth_year,
@@ -61,7 +79,11 @@ def generate_ziwei():
         #     'birth_minute': minute_int,
         #     'gender': gender
         # }
-        return json_output
+        return {
+            "ziwei_chart": json_output,  # 出生时间命盘
+            "natal_chart": json_output_natal ,  # 原局时间命盘
+            "status": "success"
+        }
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

@@ -44,13 +44,16 @@ async function submitForm() {
     const hour = parseInt(document.getElementById('birthHour').value);
     const minute = parseInt(document.getElementById('birthMinute').value);
     const birthPlace = document.getElementById('birthPlace').value;
-    
+    // 新增：检查是否有 natalTime
+    const natalTime = document.getElementById('natalTime').value.trim();    
+    const natalData = parseNatalTime(natalTime) || { year: null, month: null, day: null, hour: null, minute: null }; // 解析 natalTime，若无效则使用默认值
+
     // 将小时和分钟合并为小数小时格式，保持向后兼容
     const decimalHour = hour + minute / 60;
     
     // 计算真太阳时（包含日期）
     const trueSolarTime = calculateTrueSolarTime(year, month, day, hour, minute, birthPlace);
-    
+    const trueSolarNatalTime = calculateTrueSolarTime(natalData.year, natalData.month, natalData.day, natalData.hour, natalData.minute, birthPlace);
     const formData = {
         name: document.getElementById('name').value,
         gender: document.getElementById('gender').value,
@@ -59,10 +62,14 @@ async function submitForm() {
         birthDay: trueSolarTime.day,
         birthHour: trueSolarTime.hour, 
         birthMinute: trueSolarTime.minute, 
+        NatalYear: trueSolarNatalTime.year,
+        NatalMonth: trueSolarNatalTime.month,
+        NatalDay: trueSolarNatalTime.day,
+        NatalHour: trueSolarNatalTime.hour, 
+        NatalMinute: trueSolarNatalTime.minute,
         birthHour_decimal: decimalHour, // 保持小数小时格式
         birthPlace: birthPlace
     };
-    
     // 显示加载指示器
     document.getElementById('loadingIndicator').style.display = 'block';
     
@@ -81,9 +88,12 @@ async function submitForm() {
         }
         
         const data = await response.json();
-        data.name = formData.name;
-        data.shichen = convertTimeFormat(decimalHour); // 使用合并后的小时
-        
+        data.ziwei_chart=JSON.parse(data.ziwei_chart) || {}; // 确保 ziwei_chart 存在
+        data.ziwei_chart.name = formData.name;
+        data.ziwei_chart.shichen = convertTimeFormat(decimalHour); // 使用合并后的小时
+        data.natal_chart=JSON.parse(data.natal_chart) || {}; // 确保 natal_chart 存在
+        data.natal_chart.name = formData.name;
+        data.natal_chart.shichen = convertTimeFormat(decimalHour); // 使用合并后的小时        
         // 渲染命盘
         renderChart(data, formData);
         // 成功生成命盘后隐藏输入区域

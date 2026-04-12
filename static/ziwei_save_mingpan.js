@@ -139,7 +139,9 @@
                 birthHour: document.getElementById('birthHour').value,
                 birthMinute: document.getElementById('birthMinute').value, // 新增分钟字段
                 gender: document.getElementById('gender').value,
-                birthPlace: document.getElementById('birthPlace').value
+                birthPlace: document.getElementById('birthPlace').value,
+                // 新增：natalTime
+                natalTime: document.getElementById('natalTime').value.trim() || ''
             };
         }
 
@@ -283,7 +285,8 @@
             document.getElementById('birthMinute').value = data.birthMinute || 0; // 新增分钟字段，默认为0
             document.getElementById('gender').value = data.gender;
             document.getElementById('birthPlace').value = data.birthPlace;
-            
+            // 新增：加载 natalTime
+            document.getElementById('natalTime').value = data.natalTime || '';            
             // 更新天干显示和真太阳时
             updateTrueSolar();
         }

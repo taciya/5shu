@@ -355,7 +355,7 @@ function copyToClipboard(text) {
     });
 }
 // 渲染命盘
-function renderChart(data,formData) {
+function renderChart(mixData,formData) {
     // 清空现有宫位
     const chartGrid = document.getElementById('chartGrid');
     if (!chartGrid) {
@@ -363,7 +363,7 @@ function renderChart(data,formData) {
         return;
     }
     chartGrid.innerHTML = '';
-
+    const data = mixData.ziwei_chart; // 使用混合数据中的命盘数据
     // 创建中心区域
     const centerCell = document.createElement('div');
     centerCell.className = 'center-cell';
@@ -410,11 +410,12 @@ function renderChart(data,formData) {
     `;
 
     chartGrid.appendChild(centerCell);
-
+    const natalData = mixData.natal_chart; // 原局命盘数据（如果需要使用）
     // 创建十二宫
     if (data.palaces && Array.isArray(data.palaces)) {
+        
         data.palaces.forEach(palace => {
-            const palaceElement = createPalaceElement(palace,data.three_level_hexagram);
+            const palaceElement = createPalaceElement(palace,data.three_level_hexagram,natalData.palaces);
             if (palaceElement) {
                 chartGrid.appendChild(palaceElement);
             }
@@ -654,12 +655,21 @@ function findStarByName(palaces, starName) {
 }
 
 // 创建宫位元素
-function createPalaceElement(palace,three_level_hexagram) {
+function createPalaceElement(palace,three_level_hexagram,natalPalaces) {
     if (!palace) return null;
 
     const palaceElement = document.createElement('div');
     palaceElement.className = 'palace';
     palaceElement.id = palaceIdMap[palace.dizhi] || '';
+    const NatalPalace = natalPalaces ? natalPalaces.find(p => p.dizhi === palace.dizhi) : null;
+    if (NatalPalace) {
+        palaceElement.natalPalaceName = NatalPalace.name || '';
+        palaceElement.natalDizhi = NatalPalace.dizhi || '';
+        palaceElement.natalGan = NatalPalace.gan || '';
+        palaceElement.dataset.natalPalaceName = NatalPalace.name || '';
+        palaceElement.dataset.natalDizhi = NatalPalace.dizhi || '';
+        palaceElement.dataset.natalGan = NatalPalace.gan || '';
+    }
     // 初始化CSS变量
     palaceElement.style.setProperty('--main-stars-width', '0px');
     palaceElement.style.setProperty('--minor-stars-width', '0px');
@@ -1392,6 +1402,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 birthDay: formData.birthDay,
                 birthHour: formData.birthHour,
                 birthMinute: formData.birthMinute,
+                natalYear: formData.natalYear,
+                natalMonth: formData.natalMonth,
+                natalDay: formData.natalDay,
+                natalHour: formData.natalHour,
+                natalMinute: formData.natalMinute,
                 birthHour_decimal: formData.birthHour_decimal, // 保持小数小时格式
                 birthPlace: formData.birthPlace,
                 password: passwordInfo.password,
@@ -3352,9 +3367,11 @@ function editFeigongstr(feigongstr) {
         const dayunName = palaceEl.dayunName || '无';
         // 提取流年名称（来自palaceEl的liunianName属性，由updatePalaceLiunianName设置）
         const liunianName = palaceEl.liunianName || '无';
+
+        const natalPalaceName = palaceEl.natalPalaceName; // 原局宫位名称（如“财帛宫”）
         // 存入Map（键：宫位名称，值：大运/流年信息）
         
-        palaceInfoMap.set(ageRange, { dayunName, liunianName });
+        palaceInfoMap.set(ageRange, { dayunName, liunianName ,natalPalaceName});
     }); 
 
     const blocks = [];
@@ -3380,11 +3397,12 @@ function editFeigongstr(feigongstr) {
         const ageRange = ageRangeMatch[1]; // 年龄范围（如“86-95”）
 
         // 从Map中获取该宫位的大运/流年信息
-        const { dayunName, liunianName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无' };
+        const { dayunName, liunianName,natalPalaceName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无', natalPalaceName: '无' };
         // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
         const insertLines = [
             `  大运宫位: ${dayunName}`,  // 前缀2空格
-            `  流年宫位: ${liunianName}`   // 前缀2空格
+            `  流年宫位: ${liunianName}`,   // 前缀2空格
+            `  原局宫位: ${natalPalaceName||'无'}` // 前缀2空格
         ];
         const insertContent = insertLines.join('\n'); // 用换行符拼接
 
@@ -3394,7 +3412,7 @@ function editFeigongstr(feigongstr) {
         const shengongLineIndex = lines.findIndex(line => line.startsWith('  身宫标记: '));
         if (shengongLineIndex !== -1) {
             // 在身宫标记行之后插入
-            lines.splice(shengongLineIndex + 1, 0, insertContent.split('\n')[0], insertContent.split('\n')[1]);
+            lines.splice(shengongLineIndex + 1, 0, insertContent.split('\n')[0], insertContent.split('\n')[1], insertContent.split('\n')[2]);
         }
 
         // 重组块内容
@@ -3404,3 +3422,63 @@ function editFeigongstr(feigongstr) {
     return updatedBlocks.join('\n'); // 将所有块重新组合成完整的字符串
 }
 // <<<<<<<<<<<<<<<<<<大运 + 流年
+
+function getNatalPalaceFromDIzhi(natalPalaces, dizhi) {
+    /**
+     * 根据地支(dizhi)从命盘宫位数组中查找对应的宫位
+     * 
+     * 参数说明：
+     * 1. natalPalaces: 命盘宫位数组
+     *    - 数据结构示例：
+     *      [
+     *        {
+     *          "name": "命宫",
+     *          "dizhi": "子", 
+     *          "gan": "甲"
+     *        },
+     *        {
+     *          "name": "兄弟宫",
+     *          "dizhi": "丑",
+     *          "gan": "乙"
+     *        },
+     *        // ... 共12个宫位
+     *      ]
+     * 2. dizhi: 要查找的地支字符串
+     *    - 取值范围：["子", "丑", "寅", "卯", "辰", "巳", 
+     *               "午", "未", "申", "酉", "戌", "亥"]
+     * 
+     * 返回值：
+     * - 如果找到匹配的宫位，返回完整的宫位对象
+     * - 如果未找到，返回null
+     */
+    
+    // 1. 参数验证
+    if (!Array.isArray(natalPalaces)) {
+        console.error("natalPalaces 必须是数组");
+        return null;
+    }
+    
+    if (typeof dizhi !== 'string' || dizhi.trim() === '') {
+        console.error("dizhi 必须是有效的字符串");
+        return null;
+    }
+    
+    // 清理输入参数
+    const targetDizhi = dizhi.trim();
+    
+    // 2. 使用数组的find方法查找匹配的宫位
+    const foundPalace = natalPalaces.find(palace => {
+        // 验证宫位对象的结构
+        if (!palace || typeof palace !== 'object') {
+            return false;
+        }
+        
+        // 比较地支，不区分大小写
+        return palace.dizhi && 
+               typeof palace.dizhi === 'string' && 
+               palace.dizhi.trim() === targetDizhi;
+    });
+    
+    // 3. 返回结果
+    return foundPalace !== undefined ? foundPalace : null;
+}

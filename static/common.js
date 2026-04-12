@@ -113,6 +113,9 @@ function formatHour(hour) {
     return `${hours}:${minutes}`;
 }
 function calculateTrueSolarTime(year, month, day, hour, minute, birthPlace) {
+    if (!isOperable(year) || !isOperable(month) || !isOperable(day) || !isOperable(hour) || !isOperable(minute)) {  
+        return { year: 0, month: 0, day: 0, hour: 0, minute: 0 }; // 返回原始输入，保持向后兼容
+    }
     
     // 获取出生地经度（默认为北京）
     const longitude = CITY_LONGITUDE[birthPlace] || 116.4;
@@ -1393,4 +1396,40 @@ function replaceSpaces(str, replacement = '') {
   if (typeof str !== 'string') return str;
   // 正则匹配所有普通空格（/ /g），全局替换为目标字符
   return str.replace(/ /g, replacement);
+}
+
+// 解析 natalTime 输入
+function parseNatalTime(natalTimeStr) {
+    if (!natalTimeStr) {
+        return null; 
+    }
+    
+    // 支持多种格式：YYYY/MM/DD HH:MM, YYYY-MM-DD HH:MM, YYYY/MM/DD HH, YYYY/MM/DD
+    const formats = [
+        /^(\d{4})[/-](\d{1,2})[/-](\d{1,2}) (\d{1,2}):(\d{1,2})$/,
+        /^(\d{4})[/-](\d{1,2})[/-](\d{1,2}) (\d{1,2})$/,
+        /^(\d{4})[/-](\d{1,2})[/-](\d{1,2})$/
+    ];
+    
+    for (const format of formats) {
+        const match = natalTimeStr.match(format);
+        if (match) {
+            const year = parseInt(match[1]);
+            const month = parseInt(match[2]);
+            const day = parseInt(match[3]);
+            const hour = match[4] ? parseInt(match[4]) : 0;  // 默认为0时
+            const minute = match[5] ? parseInt(match[5]) : 0;  // 默认为0分
+            
+            // 验证数据有效性
+            if (year < 1 || year > 9999) throw new Error('年份必须在1-9999之间');
+            if (month < 1 || month > 12) throw new Error('月份必须在1-12之间');
+            if (day < 1 || day > 31) throw new Error('日期必须在1-31之间');
+            if (hour < 0 || hour >= 24) throw new Error('小时必须在0-23之间');
+            if (minute < 0 || minute >= 60) throw new Error('分钟必须在0-59之间');
+            
+            return { year, month, day, hour, minute };
+        }
+    }
+    
+    throw new Error('时间格式错误，请使用 YYYY/MM/DD HH:MM 格式');
 }
