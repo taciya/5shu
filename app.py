@@ -47,6 +47,7 @@ def generate_ziwei():
         minute_int = int(birth_minute)
 
         # 创建紫微斗数命盘实例
+        print(f"/generate_ziwei 生成命盘参数: {birth_year}-{birth_month}-{birth_day} {hour_int}:{minute_int} 性别: {gender}")
         chart = ZiweiChart(birth_year, birth_month, birth_day, hour_int, minute_int, gender)
 
         # 获取JSON格式的命盘数据
@@ -89,13 +90,12 @@ def export_feigong():
         birth_hour = data.get('birthHour')
         birth_minute = data.get('birthMinute')
         gender = data.get('gender', 'male')
-        print(birth_year, birth_month, birth_day, birth_hour, birth_minute, gender)
         if not all([birth_year, birth_month, birth_day, birth_hour]):
             return jsonify({'success': False, 'message': '参数不完整'}), 400
         
         hour_int = int(birth_hour)
         minute_int = int(birth_minute) if birth_minute else 0
-
+        print(f"/export_feigong 生成命盘参数: {birth_year}-{birth_month}-{birth_day} {hour_int}:{minute_int} 性别: {gender}")
         chart = ZiweiChart(birth_year, birth_month, birth_day, hour_int, minute_int, gender)
         
         # 使用专门的方法生成feigong_str

@@ -1394,7 +1394,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 birthMinute: formData.birthMinute,
                 birthHour_decimal: formData.birthHour_decimal, // 保持小数小时格式
                 birthPlace: formData.birthPlace,
-                password: passwordInfo.password
+                password: passwordInfo.password,
+                gender: formData.gender
             };            
             // 验证必填参数
             if (!chartParams.birthYear || !chartParams.birthMonth || !chartParams.birthDay) {
@@ -3271,7 +3272,7 @@ function getDizhiByGan(data, targetGan) {
     return foundPalace ? foundPalace.dizhi : null;
 }
 
-function editFeigongstr(feigongstr) {
+function editFeigongstr_bak(feigongstr) {
     // 获取所有宫位元素（DOM层）
     const palaceElements = document.querySelectorAll('.palace');
     // 存储宫位名称与对应的大运/流年信息（键值对：宫位名称→{dayunName, liunianName}）
@@ -3285,6 +3286,7 @@ function editFeigongstr(feigongstr) {
         // 提取流年名称（来自palaceEl的liunianName属性，由updatePalaceLiunianName设置）
         const liunianName = palaceEl.liunianName || '无';
         // 存入Map（键：宫位名称，值：大运/流年信息）
+        
         palaceInfoMap.set(ageRange, { dayunName, liunianName });
     }); 
 
@@ -3331,6 +3333,72 @@ function editFeigongstr(feigongstr) {
             // lines.push(insertContent.trim().split('\n')[0], insertContent.trim().split('\n')[1]);
         }
         
+        // 重组块内容
+        return lines.join('\n');
+    });
+
+    return updatedBlocks.join('\n'); // 将所有块重新组合成完整的字符串
+}
+function editFeigongstr(feigongstr) {
+    // 获取所有宫位元素（DOM层）
+    const palaceElements = document.querySelectorAll('.palace');
+    // 存储宫位名称与对应的大运/流年信息（键值对：宫位名称→{dayunName, liunianName}）
+    const palaceInfoMap = new Map();
+
+    palaceElements.forEach(palaceEl => {
+        // 提取宫位名称（如“财帛宫”，来自.palace-name元素）
+        const ageRange = palaceEl.querySelector('.age-range').textContent.trim();
+        // 提取大运名称（来自palaceEl的dayunName属性，由updatePalaceDayunName设置）
+        const dayunName = palaceEl.dayunName || '无';
+        // 提取流年名称（来自palaceEl的liunianName属性，由updatePalaceLiunianName设置）
+        const liunianName = palaceEl.liunianName || '无';
+        // 存入Map（键：宫位名称，值：大运/流年信息）
+        
+        palaceInfoMap.set(ageRange, { dayunName, liunianName });
+    }); 
+
+    const blocks = [];
+    let currentBlock = '';
+    feigongstr.split('\n').forEach(line => {
+        // 如果行匹配宫位块开头（如“财帛宫 (乙卯) [86-95岁]:”），则开始新块
+        if (line.match(/^[^\()]+? \([^)]+\) \[[^\]]+\]:$/)) {
+            if (currentBlock) blocks.push(currentBlock);
+            currentBlock = line + '\n';
+        } else {
+            currentBlock += line + '\n';
+        }
+    });
+    if (currentBlock) blocks.push(currentBlock); // 添加最后一个块
+
+    // 遍历所有宫位块，修改内容
+    const updatedBlocks = blocks.map(block => {
+        console.log(`Processing block:\n${block}\n---`); // 调试输出当前块内容
+        // 提取宫位名称（如“财帛宫”，从块的第一行获取）
+        const firstLine = block.split('\n')[0];
+
+        const ageRangeMatch = firstLine.match(/\[(.+)岁\]/); // 匹配“age-range”部分
+        if (!ageRangeMatch) return block; // 无法识别，跳过
+        const ageRange = ageRangeMatch[1]; // 年龄范围（如“86-95”）
+
+        // 从Map中获取该宫位的大运/流年信息
+        const { dayunName, liunianName } = palaceInfoMap.get(ageRange) || { dayunName: '无', liunianName: '无' };
+        console.log(`Processing block for age range: ${ageRange}, dayunName: ${dayunName}, liunianName: ${liunianName}`);
+        // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
+        const insertLines = [
+            `  大运宫位: ${dayunName}`,  // 前缀2空格
+            `  流年宫位: ${liunianName}`   // 前缀2空格
+        ];
+        const insertContent = insertLines.join('\n'); // 用换行符拼接
+
+        // 在块的末尾（身宫标记之后）插入内容
+        // 找到“身宫标记: ”的行，在其后添加insertContent
+        const lines = block.split('\n');
+        const shengongLineIndex = lines.findIndex(line => line.startsWith('  身宫标记: '));
+        if (shengongLineIndex !== -1) {
+            // 在身宫标记行之后插入
+            lines.splice(shengongLineIndex + 1, 0, insertContent.split('\n')[0], insertContent.split('\n')[1]);
+        }
+
         // 重组块内容
         return lines.join('\n');
     });

@@ -39,7 +39,7 @@ class ZiweiChart:
         utils = CalendarUtils()
         # 测试闰月数据
         self.lunar_info=utils.get_lunar_info(self.year, self.month, self.day, self.hour, self.minute)
-        print(self.lunar_info)
+        # print(self.lunar_info)
 
         # 初始化十二宫位
         self.palaces = [Palace(b) for b in DIZHI_ORDER]
