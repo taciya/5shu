@@ -55,7 +55,7 @@
                 </div>
                 <div class="time-input-row second-row"> 
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="trueSolarText">⭐真太阳时</label>
+                        <label for="trueSolarText">真太阳时</label>
                         <div id="trueSolarText" class="form-control" style="font-size: 12px; min-height: 38px; display: flex; align-items: center; justify-content: center;"></div>
                     </div>                      
                     <div class="time-input-group" style="flex: 1;">
@@ -66,19 +66,21 @@
 
                 <div class="time-input-row second-row">    
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="gender">性 别</label>
+                        <label for="gender">⭐性&nbsp;&nbsp;别</label>
                         <select id="gender" class="form-control" required>
                             <option value="male">男</option>
                             <option value="female">女</option>
                         </select>
                     </div>
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="birthPlace">出生地</label>
+                        <label for="birthPlace">⭐出生地</label>
                         <input type="text" id="birthPlace" class="form-control" placeholder="例如：北京" required value="吉林">
                     </div>
                     <div class="time-input-group" style="flex: 2; display: flex; align-items: center; justify-content: flex-end;">
                         <button type="button" id="randomTimeBtn" class="btn btn-random btn-jiagao">随机时间</button>
-                        &nbsp;
+                    <!-- </div>
+                    <div class="time-input-group" style="flex: 1; align-items: center; justify-content: flex-end;"></div> -->
+                        &nbsp;&nbsp;
                         <button type="submit" id="submitBtn" class="btn btn-jiagao">生成命盘</button>
                     </div>
                 </div>
@@ -88,12 +90,13 @@
             <!-- 新增保存和分类区域 -->
             <div class="save-section">
                 <div class="save-controls">
-                    <button type="button" id="saveBtn" class="btn btn-save">保存命盘</button>
+                    <input type="text" id="saveText" class="form-control" placeholder="私有分类" />
                     <select id="categorySelect" class="category-select">
                         <option value="all">全部</option>
                         <option value="new">新分类</option>
                         <!-- 其他分类将从服务器动态加载 -->
                     </select>
+                    <button type="button" id="saveBtn" class="btn btn-save">保存命盘</button>
                 </div>
                 <div id="savedList" class="saved-list">
                     <div class="empty-list">暂无保存的命盘</div>

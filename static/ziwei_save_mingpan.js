@@ -70,18 +70,8 @@
         // 保存命盘
         async function saveMingpan() {
             const formData = collectFormData();
-            const category = document.getElementById('categorySelect').value;
-            
-            if (!formData.birthYear || !formData.birthMonth || !formData.birthDay) {
-                alert('请先填写完整的出生信息');
-                return;
-            }
-            
-            // 确保分钟字段有值
-            if (!formData.birthMinute) {
-                formData.birthMinute = 0;
-            }
-            
+            const category = document.getElementById('categorySelect').value;            
+          
             // 准备要保存的数据
             const saveData = {
                 category: category === 'all' ? '未知' : category,
@@ -133,14 +123,9 @@
         function collectFormData() {
             return {
                 name: document.getElementById('name').value,
-                birthYear: document.getElementById('birthYear').value,
-                birthMonth: document.getElementById('birthMonth').value,
-                birthDay: document.getElementById('birthDay').value,
-                birthHour: document.getElementById('birthHour').value,
-                birthMinute: document.getElementById('birthMinute').value, // 新增分钟字段
+                birthTime: document.getElementById('birthTime').value , // 组合出生时间
                 gender: document.getElementById('gender').value,
                 birthPlace: document.getElementById('birthPlace').value,
-                // 新增：natalTime
                 natalTime: document.getElementById('natalTime').value.trim() || ''
             };
         }
@@ -177,19 +162,13 @@
                 mingpanList.forEach(item => {
                     const itemElement = document.createElement('div');
                     itemElement.className = 'saved-item';
-                    itemElement.setAttribute('data-id', item.id);
-                    
-                    // 格式化时间显示，包含分钟
-                    const hour = parseInt(item.data.birthHour) || 0;
-                    const minute = parseInt(item.data.birthMinute) || 0;
-                    const timeDisplay = formatTimeWithMinutes(hour, minute);
-                    
+                    itemElement.setAttribute('data-id', item.id);                    
+                   
                     itemElement.innerHTML = `
                         <div class="saved-item-header">
                             <span class="saved-item-name">${item.name}</span>
                             <div class="saved-item-details">
-                                ${item.data.birthYear}年${item.data.birthMonth}月${item.data.birthDay}日 ${timeDisplay}
-                                (${item.data.gender === 'male' ? '男' : '女'})
+                                ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
                             </div>
                             <span class="saved-item-category">${item.category}</span> 
                             <button class="btn-delete" title="删除命盘记录">-</button>                           
@@ -278,11 +257,7 @@
             // 确保数据包含分钟字段
             const completeData = ensureMinuteField(data);            
             document.getElementById('name').value = data.name || '';
-            document.getElementById('birthYear').value = data.birthYear;
-            document.getElementById('birthMonth').value = data.birthMonth;
-            document.getElementById('birthDay').value = data.birthDay;
-            document.getElementById('birthHour').value = data.birthHour;
-            document.getElementById('birthMinute').value = data.birthMinute || 0; // 新增分钟字段，默认为0
+            document.getElementById('birthTime').value = data.birthTime;
             document.getElementById('gender').value = data.gender;
             document.getElementById('birthPlace').value = data.birthPlace;
             // 新增：加载 natalTime

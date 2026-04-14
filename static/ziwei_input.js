@@ -429,7 +429,7 @@ function generateRandomTime() {
         updateTrueSolar();
     }
     // 同时生成命盘
-    submitForm();
+    // submitForm();
 }
 
 
@@ -445,54 +445,54 @@ function generateRandomTime() {
 // });
 
 // 当在一个输入框中输入达到最大字符数时，光标会自动切换到下一个输入框
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取所有日期时间输入框
-    const dateInputs = [
-        document.getElementById('birthYear'),
-        document.getElementById('birthMonth'),
-        document.getElementById('birthDay'),
-        document.getElementById('birthHour'),
-        document.getElementById('birthMinute')
-    ];
+// document.addEventListener('DOMContentLoaded', function() {
+//     // 获取所有日期时间输入框
+//     const dateInputs = [
+//         document.getElementById('birthYear'),
+//         document.getElementById('birthMonth'),
+//         document.getElementById('birthDay'),
+//         document.getElementById('birthHour'),
+//         document.getElementById('birthMinute')
+//     ];
     
     
-    // 为每个日期时间输入框添加事件监听
-    dateInputs.forEach((input, index) => {
-        // 输入事件 - 限制输入为数字
-        input.addEventListener('input', function() {
-            // 移除非数字字符
-            this.value = this.value.replace(/\D/g, '');            
+//     // 为每个日期时间输入框添加事件监听
+//     dateInputs.forEach((input, index) => {
+//         // 输入事件 - 限制输入为数字
+//         input.addEventListener('input', function() {
+//             // 移除非数字字符
+//             this.value = this.value.replace(/\D/g, '');            
             
-            // 检查是否达到最大长度
-            if (this.value.length >= parseInt(this.getAttribute('maxlength'))) {
-                // 如果是最后一个输入框，不切换
-                if (index < dateInputs.length - 1) {
-                    // 自动聚焦到下一个输入框
-                    dateInputs[index + 1].focus();
-                }
-            }
-        });
+//             // 检查是否达到最大长度
+//             if (this.value.length >= parseInt(this.getAttribute('maxlength'))) {
+//                 // 如果是最后一个输入框，不切换
+//                 if (index < dateInputs.length - 1) {
+//                     // 自动聚焦到下一个输入框
+//                     dateInputs[index + 1].focus();
+//                 }
+//             }
+//         });
         
-        // 按键事件 - 处理退格键
-        input.addEventListener('keydown', function(e) {
-            // 如果是退格键且输入框为空
-            if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
-                // 阻止默认行为，避免删除前一个字符
-                e.preventDefault();
-                // 聚焦到上一个输入框
-                dateInputs[index - 1].focus();
-            }
+//         // 按键事件 - 处理退格键
+//         input.addEventListener('keydown', function(e) {
+//             // 如果是退格键且输入框为空
+//             if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+//                 // 阻止默认行为，避免删除前一个字符
+//                 e.preventDefault();
+//                 // 聚焦到上一个输入框
+//                 dateInputs[index - 1].focus();
+//             }
             
-            // 处理左箭头键
-            if (e.key === 'ArrowLeft' && this.selectionStart === 0 && index > 0) {
-                dateInputs[index - 1].focus();
-            }
+//             // 处理左箭头键
+//             if (e.key === 'ArrowLeft' && this.selectionStart === 0 && index > 0) {
+//                 dateInputs[index - 1].focus();
+//             }
             
-            // 处理右箭头键
-            if (e.key === 'ArrowRight' && this.selectionStart === this.value.length && index < dateInputs.length - 1) {
-                dateInputs[index + 1].focus();
-            }
-        });
+//             // 处理右箭头键
+//             if (e.key === 'ArrowRight' && this.selectionStart === this.value.length && index < dateInputs.length - 1) {
+//                 dateInputs[index + 1].focus();
+//             }
+//         });
         
-    });
-});
+//     });
+// });
