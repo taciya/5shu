@@ -1360,9 +1360,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 导出按钮点击事件
     exportBtn.addEventListener('click', async function() {
-        const exportBtn = this;
-        const formData = JSON.parse(exportBtn.formData); // 从按钮属性获取命盘参数
-        const originalText = exportBtn.textContent;
+        const thisBtn = this;
+        const formData = JSON.parse(thisBtn.formData); // 从按钮属性获取命盘参数
+        const originalText = thisBtn.textContent;
         // 填充文本内容
         // exportText.textContent = feigong_str;
         // 显示模态框
@@ -1371,8 +1371,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const clipboardHelper = new ClipboardHelper();
         try {
             // 显示加载状态
-            exportBtn.textContent = '生成中...';
-            exportBtn.disabled = true;
+            thisBtn.textContent = '生成中...';
+            thisBtn.disabled = true;
 
             let passwordInfo;
             
@@ -1390,8 +1390,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (!passwordInfo) {
                     // 用户取消输入
-                    exportBtn.textContent = originalText;
-                    exportBtn.disabled = false;
+                    thisBtn.textContent = originalText;
+                    thisBtn.disabled = false;
                     return;
                 }
             }
@@ -1450,14 +1450,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await clipboardHelper.copyText(fullContent);
             
             if (result.success) {
-                exportBtn.textContent = '已复制';
+                thisBtn.textContent = '已复制';
 
             } else {
                 // 复制失败，提供手动复制选项
-                exportBtn.textContent = '请手动复制';
+                thisBtn.textContent = '请手动复制';
                 setTimeout(() => {
-                    exportBtn.textContent = originalText;
-                    exportBtn.disabled = false;
+                    thisBtn.textContent = originalText;
+                    thisBtn.disabled = false;
                 }, 2000);
                 
                 clipboardHelper.showCopyFallback(fullContent);
@@ -1465,14 +1465,14 @@ document.addEventListener('DOMContentLoaded', function() {
              
         } catch (error) {
             console.error('导出失败:', error);
-            exportBtn.textContent = '导出失败';
+            thisBtn.textContent = '导出失败';
             showError('导出失败: ' + error.message);
         } finally {
             // 2秒后恢复按钮状态
             setTimeout(() => {
-                if (exportBtn.textContent !== '请手动选择复制') {
-                    exportBtn.textContent = originalText;
-                    exportBtn.disabled = false;
+                if (thisBtn.textContent !== '请手动选择复制') {
+                    thisBtn.textContent = originalText;
+                    thisBtn.disabled = false;
                 }
             }, 2000);
         }

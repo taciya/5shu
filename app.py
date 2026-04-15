@@ -112,7 +112,7 @@ def export_feigong():
         birth_hour = data.get('birthHour')
         birth_minute = data.get('birthMinute')
         gender = data.get('gender', 'male')
-        if not all([birth_year, birth_month, birth_day, birth_hour]):
+        if  all(v is  None and v != False and v == "" for v in [birth_year, birth_month, birth_day, birth_hour]):
             return jsonify({'success': False, 'message': '参数不完整'}), 400
         
         hour_int = int(birth_hour)
