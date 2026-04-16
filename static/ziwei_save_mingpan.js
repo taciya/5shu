@@ -235,17 +235,17 @@
             let bgColor, borderColor, textColor = '#333';
             
             if (item.is_own) {
-                // 自己的命盘 - 浅蓝色背景
-                bgColor = '#e3f2fd';  // 淡蓝色
-                borderColor = '#2196f3';  // 蓝色边框
+                // 自己的命盘 - 默认背景
+                bgColor = '#f5f5f5';  
+                borderColor = '#ddd';  
             } else if (isVerified) {
                 // 他人的命盘（已验证状态） - 浅绿色背景
                 bgColor = '#e8f5e9';  // 淡绿色
                 borderColor = '#4caf50';  // 绿色边框
             } else {
                 // 默认样式
-                bgColor = '#f5f5f5';
-                borderColor = '#ddd';
+                bgColor = '#e3f2fd';  // 淡蓝色
+                borderColor = '#2196f3';  // 蓝色边框
             }            
             // 应用样式
             itemElement.style.cssText = `
@@ -258,14 +258,14 @@
                 cursor: pointer;
                 transition: all 0.2s ease;
                 color: ${textColor};
-                align-items: center;
+                align-items: center;                
             `;            
             itemElement.innerHTML = `
                 <div class="saved-item-header">
                     <div class="saved-item-title">
                         <span class="saved-item-name">${item.name || '未命名'}</span>
                     </div>
-                    <div class="saved-item-details">
+                    <div class="saved-item-details" style="justify-content: center; ">
                         ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
                     </div>
                     <div class="saved-item-meta">
