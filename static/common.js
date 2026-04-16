@@ -1494,3 +1494,140 @@ function formatToStandard(inputId) {
         input.value = formatted;
     }
 }
+
+
+// 终端标识生成和管理
+class DeviceIdentifier {
+    constructor() {
+        this.STORAGE_KEY = 'ziwei_device_id';
+        this.DEVICE_TYPE_KEY = 'ziwei_device_type';
+    }
+    
+    // 生成固定终端ID
+    generateDeviceId() {
+        // 1. 尝试从localStorage获取现有ID
+        let deviceId = localStorage.getItem(this.STORAGE_KEY);
+        
+        if (deviceId) {
+            return deviceId;
+        }
+        
+        // 2. 生成新的终端ID（基于浏览器指纹+时间戳+随机数）
+        const components = [];
+        
+        // 浏览器信息
+        components.push(navigator.userAgent);
+        components.push(navigator.platform);
+        components.push(navigator.language);
+        components.push(screen.width + 'x' + screen.height);
+        
+        // 时间戳
+        components.push(Date.now().toString());
+        
+        // 随机数
+        components.push(Math.random().toString(36).substr(2, 9));
+        
+        // 计算哈希
+        const combined = components.join('|');
+        deviceId = this.hashString(combined);
+        
+        // 保存到localStorage
+        localStorage.setItem(this.STORAGE_KEY, deviceId);
+        
+        return deviceId;
+    }
+    
+    // 哈希函数
+    hashString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // 转换为32位整数
+        }
+        return 'device_' + Math.abs(hash).toString(36);
+    }
+    
+    // 获取设备类型
+    getDeviceType() {
+        const ua = navigator.userAgent;
+        if (/Mobile|Android|iPhone|iPad|iPod|Windows Phone/i.test(ua)) {
+            return 'mobile';
+        } else if (/Tablet|iPad/i.test(ua)) {
+            return 'tablet';
+        } else {
+            return 'pc';
+        }
+    }
+    
+    // 保存设备类型
+    saveDeviceType() {
+        const deviceType = this.getDeviceType();
+        localStorage.setItem(this.DEVICE_TYPE_KEY, deviceType);
+        return deviceType;
+    }
+    
+    // 获取设备信息
+    getDeviceInfo() {
+        return {
+            id: this.generateDeviceId(),
+            type: this.getDeviceType(),
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            screen: `${screen.width}x${screen.height}`
+        };
+    }
+}
+
+// 全局设备标识器实例
+const deviceIdentifier = new DeviceIdentifier();
+
+// 在页面加载时初始化
+document.addEventListener('DOMContentLoaded', function() {
+    const deviceInfo = deviceIdentifier.getDeviceInfo();
+    console.log('设备信息:', deviceInfo);
+    deviceIdentifier.saveDeviceType();
+    
+    // 将设备ID存储在全局变量中
+    window.DEVICE_ID = deviceInfo.id;
+});
+
+
+// 密码验证管理
+class PasswordVerification {
+    constructor() {
+        this.STORAGE_KEY = 'ziwei_password_verified';
+    }
+    
+    // 检查今天是否已验证
+    isVerifiedToday() {
+        const verifiedData = localStorage.getItem(this.STORAGE_KEY);
+        if (!verifiedData) return false;
+        
+        try {
+            const data = JSON.parse(verifiedData);
+            const today = new Date().toDateString();
+            return data.date === today && data.verified === true;
+        } catch (e) {
+            return false;
+        }
+    }
+    
+    // 设置验证状态
+    setVerified(status) {
+        const data = {
+            verified: status,
+            date: new Date().toDateString(),
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+    }
+    
+    // 清除验证状态
+    clearVerification() {
+        localStorage.removeItem(this.STORAGE_KEY);
+    }
+}
+
+const passwordVerifier = new PasswordVerification();

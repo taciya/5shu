@@ -100,8 +100,7 @@ def export_feigong():
         utils = CalendarUtils()
         # 验证密码
         provided_password = data.get('password').strip()
-        print(provided_password,f'{EXPORT_PASSWORD}{utils.generate_mmdd_password()}')
-        if not provided_password or provided_password != f'{EXPORT_PASSWORD}{utils.generate_mmdd_password()}':
+        if utils.verify_password(provided_password):
             print('密码错误')
             # 密码错误，返回空响应
             return '', 401  # 401 Unauthorized
@@ -235,16 +234,57 @@ def get_all_categories():
 def get_mingpan():
     try:
         category = request.args.get('category', 'all')
+        device_id = request.args.get('device_id')
+        password = request.args.get('password', '')
+        if not device_id:
+            return jsonify({
+                "success": False,
+                "message": "缺少设备标识"
+            }), 400
+        utils = CalendarUtils()
+        # 检查密码验证
+        provided_password = password.strip()
+        if utils.verify_password(provided_password):       
+            is_verified = False
+        else:
+            is_verified = True
+
+
         data = read_data()
         items = data.get('items', [])
         
-        # 如果请求的是全部，则返回所有
-        if category == 'all':
-            return jsonify({"success": True, "data": items})
+        # 根据验证状态过滤数据
+        filtered_items = []
+        for item in items:
+            item_device_id = item.get('device_info', {}).get('device_id')
+            
+            # 添加是否为自己的命盘标记
+            item_copy = item.copy()
+            item_copy['is_own'] = (item_device_id == device_id)
+            
+            # 如果已验证，显示所有命盘
+            if is_verified:
+                filtered_items.append(item_copy)
+            # 否则只显示自己的命盘
+            elif item_device_id == device_id:
+                filtered_items.append(item_copy)
+                        
+        # 按分类筛选
+        if category != 'all':
+            filtered_items = [item for item in filtered_items if item.get('category') == category]
         
-        # 否则按分类筛选
-        filtered_items = [item for item in items if item.get('category') == category]
-        return jsonify({"success": True, "data": filtered_items})
+        return jsonify({
+            "success": True, 
+            "data": filtered_items,
+            "is_verified": is_verified,
+        })
+        # # 如果请求的是全部，则返回所有
+        # if category == 'all':
+        #     return jsonify({"success": True, "data": items})
+        
+        # # 否则按分类筛选
+        # filtered_items = [item for item in items if item.get('category') == category]
+        # return jsonify({"success": True, "data": filtered_items})
     except Exception as e:
         app.logger.error(f"获取命盘失败: {str(e)}")
         return jsonify({
@@ -259,6 +299,14 @@ def save_mingpan():
     try:
         # 获取请求数据
         new_data = request.json
+
+        # 验证设备ID
+        device_id = new_data.get('data', {}).get('deviceId')
+        if not device_id:
+            return jsonify({
+                "success": False,
+                "message": "缺少设备标识"
+            }), 400
         
         # 读取现有数据
         data = read_data()
@@ -283,6 +331,13 @@ def save_mingpan():
         new_data['id'] = new_id
         new_data['timestamp'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
+        # 添加设备信息
+        new_data['device_info'] = {
+            'device_id': device_id,
+            'device_type': new_data.get('data', {}).get('deviceType', 'unknown'),
+            'save_time': new_data.get('data', {}).get('saveTime')
+        }
+                
         # 添加到列表
         items.append(new_data)
         data['items'] = items

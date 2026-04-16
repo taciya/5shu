@@ -121,12 +121,19 @@
 
         // 收集表单数据
         function collectFormData() {
+            // 获取设备ID
+            const deviceId = window.DEVICE_ID || deviceIdentifier.generateDeviceId();
+            const deviceType = deviceIdentifier.getDeviceType();
             return {
                 name: document.getElementById('name').value,
                 birthTime: document.getElementById('birthTime').value , // 组合出生时间
                 gender: document.getElementById('gender').value,
                 birthPlace: document.getElementById('birthPlace').value,
-                natalTime: document.getElementById('natalTime').value.trim() || ''
+                natalTime: document.getElementById('natalTime').value.trim() || '',
+                // 添加设备信息
+                deviceId: deviceId,
+                deviceType: deviceType,
+                saveTime: new Date().toISOString()
             };
         }
 
@@ -136,8 +143,20 @@
             listContainer.innerHTML = '<div class="empty-list">正在加载命盘列表...</div>';
             
             try {
+                // 获取设备ID
+                const deviceId = window.DEVICE_ID || deviceIdentifier.generateDeviceId();
+                // 构建请求URL
+                let url = getApiBaseUrl() + `/get_mingpan?category=${encodeURIComponent(category)}&device_id=${encodeURIComponent(deviceId)}`;
+                let passwordInfo;
+                
+                // 检查今天是否已经验证过
+                if (isPasswordVerifiedToday()) {
+                    // 自动使用当前日期的密码
+                    url += '&password=' + getCurrentMMDDPassword();
+                } 
+
                 // 从后端获取命盘数据
-                const response = await fetch(getApiBaseUrl()+`/get_mingpan?category=${encodeURIComponent(category)}`);
+                const response = await fetch(url);
                 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -151,52 +170,144 @@
                 }
                 
                 const mingpanList = result.data || [];
-                
-                if (mingpanList.length === 0) {
-                    listContainer.innerHTML = '<div class="empty-list">暂无保存的命盘</div>';
-                    return;
-                }
-                
-                listContainer.innerHTML = '';
-                
-                mingpanList.forEach(item => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'saved-item';
-                    itemElement.setAttribute('data-id', item.id);                    
-                   
-                    itemElement.innerHTML = `
-                        <div class="saved-item-header">
-                            <span class="saved-item-name">${item.name}</span>
-                            <div class="saved-item-details">
-                                ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
-                            </div>
-                            <span class="saved-item-category">${item.category}</span> 
-                            <button class="btn-delete" title="删除命盘记录">-</button>                           
-                        </div>
-                    `;
+                const isVerified = result.is_verified || false;
+
+                // 更新验证状态
+                if (isVerified) {
+                    passwordVerifier.setVerified(true);
+                }         
+
+                // 渲染命盘列表
+                renderMingpanList(mingpanList, isVerified);
                     
-                    // 添加双击事件
-                    itemElement.addEventListener('dblclick', function() {
-                        loadMingpanToForm(item.data);
-                    });
-
-                    // 添加删除按钮事件
-                    const deleteBtn = itemElement.querySelector('.btn-delete');
-                    deleteBtn.addEventListener('click', function(e) {
-                        e.stopPropagation(); // 阻止冒泡到双击事件
-                        showDeleteDialog(item.id, item.name);
-                    });           
-
-                    listContainer.appendChild(itemElement);
-                });
-                
-                
-            } catch (error) {
-                console.error('加载命盘列表时出错:', error);
-                listContainer.innerHTML = `<div class="empty-list">加载失败: ${error.message}</div>`;
+                } catch (error) {
+                    console.error('加载命盘列表时出错:', error);
+                    listContainer.innerHTML = `<div class="empty-list">加载失败: ${error.message}</div>`;
+                }
+            }
+        // 渲染命盘列表
+        function renderMingpanList(mingpanList, isVerified) {
+            const listContainer = document.getElementById('savedList');
+            listContainer.innerHTML = '';
+            
+           
+            mingpanList.forEach(item => {
+                const itemElement = createMingpanItem(item, isVerified);
+                listContainer.appendChild(itemElement);
+            });
+            
+            // 如果没有命盘，显示提示
+            if (mingpanList.length === 0) {
+                listContainer.innerHTML = '<div class="empty-list">暂无保存的命盘</div>';
             }
         }
 
+        // 创建命盘列表项
+        function createMingpanItem(item, isVerified) {
+            const itemElement = document.createElement('div');
+            
+            // 基础CSS类
+            const baseClasses = ['saved-item'];
+            
+            // 如果是自己的命盘
+            if (item.is_own) {
+                baseClasses.push('own-item');
+            } else {
+                baseClasses.push('other-item');
+            }
+            
+            // 如果是已验证状态但不是自己的
+            if (isVerified && !item.is_own) {
+                baseClasses.push('verified-other');
+            }
+            
+            itemElement.className = baseClasses.join(' ');
+            itemElement.setAttribute('data-id', item.id);
+            
+            // 设备信息
+            const deviceInfo = item.device_info || {};
+            const deviceType = deviceInfo.device_type || 'unknown';
+            const deviceIcon = this.getDeviceIcon(deviceType);
+            
+            // 是否为当前设备
+            const isCurrentDevice = deviceInfo.device_id === window.DEVICE_ID;
+            // 设置背景颜色
+            let bgColor, borderColor, textColor = '#333';
+            
+            if (item.is_own) {
+                // 自己的命盘 - 浅蓝色背景
+                bgColor = '#e3f2fd';  // 淡蓝色
+                borderColor = '#2196f3';  // 蓝色边框
+            } else if (isVerified) {
+                // 他人的命盘（已验证状态） - 浅绿色背景
+                bgColor = '#e8f5e9';  // 淡绿色
+                borderColor = '#4caf50';  // 绿色边框
+            } else {
+                // 默认样式
+                bgColor = '#f5f5f5';
+                borderColor = '#ddd';
+            }            
+            // 应用样式
+            itemElement.style.cssText = `
+                background-color: ${bgColor};
+                border: 1px solid ${borderColor};
+                border-left: 4px solid ${borderColor};
+                border-radius: 6px;
+                padding: 12px;
+                margin-bottom: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                color: ${textColor};
+                align-items: center;
+            `;            
+            itemElement.innerHTML = `
+                <div class="saved-item-header">
+                    <div class="saved-item-title">
+                        <span class="saved-item-name">${item.name || '未命名'}</span>
+                    </div>
+                    <div class="saved-item-details">
+                        ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
+                    </div>
+                    <div class="saved-item-meta">
+                        <span class="saved-item-category">
+                            ${item.category}
+                        </span>                   
+                        <span class="device-info" title="${deviceType}设备">
+                            ${deviceIcon} 
+                            <!-- 
+                            ${isCurrentDevice ? '当前设备' : deviceType}    
+                            -->                          
+                        </span>
+                    </div>
+                    <button class="btn-delete" title="删除命盘记录">-</button>
+                </div>
+            `;
+            
+            // 添加双击事件
+            itemElement.addEventListener('dblclick', function() {
+                loadMingpanToForm(item.data);
+            });
+
+            // 添加删除按钮事件
+            const deleteBtn = itemElement.querySelector('.btn-delete');
+            deleteBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showDeleteDialog(item.id, item.name);
+            });
+            
+            return itemElement;
+        }
+
+        // 获取设备图标
+        function getDeviceIcon(deviceType) {
+            const iconMap = {
+                'mobile': '📱',
+                'tablet': '📱',
+                'pc': '💻',
+                'unknown': ''
+            };
+            return iconMap[deviceType] || '';
+        }
         // 新增：格式化时间显示（包含分钟）
         function formatTimeWithMinutes(hour, minute) {
             const h = hour.toString().padStart(2, '0');

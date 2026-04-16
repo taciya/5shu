@@ -233,3 +233,10 @@ class CalendarUtils:
             # 格式化为MMDD：月份和日期各两位，不足补零
             mmdd_password = date_obj.strftime('%m%d')
             return mmdd_password
+    
+   
+    def verify_password(self, password):
+        EXPORT_PASSWORD = '5shu'
+        # 验证密码
+        print(password,f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}')       
+        return password != f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}'
