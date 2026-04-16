@@ -492,6 +492,7 @@ function renderChart(mixData,formData) {
 
     const exportBtn = document.getElementById('exportBtn');
     exportBtn.formData = JSON.stringify(formData); // 将formData附加到导出按钮，供导出功能使用
+    clearDayunDisplays();   // 初始化时清空大运显示
 }
 
 function generateFeigongString() {
@@ -3060,7 +3061,7 @@ function clearDayunDisplays() {
         const palaceNameEl = palaceEl.querySelector('.palace-name');
         if (palaceNameEl) {
             // 获取原局宫位名称
-            const natalName = palaceEl.natalPalaceName || palaceEl.dataset.natalPalaceName ;
+            const natalName = palaceEl.natalPalaceName || '' ;
             const displayName = natalName.replace('宫', '') || '';
             
             // 创建原局宫位名称显示元素
