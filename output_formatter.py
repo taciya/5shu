@@ -117,7 +117,8 @@ class OutputFormatter:
                         for src in sources:
                             star = src['star']
                             source_palace = src['source_palace']
-                            feiru_arr.append(f"从<{source_palace}>飞入<{star}{sihua_type}{STAR_BRIGHTNESS_TABLE.get(sihua_type, {}).get(dizhi, '□')}%>")
+                            source_gan = src['source_gan']
+                            feiru_arr.append(f"从<{source_palace}({source_gan})>飞入<{star}{sihua_type}{STAR_BRIGHTNESS_TABLE.get(sihua_type, {}).get(dizhi, '□')}%>")
                 age_range = palace.age_range                 
 
                 return_str.append(f"{palace_name} ({gan}{dizhi}) [{age_range}岁]:")

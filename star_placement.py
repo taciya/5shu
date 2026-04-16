@@ -181,6 +181,7 @@ class StarPlacement:
                     feiru_map[target_dizhi][sihua_type].append({
                         'star': target_info['star'],
                         'source_palace': palace_name,
+                        'source_gan': target_info['source_gan'],
                         'source_dizhi': source_dizhi
                     })
         
@@ -231,7 +232,8 @@ class StarPlacement:
                     entry[sihua_type] = {
                         'target': target_dizhi,
                         'target_palace_name': target_palace_name,
-                        'star': star_name
+                        'star': star_name,
+                        'source_gan': gong_gan,
                     }
                 else:
                     entry[sihua_type] = None  # 未找到星曜时设置为 None
