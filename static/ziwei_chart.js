@@ -664,6 +664,7 @@ function createPalaceElement(palace,three_level_hexagram,natalPalaces) {
     const NatalPalace = natalPalaces ? natalPalaces.find(p => p.dizhi === palace.dizhi) : null;
     if (NatalPalace) {
         palaceElement.natalPalaceName = NatalPalace.name || '';
+        palaceElement.dataset.natalPalaceName = NatalPalace.name || '';
         palaceElement.natalDizhi = NatalPalace.dizhi || '';
         palaceElement.natalGan = NatalPalace.gan || '';
         palaceElement.dataset.natalPalaceName = NatalPalace.name || '';
@@ -3046,9 +3047,44 @@ function generateDayunSihua(data, dayunPalace) {
 function clearDayunDisplays() {
     /**
      * 移除所有宫位中的大运名称元素（palace-name-dayun）
-     * 天地规则：心念离开大运→卦象标记消散
+     * 并显示原局宫位名称
      */
-    document.querySelectorAll('.palace-name-dayun').forEach(el => el.remove());
+    document.querySelectorAll('.palace').forEach(palaceEl => {
+        // 1. 移除现有的大运显示元素
+        const dayunEl = palaceEl.querySelector('.palace-name-dayun');
+        if (dayunEl) {
+            dayunEl.remove();
+        }
+        
+        // 2. 显示原局宫位名称
+        const palaceNameEl = palaceEl.querySelector('.palace-name');
+        if (palaceNameEl) {
+            // 获取原局宫位名称
+            const natalName = palaceEl.natalPalaceName || palaceEl.dataset.natalPalaceName ;
+            const displayName = natalName.replace('宫', '') || '';
+            
+            // 创建原局宫位名称显示元素
+            const natalNameEl = document.createElement('div');
+            natalNameEl.className = 'palace-name-natal palace-name-dayun';
+            natalNameEl.textContent = displayName;
+            natalNameEl.style.cssText = `
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #8b4513;  /* 深棕色，与命盘主题一致 */
+                font-size: 12px;
+                white-space: nowrap;
+                z-index: 10;
+                background: rgba(255, 255, 255, 0.8);
+                padding: 0 4px;
+                border-radius: 2px;
+            `;
+            
+            // 插入到宫位名称上方
+            palaceNameEl.parentNode.insertBefore(natalNameEl, palaceNameEl);
+        }
+    });
 }
 
 

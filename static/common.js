@@ -1586,7 +1586,6 @@ const deviceIdentifier = new DeviceIdentifier();
 // 在页面加载时初始化
 document.addEventListener('DOMContentLoaded', function() {
     const deviceInfo = deviceIdentifier.getDeviceInfo();
-    console.log('设备信息:', deviceInfo);
     deviceIdentifier.saveDeviceType();
     
     // 将设备ID存储在全局变量中
