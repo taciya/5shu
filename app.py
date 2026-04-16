@@ -303,10 +303,7 @@ def save_mingpan():
         # 验证设备ID
         device_id = new_data.get('data', {}).get('deviceId')
         if not device_id:
-            return jsonify({
-                "success": False,
-                "message": "缺少设备标识"
-            }), 400
+            device_id = 'weizhi'
         
         # 读取现有数据
         data = read_data()
@@ -337,7 +334,7 @@ def save_mingpan():
             'device_type': new_data.get('data', {}).get('deviceType', 'unknown'),
             'save_time': new_data.get('data', {}).get('saveTime')
         }
-                
+
         # 添加到列表
         items.append(new_data)
         data['items'] = items
