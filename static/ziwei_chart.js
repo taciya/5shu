@@ -2565,7 +2565,7 @@ function bindPalaceNameEvents() {
     
     newPalaceNameElements.forEach(element => {
         const palaceName = element.textContent.replace('宫', '').trim();
-        const ganzhiElement = element.previousSibling ? element.previousSibling.querySelector('.ganzhi span') : null;
+        const ganzhiElement = element.parentElement && element.parentElement.querySelector('.ganzhi') ? element.parentElement.querySelector('.ganzhi') : null;
         // 点击事件
         element.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -3303,7 +3303,7 @@ function clearLiunianDisplays() {
     
     const liunianSelector = document.getElementById('liunianSelector');
     if (liunianSelector) {
-        liunianSelector.innerHTML = '<option value="">选择流年</option>';
+        liunianSelector.innerHTML = '<option value="">流年</option>';
         liunianSelector.disabled = true;
     }
 }
