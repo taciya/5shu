@@ -406,3 +406,47 @@ h2,hr{
 /* trueSolarText 容器样式调整 end------------------------- */
 
 
+/* 真太阳时容器样式 */
+.true-solar-container {
+    display: none; /* 默认隐藏 */
+    transition: all 0.3s ease;
+}
+
+.true-solar-container.visible {
+    display: flex; /* 显示时使用flex布局 */
+}
+
+/* 展开/闭合按钮样式 */
+.toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    border: 1px solid #d2b48c;
+    font-size: 16px;
+    font-weight: bold;
+    color: #8b4513;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.text-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+.toggle-btn:hover {
+    background-color: #8b4513;
+    color: white;
+    transform: scale(1.1);
+}
+
+.toggle-btn.expanded {
+    background-color: #8b4513;
+    color: white;
+}

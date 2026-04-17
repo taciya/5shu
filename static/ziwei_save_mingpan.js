@@ -39,7 +39,20 @@
             
             // 绑定新分类对话框按钮事件
             document.getElementById('confirmNewCategory').addEventListener('click', createNewCategory);
-            document.getElementById('cancelNewCategory').addEventListener('click', hideNewCategoryDialog);            
+            document.getElementById('cancelNewCategory').addEventListener('click', hideNewCategoryDialog);   
+            
+            // 绑定加密锁按钮事件
+            const lockBtn = document.getElementById('lockBtn');
+            if (lockBtn) {
+                lockBtn.addEventListener('click', function() {
+                    // 获取当前选中的分类
+                    const categorySelect = document.getElementById('categorySelect');
+                    const currentCategory = categorySelect.value;
+                    
+                    // 触发加载命盘列表，传递flg参数为true
+                    loadSavedMingpanList(currentCategory, true);
+                });
+            }            
         });
 
         // 从服务器加载所有分类
@@ -138,13 +151,14 @@
         }
 
         // 加载保存的命盘列表
-        async function loadSavedMingpanList(category = 'all') {
+        async function loadSavedMingpanList(category = 'all',flg=false) {
             const listContainer = document.getElementById('savedList');
             listContainer.innerHTML = '<div class="empty-list">正在加载命盘列表...</div>';
             
             try {
                 // 获取设备ID
                 const deviceId = window.DEVICE_ID || deviceIdentifier.generateDeviceId();
+             
                 // 构建请求URL
                 let url = getApiBaseUrl() + `/get_mingpan?category=${encodeURIComponent(category)}&device_id=${encodeURIComponent(deviceId)}`;
                 let passwordInfo;
@@ -152,9 +166,31 @@
                 // 检查今天是否已经验证过
                 if (isPasswordVerifiedToday()) {
                     // 自动使用当前日期的密码
-                    url += '&password=' + getCurrentMMDDPassword();
-                } 
+                    passwordInfo = {
+                        password: getCurrentMMDDPassword(),
+                        remember: true,
+                        autoFilled: true
+                    };                    
 
+                } else if (flg) {
+                    // 显示密码输入模态框
+                    passwordInfo = await showPasswordModalWithMemory();                    
+                    if (!passwordInfo) {
+                        passwordInfo = {
+                            password: '',
+                            remember: false,
+                            autoFilled: false
+                        };  
+                    }
+                }else {
+                    passwordInfo = {
+                        password: '',
+                        remember: false,
+                        autoFilled: false
+                    };                        
+                }
+                // 自动使用当前日期的密码
+                url += '&password=' + passwordInfo.password;
                 // 从后端获取命盘数据
                 const response = await fetch(url);
                 
@@ -172,10 +208,10 @@
                 const mingpanList = result.data || [];
                 const isVerified = result.is_verified || false;
 
-                // 更新验证状态
-                if (isVerified) {
-                    passwordVerifier.setVerified(true);
-                }         
+                // 密码验证成功，如果用户选择了"记住"，则标记今天已验证
+                if (passwordInfo.remember && !passwordInfo.autoFilled) {
+                    markPasswordVerifiedToday(passwordInfo.password);
+                }     
 
                 // 渲染命盘列表
                 renderMingpanList(mingpanList, isVerified);

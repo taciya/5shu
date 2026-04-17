@@ -496,3 +496,78 @@ function generateRandomTime() {
         
 //     });
 // });
+
+// 初始化真太阳时显示/隐藏功能
+function initTrueSolarToggle() {
+    const toggleBtn = document.getElementById('toggleSolarTimeBtn');
+    const trueSolarContainer = document.querySelector('.time-input-row.second-row');
+    
+    if (!toggleBtn || !trueSolarContainer) {
+        console.error('找不到切换按钮或真太阳时容器');
+        return;
+    }
+    
+    // 添加真太阳时容器类名
+    trueSolarContainer.classList.add('true-solar-container');
+    
+    // 初始化状态：默认隐藏
+    let isExpanded = false;
+    toggleBtn.textContent = '+';
+    trueSolarContainer.classList.remove('visible');
+    
+    // 点击事件
+    toggleBtn.addEventListener('click', function() {
+        isExpanded = !isExpanded;
+        
+        if (isExpanded) {
+            // 展开状态
+            this.textContent = '-';
+            this.classList.add('expanded');
+            trueSolarContainer.classList.add('visible');
+            
+            // 添加动画效果
+            trueSolarContainer.style.opacity = '0';
+            trueSolarContainer.style.height = '0';
+            trueSolarContainer.style.overflow = 'hidden';
+            
+            // 获取容器实际高度
+            const height = trueSolarContainer.scrollHeight;
+            
+            // 使用requestAnimationFrame确保动画流畅
+            requestAnimationFrame(() => {
+                trueSolarContainer.style.transition = 'opacity 0.3s ease, height 0.3s ease';
+                trueSolarContainer.style.opacity = '1';
+                trueSolarContainer.style.height = height + 'px';
+            });
+            
+            // 动画结束后清除内联样式
+            setTimeout(() => {
+                trueSolarContainer.style.height = 'auto';
+                trueSolarContainer.style.overflow = 'visible';
+            }, 300);
+        } else {
+            // 收起状态
+            this.textContent = '+';
+            this.classList.remove('expanded');
+            
+            // 动画效果
+            trueSolarContainer.style.transition = 'opacity 0.3s ease, height 0.3s ease';
+            trueSolarContainer.style.opacity = '0';
+            trueSolarContainer.style.height = '0';
+            trueSolarContainer.style.overflow = 'hidden';
+            
+            // 动画结束后隐藏
+            setTimeout(() => {
+                trueSolarContainer.classList.remove('visible');
+            }, 300);
+        }
+    });
+}
+
+// 在页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 其他初始化代码...
+    
+    // 初始化真太阳时切换功能
+    initTrueSolarToggle();
+});

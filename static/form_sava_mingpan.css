@@ -241,4 +241,69 @@
         
         .new-category-dialog .btn-cancel:hover {
             background: #6b3409;
-        }        
+        }  
+
+#saveBtn{
+    /* margin-left: 0px; */
+    margin-right: 3px;
+}
+/* 加密锁按钮样式 */
+.btn-lock {
+    /* 深棕色，与主题一致 */
+    /* background-color: #8b4513;   */
+    color: white;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  /* 固定宽度，保持方形 */
+    transition: all 0.2s ease;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+.btn-lock:hover {
+    background-color: #a0522d;  /* 悬停时稍亮的棕色 */
+    transform: scale(1.05);
+}
+
+.btn-lock:active {
+    transform: scale(0.95);
+}
+
+/* 锁图标样式 */
+#lockIcon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+/* 解锁状态图标 */
+.btn-lock.unlocked #lockIcon {
+    transform: rotate(90deg);
+    color: #4caf50;  /* 解锁时显示绿色 */
+}
+
+/* 已验证状态样式 */
+.btn-lock.verified {
+    background-color: #4caf50;  /* 验证通过显示绿色 */
+    border-color: #388e3c;
+}
+
+.btn-lock.verified:hover {
+    background-color: #388e3c;
+}
+
+/* 验证状态提示 */
+.lock-status {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+    text-align: center;
+    height: 14px;
+    overflow: hidden;
+}        

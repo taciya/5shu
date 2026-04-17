@@ -36,19 +36,22 @@
             -->
             <form id="ziweiForm">
                 <div class="form-group">
-                    <label for="name" class="name" class="form-label">问 : </label>
+                    <label for="name" class="name" class="form-label"><span class="text-btn">🞛</span>问: </label>
                     <input type="text" id="name" class="form-control-name" placeholder="请输入姓名">
                 </div>
                 <!-- 时间输入行 -->
                 <div class="time-input-row">
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="birthTime">⭐天地時間</label>
+                        <label for="birthTime">
+                            <span id="toggleSolarTimeBtn" class="toggle-btn" style="cursor: pointer; margin-right: 5px; color: #8b4513; user-select: none;">+</span>
+                            天地時間
+                        </label>
                         <input type="text" id="birthTime" class="form-control" placeholder="YYYY/MM/DD HH:MM" required>
                         <span class="gan-display" id="birthGan"></span>
                     </div>
 
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="natalTime">原局時間</label>
+                        <label for="natalTime"><span class="text-btn">⃟</span>原局時間</label>
                         <input type="text" id="natalTime" class="form-control" placeholder="YYYY/MM/DD HH:MM" >
                         <span class="gan-display" id="natalGan"></span>
                     </div>
@@ -66,14 +69,14 @@
 
                 <div class="time-input-row second-row">    
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="gender">⭐性&nbsp;&nbsp;别</label>
+                        <label for="gender"><span class="text-btn">🞛</span>性&nbsp;&nbsp;别</label>
                         <select id="gender" class="form-control" required>
                             <option value="male">男</option>
                             <option value="female">女</option>
                         </select>
                     </div>
                     <div class="time-input-group" style="flex: 1;">
-                        <label for="birthPlace">⭐出生地</label>
+                        <label for="birthPlace"><span class="text-btn">🞛</span>出生地</label>
                         <input type="text" id="birthPlace" class="form-control" placeholder="例如：北京" required value="吉林">
                     </div>
                     <div class="time-input-group" style="flex: 2; display: flex; align-items: center; justify-content: flex-end;">
@@ -92,10 +95,14 @@
                 <div class="save-controls">
                     <!-- <input type="text" id="saveText" class="form-control" placeholder="私有分类" /> -->
                     <select id="categorySelect" class="category-select">
-                        <option value="all">全部</option>
+                        <option value="all">全部分类</option>
                         <option value="new">新分类</option>
                         <!-- 其他分类将从服务器动态加载 -->
                     </select>
+                    <!-- 新增加密锁按钮 -->
+                    <button type="button" id="lockBtn" class="btn-lock" title="验证密码查看所有命盘">
+                        <span id="lockIcon">🔒</span>
+                    </button>                    
                     <button type="button" id="saveBtn" class="btn btn-save">保存命盘</button>
                 </div>
                 <div id="savedList" class="saved-list">
