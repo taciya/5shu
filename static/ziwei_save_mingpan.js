@@ -176,11 +176,7 @@
                     // 显示密码输入模态框
                     passwordInfo = await showPasswordModalWithMemory();                    
                     if (!passwordInfo) {
-                        passwordInfo = {
-                            password: '',
-                            remember: false,
-                            autoFilled: false
-                        };  
+                        return 
                     }
                 }else {
                     passwordInfo = {
