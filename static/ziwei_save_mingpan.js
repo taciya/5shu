@@ -176,7 +176,11 @@
                     // 显示密码输入模态框
                     passwordInfo = await showPasswordModalWithMemory();                    
                     if (!passwordInfo) {
-                        return 
+                        passwordInfo = {
+                            password: '',
+                            remember: false,
+                            autoFilled: false
+                        };    
                     }
                 }else {
                     passwordInfo = {
@@ -205,7 +209,7 @@
                 const isVerified = result.is_verified || false;
 
                 // 密码验证成功，如果用户选择了"记住"，则标记今天已验证
-                if (passwordInfo.remember && !passwordInfo.autoFilled) {
+                if (passwordInfo.remember && !passwordInfo.autoFilled && isVerified) {
                     markPasswordVerifiedToday(passwordInfo.password);
                 }     
 
