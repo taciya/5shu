@@ -3066,12 +3066,12 @@ function clearDayunDisplays() {
             
             // 创建原局宫位名称显示元素
             const natalNameEl = document.createElement('div');
-            natalNameEl.className = 'palace-name-natal palace-name-dayun';
-            natalNameEl.textContent = displayName;
+            natalNameEl.className = 'palace-name-natal';
+            natalNameEl.textContent = `<${displayName.substring(0, 1)}>`;// 用尖括号区分原局名称
             natalNameEl.style.cssText = `
                 position: absolute;
-                top: -15px;
-                left: 50%;
+                top: 5px;
+                left: 60%; /* 微调位置，避免重叠 */
                 transform: translateX(-50%);
                 color: #8b4513;  /* 深棕色，与命盘主题一致 */
                 font-size: 12px;

@@ -357,7 +357,7 @@ window.onload = function() {
     hideInputSection();
 
     // 为时间输入框添加焦点时选中文本的功能
-    const timeInputs = ['birthYear', 'birthMonth', 'birthDay', 'birthHour', 'birthMinute'];
+    const timeInputs = ['birthYear', 'birthMonth', 'birthDay', 'birthHour', 'birthMinute', 'birthTime', 'natalTime'];
     timeInputs.forEach(id => {
         const input = document.getElementById(id);
         if (input) {
