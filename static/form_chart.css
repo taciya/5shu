@@ -1870,7 +1870,7 @@ dl{
 
 .palace-name-natal{
     position: absolute;
-    top: 7px;
+    top: 2px;
     left: 60%; /* 微调位置，避免重叠 */
     transform: translateX(-50%);
     color: #8b4513;  /* 深棕色，与命盘主题一致 */
