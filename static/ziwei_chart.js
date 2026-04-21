@@ -2930,20 +2930,7 @@ function updatePalaceDayunName(data, dayunData) {
 
         // 4.3 设置大运名称与样式（星曜显化规则）
         dayunEl.textContent = "["+dayunName+"]";
-        dayunEl.style.cssText = `
-            position: absolute;
-            top: -15px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            color: ${dayunName === '大命' ? '#8b4513' : '#430450'}; /* 大命用深棕，其他用紫 */
-            font-weight: ${dayunName === '大命' ? 'bold' : 'normal'}; 
-            font-size: 12px;
-            white-space: nowrap; 
-            z-index: 10;
-            background: rgba(241, 233, 249, 0.8); /* 米黄背景模拟命盘纸 */
-            padding: 0 4px;
-            border-radius: 2px;
-        `;
+        dayunEl.className = 'palace-name-dayun'; // 重置样式类
 
     });
 }
@@ -3068,19 +3055,6 @@ function clearDayunDisplays() {
             const natalNameEl = document.createElement('div');
             natalNameEl.className = 'palace-name-natal';
             natalNameEl.textContent = `<${displayName.substring(0, 1)}>`;// 用尖括号区分原局名称
-            natalNameEl.style.cssText = `
-                position: absolute;
-                top: 5px;
-                left: 60%; /* 微调位置，避免重叠 */
-                transform: translateX(-50%);
-                color: #8b4513;  /* 深棕色，与命盘主题一致 */
-                font-size: 12px;
-                white-space: nowrap;
-                z-index: 10;
-                background: rgba(255, 255, 255, 0.8);
-                padding: 0 4px;
-                border-radius: 2px;
-            `;
             
             // 插入到宫位名称上方
             palaceNameEl.parentNode.insertBefore(natalNameEl, palaceNameEl);
@@ -3185,20 +3159,7 @@ function updatePalaceLiunianName(data, liunianData) {
 
         // 4.3 设置流年名称与样式（同大运的样式逻辑，用红色系区分）
         liunianEl.textContent = `[${liunianName}]`;
-        liunianEl.style.cssText = `
-            position: absolute;
-            top: -30px; /* 在palace-name-dayun上方（大运在-15px） */
-            left: 50%;
-            transform: translateX(-50%);
-            color: ${liunianName === '流命' ? '#ff0000' : '#ff6666'}; /* 流命用深红，其他用浅红 */
-            font-weight: ${liunianName === '流命' ? 'bold' : 'normal'};
-            font-size: 12px;
-            white-space: nowrap;
-            z-index: 10;
-            background: rgba(255, 240, 240, 0.8); /* 浅红背景（模拟命盘纸） */
-            padding: 0 4px;
-            border-radius: 2px;
-        `;
+        liunianEl.className = 'palace-name-liunian';
     });
 }
 
