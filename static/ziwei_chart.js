@@ -3009,24 +3009,9 @@ function generateDayunSihua(data, dayunPalace) {
         starElements.forEach((span, index) => {
             dayunEl.appendChild(span);
             if (index < starElements.length - 1) {
-                dayunEl.appendChild(document.createTextNode(' ')); // 星曜间加空格
+                dayunEl.appendChild(document.createTextNode('|')); // 星曜之间用竖线分隔
             }
         });
-
-        // 5.6 调整样式（符合天地卦象的视觉显化）
-        dayunEl.style.cssText = `
-            position: absolute;
-            top: -15px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            font-size: 12px;
-            white-space: nowrap; 
-            z-index: 10;
-            background: rgba(241, 233, 249, 0.8); /* 米黄背景模拟命盘纸 */
-            padding: 0 4px;
-            border-radius: 2px;
-            color: #430450; /* 大运名称用紫色（非忌） */
-        `;
     });
 }
 
@@ -3232,24 +3217,9 @@ function generateLiunianSihua(data, selectedYear, liunianPalace) {
         starElements.forEach((span, index) => {
             liunianEl.appendChild(span);
             if (index < starElements.length - 1) {
-                liunianEl.appendChild(document.createTextNode(' '));
+                liunianEl.appendChild(document.createTextNode('|'));// 星曜之间用竖线分隔
             }
-        });
-        
-        // 调整样式（与大运一致）
-        liunianEl.style.cssText = `
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            white-space: nowrap;
-            z-index: 10;
-            background: rgba(255, 240, 240, 0.8);
-            padding: 0 4px;
-            border-radius: 2px;
-            color: #ff6666; /* 流年名称用浅红（非忌） */
-        `;
+        });        
     });
 }
 
