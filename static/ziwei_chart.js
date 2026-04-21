@@ -3054,7 +3054,7 @@ function clearDayunDisplays() {
             // 创建原局宫位名称显示元素
             const natalNameEl = document.createElement('div');
             natalNameEl.className = 'palace-name-natal';
-            natalNameEl.textContent = `<${displayName.substring(0, 1)}>`;// 用尖括号区分原局名称
+            natalNameEl.textContent = `${displayName.substring(0, 1)}`;// 用尖括号区分原局名称
             
             // 插入到宫位名称上方
             palaceNameEl.parentNode.insertBefore(natalNameEl, palaceNameEl);
