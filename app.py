@@ -15,9 +15,11 @@ import sqlite3
 from functools import wraps
 import hashlib
 import secrets
+from utils import CalendarUtils
 
 app = Flask(__name__)
 CORS(app)  # 允许所有域的跨域请求
+utils = CalendarUtils()
 
 @app.route('/')
 def home():
@@ -89,7 +91,7 @@ def generate_ziwei():
         return jsonify({'error': str(e)}), 500
 
 EXPORT_PASSWORD = '5shu'
-from utils import CalendarUtils
+
 @app.route('/export_feigong', methods=['POST'])
 def export_feigong():
     """专门用于生成和返回feigong_str的接口"""
@@ -97,7 +99,6 @@ def export_feigong():
         data = request.get_json()
         if not data:
             return jsonify({'success': False, 'message': '缺少命盘参数'}), 400
-        utils = CalendarUtils()
         # 验证密码
         provided_password = data.get('password').strip()
         if utils.verify_password(provided_password):
@@ -241,7 +242,6 @@ def get_mingpan():
                 "success": False,
                 "message": "缺少设备标识"
             }), 400
-        utils = CalendarUtils()
         # 检查密码验证
         provided_password = password.strip()
         if utils.verify_password(provided_password):       
@@ -492,6 +492,7 @@ def get_star(star_name):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+from app_rule_db import ZiWeiEngine, Edge
 @app.route('/api/sihuas/<gan>', methods=['GET'])
 # @login_required  # 如果你的系统需要登录才能查看，可以把注释解开
 def get_sihua(gan):
@@ -501,7 +502,6 @@ def get_sihua(gan):
       - gan: 宫干 (例如 '甲', '乙')
     """
     try:
-        
         if not gan:
             return jsonify({'success': False, 'message': '缺少参数: gan(宫干)'}), 400
             
@@ -552,6 +552,24 @@ def get_sihua(gan):
             logic_text = f"<br/><b>{source_palace}[{source_motive}]</b> ➔ <b>[{action}]</b> ➔ <b>{target_palace}[{result_face}]</b> "
             result_text = f"表现为：<b>“{star_meaning}”</b>。"
             
+            edges = [
+                Edge(utils.normalize_palace(source_palace), utils.normalize_palace(target_palace), sihua_type),
+            ]
+            selfs = [
+            ]
+
+            engine = ZiWeiEngine(edges, selfs)
+
+            result = engine.analyze()
+
+            logic_sihua3=""
+            for item in result["details"]:
+                print(f"分析细节: {item}")  # <<<<<<<<
+                logic_sihua3+=f"<br/>&emsp;{item}"
+  
+            logic_sihua4=f"<br/>&emsp;{result["final"]}"
+  
+
             sihua_data[sihua_type] = {
                 'star': star_name,
                 'target_palace': target_palace,
@@ -561,7 +579,9 @@ def get_sihua(gan):
                 'logic_sihua1': PALACE_SIHUA_MAP.get('SIHUA_ACTION', {}).get(sihua_type, "作用于").get("X"),
                 'logic_source': source_motive,
                 'logic_sihua2': action,
-                'logic_target': result_face
+                'logic_target': result_face,
+                'logic_sihua3': logic_sihua3,
+                'logic_sihua4': logic_sihua4,
             }
             
 

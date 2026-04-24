@@ -240,3 +240,48 @@ class CalendarUtils:
         # 验证密码
         print(password,f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}')       
         return password != f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}'
+    
+
+   # =========================
+    # 宫位标准化
+    # =========================
+    def normalize_palace(self, name: str):
+        name = name.strip()
+
+        mapping = {
+            "命": "命宫",
+            "事业": "事业宫",
+            "财帛": "财帛宫",
+            "夫妻": "夫妻宫",
+            "迁移": "迁移宫",
+            "福德": "福德宫",
+            "田宅": "田宅宫",
+            "兄弟": "兄弟宫",
+            "疾厄": "疾厄宫",
+            "交友": "交友宫",
+            "父母": "父母宫",
+            "子女": "子女宫",
+            "事": "事业宫",
+            "财": "财帛宫",
+            "夫": "夫妻宫",
+            "迁": "迁移宫",
+            "福": "福德宫",
+            "田": "田宅宫",
+            "兄": "兄弟宫",
+            "疾": "疾厄宫",
+            "交": "交友宫",
+            "父": "父母宫",
+            "子": "子女宫"
+        }
+
+        # ⭐ 优先精确匹配
+        for k in sorted(mapping.keys(), key=len, reverse=True):
+            if name == k:
+                return mapping[k]
+
+        # ⭐ 再做后缀匹配（避免误伤）
+        for k in sorted(mapping.keys(), key=len, reverse=True):
+            if name.endswith(k):
+                return mapping[k]
+
+        return name    
