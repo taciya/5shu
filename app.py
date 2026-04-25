@@ -565,7 +565,7 @@ def get_sihua(gan):
             logic_sihua3=""
             for item in result["details"]:
                 print(f"分析细节: {item}")  # <<<<<<<<
-                logic_sihua3+=f"<br/>&emsp;{item}"
+                logic_sihua3+=f"<br/>&emsp;{item["meanings"]}"
   
             logic_sihua4=f"<br/>&emsp;{result["final"]}"
   
@@ -581,7 +581,7 @@ def get_sihua(gan):
                 'logic_sihua2': action,
                 'logic_target': result_face,
                 'logic_sihua3': logic_sihua3,
-                'logic_sihua4': logic_sihua4,
+                # 'logic_sihua4': logic_sihua4,
             }
             
 

@@ -48,7 +48,6 @@ class ZiWeiEngine:
     # -------- 规则匹配 --------
     def match_rule(self, edge: Edge):
         key = edge.key()
-        key=self.normalize_palace(key)  # 标准化宫位名称
         if key not in self.rule_db:
             return None
 

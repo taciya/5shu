@@ -2373,11 +2373,10 @@ async function showPalaceMeaning(palaceName,palaceGan, sihuaData,element) {
                         <li class="sihua-item">
                             <div class="desc-logic" style="color: #555;margin-left: 10px;">
                                 🚀${palaceName}宫 : ${info.logic_source} <br/>
-                                ☯ ${info.target_palace} : ${info.logic_target}
-                                <span class="sihua-${sihuaMap[sihuaType] || sihuaType}">
-                                    卐【${sihuaType}】${info.star}(${info.brightness})  > ${info.logic_sihua2} < ${info.logic_sihua1} <br/>
+                                ☯ ${info.target_palace} : ${info.logic_target} <br/>
+                                <span class="sihua-${sihuaMap[sihuaType] || sihuaType}" >
+                                    卐【${sihuaType}】${info.star}(${info.brightness})  > ${info.logic_sihua2} < ${info.logic_sihua1}
                                     ${info.logic_sihua3} <br/>
-                                    ${info.logic_sihua4} <br/>
                                 </span>
                             </div>
                         </li>
