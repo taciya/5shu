@@ -1302,6 +1302,7 @@ h1 {
         font-size: 9px;
         margin-bottom: 1px;
     }
+
     /* 标题和文字大小调整 */
     h1 {
         font-size: 20px;
@@ -1770,9 +1771,13 @@ h1 {
     top:70%;
     right: 20px;
     z-index: 10;
+
+    gap: 4px; /* 图标之间的间距 */
+    align-items: flex-end; /* 底部对齐，确保图标对齐 */
+    /* 根据你的布局调整 top/left/right/bottom */    
 }
 .tracking-mark {
-    position: static;
+    /* position: static; */
     width: 20px;
     height: 20px;
     background-color: white;
@@ -1785,7 +1790,30 @@ h1 {
     padding: 0;
     line-height: 1;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+    flex-direction: column; /* 纵向排列：亮度值在上，图标在下 */
+    position: relative;    
 }
+
+
+/* 3. 亮度值样式：取消绝对定位 */
+.brightness-value {
+    position: static;       /* 关键：取消之前的 absolute */
+    font-size: 9px;
+    line-height: 1;
+    margin-bottom: 2px;     /* 与下方图标的间距 */
+    color: #666;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+/* 4. 如果你想让不同四化的亮度颜色不同（可选） */
+.tracking-mark.lu .brightness-value { color: #035a24; } /* 禄-绿 */
+.tracking-mark.quan .brightness-value { color: #430450; } /* 权-紫 */
+.tracking-mark.ke .brightness-value { color: #4169e1; } /* 科-蓝 */
+.tracking-mark.ji .brightness-value { color: #ff0a0a; } /* 忌-红 */
+
+    
 /* 四化类型颜色 */
 .tracking-mark.lu {
     border: 2px solid #035a24;

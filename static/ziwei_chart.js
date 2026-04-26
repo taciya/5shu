@@ -671,6 +671,7 @@ function createPalaceElement(palace,three_level_hexagram,natalPalaces) {
         palaceElement.dataset.natalPalaceName = NatalPalace.name || '';
         palaceElement.dataset.natalDizhi = NatalPalace.dizhi || '';
         palaceElement.dataset.natalGan = NatalPalace.gan || '';
+        palaceElement.dizhi = palace.dizhi || '';
     }
     // 初始化CSS变量
     palaceElement.style.setProperty('--main-stars-width', '0px');
@@ -1884,7 +1885,7 @@ function showSihuaTracking(currentPalace) {
         const sources = getSihuaSources(starName, currentPalace);
         // console.log(`星曜 ${starName} 在 ${currentPalace}宫 的四化来源:`, sources);
         sources.forEach(source => {
-            createTrackingMark(source.palace, source.sihuaType, source.showName);
+            createTrackingMark(source.palace, source.sihuaType, source.showName,currentPalace);
         });
     });
 }
@@ -1912,7 +1913,7 @@ function getSihuaSources(starName, currentPalace) {
 }
 
 // 4. 新增创建追踪标记函数
-function createTrackingMark(sourceTianGan, sihuaType, starName) {
+function createTrackingMark(sourceTianGan, sihuaType, starName, dizhi) {
 
     // 查找所有包含指定天干的宫位
     const targetPalaces = findPalacesByTianGan(sourceTianGan);
@@ -1945,6 +1946,18 @@ function createTrackingMark(sourceTianGan, sihuaType, starName) {
         // 设置标记位置
         mark.style.right = `${60 + markCount * 25}`; // 偏移，避免重叠
 
+
+        // 1. 获取亮度值 (从你代码中的 STAR_BRIGHTNESS_TABLE 获取)
+        const brightness = STAR_BRIGHTNESS_TABLE[sihuaType] ? STAR_BRIGHTNESS_TABLE[sihuaType][dizhi] : '';
+        
+        // 2. 创建亮度显示标签
+        if (brightness !== undefined) {
+            const brightnessLabel = document.createElement('span');
+            brightnessLabel.className = 'brightness-value';
+            brightnessLabel.textContent = brightness;
+            mark.appendChild(brightnessLabel);
+        }
+        
         // 添加到宫位元素
         marksContainer.appendChild(mark);
 
