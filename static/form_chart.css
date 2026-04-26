@@ -1292,15 +1292,14 @@ h1 {
         padding: 2px 4px;
     }
     .tracking-marks-container {
-        right: 2px;
+        right: 20px;
         width: 18px;
     }
 
     .tracking-mark {
         width: 18px;
-        height: 18px;
+        height: 20px;
         font-size: 9px;
-        margin-bottom: 1px;
     }
 
     /* 标题和文字大小调整 */
@@ -1852,7 +1851,7 @@ h1 {
 
     .tracking-mark {
         width: 14px;
-        height: 14px;
+        height: 16px;
         font-size: 7px;
     }
 }
