@@ -1772,14 +1772,14 @@ h1 {
     right: 20px;
     z-index: 10;
 
-    gap: 4px; /* 图标之间的间距 */
+    gap: 1px; /* 图标之间的间距 */
     align-items: flex-start; /* 顶部对齐，确保图标对齐 */
     /* 根据你的布局调整 top/left/right/bottom */    
 }
 .tracking-mark {
     /* position: static; */
     width: 20px;
-    height: 20px;
+    height: 24px;
     background-color: white;
     border-radius: 25%;
     display: flex;
