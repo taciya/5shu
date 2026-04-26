@@ -1768,28 +1768,28 @@ h1 {
     display: flex;
     flex-direction: row;  /* 水平排列 */
     flex-wrap: nowrap;     /* 不允许换行 */
-    top:70%;
+    top:60%;
     right: 20px;
     z-index: 10;
 
     gap: 1px; /* 图标之间的间距 */
-    align-items: flex-start; /* 顶部对齐，确保图标对齐 */
+    align-items: flex-end; /* 顶部对齐，确保图标对齐 */
     /* 根据你的布局调整 top/left/right/bottom */    
 }
 .tracking-mark {
     /* position: static; */
     width: 20px;
-    height: 24px;
+    height: 22px;
     background-color: white;
     border-radius: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 10px;
-    font-weight: bold;
+    font-weight: normal;
     padding: 0;
     line-height: 1;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
 
     flex-direction: column; /* 纵向排列：亮度值在上，图标在下 */
     position: relative;    
@@ -1801,7 +1801,7 @@ h1 {
     position: static;       /* 关键：取消之前的 absolute */
     font-size: 9px;
     line-height: 1;
-    margin-bottom: 2px;     /* 与下方图标的间距 */
+    margin-bottom: 0px;     /* 与下方图标的间距 */
     color: #666;
     font-weight: normal;
     white-space: nowrap;
