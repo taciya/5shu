@@ -1767,13 +1767,13 @@ h1 {
     display: flex;
     flex-direction: row;  /* 水平排列 */
     flex-wrap: nowrap;     /* 不允许换行 */
-    top:60%;
+    top:70%;
     right: 20px;
     z-index: 10;
 
     gap: 1px; /* 图标之间的间距 */
     align-items: flex-end; /* 顶部对齐，确保图标对齐 */
-    /* 根据你的布局调整 top/left/right/bottom */    
+    /* 根据你的布局调整 top/left/right/bottom */
 }
 .tracking-mark {
     /* position: static; */
@@ -1791,7 +1791,7 @@ h1 {
     box-shadow: 0 1px 5px rgba(0,0,0,0.2);
 
     flex-direction: column; /* 纵向排列：亮度值在上，图标在下 */
-    position: relative;    
+    position: relative;
 }
 
 
@@ -1812,7 +1812,7 @@ h1 {
 .tracking-mark.ke .brightness-value { color: #4169e1; } /* 科-蓝 */
 .tracking-mark.ji .brightness-value { color: #ff0a0a; } /* 忌-红 */
 
-    
+
 /* 四化类型颜色 */
 .tracking-mark.lu {
     border: 2px solid #035a24;
@@ -1910,13 +1910,13 @@ dl{
 }
 .palace-name-dayun{
     position: absolute;
-    top: -15px; 
-    left: 50%; 
+    top: -15px;
+    left: 50%;
     transform: translateX(-50%);
     color: #430450;/*${dayunName === '大命' ? '#8b4513' : '#430450'};  大命用深棕，其他用紫 */
     font-weight: normal;/*${dayunName === '大命' ? 'bold' : 'normal'}; */
     font-size: 12px;
-    white-space: nowrap; 
+    white-space: nowrap;
     z-index: 10;
     background: rgba(241, 233, 249, 0.8); /* 米黄背景模拟命盘纸 */
     padding: 0 4px;
@@ -1937,25 +1937,25 @@ dl{
     border-radius: 2px;
 }
 /* 响应式调整  */
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .palace-name-natal{
         font-size: 11px;
     }
-    .palace-name-dayun{ 
+    .palace-name-dayun{
         font-size: 11px;
     }
     .palace-name-liunian{
-        font-size: 11px;   
-    } 
+        font-size: 11px;
+    }
 }
 @media (max-width: 480px) {
     .palace-name-natal{
         font-size: 10px;
     }
-    .palace-name-dayun{ 
+    .palace-name-dayun{
         font-size: 10px;
     }
     .palace-name-liunian{
-        font-size: 10px;   
-    } 
+        font-size: 10px;
+    }
 }
