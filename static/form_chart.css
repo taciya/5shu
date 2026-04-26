@@ -1773,7 +1773,7 @@ h1 {
     z-index: 10;
 
     gap: 4px; /* 图标之间的间距 */
-    align-items: flex-end; /* 底部对齐，确保图标对齐 */
+    align-items: flex-start; /* 顶部对齐，确保图标对齐 */
     /* 根据你的布局调整 top/left/right/bottom */    
 }
 .tracking-mark {
