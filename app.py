@@ -552,7 +552,7 @@ def get_sihua(gan):
             logic_text = f"<br/><b>{source_palace}[{source_motive}]</b> ➔ <b>[{action}]</b> ➔ <b>{target_palace}[{result_face}]</b> "
             result_text = f"表现为：<b>“{star_meaning}”</b>。"
             
-            print(f"四化分析: {source_palace} {target_palace}")  # <<<<<<<<
+            # print(f"四化分析: {source_palace} {target_palace}")  # <<<<<<<<
             edges = [
                 Edge(utils.normalize_palace(source_palace), utils.normalize_palace(target_palace), sihua_type),
             ]
@@ -565,7 +565,7 @@ def get_sihua(gan):
 
             logic_sihua3=""
             for item in result["details"]:
-                print(f"分析细节: {item}")  # <<<<<<<<
+                # print(f"分析细节: {item}")  # <<<<<<<<
                 logic_sihua3+=f"<br/>&emsp;{item["meanings"]}"
   
             logic_sihua4=f"<br/>&emsp;{result["final"]}"
