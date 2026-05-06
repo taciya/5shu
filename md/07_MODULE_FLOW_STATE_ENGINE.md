@@ -10,9 +10,9 @@
 
 必须统一归属：
 
-```text id="58g7z4"
+
 MODULE_FLOW_STATE_ENGINE
-```
+
 
 其他模块：
 
@@ -28,9 +28,9 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-```text id="n14ujt"
+
 路径是否存在
-```
+
 
 即：
 
@@ -53,9 +53,9 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-```text id="wnzrcr"
+
 小星如何影响流动质量
-```
+
 
 ⚠️ 不负责：
 
@@ -68,9 +68,9 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-```text id="aw5g3u"
+
 落点是否有能力承载
-```
+
 
 ⚠️ 不负责：
 
@@ -83,19 +83,19 @@ MODULE_FLOW_STATE_ENGINE
 
 统一负责：
 
-```text id="qu5dr2"
+
 最终流动状态
-```
+
 
 即：
 
-```text id="pfr3z5"
+
 路径结构
 +
 小星影响
 +
 Terminal承载
-```
+
 
 最终融合。
 
@@ -103,7 +103,7 @@ Terminal承载
 
 ## 三、Flow State 总公式（核心）
 
-```text id="c9lwwk"
+
 最终流动状态
 =
 路径状态
@@ -111,7 +111,7 @@ Terminal承载
 承接质量
 ×
 Terminal承载
-```
+
 
 ---
 
@@ -153,19 +153,19 @@ Terminal承载
 
 满足：
 
-```text id="o3duf0"
+
 normal
 +
 valid_flow
 +
 stable_terminal
-```
+
 
 判定：
 
-```text id="h8edr1"
+
 stable_structure
-```
+
 
 ---
 
@@ -173,19 +173,19 @@ stable_structure
 
 满足：
 
-```text id="4f36bc"
+
 normal
 +
 weak_flow
 +
 weak_terminal
-```
+
 
 判定：
 
-```text id="7lnnvs"
+
 pseudo_stable
-```
+
 
 
 ---
@@ -194,17 +194,17 @@ pseudo_stable
 
 满足任一：
 
-```text id="6m7t8i"
+
 collapse_flow
 or
 collapse_terminal
-```
+
 
 判定：
 
-```text id="pr9r7r"
+
 collapse_structure
-```
+
 
 ---
 
@@ -212,17 +212,17 @@ collapse_structure
 
 满足：
 
-```text id="79t7k4"
+
 self_loop
 +
 阻力型小星
-```
+
 
 判定：
 
-```text id="s7cgfg"
+
 loop_structure
-```
+
 
 
 ---
@@ -231,7 +231,7 @@ loop_structure
 
 最终状态优先级：
 
-```text id="mln7m9"
+
 collapse_structure
 >
 loop_structure
@@ -239,13 +239,13 @@ loop_structure
 pseudo_stable
 >
 stable_structure
-```
+
 
 ⚠️ 即：
 
-```text id="6dbjlwm"
+
 崩塌优先于稳定
-```
+
 
 ---
 
@@ -255,7 +255,7 @@ stable_structure
 
 必须：
 
-```text id="ddyk4d"
+
 路径状态
 +
 承接状态
@@ -263,18 +263,18 @@ stable_structure
 Terminal状态
 +
 最终结构状态
-```
+
 
 ---
 
 ### 示例
 
-```text id="kkp6kg"
+
 路径状态：normal
 承接状态：weak_flow
 Terminal状态：weak_terminal
 最终结构：pseudo_stable
-```
+
 
 ---
 
@@ -282,23 +282,23 @@ Terminal状态：weak_terminal
 
 ⚠️ 必须明确：
 
-```text id="2bdv4e"
+
 路径存在
 ≠
 结构稳定
-```
+
 
 真正稳定：
 
 必须：
 
-```text id="2w7tvc"
+
 路径
 +
 承接
 +
 Terminal
-```
+
 
 同时成立。
 

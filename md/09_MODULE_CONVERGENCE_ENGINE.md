@@ -8,15 +8,15 @@
 
 必须最终判断：
 
-```text id="i33q6m"
+
 该事件是否真正收敛
-```
+
 
 即：
 
-```text id="3t4sjd"
+
 因果是否已经完成闭合
-```
+
 
 ---
 
@@ -26,9 +26,9 @@
 
 定义：
 
-```text id="nct28g"
+
 路径已经形成稳定现实结果
-```
+
 
 表现：
 
@@ -43,9 +43,9 @@
 
 定义：
 
-```text id="zmmhfw"
+
 路径仍持续扩散
-```
+
 
 表现：
 
@@ -58,7 +58,7 @@
 
 ## 三、收敛检测总公式（新增）
 
-```text id="7pazgi"
+
 事件收敛
 =
 路径停止扩散
@@ -68,7 +68,7 @@ Flow State稳定
 Terminal可承载
 ×
 无继续飞忌
-```
+
 
 ---
 
@@ -78,18 +78,18 @@ Terminal可承载
 
 满足：
 
-```text
+
 ① 无继续扩散
 ② Flow State 已稳定
 ③ Terminal 可承载
 ④ 已形成现实结果
-```
+
 
 判定：
 
-```text
+
 converged
-```
+
 
 ---
 
@@ -97,23 +97,23 @@ converged
 
 满足：
 
-```text
+
 表面停止
 但内部仍存在损耗
-```
+
 
 例如：
 
-```text
+
 weak_flow
 weak_terminal
-```
+
 
 判定：
 
-```text
+
 pseudo_converged
-```
+
 
 ---
 
@@ -121,18 +121,18 @@ pseudo_converged
 
 满足任一：
 
-```text
+
 split_flow
 持续飞忌
 持续外流
 结构仍扩散
-```
+
 
 判定：
 
-```text
+
 unconverged
-```
+
 
 
 ---
@@ -146,13 +146,13 @@ unconverged
 
 最终收敛优先级：
 
-```text id="q3o3ol"
+
 converged
 >
 pseudo_converged
 >
 unconverged
-```
+
 
 ---
 
@@ -160,15 +160,15 @@ unconverged
 
 ⚠️ 一旦满足：
 
-```text id="c9nhf9"
+
 converged
-```
+
 
 必须：
 
-```text id="13q9gr"
+
 停止继续串联路径
-```
+
 
 禁止：
 
@@ -177,8 +177,14 @@ converged
 ❌ 强行继续分析
 
 ---
+⚠️ 本停止协议：
 
+仅适用于：
+当前层级路径
 
+禁止：
+提前终止 Overlay 长周期分析
+---
 
 
 
@@ -187,29 +193,29 @@ converged
 
 ⚠️ 必须明确：
 
-```text id="m4x2uv"
+
 路径结束
 ≠
 事件收敛
-```
+
 
 因为：
 
-```text id="jlwm7d"
+
 dead_end
-```
+
 
 仅代表：
 
-```text id="fopxzf"
+
 路径暂时停止外流。
-```
+
 
 不等于：
 
-```text id="nq5d1g"
+
 事件已经结束
-```
+
 
 ---
 
@@ -219,13 +225,13 @@ dead_end
 
 必须同时满足：
 
-```text id="6k6q2s"
+
 路径停止扩散
 +
 结构稳定
 +
 现实落地
-```
+
 
 缺一不可。
 
@@ -237,19 +243,19 @@ dead_end
 
 必须写：
 
-```text
+
 收敛类型
 +
 是否继续扩散
 +
 是否允许停止路径分析
-```
+
 
 ---
 
 ### 示例
 
-```text id="0wct1u"
+
 收敛类型：pseudo_converged
 
 是否继续扩散：
@@ -257,7 +263,7 @@ dead_end
 
 路径分析：
 允许停止主路径延伸
-```
+
 
 ---
 
