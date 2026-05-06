@@ -75,6 +75,7 @@
 * MODULE_PATH_ENGINE
 * MODULE_5D_SCAN
 * MODULE_SCENE_MAPPING
+* MODULE_REALITY_MAPPING_ENGINE
 * MODULE_MINOR_STAR_LOGIC
 * MODULE_MINOR_STAR_ENGINE
 * MODULE_ENERGY_PRIORITY
@@ -184,6 +185,46 @@ self_loop
 → ② 承接到哪里
 → ③ 承接后变成什么
 → ④ 是否真正收敛
+```
+
+---
+## STEP 2.3｜Flow State 融合（新增）
+
+必须：
+
+```text id="4udxq6"
+① 锁定路径状态
+→ ② 锁定承接状态
+→ ③ 锁定Terminal状态
+→ ④ 计算最终结构稳定性
+→ ⑤ 输出最终Flow State
+```
+
+---
+## STEP 2.5｜现实事件映射（新增）
+
+必须：
+
+```text
+① 锁定最终落点宫
+→ ② 锁定最高权重主星
+→ ③ 锁定主导四化
+→ ④ 锁定现实事件优先级
+→ ⑤ 输出现实行为结果
+```
+
+---
+
+## STEP 2.7｜事件收敛检测（新增）
+
+必须：
+
+```text id="x1jlwm"
+① 检查路径是否继续扩散
+→ ② 检查最终Flow State
+→ ③ 检查Terminal稳定性
+→ ④ 判定收敛类型
+→ ⑤ 输出最终现实状态
 ```
 
 ---
@@ -301,6 +342,9 @@ MODULE_SELF_CHECK
 命理 = 时间结构
 飞四化 = 因果流动
 小星 = 成本函数
+现实映射 = 事件收敛
+Flow State = 结构稳定性
+Convergence = 事件最终状态
 路径评分 = 优先级系统
 ```
 
