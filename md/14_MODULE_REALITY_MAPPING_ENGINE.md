@@ -550,11 +550,11 @@ MODULE_PATH_PRIORITY_ENGINE
 按照：
 
 Path Priority Score
-＞
+>
 Convergence Level
-＞
+>
 Terminal Stability
-＞
+>
 四化强度
 
 排序。
