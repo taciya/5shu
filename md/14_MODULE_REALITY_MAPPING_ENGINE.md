@@ -435,3 +435,24 @@ MODULE_PATH_PRIORITY_ENGINE
 禁止：
 
 多个互斥现实同时成立。
+
+### 10.1 互斥现实裁断协议（新增）
+
+若：
+
+多个路径：
+
+产生互斥现实。
+
+必须：
+
+按照：
+
+```text
+Path Priority Score
+＞
+Convergence Level
+＞
+Terminal Stability
+＞
+四化强度
