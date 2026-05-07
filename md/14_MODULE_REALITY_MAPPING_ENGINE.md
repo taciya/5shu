@@ -448,7 +448,6 @@ MODULE_PATH_PRIORITY_ENGINE
 
 按照：
 
-```text
 Path Priority Score
 ＞
 Convergence Level
@@ -456,3 +455,52 @@ Convergence Level
 Terminal Stability
 ＞
 四化强度
+
+排序。
+
+仅允许：
+
+最高路径
+
+成为：
+
+主现实结果。
+
+其余：
+
+降级为：
+
+- 背景扰动
+- 阶段性现象
+- 次级路径
+
+
+## 十一、现实结果终止协议（新增）
+
+若：
+
+主现实结果已经满足：
+
+- converged
+- stable_terminal
+- Path Priority最高
+
+则：
+
+禁止：
+
+后续低优先级路径
+覆盖主现实结果。
+
+低优先级路径：
+
+仅允许：
+
+作为：
+- 背景波动
+- 次级扰动
+- 阶段性变化
+
+禁止：
+
+推翻主现实。
