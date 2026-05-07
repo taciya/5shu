@@ -15,6 +15,13 @@
 * 在此模块重新扫描
 * 在此模块重新计算路径
 
+
+⚠️ OUTPUT_TEMPLATE 不负责：
+* 决定压缩等级
+
+压缩规则唯一来源：
+* MODULE_COMPRESSION_PROTOCOL
+
 ---
 
 ### 输出来源必须来自：
