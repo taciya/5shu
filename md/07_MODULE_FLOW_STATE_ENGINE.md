@@ -4,15 +4,13 @@
 
 ⚠️ 所有：
 
-* 路径状态
-* 承接状态
-* Terminal状态
+- 路径状态
+- 承接状态
+- Terminal状态
 
 必须统一归属：
 
-
 MODULE_FLOW_STATE_ENGINE
-
 
 其他模块：
 
@@ -28,24 +26,22 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-
 路径是否存在
-
 
 即：
 
-| 状态         | 定义    |
-| ---------- | ----- |
-| normal     | 正常路径  |
+| 状态       | 定义       |
+| ---------- | ---------- |
+| normal     | 正常路径   |
 | dead_end   | 无继续飞出 |
-| self_loop  | 飞回本宫  |
-| split_flow | 多飞出   |
+| self_loop  | 飞回本宫   |
+| split_flow | 多飞出     |
 
 ⚠️ 不负责：
 
-* 稳定性
-* 承接质量
-* 是否崩塌
+- 稳定性
+- 承接质量
+- 是否崩塌
 
 ---
 
@@ -53,14 +49,12 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-
 小星如何影响流动质量
-
 
 ⚠️ 不负责：
 
-* 最终状态判定
-* Terminal稳定性
+- 最终状态判定
+- Terminal稳定性
 
 ---
 
@@ -68,14 +62,12 @@ MODULE_FLOW_STATE_ENGINE
 
 仅负责：
 
-
 落点是否有能力承载
-
 
 ⚠️ 不负责：
 
-* 路径是否成立
-* 小星动力学
+- 路径是否成立
+- 小星动力学
 
 ---
 
@@ -83,26 +75,20 @@ MODULE_FLOW_STATE_ENGINE
 
 统一负责：
 
-
 最终流动状态
-
 
 即：
 
-
 路径结构
-+
-小星影响
-+
-Terminal承载
 
+- 小星影响
+- Terminal承载
 
 最终融合。
 
 ---
 
 ## 三、Flow State 总公式（核心）
-
 
 最终流动状态=
 路径状态
@@ -111,24 +97,23 @@ Terminal承载
 ×
 Terminal承载
 
-
 ---
 
 ## 四、路径状态（来自 PATH_ENGINE）
 
-| 状态         | 来源   |
-| ---------- | ---- |
+| 状态       | 来源     |
+| ---------- | -------- |
 | normal     | 正常流动 |
-| dead_end   | 断流   |
-| self_loop  | 自循环  |
-| split_flow | 分流   |
+| dead_end   | 断流     |
+| self_loop  | 自循环   |
+| split_flow | 分流     |
 
 ---
 
 ## 五、承接质量（来自 MINOR_STAR_ENGINE）
 
-| 状态            | 定义   |
-| ------------- | ---- |
+| 状态          | 定义     |
+| ------------- | -------- |
 | valid_flow    | 承接稳定 |
 | weak_flow     | 承接弱化 |
 | collapse_flow | 承接崩塌 |
@@ -137,11 +122,11 @@ Terminal承载
 
 ## 六、Terminal 状态（来自 TERMINAL_CAPACITY）
 
-| 状态                | 定义   |
-| ----------------- | ---- |
+| 状态              | 定义     |
+| ----------------- | -------- |
 | stable_terminal   | 长期承载 |
 | weak_terminal     | 短期承载 |
-| overload_terminal | 超载   |
+| overload_terminal | 超载     |
 | collapse_terminal | 无法承载 |
 
 ---
@@ -152,19 +137,14 @@ Terminal承载
 
 满足：
 
-
 normal
-+
-valid_flow
-+
-stable_terminal
 
+- valid_flow
+- stable_terminal
 
 判定：
 
-
 stable_structure
-
 
 ---
 
@@ -172,20 +152,14 @@ stable_structure
 
 满足：
 
-
 normal
-+
-weak_flow
-+
-weak_terminal
 
+- weak_flow
+- weak_terminal
 
 判定：
 
-
 pseudo_stable
-
-
 
 ---
 
@@ -193,17 +167,13 @@ pseudo_stable
 
 满足任一：
 
-
 collapse_flow
 or
 collapse_terminal
 
-
 判定：
 
-
 collapse_structure
-
 
 ---
 
@@ -211,18 +181,13 @@ collapse_structure
 
 满足：
 
-
 self_loop
-+
-阻力型小星
 
+- 阻力型小星
 
 判定：
 
-
 loop_structure
-
-
 
 ---
 
@@ -230,21 +195,17 @@ loop_structure
 
 最终状态优先级：
 
-
 collapse_structure
->
-loop_structure
->
-pseudo_stable
->
-stable_structure
 
+> loop_structure
+>
+> pseudo_stable
+>
+> stable_structure
 
 ⚠️ 即：
 
-
 崩塌优先于稳定
-
 
 ---
 
@@ -254,26 +215,20 @@ stable_structure
 
 必须：
 
-
 路径状态
-+
-承接状态
-+
-Terminal状态
-+
-最终结构状态
 
+- 承接状态
+- Terminal状态
+- 最终结构状态
 
----
+  ***
 
 ### 示例
-
 
 路径状态：normal
 承接状态：weak_flow
 Terminal状态：weak_terminal
 最终结构：pseudo_stable
-
 
 ---
 
@@ -281,27 +236,19 @@ Terminal状态：weak_terminal
 
 ⚠️ 必须明确：
 
-
 路径存在
 ≠
 结构稳定
-
 
 真正稳定：
 
 必须：
 
-
 路径
-+
-承接
-+
-Terminal
 
+- 承接
+- Terminal
 
 同时成立。
 
 ---
-
-
-

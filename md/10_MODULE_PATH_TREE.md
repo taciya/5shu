@@ -6,8 +6,8 @@
 
 田宅宫
 └── 忌入福德宫
-    ├── → 交友宫（split_flow）
-    └── → 迁移宫（split_flow）
+├── → 交友宫（split_flow）
+└── → 迁移宫（split_flow）
 
 ---
 

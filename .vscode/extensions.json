@@ -3,7 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
-    "usernamehw.errorlens",
-    "eamodio.gitlens"
+    "usernamehw.errorlens"
+    // "eamodio.gitlens"
   ]
 }
