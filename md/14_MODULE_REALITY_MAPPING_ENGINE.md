@@ -549,3 +549,30 @@ Path Priority Score
 禁止：
 
 推翻主现实。
+
+### 11.1 Main Reality Lock
+
+若：
+
+主结果已经满足：
+
+- ultra_hot
+- converged
+- stable_terminal
+- Path Priority最高
+
+则：
+
+定义：
+
+main_reality_locked
+
+后续路径：
+
+禁止推翻主现实。
+
+仅允许：
+
+- 局部扰动
+- 阶段波动
+- 次级现象

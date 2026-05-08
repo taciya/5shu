@@ -1,5 +1,25 @@
 # MODULE_CONVERGENCE_ENGINE
 
+⚠️ Convergence：
+
+不负责判断：
+
+- 结构稳定
+- Terminal稳定
+- 空间稳定
+
+这些仅引用：
+
+- FLOW_STATE_ENGINE
+- TERMINAL_CAPACITY_ENGINE
+- SPATIAL_CONVERGENCE_ENGINE
+
+Convergence：
+
+只负责：
+
+“事件是否停止扩散”。
+
 ## 一、核心定义（新增最高优先级）
 
 ⚠️ 路径：
