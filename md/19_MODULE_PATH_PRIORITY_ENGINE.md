@@ -80,8 +80,7 @@ path_heat =
 
 满足任一：
 
-- 三层共振宫
-- 一级动态激活宫
+- 动态热点宫
 - 高能忌路径
 - collapse_structure
 - Terminal最终落点

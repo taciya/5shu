@@ -1,3 +1,45 @@
+# MODULE_MODULE_BOUNDARY_LOCK
+
+1️⃣ FIELD_LOCK
+仅负责：
+场域层级定义。
+
+2️⃣ PATH_ENGINE
+仅负责：
+路径生成。
+
+3️⃣ PATH_GRAVITY_ENGINE
+仅负责：
+路径是否仍属于当前事件。
+
+4️⃣ RECURSION_LIMIT_PROTOCOL
+仅负责：
+技术性停止条件。
+
+5️⃣ CONVERGENCE_ENGINE
+仅负责：
+事件是否结束。
+
+6️⃣ REALITY_MAPPING_ENGINE
+仅负责：
+现实映射。
+
+7️⃣ 任意模块：
+
+禁止越权定义：
+
+其它模块职责。
+
+8️⃣ 若模块冲突：
+
+优先级：
+
+ROOT_PROTOCOL
+＞
+MODULE_BOUNDARY_LOCK
+＞
+其余模块
+
 # MODULE_OVERRIDE_AUTHORITY_TREE
 
 ## 一、模块定位（最高权限协议）
