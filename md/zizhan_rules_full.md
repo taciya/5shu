@@ -256,7 +256,7 @@
 
 
 
-# MODULE_CAUSAL_LOCK
+# MODULE_CAUSAL_PROTOCOL
 
 ## 一、动态优先于静态（铁律）
 
