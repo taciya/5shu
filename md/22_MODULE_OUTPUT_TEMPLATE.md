@@ -732,8 +732,8 @@ ultra_hot
 优先级：
 
 动态激活
-
-> 默认压缩率
+＞
+默认压缩率
 
 ---
 
@@ -841,5 +841,5 @@ ultra_hot
 而被压缩。
 
 Coverage Priority
-
-> Compression Priority
+＞
+Compression Priority

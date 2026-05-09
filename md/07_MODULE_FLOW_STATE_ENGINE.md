@@ -199,11 +199,11 @@ loop_structure
 
 collapse_structure
 
-> loop_structure
->
-> pseudo_stable
->
-> stable_structure
+loop_structure
+＞
+pseudo_stable
+＞
+stable_structure
 
 ⚠️ 即：
 
