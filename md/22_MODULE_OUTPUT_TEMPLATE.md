@@ -1,5 +1,23 @@
 # MODULE_OUTPUT_TEMPLATE
 
+⚠️ OUTPUT_TEMPLATE：
+
+不允许：
+
+新增任何：
+
+- 因果
+- 稳定性
+- 收敛性
+- 现实结果
+
+仅允许：
+
+引用：
+
+上游模块
+已经生成的最终结果。
+
 ## 一、输出层总原则（新增最高优先级）
 
 ⚠️ MODULE_OUTPUT_TEMPLATE 仅负责：

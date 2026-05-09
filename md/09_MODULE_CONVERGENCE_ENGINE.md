@@ -73,11 +73,34 @@ Convergence：
 事件收敛=
 路径停止扩散
 ×
-Flow State稳定
+引用 Flow State 最终结果
 ×
-Terminal可承载
+引用 Terminal 最终结果
 ×
 无继续飞忌
+
+---
+
+⚠️ 注意：
+
+Convergence Engine：
+
+仅允许：
+
+引用：
+
+- FLOW_STATE_ENGINE
+- TERMINAL_CAPACITY_ENGINE
+
+最终状态。
+
+禁止：
+
+重新计算：
+
+- 稳定性
+- 承接质量
+- Terminal承载能力
 
 ---
 

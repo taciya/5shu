@@ -1,5 +1,22 @@
 # MODULE_STRUCTURED_REASONING_PROTOCOL
 
+⚠️ 本模块：
+
+仅负责：
+
+结构化展示。
+
+禁止：
+
+重新生成路径。
+
+所有路径：
+
+必须直接引用：
+
+MODULE_PATH_ENGINE
+最终结果。
+
 ## 一、核心定义（新增最高优先级）
 
 ⚠️ 所有最终输出：
