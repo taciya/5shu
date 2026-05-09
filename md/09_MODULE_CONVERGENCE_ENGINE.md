@@ -262,3 +262,18 @@ dead_end
 允许停止主路径延伸
 
 ---
+
+⚠️ Convergence：
+
+仅负责：
+
+事件是否闭环。
+
+---
+
+禁止：
+
+反覆盖：
+
+- Reality
+- Terminal

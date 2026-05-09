@@ -254,3 +254,19 @@ Terminal状态：weak_terminal
 同时成立。
 
 ---
+
+⚠️ Flow State：
+
+仅负责：
+
+结构稳定性。
+
+---
+
+禁止：
+
+直接覆盖：
+
+- Reality
+- Terminal
+- Convergence

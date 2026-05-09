@@ -170,3 +170,15 @@ collapse_terminal
 结构无法继续承载
 
 ---
+
+⚠️ Terminal：
+
+拥有：
+
+第二级覆盖权。
+
+---
+
+仅次于：
+
+Reality Override。

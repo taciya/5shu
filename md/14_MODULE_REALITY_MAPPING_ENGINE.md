@@ -1,5 +1,23 @@
 # MODULE_REALITY_MAPPING_ENGINE
 
+⚠️ Reality Mapping：
+
+拥有：
+
+最高现实覆盖权。
+
+---
+
+一旦：
+
+Reality成立。
+
+---
+
+低层模块：
+
+禁止反覆盖。
+
 ## 一、核心定义（新增最高优先级）
 
 ⚠️ 宫位：

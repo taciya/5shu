@@ -180,3 +180,20 @@ Path Heat。
 ❌ 所有路径平权
 
 ---
+
+⚠️ 主路径：
+
+仅代表：
+
+路径主线。
+
+---
+
+禁止：
+
+直接覆盖：
+
+- Reality
+- Terminal
+- Convergence
+- Flow State
