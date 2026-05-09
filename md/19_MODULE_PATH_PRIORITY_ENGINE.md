@@ -80,10 +80,12 @@ path_heat =
 
 满足任一：
 
-- 动态热点场
-- 高能忌路径
-- collapse_structure
-- Terminal最终落点
+- 最近持续触发
+- 高频重复承接
+- 现实反馈持续增强
+- collapse_flow
+- reality_override
+- 当前现实正在显化
 
 ---
 
@@ -167,7 +169,16 @@ Path Heat。
 最终：
 
 评分最高路径=
-主现实结果
+主候选路径
+
+最终现实裁定：
+
+必须交由：
+
+Reality Override
+与
+Terminal
+最终确认。
 
 ---
 
