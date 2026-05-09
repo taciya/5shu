@@ -5,10 +5,10 @@ from star_placement import StarPlacement
 from sihua_calculator import SihuaCalculator
 from output_formatter import OutputFormatter
 from models import Palace
-
+from qimen_runtime_engine import QimenRuntimeEngine
 class ZiweiChart:
     """紫微斗数命盘类"""
-    
+
     def __init__(self, year, month, day, hour, minute, gender):
         self.year = year
         self.month = month
@@ -30,10 +30,11 @@ class ZiweiChart:
         self.start_age = None  # 起始年龄
         self.true_solar_time=f'{year}/{month}/{day} {hour}:{minute}'
         self.sizhu_bagua=None # 四柱八卦
-        self.lunar_info=None # 
+        self.lunar_info=None #
+        self.qimen_runtime = None  # 奇门遁甲运行时数据
         # 初始化命盘
         self._initialize_chart()
-    
+
     def _initialize_chart(self):
         """初始化命盘"""
         utils = CalendarUtils()
@@ -44,7 +45,7 @@ class ZiweiChart:
         # 初始化十二宫位
         self.palaces = [Palace(b) for b in DIZHI_ORDER]
         # 设置四柱八卦
-        
+
         # self.sizhu_bagua=utils.generate_sizhu_bagua_extended(self.sizhu_ymdh['year'][0], self.sizhu_ymdh['month'], self.sizhu_ymdh['day'], self.sizhu_ymdh['hour'])
         self.sizhu_bagua={
             "年柱": f"{self.lunar_info['year_GZ']}",
@@ -58,7 +59,7 @@ class ZiweiChart:
         # print(self.sizhu_bagua)   #<<<<<<<<<
         # 安星计算
         star_placement = StarPlacement(self)
-        
+
         # 定位命宫
         self.minggong_index = star_placement.find_minggong()
         ordered_names = []
@@ -66,7 +67,7 @@ class ZiweiChart:
             idx = (self.minggong_index- i) % 12
             ordered_names.append(PALACE_NAMES[idx])
         for i, palace in enumerate(self.palaces):
-            palace.palace_name = ordered_names[i]  
+            palace.palace_name = ordered_names[i]
 
         # print("定位命宫")
         # 定位身宫
@@ -74,7 +75,7 @@ class ZiweiChart:
         self.wuxingju = star_placement.get_wuxingju_jushu2()
 
         # 定位来因宫
-        star_placement.place_laiyingong()        
+        star_placement.place_laiyingong()
         # 计算大限范围
         star_placement.calculate_limitation()
         # print("定位身宫")
@@ -82,7 +83,7 @@ class ZiweiChart:
         star_placement.place_main_stars()
         # print("安主星")
         self.feigong_map=star_placement.get_feigong_map()
-        self.feiru_map=star_placement.get_feiru_map()      
+        self.feiru_map=star_placement.get_feiru_map()
 
         # 安辅星
         star_placement.place_minor_stars()
@@ -113,22 +114,25 @@ class ZiweiChart:
         sihua_calculator.calculate_lixin_sihua()  # 自化
         sihua_calculator.calculate_xiangxin_sihua()  # 向心四化
         # print("四化计算")
-    
+        # 奇门遁甲运行时数据
+        qimen_engine = QimenRuntimeEngine(self)
+        self.qimen_runtime = qimen_engine.build()
+
     def to_json(self):
         """将命盘数据转换为JSON格式"""
         formatter = OutputFormatter(self)
         return formatter.to_json()
-    
+
     def to_json144(self):
         """将命盘数据转换为JSON格式"""
         formatter = OutputFormatter(self)
-        return formatter.to_json144()    
-    
+        return formatter.to_json144()
+
     def save_to_file(self):
         """将命盘数据保存到本地JSON文件"""
         formatter = OutputFormatter(self)
         return formatter.save_to_file ()
-    
+
     def print_all_palaces(self,stars=[]):
         """将命盘数据转换为JSON格式"""
         formatter = OutputFormatter(self)
