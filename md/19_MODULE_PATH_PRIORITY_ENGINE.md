@@ -80,7 +80,7 @@ path_heat =
 
 满足任一：
 
-- 动态热点宫
+- 动态热点场
 - 高能忌路径
 - collapse_structure
 - Terminal最终落点

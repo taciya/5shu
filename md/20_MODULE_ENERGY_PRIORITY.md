@@ -84,7 +84,7 @@ MODULE_OVERRIDE_AUTHORITY_TREE
 来自：
 
 - 主卦宫
-- 动态热点宫
+- 动态热点场
 
 则：
 
@@ -514,7 +514,7 @@ Path Heat
 来自：
 
 - 主卦宫
-- 动态热点宫
+- 动态热点场
 
 则：
 

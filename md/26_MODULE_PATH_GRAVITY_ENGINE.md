@@ -250,7 +250,7 @@ drift_path。
 
 - 三层卦
 - 一级事件宫
-- 动态热点宫
+- 动态热点场
 
 则定义：
 
@@ -531,7 +531,7 @@ gravity_return：
 
 2️⃣ 热度等级：
 
-【ultra_hot】
+【field_ultra】
 
 满足：
 
@@ -548,7 +548,7 @@ gravity_return：
 
 ---
 
-【high_hot】
+【field_high】
 
 满足：
 
@@ -564,7 +564,7 @@ gravity_return：
 
 ---
 
-【medium_hot】
+【field_medium】
 
 满足：
 
@@ -579,7 +579,7 @@ gravity_return：
 
 ---
 
-【low_hot】
+【field_low】
 
 满足：
 
@@ -596,11 +596,11 @@ gravity_return：
 
 仅允许：
 
-- medium_hot
-- low_hot
+- field_medium
+- field_low
 
 被压缩。
 
-4️⃣ ultra_hot：
+4️⃣ field_ultra：
 
 禁止压缩。
