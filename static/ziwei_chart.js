@@ -630,7 +630,7 @@ function generateFeigongString() {
   const dayunSelector = document.getElementById('dayunSelector')
   const liunianSelector = document.getElementById('liunianSelector')
   const palaces = document.querySelectorAll('.palace') // 所有宫位元素
-  const birthPlace = document.getElementById('birthPlace') // 获取出生地元素（假设有.center-info类）
+  const birthPlace = document.getElementById('birthPlace') // 获取出生地元素
   // 2. 提取大运信息（若选中）
   let dayunInfo = '未选'
   if (dayunSelector.value) {
@@ -676,10 +676,9 @@ function generateFeigongString() {
     fullContent += `问卦占事：${neirong.textContent.trim()}\n`
     fullContent += `三层卦象：主卦(${getLaiyinPalace(palaces).isLaiyin.trim()})，十分卦(${getShifenPalace(palaces).isShifen.trim()})，分钟卦(${getFenzhongPalace(palaces).isFenzhong.trim()})\n`
   }
-  // 起卦场：
-  // 事件场：
-  fullContent += `起卦场：${birthPlace.textContent.trim()}\n`
-  fullContent += `事件场：${birthPlace.textContent.trim()}\n`
+
+  fullContent += `起卦场：东京\n`
+  fullContent += `事件场：${birthPlace.value.trim()}\n`
   fullContent += `命盘信息：\n`
   return fullContent
 }
