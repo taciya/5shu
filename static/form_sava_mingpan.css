@@ -1,309 +1,361 @@
-        /* 新增保存和分类相关样式 */
-        .save-section {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #d2b48c;
-        }
+/* 新增保存和分类相关样式 */
+.save-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #d2b48c;
+}
 
-        .save-controls {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
+.save-controls {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+}
 
-        .category-select {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #d2b48c;
-            border-radius: 4px;
-            font-family: 'Noto Sans SC', sans-serif;
-        }
+.category-select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #d2b48c;
+  border-radius: 4px;
+  font-family: 'Noto Sans SC', sans-serif;
+  white-space: nowrap;
+}
 
-        .btn-save {
-            background-color: #035a24;
-        }
+.btn-save {
+  background-color: #035a24;
+}
 
-        .btn-save:hover {
-            background-color: #02431c;
-        }
+.btn-save:hover {
+  background-color: #02431c;
+}
 
-        .saved-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #d2b48c;
-            border-radius: 4px;
-            padding: 10px;
-            background: #fff8dc;
-        }
+.saved-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #d2b48c;
+  border-radius: 4px;
+  padding: 10px;
+  background: #fff8dc;
+}
 
-        .saved-item {
-            padding: 8px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            background: #f5ecd6;
-            border: 1px solid #d2b48c;
-            cursor: pointer;
-        }
+.saved-item {
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background: #f5ecd6;
+  border: 1px solid #d2b48c;
+  cursor: pointer;
+}
 
-        .saved-item:hover {
-            background: #e6d9b8;
-        }
+.saved-item:hover {
+  background: #e6d9b8;
+}
+/*
+.saved-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+*/
 
-        .saved-item-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
+.saved-item-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #8b4513;
+}
 
-        .saved-item-name {
-            font-size: 12px;
-            font-weight: bold;
-            color: #8b4513;
-        }
+.saved-item-category {
+  font-size: 12px;
+  color: #556b2f;
+  background: #d2b48c;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
 
-        .saved-item-category {
-            font-size: 12px;
-            color: #556b2f;
-            background: #d2b48c;
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
+.saved-item-details {
+  font-size: 12px;
+  color: #696969;
+}
 
-        .saved-item-details {
-            font-size: 12px;
-            color: #696969;
-        }
+.empty-list {
+  text-align: center;
+  color: #696969;
+  font-style: italic;
+  padding: 15px;
+}
 
-        .empty-list {
-            text-align: center;
-            color: #696969;
-            font-style: italic;
-            padding: 15px;
-        }
+/* 删除按钮样式 */
+.btn-delete {
+  background-color: #ff0a0a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: background-color 0.2s;
+}
 
-        /* 删除按钮样式 */
-        .btn-delete {
-            background-color: #ff0a0a;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 3px 8px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-left: 5px;
-            transition: background-color 0.2s;
-        }
-        
-        .btn-delete:hover {
-            background-color: #cc0000;
-        }
-        
-        /* 确认删除对话框 */
-        .confirm-dialog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        
-        .confirm-dialog .dialog-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 90%;
-        }
-        
-        .confirm-dialog .dialog-title {
-            color: #8b4513;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .confirm-dialog .dialog-message {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .confirm-dialog .dialog-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .confirm-dialog .dialog-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .confirm-dialog .dialog-confirm {
-            background: #ff0a0a;
-            color: white;
-        }
-        
-        .confirm-dialog .dialog-cancel {
-            background: #8b4513;
-            color: white;
-        }        
+.btn-delete:hover {
+  background-color: #cc0000;
+}
 
-        /* 新分类对话框样式 */
-        .new-category-dialog {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1100;
-        }
-        
-        .new-category-dialog .new-category-content {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 400px;
-        }
-        
-        .new-category-dialog .dialog-title {
-            color: #8b4513;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .new-category-dialog .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .new-category-dialog .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #8b4513;
-        }
-        
-        .new-category-dialog .form-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d2b48c;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        .new-category-dialog .dialog-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .new-category-dialog .dialog-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .new-category-dialog .btn-confirm {
-            background: #035a24;
-            color: white;
-        }
-        
-        .new-category-dialog .btn-confirm:hover {
-            background: #02431c;
-        }
-        
-        .new-category-dialog .btn-cancel {
-            background: #8b4513;
-            color: white;
-        }
-        
-        .new-category-dialog .btn-cancel:hover {
-            background: #6b3409;
-        }  
+/* 确认删除对话框 */
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
 
-#saveBtn{
-    /* margin-left: 0px; */
-    margin-right: 3px;
+.confirm-dialog .dialog-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+}
+
+.confirm-dialog .dialog-title {
+  color: #8b4513;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.confirm-dialog .dialog-message {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.confirm-dialog .dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confirm-dialog .dialog-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.confirm-dialog .dialog-confirm {
+  background: #ff0a0a;
+  color: white;
+}
+
+.confirm-dialog .dialog-cancel {
+  background: #8b4513;
+  color: white;
+}
+
+/* 新分类对话框样式 */
+.new-category-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+}
+
+.new-category-dialog .new-category-content {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+}
+
+.new-category-dialog .dialog-title {
+  color: #8b4513;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.new-category-dialog .form-group {
+  margin-bottom: 20px;
+}
+
+.new-category-dialog .form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #8b4513;
+}
+
+.new-category-dialog .form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d2b48c;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.new-category-dialog .dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.new-category-dialog .dialog-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.new-category-dialog .btn-confirm {
+  background: #035a24;
+  color: white;
+}
+
+.new-category-dialog .btn-confirm:hover {
+  background: #02431c;
+}
+
+.new-category-dialog .btn-cancel {
+  background: #8b4513;
+  color: white;
+}
+
+.new-category-dialog .btn-cancel:hover {
+  background: #6b3409;
+}
+
+#saveBtn {
+  /* margin-left: 0px; */
+  margin-right: 3px;
 }
 /* 加密锁按钮样式 */
 .btn-lock {
-    /* 深棕色，与主题一致 */
-    /* background-color: #8b4513;   */
-    color: white;
-    border: 1px solid #d2b48c;
-    border-radius: 4px;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-family: 'Noto Sans SC', sans-serif;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;  /* 固定宽度，保持方形 */
-    transition: all 0.2s ease;
-    margin-left: 0px;
-    margin-right: 10px;
+  /* 深棕色，与主题一致 */
+  /* background-color: #8b4513;   */
+  color: white;
+  border: 1px solid #d2b48c;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* 固定宽度，保持方形 */
+  transition: all 0.2s ease;
+  margin-left: 0px;
+  margin-right: 10px;
 }
 
 .btn-lock:hover {
-    background-color: #a0522d;  /* 悬停时稍亮的棕色 */
-    transform: scale(1.05);
+  background-color: #a0522d; /* 悬停时稍亮的棕色 */
+  transform: scale(1.05);
 }
 
 .btn-lock:active {
-    transform: scale(0.95);
+  transform: scale(0.95);
 }
 
 /* 锁图标样式 */
 #lockIcon {
-    font-size: 14px;
-    transition: transform 0.3s ease;
+  font-size: 14px;
+  transition: transform 0.3s ease;
 }
 
 /* 解锁状态图标 */
 .btn-lock.unlocked #lockIcon {
-    transform: rotate(90deg);
-    color: #4caf50;  /* 解锁时显示绿色 */
+  transform: rotate(90deg);
+  color: #4caf50; /* 解锁时显示绿色 */
 }
 
 /* 已验证状态样式 */
 .btn-lock.verified {
-    background-color: #4caf50;  /* 验证通过显示绿色 */
-    border-color: #388e3c;
+  background-color: #4caf50; /* 验证通过显示绿色 */
+  border-color: #388e3c;
 }
 
 .btn-lock.verified:hover {
-    background-color: #388e3c;
+  background-color: #388e3c;
 }
 
 /* 验证状态提示 */
 .lock-status {
-    font-size: 11px;
-    color: #666;
-    margin-top: 3px;
-    text-align: center;
-    height: 14px;
-    overflow: hidden;
-}        
+  font-size: 11px;
+  color: #666;
+  margin-top: 3px;
+  text-align: center;
+  height: 14px;
+  overflow: hidden;
+}
+
+/* --------------------------------------- */
+
+/* 改进：调整列表项布局，让meta信息和删除按钮在右侧 */
+.saved-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.saved-item-title {
+  flex: 1;
+  /* min-width: 150px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved-item-details {
+  flex: 2;
+  min-width: 120px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.saved-item-right-group {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-content: flex-end;
+  max-width: 180px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.saved-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* min-width: 60px; */
+  flex-shrink: 0;
+}
+
+.btn-delete {
+  flex-shrink: 0;
+  margin-left: 0; /* 移除原来的margin-left */
+}

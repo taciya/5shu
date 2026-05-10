@@ -311,21 +311,20 @@ function createMingpanItem(item, isVerified) {
                     <div class="saved-item-title">
                         <span class="saved-item-name">${item.name || '未命名'}</span>
                     </div>
-                    <div class="saved-item-details" style="justify-content: center; ">
+                    <!--
+                    <div class="saved-item-details">
                         ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
                     </div>
-                    <div class="saved-item-meta">
-                        <span class="saved-item-category">
-                            ${item.category}
+                    -->
+                    <div class="saved-item-right-group">
+                        <span class="saved-item-details" title="出生时间和性别">
+                          ${item.data.birthTime}(${item.data.gender === 'male' ? '男' : '女'})
                         </span>
-                        <span class="device-info" title="${deviceType}设备">
-                          <!--
-                            ${deviceIcon}
-                            ${isCurrentDevice ? '当前设备' : deviceType}
-                          -->
+                        <span class="saved-item-category" title="分类">
+                          ${item.category}
                         </span>
+                      <button class="btn-delete" title="删除命盘记录">-</button>
                     </div>
-                    <button class="btn-delete" title="删除命盘记录">-</button>
                 </div>
             `
 
