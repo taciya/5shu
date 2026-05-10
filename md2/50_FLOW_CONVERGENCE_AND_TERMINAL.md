@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_CONVERGENCE_QUALITY_LOCK delete_scope=whole_block -->
+
 # MODULE_CONVERGENCE_QUALITY_LOCK
 
 ## 一、显化强度 ≠ 结果质量（最高优先级）
@@ -382,9 +383,11 @@
 否则：
 
 禁止输出最终结论。
+
 <!-- MODULE_END name=MODULE_CONVERGENCE_QUALITY_LOCK -->
 
 <!-- MODULE_START name=MODULE_FLOW_STATE_ENGINE delete_scope=whole_block -->
+
 # MODULE_FLOW_STATE_ENGINE
 
 ## 一、核心定义（新增最高优先级）
@@ -660,6 +663,7 @@ Terminal状态：weak_terminal
 <!-- MODULE_END name=MODULE_FLOW_STATE_ENGINE -->
 
 <!-- MODULE_START name=MODULE_CONVERGENCE_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_CONVERGENCE_PROTOCOL
 
 ## 一、事件成立 ≠ 事件收敛
@@ -712,9 +716,11 @@ Terminal状态：weak_terminal
 最后收敛宫
 
 作为现实落点
+
 <!-- MODULE_END name=MODULE_CONVERGENCE_PROTOCOL -->
 
 <!-- MODULE_START name=MODULE_CONVERGENCE_ENGINE delete_scope=whole_block -->
+
 # MODULE_CONVERGENCE_ENGINE
 
 ⚠️ Convergence：
@@ -997,6 +1003,7 @@ dead_end
 <!-- MODULE_END name=MODULE_CONVERGENCE_ENGINE -->
 
 <!-- MODULE_START name=MODULE_TERMINAL_CAPACITY_ENGINE delete_scope=whole_block -->
+
 # MODULE_TERMINAL_CAPACITY_ENGINE
 
 ## 一、核心定义
@@ -1181,4 +1188,5 @@ collapse_terminal
 仅次于：
 
 Reality Override。
+
 <!-- MODULE_END name=MODULE_TERMINAL_CAPACITY_ENGINE -->

@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_RANK_PERCENTILE_LOCK delete_scope=whole_block -->
+
 # MODULE_RANK_PERCENTILE_LOCK
 
 ## 一、排名类事件禁止直接输出具体名次（ROOT级）
@@ -215,9 +216,11 @@
 而是：
 
 「天地中的层级位置」。
+
 <!-- MODULE_END name=MODULE_RANK_PERCENTILE_LOCK -->
 
 <!-- MODULE_START name=MODULE_PATH_PRIORITY_ENGINE delete_scope=whole_block -->
+
 # MODULE_PATH_PRIORITY_ENGINE
 
 ## 一、核心定义
@@ -430,6 +433,7 @@ Terminal
 <!-- MODULE_END name=MODULE_PATH_PRIORITY_ENGINE -->
 
 <!-- MODULE_START name=MODULE_ENERGY_PRIORITY delete_scope=whole_block -->
+
 # MODULE_ENERGY_PRIORITY
 
 ⚠️ 本模块：
@@ -1222,9 +1226,11 @@ Terminal：
 - Reality
 
 的路径。
+
 <!-- MODULE_END name=MODULE_ENERGY_PRIORITY -->
 
 <!-- MODULE_START name=MODULE_STRATEGY_ENGINE delete_scope=whole_block -->
+
 # MODULE_STRATEGY_ENGINE
 
 ## 一、 【动态应卦】阴阳损益对冲算法

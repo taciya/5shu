@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_CAUSAL_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_CAUSAL_PROTOCOL
 
 ## 一、动态优先于静态（铁律）
@@ -88,9 +89,11 @@
 最终去向
 
 缺一不可
+
 <!-- MODULE_END name=MODULE_CAUSAL_PROTOCOL -->
 
 <!-- MODULE_START name=MODULE_TRACE_ONLY_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_TRACE_ONLY_PROTOCOL
 
 ## 一、追四化定义
@@ -146,9 +149,11 @@ A宫追忌B宫
 是否失败：
 
 仍必须看飞四化
+
 <!-- MODULE_END name=MODULE_TRACE_ONLY_PROTOCOL -->
 
 <!-- MODULE_START name=MODULE_PATH_ENGINE delete_scope=whole_block -->
+
 # MODULE_PATH_ENGINE
 
 ## 一、路径构建铁律（最高优先级）
@@ -531,9 +536,11 @@ A宫追忌B宫
 | split_flow | 分流路径     |
 
 ---
+
 <!-- MODULE_END name=MODULE_PATH_ENGINE -->
 
 <!-- MODULE_START name=MODULE_PATH_GRAVITY_ENGINE delete_scope=whole_block -->
+
 # MODULE_PATH_GRAVITY_ENGINE
 
 ## 一、核心定义（新增最高优先级）
@@ -1058,9 +1065,11 @@ gravity_return：
 任一成立：
 
 必须重算路径。
+
 <!-- MODULE_END name=MODULE_PATH_GRAVITY_ENGINE -->
 
 <!-- MODULE_START name=MODULE_PATH_TREE delete_scope=whole_block -->
+
 # MODULE_PATH_TREE
 
 ## 所有路径必须树状输出：
@@ -1120,9 +1129,11 @@ split_flow
 适合因果阅读。
 
 两者必须同时存在。
+
 <!-- MODULE_END name=MODULE_PATH_TREE -->
 
 <!-- MODULE_START name=MODULE_RECURSION_LIMIT_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_RECURSION_LIMIT_PROTOCOL
 
 ## 一、递归停止铁律
@@ -1194,4 +1205,5 @@ recursive_loop
 禁止：
 
 无限飞宫。
+
 <!-- MODULE_END name=MODULE_RECURSION_LIMIT_PROTOCOL -->

@@ -48,7 +48,7 @@ FILE_LIST = [
 ]
 
 
-INPUT_DIR = "md2s"
+INPUT_DIR = "md2"
 OUTPUT_FILE = "./md2/zizhan_rules_full.md"
 FILE_LIST = [
     "00_GLOBAL_PREAMBLE.md",

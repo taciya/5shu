@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_3_LAYER_FIELD_LOCK delete_scope=whole_block -->
+
 # MODULE_3_LAYER_FIELD_LOCK
 
 1️⃣ 三层卦
@@ -69,6 +70,7 @@
 <!-- MODULE_END name=MODULE_3_LAYER_FIELD_LOCK -->
 
 <!-- MODULE_START name=MODULE_MANIFEST_OVERRIDE_LOCK delete_scope=whole_block -->
+
 # MODULE_MANIFEST_OVERRIDE_LOCK
 
 ## 一、显化强度 ≠ 结果权重（强制）
@@ -194,9 +196,11 @@
 “顶级结果成立”。
 
 ---
+
 <!-- MODULE_END name=MODULE_MANIFEST_OVERRIDE_LOCK -->
 
 <!-- MODULE_START name=MODULE_MANIFEST_LAYER_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_MANIFEST_LAYER_PROTOCOL
 
 ## 一、显化位定义
@@ -244,9 +248,11 @@
 
 路径优先
 显化次之
+
 <!-- MODULE_END name=MODULE_MANIFEST_LAYER_PROTOCOL -->
 
 <!-- MODULE_START name=MODULE_LAYER_PRIORITY delete_scope=whole_block -->
+
 # MODULE_LAYER_PRIORITY
 
 ## 一、三层卦职责
@@ -322,9 +328,11 @@
 禁止：
 
 单层定论
+
 <!-- MODULE_END name=MODULE_LAYER_PRIORITY -->
 
 <!-- MODULE_START name=MODULE_DYNAMIC_ACTIVATION_ENGINE delete_scope=whole_block -->
+
 # MODULE_DYNAMIC_ACTIVATION_ENGINE
 
 ## 一、动态激活铁律（最高优先级）
@@ -460,9 +468,11 @@ collapse_structure宫
 事件用宫
 ＞
 背景宫
+
 <!-- MODULE_END name=MODULE_DYNAMIC_ACTIVATION_ENGINE -->
 
 <!-- MODULE_START name=MODULE_DYNAMIC_HEAT_LEVEL delete_scope=whole_block -->
+
 # MODULE_DYNAMIC_HEAT_LEVEL
 
 1️⃣ 所有热点场：
@@ -544,4 +554,5 @@ collapse_structure宫
 4️⃣ field_ultra：
 
 禁止压缩。
+
 <!-- MODULE_END name=MODULE_DYNAMIC_HEAT_LEVEL -->

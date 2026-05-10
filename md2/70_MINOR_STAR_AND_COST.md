@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_MINOR_STAR_LOGIC delete_scope=whole_block -->
+
 # MODULE_MINOR_STAR_LOGIC
 
 ## 小星从属原则
@@ -62,9 +63,10 @@
 2. **权重：** \* **击穿级 (空/劫/耗)：** 改变结构。
    - **摩擦级 (羊/陀/火/铃)：** 焦虑、刺痛或纠缠。
    - **标记级 (天虚/天喜/病符)：** 定义真伪、喜庆或病态。
-<!-- MODULE_END name=MODULE_MINOR_STAR_LOGIC -->
+   <!-- MODULE_END name=MODULE_MINOR_STAR_LOGIC -->
 
 <!-- MODULE_START name=MODULE_MINOR_STAR_ENGINE delete_scope=whole_block -->
+
 # MODULE_MINOR_STAR_ENGINE
 
 ## 一、小星系统总纲（升级版）
@@ -1171,9 +1173,11 @@
 优先定义结构空洞，
 
 天喜仅作为短期体验染色。
+
 <!-- MODULE_END name=MODULE_MINOR_STAR_ENGINE -->
 
 <!-- MODULE_START name=MODULE_COST_ENGINE delete_scope=whole_block -->
+
 # MODULE_COST_ENGINE
 
 ## 一、小星不是描述
@@ -1262,4 +1266,5 @@
 受到XX小星影响，
 导致XX成本增加，
 因此出现XX现实结果”
+
 <!-- MODULE_END name=MODULE_COST_ENGINE -->

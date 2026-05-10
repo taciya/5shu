@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_OUTPUT_TEMPLATE delete_scope=whole_block -->
+
 # MODULE_OUTPUT_TEMPLATE
 
 ⚠️ OUTPUT_TEMPLATE：
@@ -849,4 +850,5 @@ ultra_hot
 必须：
 
 路径 + 物理显像 + 现实落点
+
 <!-- MODULE_END name=MODULE_OUTPUT_TEMPLATE -->

@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_STRUCTURED_REASONING_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_STRUCTURED_REASONING_PROTOCOL
 
 ⚠️ 本模块：
@@ -437,4 +438,5 @@ Overlay：
 禁止：
 
 仅输出静态宫位分析。
+
 <!-- MODULE_END name=MODULE_STRUCTURED_REASONING_PROTOCOL -->

@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_5D_SCAN delete_scope=whole_block -->
+
 # MODULE_5D_SCAN
 
 ## 模式隔离协议
@@ -149,6 +150,7 @@
 <!-- MODULE_END name=MODULE_5D_SCAN -->
 
 <!-- MODULE_START name=MODULE_OVERLAY_ENGINE delete_scope=whole_block -->
+
 # MODULE_OVERLAY_ENGINE
 
 ## 一、命理模式优先级
@@ -231,9 +233,11 @@ Overlay：
 仅允许：
 
 作为背景解释层。
+
 <!-- MODULE_END name=MODULE_OVERLAY_ENGINE -->
 
 <!-- MODULE_START name=MODULE_COMPOSITE_IMAGE_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_COMPOSITE_IMAGE_PROTOCOL
 
 ## 一、模块定位（最高优先级）
@@ -919,4 +923,5 @@ XXX宫
 孤立化、
 
 解释紫占。
+
 <!-- MODULE_END name=MODULE_COMPOSITE_IMAGE_PROTOCOL -->

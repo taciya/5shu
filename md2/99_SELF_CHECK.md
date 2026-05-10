@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_SELF_CHECK delete_scope=whole_block -->
+
 # MODULE_SELF_CHECK
 
 ## 一、 后台执行自检准则
@@ -230,4 +231,5 @@ Coverage Failure。
 → 必须重算
 
 ---
+
 <!-- MODULE_END name=MODULE_SELF_CHECK -->
