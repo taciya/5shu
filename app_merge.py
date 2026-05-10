@@ -47,6 +47,24 @@ FILE_LIST = [
     "23_MODULE_SELF_CHECK.md",
 ]
 
+
+INPUT_DIR = "md_rules"
+OUTPUT_FILE = "./md_rules/zizhan_rules_full.md"
+FILE_LIST = [
+    "00_GLOBAL_PREAMBLE.md",
+    "10_MODE_CORE_AND_STAR_MODEL.md",
+    "11_ROLE_MAPPING_PROTOCOL.md",
+    "20_FIELD_LAYER_AND_MANIFEST.md",
+    "30_CAUSAL_PATH_AND_TRACE.md",
+    "40_SCAN_OVERLAY_AND_COMPOSITE.md",
+    "50_FLOW_CONVERGENCE_AND_TERMINAL.md",
+    "60_REALITY_SCENE_AND_SPATIAL.md",
+    "70_MINOR_STAR_AND_COST.md",
+    "80_PRIORITY_ENERGY_RANK_AND_STRATEGY.md",
+    "85_STRUCTURED_REASONING_AND_COMPRESSION.md",
+    "90_OUTPUT_FORMAT.md",
+    "99_SELF_CHECK.md"
+]
 # =========================
 # merge
 # =========================
