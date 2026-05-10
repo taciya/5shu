@@ -48,8 +48,8 @@ FILE_LIST = [
 ]
 
 
-INPUT_DIR = "md_rules"
-OUTPUT_FILE = "./md_rules/zizhan_rules_full.md"
+INPUT_DIR = "md2s"
+OUTPUT_FILE = "./md2/zizhan_rules_full.md"
 FILE_LIST = [
     "00_GLOBAL_PREAMBLE.md",
     "10_MODE_CORE_AND_STAR_MODEL.md",
