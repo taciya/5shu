@@ -13,125 +13,25 @@
 4. 除上述两项外，任何规则文件都必须能够单独被修改、删除或替换。
 5. 若未来用 Python 合并为 zizhan_rules_full.md，建议仅按文件名前缀排序拼接，不需要解析依赖关系。
 
-<!-- PROMPT_SECTION_START id=PROMPT_一 title="一、系统加载协议（最高优先级）" -->
+## ROOT 唯一来源说明
 
-## 一、系统加载协议（最高优先级）
+本文件只保留规则库 ROOT。
 
-必须加载：
+Prompt.md 只作为启动器，不再重复定义系统根协议、强制执行协议、最终铁律或模式路由。
 
-👉 zizhan_rules_full.md
+最终 ROOT 来源：
 
-禁止：
+- SYSTEM_ROOT_LOCK
+- MODULE_HEAVEN_DIRECT_READ_LOCK
+- MODULE_MODULE_BOUNDARY_LOCK
+- MODULE_OVERRIDE_AUTHORITY_TREE
 
-❌ 自创规则
-❌ 跳过模块
-❌ 用经验覆盖规则
-❌ 脱离飞四化路径，仅凭星曜直接定义结果。
+这样可以避免：
 
-✅ 允许：
-
-星曜作为：
-
-- 现象解释器
-- 场景映射器
-- Reality载体
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_一 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_二 title="二、系统根协议（最高优先级）" -->
-
-## 二、系统根协议（最高优先级）
-
-1️⃣ 飞四化
-＝唯一合法因果
-
-2️⃣ 星曜
-＝现象解释器
-不是因果源
-
-3️⃣ 追四化
-＝只能溯源
-不能裁断结果
-
-4️⃣ 主卦 / 十分 / 分钟
-＝显化界面
-不是承接位
-
-5️⃣ 小星
-＝路径成本函数
-
-6️⃣ 所有事件必须：
-
-飞入
-→ 承接
-→ 飞出
-→ 收敛
-
-缺一不可
-
-6.1️⃣ 三层卦场域原则
-
-主卦 / 十分卦 / 分钟卦
-＝天地当前事件核心场。
-
-所有飞四化路径：
-
-必须优先围绕三层卦形成闭环。
-
-三层卦之外的宫位：
-
-仅允许作为：
-
-- 动态热点场
-- 外围背景场
-
-禁止：
-
-外围宫位反客为主。
-
-7️⃣ 无飞入
-＝禁止事件成立
-
-8️⃣ 最终结果
-＝最后收敛宫
-
-9️⃣ 所有输出
-必须树状路径化
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_二 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_四 title="四、强制执行协议" -->
-
-## 四、强制执行协议
-
-顺序执行以下md中的各规则协议：
-
-👉 zizhan_rules_full.md
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_四 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_五 title="五、最终铁律" -->
-
-## 五、最终铁律
-
-紫占 = 动态路径
-命理 = 时间结构
-飞四化 = 因果流动
-小星 = 成本函数
-Flow State = 结构稳定性
-Convergence = 事件是否结束
-Reality Mapping = 现实落地
-Path Priority = 主结果竞争系统
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_五 -->
+- 双 ROOT
+- 双铁律入口
+- Prompt 与规则库互相覆盖
+- 合并后重复定义优先级
 
 <!-- MODULE_START name=SYSTEM_ROOT_LOCK delete_scope=whole_block -->
 
@@ -154,6 +54,20 @@ Path Priority = 主结果竞争系统
 
 5️⃣ 小星
 ＝路径成本函数
+＋现实结构细节函数
+＋形态显化函数
+
+小星不能单独定义事件。
+
+必须：
+主路径成立后，
+小星仅负责：
+
+- 成本
+- 阻力
+- 形态
+- 症状
+- 细节
 
 6️⃣ 所有事件必须：
 
@@ -166,10 +80,61 @@ Path Priority = 主结果竞争系统
 ＝禁止定义外部因果成立
 
 8️⃣ 最终结果
+
+默认：
+
 ＝最后收敛宫
+
+若存在：
+
+Reality Override
+
+则：
+
+Reality 层
+优先于
+Terminal 层与 Convergence 层
 
 9️⃣ 所有输出
 必须树状路径化
+
+10️⃣ 禁止现实经验补盘
+
+所有结果：
+
+只能来自：
+
+飞四化路径
+＋承接结构
+＋收敛结构
+＋覆盖裁定
+＋现实映射
+
+禁止：
+
+- 常识补全
+- 社会经验补全
+- 统计概率补全
+- 现实合理化补全
+
+11️⃣ 模块执行顺序锁
+
+必须按以下顺序执行：
+
+FIELD
+→ PATH
+→ FLOW
+→ CONVERGENCE
+→ OVERRIDE
+→ REALITY
+→ OUTPUT
+→ SELF_CHECK
+
+禁止错序：
+
+- 先现实映射后路径
+- 先结论后收敛
+- 先输出后自检
 
 <!-- MODULE_END name=SYSTEM_ROOT_LOCK -->
 
@@ -546,13 +511,32 @@ A高
 仅负责：
 现实映射。
 
-7️⃣ 任意模块：
+7️⃣ OUTPUT_TEMPLATE
+仅负责：
+展示上游结果。
+
+8️⃣ SELF_CHECK
+仅负责：
+最终一致性检查。
+
+9️⃣ 标准执行顺序：
+
+FIELD
+→ PATH
+→ FLOW
+→ CONVERGENCE
+→ OVERRIDE
+→ REALITY
+→ OUTPUT
+→ SELF_CHECK
+
+10️⃣ 任意模块：
 
 禁止越权定义：
 
 其它模块职责。
 
-8️⃣ 若模块冲突：
+11️⃣ 若模块冲突：
 
 优先级：
 
@@ -645,16 +629,17 @@ Star Appearance Override
 
 定义：
 
-是否真正改变现实结构。
+必须形成不可逆现实状态。
 
 包括：
 
-- 合同成立
-- 婚姻成立
-- 财务落地
-- 身份变化
-- 身体状态改变
-- 长期现实形成
+- 已签合同
+- 已到账
+- 已登记
+- 已怀孕
+- 已确诊
+- 已分手
+- 已录取
 
 ---
 
@@ -886,3 +871,41 @@ Star
 任何逆向覆盖。
 
 <!-- MODULE_END name=MODULE_OVERRIDE_AUTHORITY_TREE -->
+
+# RULE SOURCE PRIORITY LOCK
+
+ROOT_PROTOCOL
+＞
+PATH_ENGINE
+＞
+FIELD_ENGINE
+＞
+OVERRIDE
+＞
+REALITY
+＞
+星曜象义库
+＞
+课程案例
+＞
+传统解释
+
+# TERMINAL_REQUIRED_LOCK
+
+无Terminal
+＝禁止定义最终结果
+只能定义：
+过程态
+趋势态
+进行态
+
+# STAR_MODEL_LAYER
+
+课程中的星曜定义
+仅允许作为：
+Reality Mapping层
+
+禁止作为：
+因果层
+结果层
+收敛层

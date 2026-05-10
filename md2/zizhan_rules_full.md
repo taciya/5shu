@@ -13,125 +13,25 @@
 4. 除上述两项外，任何规则文件都必须能够单独被修改、删除或替换。
 5. 若未来用 Python 合并为 zizhan_rules_full.md，建议仅按文件名前缀排序拼接，不需要解析依赖关系。
 
-<!-- PROMPT_SECTION_START id=PROMPT_一 title="一、系统加载协议（最高优先级）" -->
+## ROOT 唯一来源说明
 
-## 一、系统加载协议（最高优先级）
+本文件只保留规则库 ROOT。
 
-必须加载：
+Prompt.md 只作为启动器，不再重复定义系统根协议、强制执行协议、最终铁律或模式路由。
 
-👉 zizhan_rules_full.md
+最终 ROOT 来源：
 
-禁止：
+- SYSTEM_ROOT_LOCK
+- MODULE_HEAVEN_DIRECT_READ_LOCK
+- MODULE_MODULE_BOUNDARY_LOCK
+- MODULE_OVERRIDE_AUTHORITY_TREE
 
-❌ 自创规则
-❌ 跳过模块
-❌ 用经验覆盖规则
-❌ 脱离飞四化路径，仅凭星曜直接定义结果。
+这样可以避免：
 
-✅ 允许：
-
-星曜作为：
-
-- 现象解释器
-- 场景映射器
-- Reality载体
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_一 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_二 title="二、系统根协议（最高优先级）" -->
-
-## 二、系统根协议（最高优先级）
-
-1️⃣ 飞四化
-＝唯一合法因果
-
-2️⃣ 星曜
-＝现象解释器
-不是因果源
-
-3️⃣ 追四化
-＝只能溯源
-不能裁断结果
-
-4️⃣ 主卦 / 十分 / 分钟
-＝显化界面
-不是承接位
-
-5️⃣ 小星
-＝路径成本函数
-
-6️⃣ 所有事件必须：
-
-飞入
-→ 承接
-→ 飞出
-→ 收敛
-
-缺一不可
-
-6.1️⃣ 三层卦场域原则
-
-主卦 / 十分卦 / 分钟卦
-＝天地当前事件核心场。
-
-所有飞四化路径：
-
-必须优先围绕三层卦形成闭环。
-
-三层卦之外的宫位：
-
-仅允许作为：
-
-- 动态热点场
-- 外围背景场
-
-禁止：
-
-外围宫位反客为主。
-
-7️⃣ 无飞入
-＝禁止事件成立
-
-8️⃣ 最终结果
-＝最后收敛宫
-
-9️⃣ 所有输出
-必须树状路径化
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_二 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_四 title="四、强制执行协议" -->
-
-## 四、强制执行协议
-
-顺序执行以下md中的各规则协议：
-
-👉 zizhan_rules_full.md
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_四 -->
-
-<!-- PROMPT_SECTION_START id=PROMPT_五 title="五、最终铁律" -->
-
-## 五、最终铁律
-
-紫占 = 动态路径
-命理 = 时间结构
-飞四化 = 因果流动
-小星 = 成本函数
-Flow State = 结构稳定性
-Convergence = 事件是否结束
-Reality Mapping = 现实落地
-Path Priority = 主结果竞争系统
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_五 -->
+- 双 ROOT
+- 双铁律入口
+- Prompt 与规则库互相覆盖
+- 合并后重复定义优先级
 
 <!-- MODULE_START name=SYSTEM_ROOT_LOCK delete_scope=whole_block -->
 
@@ -154,6 +54,20 @@ Path Priority = 主结果竞争系统
 
 5️⃣ 小星
 ＝路径成本函数
+＋现实结构细节函数
+＋形态显化函数
+
+小星不能单独定义事件。
+
+必须：
+主路径成立后，
+小星仅负责：
+
+- 成本
+- 阻力
+- 形态
+- 症状
+- 细节
 
 6️⃣ 所有事件必须：
 
@@ -166,10 +80,61 @@ Path Priority = 主结果竞争系统
 ＝禁止定义外部因果成立
 
 8️⃣ 最终结果
+
+默认：
+
 ＝最后收敛宫
+
+若存在：
+
+Reality Override
+
+则：
+
+Reality 层
+优先于
+Terminal 层与 Convergence 层
 
 9️⃣ 所有输出
 必须树状路径化
+
+10️⃣ 禁止现实经验补盘
+
+所有结果：
+
+只能来自：
+
+飞四化路径
+＋承接结构
+＋收敛结构
+＋覆盖裁定
+＋现实映射
+
+禁止：
+
+- 常识补全
+- 社会经验补全
+- 统计概率补全
+- 现实合理化补全
+
+11️⃣ 模块执行顺序锁
+
+必须按以下顺序执行：
+
+FIELD
+→ PATH
+→ FLOW
+→ CONVERGENCE
+→ OVERRIDE
+→ REALITY
+→ OUTPUT
+→ SELF_CHECK
+
+禁止错序：
+
+- 先现实映射后路径
+- 先结论后收敛
+- 先输出后自检
 
 <!-- MODULE_END name=SYSTEM_ROOT_LOCK -->
 
@@ -546,13 +511,32 @@ A高
 仅负责：
 现实映射。
 
-7️⃣ 任意模块：
+7️⃣ OUTPUT_TEMPLATE
+仅负责：
+展示上游结果。
+
+8️⃣ SELF_CHECK
+仅负责：
+最终一致性检查。
+
+9️⃣ 标准执行顺序：
+
+FIELD
+→ PATH
+→ FLOW
+→ CONVERGENCE
+→ OVERRIDE
+→ REALITY
+→ OUTPUT
+→ SELF_CHECK
+
+10️⃣ 任意模块：
 
 禁止越权定义：
 
 其它模块职责。
 
-8️⃣ 若模块冲突：
+11️⃣ 若模块冲突：
 
 优先级：
 
@@ -563,6 +547,112 @@ MODULE_BOUNDARY_LOCK
 其余模块
 
 <!-- MODULE_END name=MODULE_MODULE_BOUNDARY_LOCK -->
+
+<!-- MODULE_START name=FIELD_ROLE_MAPPING_LOCK delete_scope=whole_block -->
+
+# FIELD_ROLE_MAPPING_LOCK
+
+## 一、角色映射属于FIELD阶段
+
+角色映射：
+
+必须属于：
+
+FIELD阶段。
+
+执行顺序：
+
+FIELD：
+
+- 太极点
+- 三层卦
+- 场域层级
+- 角色映射
+- 主客结构
+
+完成后：
+
+才允许进入：
+
+PATH阶段。
+
+---
+
+## 二、禁止PATH后补角色
+
+禁止：
+
+先跑PATH
+后补角色映射。
+
+否则：
+
+容易出现：
+
+角色漂移。
+
+---
+
+## 三、FIELD禁止提前Reality
+
+FIELD阶段：
+
+只能定义：
+
+- 场域
+- 结构
+- 主客关系
+- 角色定位
+
+禁止：
+
+- 提前Reality Mapping
+- 提前Terminal
+- 提前结果裁断
+
+---
+
+## 四、角色必须唯一锁定
+
+同一宫位：
+
+必须优先锁定：
+
+主角色。
+
+若存在：
+
+次角色：
+
+必须说明：
+
+- 转换原因
+- 转换条件
+- 转换时机
+
+否则：
+
+视为：
+
+角色漂移错误。
+
+---
+
+## 五、最终铁律
+
+FIELD：
+
+只负责：
+
+“谁是谁”。
+
+PATH：
+
+才负责：
+
+“发生了什么”。
+
+<!-- MODULE_END name=FIELD_ROLE_MAPPING_LOCK -->
 
 <!-- MODULE_START name=MODULE_OVERRIDE_AUTHORITY_TREE delete_scope=whole_block -->
 
@@ -645,16 +735,17 @@ Star Appearance Override
 
 定义：
 
-是否真正改变现实结构。
+必须形成不可逆现实状态。
 
 包括：
 
-- 合同成立
-- 婚姻成立
-- 财务落地
-- 身份变化
-- 身体状态改变
-- 长期现实形成
+- 已签合同
+- 已到账
+- 已登记
+- 已怀孕
+- 已确诊
+- 已分手
+- 已录取
 
 ---
 
@@ -887,6 +978,174 @@ Star
 
 <!-- MODULE_END name=MODULE_OVERRIDE_AUTHORITY_TREE -->
 
+<!-- MODULE_START name=REALITY_OVERRIDE_ACTIVATION_LOCK delete_scope=whole_block -->
+
+# REALITY_OVERRIDE_ACTIVATION_LOCK
+
+## 一、Reality Override 生效条件
+
+Reality Override：
+
+不是：
+
+“现实已经发生”
+即可成立。
+
+必须同时满足：
+
+- 飞入成立
+- 承接成立
+- 飞出成立
+- Reality结构成立
+- 最终现实闭环成立
+
+否则：
+
+禁止激活 Reality Override。
+
+---
+
+## 二、Reality禁止脱离飞四化
+
+Reality：
+
+不能脱离：
+
+飞四化路径
+
+单独成立。
+
+即：
+
+现实事件：
+
+必须存在：
+
+对应飞四化结构。
+
+否则：
+
+即使现实逻辑上：
+
+“已经发生”
+
+也禁止裁断成立。
+
+---
+
+## 三、Reality不是现实经验
+
+Reality Override：
+
+不是：
+
+现实合理化。
+
+而是：
+
+盘中已经形成：
+
+不可逆现实结构。
+
+---
+
+## 四、Reality Override 允许场景
+
+包括：
+
+- 已签合同
+- 已到账
+- 已登记
+- 已录取
+- 已确诊
+- 已分手
+- 已怀孕
+
+且：
+
+必须存在：
+
+完整路径闭环。
+
+---
+
+## 五、禁止Reality强压路径
+
+禁止：
+
+现实经验
+直接覆盖：
+
+- Terminal
+- Flow
+- Convergence
+- 承接结构
+
+Reality只能：
+
+在结构完整后：
+
+取得最高裁定权。
+
+---
+
+## 六、最终铁律
+
+Reality Override：
+
+本质上：
+
+仍属于：
+
+飞四化最终显化结果。
+
+不是：
+
+独立因果源。
+
+<!-- MODULE_END name=REALITY_OVERRIDE_ACTIVATION_LOCK -->
+
+# RULE SOURCE PRIORITY LOCK
+
+ROOT_PROTOCOL
+＞
+PATH_ENGINE
+＞
+FIELD_ENGINE
+＞
+OVERRIDE
+＞
+REALITY
+＞
+星曜象义库
+＞
+课程案例
+＞
+传统解释
+
+# TERMINAL_REQUIRED_LOCK
+
+无Terminal
+＝禁止定义最终结果
+只能定义：
+过程态
+趋势态
+进行态
+
+# STAR_MODEL_LAYER
+
+课程中的星曜定义
+仅允许作为：
+Reality Mapping层
+
+禁止作为：
+因果层
+结果层
+收敛层
+
+
+
+
 # 模式识别、核心身份与星曜模型
 
 > 单元角色：负责紫占/命理模式切换、角色身份、星曜模型定义
@@ -894,49 +1153,19 @@ Star
 > 历史标签说明：正文中出现的 MODULE_xxx 名称仅保留原始规则标签或输出字段名，不构成文件级依赖。
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
-<!-- PROMPT_SECTION_START id=PROMPT_三 title="三、模式识别" -->
+## 模式控制唯一来源
 
-## 三、模式识别
+本文件只保留 MODULE_CORE_PROTOCOL 作为模式控制器。
 
-### 问卦占事
+Prompt.md 不再重复定义模式识别；合并后的规则库也不再保留 PROMPT_三。
 
-激活：
+这样可以避免：
 
-紫占模式
+- Prompt 模式
+- PROMPT_三 模式
+- MODULE_CORE_PROTOCOL 模式
 
-分析：
-
-主卦 / 十分卦 / 分钟卦
-
----
-
-### 问卦占命
-
-激活：
-
-命理模式
-
-分析：
-
-来因 / 大运 / 流年
-
-三层卦：
-
-仅作为动态触发层
-
-优先级：
-
-来因
-＞
-大运
-＞
-流年
-＞
-三层卦
-
----
-
-<!-- PROMPT_SECTION_END id=PROMPT_三 -->
+三层重复路由造成的边界漂移。
 
 <!-- MODULE_START name=MODULE_CORE_PROTOCOL delete_scope=whole_block -->
 
@@ -1218,6 +1447,9 @@ _(执行时需全量调用知识库)_
 
 <!-- MODULE_END name=MODULE_DESTINY_EXPANSION_PROTOCOL -->
 
+
+
+
 # 人物角色映射与太极点锁定
 
 > 单元角色：负责人物、多角色、宫位到现实角色映射
@@ -1228,6 +1460,30 @@ _(执行时需全量调用知识库)_
 <!-- PROMPT_SECTION_START id=PROMPT_六 title="六、人物角色映射协议" -->
 
 ## 六、人物角色映射协议
+
+### 零、权限边界（最高优先级）
+
+本协议仅负责：
+
+宫位 → 现实角色映射。
+
+允许输出：
+
+- 宫位对应的现实角色
+- 多角色关系中的对象归属
+- 同一宫位的主角色 / 次角色
+- 角色动态转换原因
+
+禁止直接定义：
+
+- Terminal
+- Reality
+- Final Result
+- 收敛成立
+- 覆盖权限
+- 最终成败
+
+角色映射只能为路径、现实映射和输出格式提供对象定位，不得替代飞四化路径、收敛或覆盖裁定。
 
 ### 一、总纲
 
@@ -1633,6 +1889,9 @@ _(执行时需全量调用知识库)_
 的解盘错误。
 
 <!-- PROMPT_SECTION_END id=PROMPT_六 -->
+
+
+
 
 # 场域层级、显化层与三层卦边界
 
@@ -2192,6 +2451,9 @@ collapse_structure宫
 禁止压缩。
 
 <!-- MODULE_END name=MODULE_DYNAMIC_HEAT_LEVEL -->
+
+
+
 
 # 因果、追化与路径引擎
 
@@ -3403,6 +3665,9 @@ recursive_loop
 
 <!-- MODULE_END name=MODULE_RECURSION_LIMIT_PROTOCOL -->
 
+
+
+
 # 五维扫描、Overlay 与复合象
 
 > 单元角色：负责多维扫描、时间层叠、复合象图、命理扩展触发
@@ -4330,6 +4595,9 @@ XXX宫
 解释紫占。
 
 <!-- MODULE_END name=MODULE_COMPOSITE_IMAGE_PROTOCOL -->
+
+
+
 
 # Flow State、收敛质量与终端承载
 
@@ -5524,6 +5792,9 @@ Reality Override。
 
 <!-- MODULE_END name=MODULE_TERMINAL_CAPACITY_ENGINE -->
 
+
+
+
 # 现实映射、场景映射与空间收敛
 
 > 单元角色：负责现实落地、场景转换、空间场、观察/现实收敛
@@ -5567,7 +5838,7 @@ Overlay
 - **小星染色**：
   - **阴煞** 🦠：模型上的“霉斑/暗结”，主不可见的干扰。
   - **文曲忌** 📄：载体失效，如“合同漏洞/表达断片”。
-  <!-- MODULE_END name=MODULE_SCENE_MAPPING -->
+<!-- MODULE_END name=MODULE_SCENE_MAPPING -->
 
 <!-- MODULE_START name=MODULE_REALITY_MAPPING_ENGINE delete_scope=whole_block -->
 
@@ -6954,6 +7225,9 @@ Reality Mapping
 
 <!-- MODULE_END name=MODULE_SPATIAL_CONVERGENCE_ENGINE -->
 
+
+
+
 # 小星逻辑与路径成本
 
 > 单元角色：负责小星作为路径成本函数、承接改变、击穿与体验成本
@@ -7019,7 +7293,7 @@ Reality Mapping
 2. **权重：** \* **击穿级 (空/劫/耗)：** 改变结构。
    - **摩擦级 (羊/陀/火/铃)：** 焦虑、刺痛或纠缠。
    - **标记级 (天虚/天喜/病符)：** 定义真伪、喜庆或病态。
-   <!-- MODULE_END name=MODULE_MINOR_STAR_LOGIC -->
+<!-- MODULE_END name=MODULE_MINOR_STAR_LOGIC -->
 
 <!-- MODULE_START name=MODULE_MINOR_STAR_ENGINE delete_scope=whole_block -->
 
@@ -8224,6 +8498,9 @@ Reality Mapping
 因此出现XX现实结果”
 
 <!-- MODULE_END name=MODULE_COST_ENGINE -->
+
+
+
 
 # 优先级、能量权重、排名分层与策略
 
@@ -9478,6 +9755,9 @@ Terminal：
 - **【信息脉冲】文昌/天机高能级碰撞：** 守护神通过文字、逻辑、数据流直接通讯。主：精准直觉、书面启示。
 <!-- MODULE_END name=MODULE_STRATEGY_ENGINE -->
 
+
+
+
 # 结构化链式推理与压缩规则
 
 > 单元角色：负责链式输出前的结构化推理、路径压缩、覆盖保护
@@ -9920,6 +10200,9 @@ Overlay：
 仅输出静态宫位分析。
 
 <!-- MODULE_END name=MODULE_STRUCTURED_REASONING_PROTOCOL -->
+
+
+
 
 # 全局输出格式与展示模板
 
@@ -10776,6 +11059,9 @@ ultra_hot
 
 <!-- MODULE_END name=MODULE_OUTPUT_TEMPLATE -->
 
+
+
+
 # 最终自检协议
 
 > 单元角色：负责输出前自检；作为独立校验文件，不作为其他规则的依赖前置
@@ -11011,3 +11297,7 @@ Coverage Failure。
 ---
 
 <!-- MODULE_END name=MODULE_SELF_CHECK -->
+
+
+
+

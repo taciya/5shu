@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- MODULE_START name=MODULE_SCENE_MAPPING delete_scope=whole_block -->
+
 # MODULE_SCENE_MAPPING
 
 ## 场景映射权限协议
@@ -40,9 +41,10 @@ Overlay
 - **小星染色**：
   - **阴煞** 🦠：模型上的“霉斑/暗结”，主不可见的干扰。
   - **文曲忌** 📄：载体失效，如“合同漏洞/表达断片”。
-<!-- MODULE_END name=MODULE_SCENE_MAPPING -->
+  <!-- MODULE_END name=MODULE_SCENE_MAPPING -->
 
 <!-- MODULE_START name=MODULE_REALITY_MAPPING_ENGINE delete_scope=whole_block -->
+
 # MODULE_REALITY_MAPPING_ENGINE
 
 ⚠️ Reality Mapping：
@@ -645,6 +647,7 @@ main_reality_locked
 <!-- MODULE_END name=MODULE_REALITY_MAPPING_ENGINE -->
 
 <!-- MODULE_START name=MODULE_SPATIAL_FIELD_PROTOCOL delete_scope=whole_block -->
+
 # MODULE_SPATIAL_FIELD_PROTOCOL
 
 ## 零、协议边界（最高优先级）
@@ -1131,6 +1134,7 @@ MODULE_SPATIAL_CONVERGENCE_ENGINE
 <!-- MODULE_END name=MODULE_SPATIAL_FIELD_PROTOCOL -->
 
 <!-- MODULE_START name=MODULE_SPATIAL_CONVERGENCE_ENGINE delete_scope=whole_block -->
+
 # MODULE_SPATIAL_CONVERGENCE_ENGINE
 
 ## 一、核心定义（新增最高优先级）
@@ -1421,4 +1425,5 @@ Reality Mapping
 
 “结果存在，
 但现实世界尚未真正接通”。
+
 <!-- MODULE_END name=MODULE_SPATIAL_CONVERGENCE_ENGINE -->

@@ -4,7 +4,11 @@
 
 ## 1. 加载目标
 
+必须加载同目录下：
+
 - `zizhan_rules_full.md`
+
+若使用拆分规则源，则按 `MERGE_ORDER.txt` 合并后的 `zizhan_rules_full.md` 为准。
 
 ## 2. Prompt 职责边界
 
@@ -64,3 +68,9 @@ FIELD
 - 社会经验补全
 - 统计概率补全
 - 现实合理化补全
+
+## 5. 维护原则
+
+需要修改规则时，优先修改 `md_rules2` 中的单独规则文件，再由外部工具重新合并 `zizhan_rules_full.md`。
+
+不建议直接修改合并后的 `zizhan_rules_full.md`。

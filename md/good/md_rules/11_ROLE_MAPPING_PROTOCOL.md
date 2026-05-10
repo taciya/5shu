@@ -6,6 +6,7 @@
 > 删除方式：需要删除本类规则时，直接删除本文件；需要删除其中单个历史模块时，删除对应 MODULE_START / MODULE_END 块。
 
 <!-- PROMPT_SECTION_START id=PROMPT_六 title="六、人物角色映射协议" -->
+
 ## 六、人物角色映射协议
 
 ### 一、总纲
@@ -410,4 +411,5 @@
 「结构正确，但现实人物错位」
 
 的解盘错误。
+
 <!-- PROMPT_SECTION_END id=PROMPT_六 -->
