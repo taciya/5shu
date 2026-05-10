@@ -359,3 +359,28 @@ pseudo_progress
 “事情好不好推进”
 
 两者禁止混用。
+
+QIMEN_PLUGIN：
+
+属于：
+
+「路径运行环境层」
+
+仅允许：
+
+修正：
+
+- Flow State
+- Spatial Resistance
+- Path Heat
+- Pseudo Progress
+- Convergence Speed
+
+禁止：
+
+修改：
+
+- 飞四化因果
+- Path成立
+- 最终收敛宫
+- Reality结果
