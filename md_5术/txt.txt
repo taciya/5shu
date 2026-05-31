@@ -1,5 +1,11 @@
-/mnt/data/
-
+/mnt/data/斗数-方外人河洛派紫斗详释.doc
+/mnt/data/斗数-钦天四化.xlsx
+/mnt/data/紫占-根本象义.xlsx
+/mnt/data/紫占-紫微看病小星_笔记.pdf
+/mnt/data/紫占-课程手册2025.pdf
+/mnt/data/紫占-象义.xlsx
+/mnt/data/紫占-金刚佛光-紫微斗数占卜(176页).pdf
+/mnt/data/紫占-金刚佛光_星意汇总.xlsx
 
 结合数据源的以下规则,重新给出利用飞宫判断四化能量终止的规则.
 ·奇门.md
