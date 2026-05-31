@@ -984,11 +984,6 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   ages.className = 'ages'
   ages.textContent = palace.ages
   palaceElement.ages = palace.ages || ''
-  const naTalAgeRange = document.createElement('div')
-  naTalAgeRange.className = 'ages2'
-  naTalAgeRange.textContent = palaceElement.natalAgeRange || ''
-
-  ages.appendChild(naTalAgeRange)
   palaceElement.appendChild(ages)
 
   // 宫位底部信息
@@ -3348,8 +3343,13 @@ function clearDayunDisplays() {
       // 创建原局宫位名称显示元素
       const natalNameEl = document.createElement('div')
       natalNameEl.className = 'palace-name-natal'
-      natalNameEl.textContent = `${displayName.substring(0, 1)}` // 用尖括号区分原局名称
 
+      const naTalAgeRange = palaceEl.natalAgeRange || ''
+      natalNameEl.textContent = `${displayName.substring(0, 1)}[${naTalAgeRange}]` // 用尖括号区分原局名称
+      // const naTalAgeRange = document.createElement('div')
+      // naTalAgeRange.className = 'ages2'
+      // naTalAgeRange.textContent = palaceEl.natalAgeRange || ''
+      // natalNameEl.appendChild(naTalAgeRange)
       // 插入到宫位名称上方
       palaceNameEl.parentNode.insertBefore(natalNameEl, palaceNameEl)
     }

@@ -671,20 +671,7 @@ FFFFFF
   z-index: 10;
   /* writing-mode: vertical-lr; */
 }
-.ages2 {
-  position: absolute;
-  top: 70%; /* 垂直居中 */
-  left: 10%; /* 与changsheng-container右对齐 */
-  width: 80%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-
-  z-index: 10;
-  /* writing-mode: vertical-lr; */
-}
 /* 太极12宫 */
 .new-palace-name {
   position: absolute;
@@ -1953,17 +1940,18 @@ dl {
 
 .palace-name-natal {
   position: absolute;
-  top: 2px;
-  left: 60%; /* 微调位置，避免重叠 */
+  top: -10px;
+  left: 65%; /* 微调位置，避免重叠 */
   transform: translateX(-50%);
   color: #8b4513; /* 深棕色，与命盘主题一致 */
   font-size: 12px;
   white-space: nowrap;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.8);
+  /* background: rgba(255, 255, 255, 0.8); */
   padding: 0 4px;
   border-radius: 2px;
 }
+
 .palace-name-dayun {
   position: absolute;
   top: -15px;
