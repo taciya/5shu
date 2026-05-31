@@ -4,8 +4,15 @@
 
 必须先读取：
 
-1. 总则.md
-2. 当前项目规则
+1. Library Files
+
+- 总则.md
+
+2. Project Files
+
+- 紫占.md
+
+- 奇门.md
 
 读取完成后才能开始推理。
 
