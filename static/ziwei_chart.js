@@ -813,13 +813,15 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
     : null
   if (NatalPalace) {
     palaceElement.natalPalaceName = NatalPalace.name || ''
-    palaceElement.dataset.natalPalaceName = NatalPalace.name || ''
     palaceElement.natalDizhi = NatalPalace.dizhi || ''
     palaceElement.natalGan = NatalPalace.gan || ''
+    palaceElement.dizhi = palace.dizhi || ''
+    palaceElement.natalAgeRange = NatalPalace.age_range || ''
     palaceElement.dataset.natalPalaceName = NatalPalace.name || ''
     palaceElement.dataset.natalDizhi = NatalPalace.dizhi || ''
     palaceElement.dataset.natalGan = NatalPalace.gan || ''
-    palaceElement.dizhi = palace.dizhi || ''
+    palaceElement.dataset.dizhi = palace.dizhi || ''
+    palaceElement.dataset.natalAgeRange = NatalPalace.age_range || ''
   }
   // 初始化CSS变量
   palaceElement.style.setProperty('--main-stars-width', '0px')
@@ -982,6 +984,11 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   ages.className = 'ages'
   ages.textContent = palace.ages
   palaceElement.ages = palace.ages || ''
+  const naTalAgeRange = document.createElement('div')
+  naTalAgeRange.className = 'ages2'
+  naTalAgeRange.textContent = palaceElement.natalAgeRange || ''
+
+  ages.appendChild(naTalAgeRange)
   palaceElement.appendChild(ages)
 
   // 宫位底部信息
@@ -3686,9 +3693,15 @@ function editFeigongstr(feigongstr) {
     const liunianName = palaceEl.liunianName || '无'
 
     const natalPalaceName = palaceEl.natalPalaceName // 原局宫位名称（如“财帛宫”）
+    const natalAgeRange = palaceEl.natalAgeRange // 原局年龄范围
     // 存入Map（键：宫位名称，值：大运/流年信息）
 
-    palaceInfoMap.set(ageRange, { dayunName, liunianName, natalPalaceName })
+    palaceInfoMap.set(ageRange, {
+      dayunName,
+      liunianName,
+      natalPalaceName,
+      natalAgeRange,
+    })
   })
 
   const blocks = []
@@ -3714,14 +3727,19 @@ function editFeigongstr(feigongstr) {
     const ageRange = ageRangeMatch[1] // 年龄范围（如“86-95”）
 
     // 从Map中获取该宫位的大运/流年信息
-    const { dayunName, liunianName, natalPalaceName } = palaceInfoMap.get(
-      ageRange,
-    ) || { dayunName: '无', liunianName: '无', natalPalaceName: '无' }
+    const { dayunName, liunianName, natalPalaceName, natalAgeRange } =
+      palaceInfoMap.get(ageRange) || {
+        dayunName: '无',
+        liunianName: '无',
+        natalPalaceName: '无',
+        natalAgeRange: '无',
+      }
     // 构造插入内容（**关键改进**：大运/流年行均前缀2个空格，用数组存储行）
     const insertLines = [
       `  大运宫位: ${dayunName}`, // 前缀2空格
       `  流年宫位: ${liunianName}`, // 前缀2空格
       `  原局宫位: ${natalPalaceName && natalPalaceName !== '无' ? `原局${natalPalaceName}` : '无'}`, // 前缀2空格
+      `  原局年限: ${natalAgeRange && natalAgeRange !== '无' ? `${natalAgeRange}` : '无'}`, // 前缀2空格
     ]
     const insertContent = insertLines.join('\n') // 用换行符拼接
 
@@ -3739,6 +3757,7 @@ function editFeigongstr(feigongstr) {
         insertContent.split('\n')[0],
         insertContent.split('\n')[1],
         insertContent.split('\n')[2],
+        insertContent.split('\n')[3],
       )
     }
 
