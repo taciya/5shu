@@ -3345,7 +3345,8 @@ function clearDayunDisplays() {
       natalNameEl.className = 'palace-name-natal'
 
       const naTalAgeRange = palaceEl.natalAgeRange || ''
-      natalNameEl.textContent = `${displayName.substring(0, 1)}[${naTalAgeRange}]` // 用尖括号区分原局名称
+      naTalAgeRange && (naTalAgeRange = `<${naTalAgeRange}>`) // 如果有年龄范围，前面加个空格分隔
+      natalNameEl.textContent = `${displayName.substring(0, 1)}${naTalAgeRange}` // 用尖括号区分原局名称
       // const naTalAgeRange = document.createElement('div')
       // naTalAgeRange.className = 'ages2'
       // naTalAgeRange.textContent = palaceEl.natalAgeRange || ''
