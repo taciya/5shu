@@ -27,11 +27,11 @@
 
 解卦主路径,参考:
 
-> [紫占.md].[# 紫占：天地沟通师全维度解卦协议]
+> [# 紫占：天地沟通师全维度解卦协议]
 
 相关定义和协议,参考:
 
-> 过程中参考[紫占.md].[# ROOT_LAYER ：XXX]和[紫占.md].[# ROOT_OVERRIDE：XXX]
+> 过程中参考[# ROOT_LAYER ：XXX]和[# ROOT_OVERRIDE：XXX]
 
 # ROOT_OVERRIDE: 根定义
 
