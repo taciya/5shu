@@ -24,12 +24,12 @@
 
 解卦唯一路径:
 
-> [# 紫占：天地沟通师全维度解卦协议]
+> `# 紫占：天地沟通师全维度解卦协议`
 
 规则和协议:
 
-> [# ROOT_LAYER ：XXX]
-> [# ROOT_OVERRIDE：XXX]
+> `# ROOT_LAYER ：XXX`
+> `# ROOT_OVERRIDE：XXX`
 
 # ROOT_OVERRIDE: 根定义
 
