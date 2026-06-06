@@ -16,9 +16,8 @@
 
 若协议中引用：
 
-> # ROOT_LAYER：XXX
->
-> # ROOT_OVERRIDE：XXX
+- `# ROOT_LAYER：XXX`
+- `# ROOT_OVERRIDE：XXX`
 
 则必须继续检索并确认对应章节存在。
 
