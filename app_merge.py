@@ -7,10 +7,8 @@ from pathlib import Path
 
 # 文本文件所在目录
 INPUT_DIR = "md"
-
 # 输出文件
 OUTPUT_FILE = "./md/zizhan_rules_full.md"
-
 # 指定文件列表
 FILE_LIST = [
     "00_SYSTEM_ROOT_LOCK.md",
@@ -67,6 +65,16 @@ FILE_LIST = [
     "90_OUTPUT_FORMAT.md",
     "99_SELF_CHECK.md"
 ]
+
+INPUT_DIR = ""
+OUTPUT_FILE = "./协议/紫占.md"
+FILE_LIST = [
+    "协议/01_定义层.md",
+    "协议/02_裁断层.md",
+    "协议/03_专项协议层.md",
+    "协议/04_输出层.md",
+    "协议/05_质检层.md",
+]
 # =========================
 # merge
 # =========================
@@ -94,6 +102,6 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as outfile:
         outfile.write(content)
 
         # 写入分隔标题（可删）
-        outfile.write(f"\n\n\n\n")
+        outfile.write(f"\n\n")
 
 print(f"\n完成 -> {OUTPUT_FILE}")
