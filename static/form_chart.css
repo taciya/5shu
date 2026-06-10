@@ -808,18 +808,22 @@ FFFFFF
 /* 地支位置 */
 #巳宫 {
   grid-area: 1 / 1;
+  opacity: 0.9;
 }
 #午宫 {
   grid-area: 1 / 2;
 }
 #未宫 {
   grid-area: 1 / 3;
+  opacity: 0.9;
 }
 #申宫 {
   grid-area: 1 / 4;
+  opacity: 0.9;
 }
 #辰宫 {
   grid-area: 2 / 1;
+  opacity: 0.9;
 }
 #酉宫 {
   grid-area: 2 / 4;
@@ -829,18 +833,22 @@ FFFFFF
 }
 #戌宫 {
   grid-area: 3 / 4;
+  opacity: 0.9;
 }
 #寅宫 {
   grid-area: 4 / 1;
+  opacity: 0.9;
 }
 #丑宫 {
   grid-area: 4 / 2;
+  opacity: 0.9;
 }
 #子宫 {
   grid-area: 4 / 3;
 }
 #亥宫 {
   grid-area: 4 / 4;
+  opacity: 0.9;
 }
 
 /* 改进后的四化容器样式 */
