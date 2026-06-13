@@ -808,49 +808,392 @@ FFFFFF
 /* 地支位置 */
 #巳宫 {
   grid-area: 1 / 1;
-  opacity: 0.9;
+}
+#巳宫 .shensha-container::before {
+  content: '❿南东';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
 }
 #午宫 {
   grid-area: 1 / 2;
 }
+#午宫 .shensha-container::before {
+  content: '⓬正南';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#午宫::before {
+  content: '离';
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(160deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
 #未宫 {
   grid-area: 1 / 3;
-  opacity: 0.9;
+}
+#未宫 .shensha-container::before {
+  content: '⓮南西';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
 }
 #申宫 {
   grid-area: 1 / 4;
-  opacity: 0.9;
+}
+#申宫 .shensha-container::before {
+  content: '⓰西南';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#申宫::before {
+  content: '坤';
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(90deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
 }
 #辰宫 {
   grid-area: 2 / 1;
-  opacity: 0.9;
+}
+#辰宫 .shensha-container::before {
+  content: '➑东南';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#辰宫::before {
+  content: '巽';
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  transform: translate(-50%, -50%) rotate(0deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
 }
 #酉宫 {
   grid-area: 2 / 4;
 }
+#酉宫 .shensha-container::before {
+  content: '⓲正西';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#酉宫::before {
+  content: '兑';
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(-135deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
 #卯宫 {
   grid-area: 3 / 1;
 }
+#卯宫 .shensha-container::before {
+  content: '❻正东';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#卯宫::before {
+  content: '震';
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(45deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
 #戌宫 {
   grid-area: 3 / 4;
-  opacity: 0.9;
+}
+#戌宫 .shensha-container::before {
+  content: '⓴北西';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
 }
 #寅宫 {
   grid-area: 4 / 1;
-  opacity: 0.9;
+}
+#寅宫 .shensha-container::before {
+  content: '❹东北';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
 }
 #丑宫 {
   grid-area: 4 / 2;
-  opacity: 0.9;
+}
+#丑宫 .shensha-container::before {
+  content: '➋北东';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#丑宫::before {
+  content: '艮';
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(-90deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
 }
 #子宫 {
   grid-area: 4 / 3;
 }
+#子宫 .shensha-container::before {
+  content: '⓪正北';
+
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#子宫::before {
+  content: '坎';
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%) rotate(-20deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
 #亥宫 {
   grid-area: 4 / 4;
-  opacity: 0.9;
 }
+#亥宫 .shensha-container::before {
+  content: '㉒北西';
 
+  position: absolute;
+
+  left: -5px;
+  top: 0;
+
+  transform: translate(0, -100%) rotate(0);
+
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+
+  white-space: pre;
+  pointer-events: none;
+  z-index: 1;
+}
+#亥宫::before {
+  content: '乾';
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  transform: translate(-50%, -50%) rotate(180deg);
+
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.08);
+
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
 /* 改进后的四化容器样式 */
 .sihua-container {
   display: flex;
