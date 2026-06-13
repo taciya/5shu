@@ -512,7 +512,7 @@ function renderChart(mixData, formData) {
                 <span class="sizhu" >${data.sizhu_bagua['月柱']} </span>
                 <span class="sizhu" >${data.sizhu_bagua['日柱']} </span>
                 <span class="sizhu" >${data.sizhu_bagua['时柱']} </span>
-                <span class="sizhu" >${data.sizhu_bagua['八卦']} </span>
+                <span class="sizhu" style="color: #6a00ff;">${data.sizhu_bagua['八卦']} </span>
             </div>
             <div class="center-info center">
                 命    主：${data.mingzhu} 身    主：${data.shenzhu}
