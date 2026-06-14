@@ -473,9 +473,29 @@ def get_all_stars():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/stars/<star_name>', methods=['GET'])
-def get_star(star_name):
+
+def get_sihua_dizhi(star: str, dizhi: str):
+    """
+    根据星曜+地支取得全部四化信息
+    """
+    from constants import SIHUA_DIZHI_MAP
+    result = ''
+
+    star_data = SIHUA_DIZHI_MAP.get(star, {})
+
+    for hua, hua_data in star_data.items():
+
+        text = hua_data.get(dizhi)
+
+        if text:
+            result += f'{hua}：{text}\n'
+
+    return result
+
+@app.route('/api/stars/<star_name>/<dizhi>', methods=['GET'])
+def get_star(star_name, dizhi):
     """获取单个星曜数据"""
+    from constants import SIHUA_DIZHI_MAP
     try:
         conn = get_db_connection()
         star = conn.execute(
@@ -483,7 +503,6 @@ def get_star(star_name):
             (star_name,)
         ).fetchone()
         conn.close()
-
         if star:
             return jsonify({
                 'starName': star['star_name'],
@@ -496,6 +515,7 @@ def get_star(star_name):
                 'career': star['career'] or '',
                 'wealth': star['wealth'] or '',
                 'mindset': star['mindset'] or '',
+                'sihua_dizhi': get_sihua_dizhi(star_name, dizhi),  # 根据请求的地支参数返回对应的四化地支解释
                 'lastUpdated': star['last_updated']
             })
         return jsonify({'error': 'Not found'}), 404
