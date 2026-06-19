@@ -1656,9 +1656,16 @@ document.addEventListener('DOMContentLoaded', function () {
         ':' +
         (chartParams.birthMinute + '' || '00').padStart(2, '0') +
         '\n'
+      // 添加问卦生成时间
+      const yyyymmddhhmmss_now = new Date()
+        .toISOString()
+        .replace('T', ' ')
+        .substring(0, 16)
+      const yyyymmddhhmm_now = '问卦时间：' + yyyymmddhhmmss_now + '\n'
 
       const fullContent =
         yyyymmddhhmm +
+        yyyymmddhhmm_now +
         generateFeigongString() +
         editFeigongstr(data.feigong_str)
       // 使用新的剪贴板助手
