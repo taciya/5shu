@@ -495,7 +495,6 @@ def get_sihua_dizhi(star: str, dizhi: str):
 @app.route('/api/stars/<star_name>/<dizhi>', methods=['GET'])
 def get_star(star_name, dizhi):
     """获取单个星曜数据"""
-    from constants import SIHUA_DIZHI_MAP
 
     try:
         conn = get_db_connection()
