@@ -1080,6 +1080,137 @@ def update_profile():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
+@app.route("/api/hexagram/image/<index>", methods=['GET'])
+def hexagram_image(index):
+    HEXAGRAM_IMAGE = {
+        "乾为天": "001.png",
+        "坤为地": "002.png",
+        "水雷屯": "003.png",
+        "山水蒙": "004.png",
+        "水天需": "005.png",
+        "天水讼": "006.png",
+        "地水师": "007.png",
+        "水地比": "008.png",
+        "风天小畜": "009.png",
+        "天泽履": "010.png",
+        "地天泰": "011.png",
+        "天地否": "012.png",
+        "天火同人": "013.png",
+        "火天大有": "014.png",
+        "地山谦": "015.png",
+        "雷地豫": "016.png",
+        "泽雷随": "017.png",
+        "山风蛊": "018.png",
+        "地泽临": "019.png",
+        "风地观": "020.png",
+        "火雷噬嗑": "021.png",
+        "山火贲": "022.png",
+        "山地剥": "023.png",
+        "地雷复": "024.png",
+        "天雷无妄": "025.png",
+        "山天大畜": "026.png",
+        "山雷颐": "027.png",
+        "泽风大过": "028.png",
+        "坎为水": "029.png",
+        "离为火": "030.png",
+        "泽山咸": "031.png",
+        "雷风恒": "032.png",
+        "天山遁": "033.png",
+        "雷天大壮": "034.png",
+        "火地晋": "035.png",
+        "地火明夷": "036.png",
+        "风火家人": "037.png",
+        "火泽睽": "038.png",
+        "水山蹇": "039.png",
+        "雷水解": "040.png",
+        "山泽损": "041.png",
+        "风雷益": "042.png",
+        "泽天夬": "043.png",
+        "天风姤": "044.png",
+        "泽地萃": "045.png",
+        "地风升": "046.png",
+        "泽水困": "047.png",
+        "水风井": "048.png",
+        "泽火革": "049.png",
+        "火风鼎": "050.png",
+        "震为雷": "051.png",
+        "艮为山": "052.png",
+        "风山渐": "053.png",
+        "雷泽归妹": "054.png",
+        "雷火丰": "055.png",
+        "火山旅": "056.png",
+        "巽为风": "057.png",
+        "兑为泽": "058.png",
+        "风水涣": "059.png",
+        "水泽节": "060.png",
+        "风泽中孚": "061.png",
+        "雷山小过": "062.png",
+        "水火既济": "063.png",
+        "火水未济": "064.png",
+    }
+
+    index = int(
+        request.args[index]
+    )
+
+    return jsonify({
+        "image_url":
+        f"/static/hexagrams/pages/{HEXAGRAM_IMAGE[index]}"
+    })
+
+@app.route("/api/hexagram/<year_gz>/<month_gz>/<day_gz>/<hour_gz>", methods=['GET'])
+def hexagram(year_gz,month_gz,day_gz,hour_gz):
+
+    GAN_NUM = {
+        "甲":1,"乙":2,"丙":3,"丁":4,"戊":5,
+        "己":6,"庚":7,"辛":8,"壬":9,"癸":10
+    }
+
+    ZHI_NUM = {
+        "子":1,"丑":2,"寅":3,"卯":4,
+        "辰":5,"巳":6,"午":7,"未":8,
+        "申":9,"酉":10,"戌":11,"亥":12
+    }
+
+    BAGUA_NUM = {
+        1:"乾",
+        2:"兑",
+        3:"离",
+        4:"震",
+        5:"巽",
+        6:"坎",
+        7:"艮",
+        8:"坤"
+    }
+    yg,yz = year_gz[0], year_gz[1]
+    mg,mz = month_gz[0], month_gz[1]
+    dg,dz = day_gz[0], day_gz[1]
+    hg,hz = hour_gz[0], hour_gz[1]
+
+    upper_total = (
+        GAN_NUM[yg] + ZHI_NUM[yz] +
+        GAN_NUM[mg] + ZHI_NUM[mz] +
+        GAN_NUM[dg] + ZHI_NUM[dz]
+    )
+
+    lower_total = (
+        upper_total +
+        GAN_NUM[hg] + ZHI_NUM[hz]
+    )
+
+    upper = upper_total % 8
+    upper = 8 if upper == 0 else upper
+
+    lower = lower_total % 8
+    lower = 8 if lower == 0 else lower
+
+    moving = lower_total % 6
+    moving = 6 if moving == 0 else moving
+
+    return {
+        "hexagram": f"{BAGUA_NUM[upper]}{BAGUA_NUM[lower]}{moving}",
+        "index": 4,
+    }
 
 @app.route('/admin')
 # @login_required

@@ -507,12 +507,18 @@ function renderChart(mixData, formData) {
                 <div class="center-info">真太阳时：${birth.true_solar_time}</div>
                 <div class="center-info">农历时间：${birth.gan_zhi}年${monthMap.numberToHanzi[birth.month]}${dayMap.numberToHanzi[birth.day]} ${data.shichen}</div>
             </div>
-            <div class="center-info center">
+            <div class="center-info center hexagram-trigger"
+                data-year="${data.sizhu_bagua['年柱']}"
+                data-month="${data.sizhu_bagua['月柱']}"
+                data-day="${data.sizhu_bagua['日柱']}"
+                data-hour="${data.sizhu_bagua['时柱']}">
+
                 <span class="sizhu">${data.sizhu_bagua['年柱']}</span>
-                <span class="sizhu" >${data.sizhu_bagua['月柱']} </span>
-                <span class="sizhu" >${data.sizhu_bagua['日柱']} </span>
-                <span class="sizhu" >${data.sizhu_bagua['时柱']} </span>
-                <span class="sizhu" >${data.sizhu_bagua['八卦']} </span>
+                <span class="sizhu">${data.sizhu_bagua['月柱']}</span>
+                <span class="sizhu">${data.sizhu_bagua['日柱']}</span>
+                <span class="sizhu">${data.sizhu_bagua['时柱']}</span>
+                <span class="sizhu">${data.sizhu_bagua['八卦']}</span>
+
             </div>
             <div class="center-info center">
                 命    主：${data.mingzhu} 身    主：${data.shenzhu}
@@ -622,6 +628,77 @@ function renderChart(mixData, formData) {
   const exportBtn = document.getElementById('exportBtn')
   exportBtn.formData = JSON.stringify(formData) // 将formData附加到导出按钮，供导出功能使用
   clearDayunDisplays() // 初始化时清空大运显示
+
+  document.querySelectorAll('.hexagram-trigger').forEach((el) => {
+    el.addEventListener('click', async () => {
+      const year = el.dataset.year
+      const month = el.dataset.month
+      const day = el.dataset.day
+      const hour = el.dataset.hour
+
+      await showHexagramImage(year, month, day, hour)
+    })
+  })
+}
+
+async function showHexagramImage(year, month, day, hour) {
+  // 向服务器发送请求获取feigong_str
+  const response = await fetch(
+    getApiBaseUrl() + `/api/hexagram/${year}/${month}/${day}/${hour}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chartParams),
+    },
+  )
+
+  const data = await response.json()
+
+  if (!data.success) {
+    throw new Error(data.message || '服务器返回错误')
+  }
+
+  loadHexagramPage(data.index, data.hexagram)
+}
+
+async function loadHexagramPage(index, name) {
+  // 向服务器发送请求获取feigong_str
+  const response = await fetch(
+    getApiBaseUrl() + `/api/hexagram/image/${index}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chartParams),
+    },
+  )
+
+  const data = await response.json()
+
+  if (!data.success) {
+    throw new Error(data.message || '服务器返回错误')
+  }
+
+  const tooltip = document.getElementById('star-tooltip')
+
+  tooltip.style.display = 'block'
+
+  tooltip.innerHTML = `
+        <div class="label">
+            ${name}
+        </div>
+
+        <img
+            src="${data.image_url}"
+            style="
+                width:100%;
+                max-width:800px;
+            "
+        >
+    `
 }
 
 function generateFeigongString() {
