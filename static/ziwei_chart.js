@@ -1777,6 +1777,18 @@ const showStarMeaning = async (starName, element) => {
   tooltip.style.display = 'block'
   currentDisplayedStar = starName
   element.style.cursor = 'wait'
+  let dizhi = ''
+
+  const parent = element.parentElement
+  const grandParent = parent?.parentElement
+
+  if (parent?.classList.contains('star-unit') && grandParent) {
+    const match = grandParent.id.match(/[子丑寅卯辰巳午未申酉戌亥]/)
+
+    if (match) {
+      dizhi = match[0]
+    }
+  }
 
   try {
     // 创建新的AbortController用于本次请求
@@ -1784,7 +1796,8 @@ const showStarMeaning = async (starName, element) => {
 
     // 从服务端获取星曜含义
     const response = await fetch(
-      getApiBaseUrl() + `/api/stars/${encodeURIComponent(starName)}`,
+      getApiBaseUrl() +
+        `/api/stars/${encodeURIComponent(starName)}/${encodeURIComponent(dizhi)}`,
       {
         method: 'GET',
         signal: starMeaningRequestController.signal,
@@ -1927,6 +1940,16 @@ function buildStarMeaningHTML(starName, starData) {
             <div class="meaning-section">
                 <div class="section-title">🧠 精神思维</div>
                 <div class="section-content">${formatContent(starData.mindset)}</div>
+            </div>
+        `)
+  }
+
+  // 星曜四化
+  if (starData.sihua_dizhi) {
+    sections.push(`
+            <div class="meaning-section">
+                <div class="section-title">🔮 星曜四化</div>
+                <div class="section-content">${formatContent(starData.sihua_dizhi)}</div>
             </div>
         `)
   }
