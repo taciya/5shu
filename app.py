@@ -1080,8 +1080,8 @@ def update_profile():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
-@app.route("/api/hexagram/image/<index>", methods=['GET'])
-def hexagram_image(index):
+@app.route("/api/hexagram/image/<name>", methods=['GET'])
+def hexagram_image(name):
     HEXAGRAM_IMAGE = {
         "乾为天": "001.png",
         "坤为地": "002.png",
@@ -1149,13 +1149,9 @@ def hexagram_image(index):
         "火水未济": "064.png",
     }
 
-    index = int(
-        request.args[index]
-    )
-
-    return jsonify({
-        "image_url":
-        f"/static/hexagrams/pages/{HEXAGRAM_IMAGE[index]}"
+    print(f"请求的卦象名称: {name}")
+    return jsonify({'success': True,
+        "image_url":f"/static/hexagrams/pages/{HEXAGRAM_IMAGE[name]}"
     })
 
 @app.route("/api/hexagram/<year_gz>/<month_gz>/<day_gz>/<hour_gz>", methods=['GET'])
@@ -1182,6 +1178,91 @@ def hexagram(year_gz,month_gz,day_gz,hour_gz):
         7:"艮",
         8:"坤"
     }
+
+    HEXAGRAM_MAP = {
+        ("乾","乾"): ("乾为天",1),
+        ("坤","坤"): ("坤为地",2),
+
+        ("坎","震"): ("水雷屯",3),
+        ("艮","坎"): ("山水蒙",4),
+        ("坎","乾"): ("水天需",5),
+        ("乾","坎"): ("天水讼",6),
+        ("坤","坎"): ("地水师",7),
+        ("坎","坤"): ("水地比",8),
+
+        ("巽","乾"): ("风天小畜",9),
+        ("乾","兑"): ("天泽履",10),
+        ("坤","乾"): ("地天泰",11),
+        ("乾","坤"): ("天地否",12),
+
+        ("乾","离"): ("天火同人",13),
+        ("离","乾"): ("火天大有",14),
+        ("坤","艮"): ("地山谦",15),
+        ("震","坤"): ("雷地豫",16),
+
+        ("兑","震"): ("泽雷随",17),
+        ("艮","巽"): ("山风蛊",18),
+        ("坤","兑"): ("地泽临",19),
+        ("巽","坤"): ("风地观",20),
+
+        ("离","震"): ("火雷噬嗑",21),
+        ("艮","离"): ("山火贲",22),
+        ("艮","坤"): ("山地剥",23),
+        ("坤","震"): ("地雷复",24),
+
+        ("乾","震"): ("天雷无妄",25),
+        ("艮","乾"): ("山天大畜",26),
+        ("艮","震"): ("山雷颐",27),
+        ("兑","巽"): ("泽风大过",28),
+
+        ("坎","坎"): ("坎为水",29),
+        ("离","离"): ("离为火",30),
+
+        ("兑","艮"): ("泽山咸",31),
+        ("震","巽"): ("雷风恒",32),
+        ("乾","艮"): ("天山遁",33),
+        ("震","乾"): ("雷天大壮",34),
+
+        ("离","坤"): ("火地晋",35),
+        ("坤","离"): ("地火明夷",36),
+        ("巽","离"): ("风火家人",37),
+        ("离","兑"): ("火泽睽",38),
+
+        ("坎","艮"): ("水山蹇",39),
+        ("震","坎"): ("雷水解",40),
+
+        ("艮","兑"): ("山泽损",41),
+        ("巽","震"): ("风雷益",42),
+        ("兑","乾"): ("泽天夬",43),
+        ("乾","巽"): ("天风姤",44),
+
+        ("兑","坤"): ("泽地萃",45),
+        ("坤","巽"): ("地风升",46),
+        ("兑","坎"): ("泽水困",47),
+        ("坎","巽"): ("水风井",48),
+
+        ("兑","离"): ("泽火革",49),
+        ("离","巽"): ("火风鼎",50),
+
+        ("震","震"): ("震为雷",51),
+        ("艮","艮"): ("艮为山",52),
+        ("巽","艮"): ("风山渐",53),
+        ("震","兑"): ("雷泽归妹",54),
+
+        ("震","离"): ("雷火丰",55),
+        ("离","艮"): ("火山旅",56),
+        ("巽","巽"): ("巽为风",57),
+        ("兑","兑"): ("兑为泽",58),
+
+        ("巽","坎"): ("风水涣",59),
+        ("坎","兑"): ("水泽节",60),
+        ("巽","兑"): ("风泽中孚",61),
+        ("震","艮"): ("雷山小过",62),
+
+        ("坎","离"): ("水火既济",63),
+        ("离","坎"): ("火水未济",64),
+    }
+
     yg,yz = year_gz[0], year_gz[1]
     mg,mz = month_gz[0], month_gz[1]
     dg,dz = day_gz[0], day_gz[1]
@@ -1207,10 +1288,19 @@ def hexagram(year_gz,month_gz,day_gz,hour_gz):
     moving = lower_total % 6
     moving = 6 if moving == 0 else moving
 
-    return {
-        "hexagram": f"{BAGUA_NUM[upper]}{BAGUA_NUM[lower]}{moving}",
-        "index": 4,
-    }
+    upper_name = BAGUA_NUM[upper]
+    lower_name = BAGUA_NUM[lower]
+
+    hexagram_name, index = HEXAGRAM_MAP[
+        (upper_name, lower_name)
+    ]
+    return jsonify({'success': True,
+        "hexagram": hexagram_name,
+        "upper": upper_name,
+        "lower": lower_name,
+        "moving": moving,
+        "index": index,})
+
 
 @app.route('/admin')
 # @login_required

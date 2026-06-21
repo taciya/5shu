@@ -650,7 +650,6 @@ async function showHexagramImage(year, month, day, hour) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(chartParams),
     },
   )
 
@@ -666,13 +665,12 @@ async function showHexagramImage(year, month, day, hour) {
 async function loadHexagramPage(index, name) {
   // 向服务器发送请求获取feigong_str
   const response = await fetch(
-    getApiBaseUrl() + `/api/hexagram/image/${index}`,
+    getApiBaseUrl() + `/api/hexagram/image/${encodeURIComponent(name)}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(chartParams),
     },
   )
 
@@ -687,10 +685,6 @@ async function loadHexagramPage(index, name) {
   tooltip.style.display = 'block'
 
   tooltip.innerHTML = `
-        <div class="label">
-            ${name}
-        </div>
-
         <img
             src="${data.image_url}"
             style="
