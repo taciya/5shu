@@ -508,6 +508,8 @@ function renderChart(mixData, formData) {
                 <div class="center-info">农历时间：${birth.gan_zhi}年${monthMap.numberToHanzi[birth.month]}${dayMap.numberToHanzi[birth.day]} ${data.shichen}</div>
             </div>
             <div class="center-info center hexagram-trigger"
+                data-hexagram="${data.hexagrams['hexagram']}"
+                data-index="${data.hexagrams['index']}"
                 data-year="${data.sizhu_bagua['年柱']}"
                 data-month="${data.sizhu_bagua['月柱']}"
                 data-day="${data.sizhu_bagua['日柱']}"
@@ -631,36 +633,38 @@ function renderChart(mixData, formData) {
 
   document.querySelectorAll('.hexagram-trigger').forEach((el) => {
     el.addEventListener('click', async () => {
-      const year = el.dataset.year
-      const month = el.dataset.month
-      const day = el.dataset.day
-      const hour = el.dataset.hour
+      // const year = el.dataset.year
+      // const month = el.dataset.month
+      // const day = el.dataset.day
+      // const hour = el.dataset.hour
 
-      await showHexagramImage(year, month, day, hour)
+      // await showHexagramImage(year, month, day, hour)
+
+      loadHexagramPage(el.dataset.index, el.dataset.hexagram)
     })
   })
 }
 
-async function showHexagramImage(year, month, day, hour) {
-  // 向服务器发送请求获取feigong_str
-  const response = await fetch(
-    getApiBaseUrl() + `/api/hexagram/${year}/${month}/${day}/${hour}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  )
+// async function showHexagramImage(year, month, day, hour) {
+//   // 向服务器发送请求获取feigong_str
+//   const response = await fetch(
+//     getApiBaseUrl() + `/api/hexagram/${year}/${month}/${day}/${hour}`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     },
+//   )
 
-  const data = await response.json()
+//   const data = await response.json()
 
-  if (!data.success) {
-    throw new Error(data.message || '服务器返回错误')
-  }
+//   if (!data.success) {
+//     throw new Error(data.message || '服务器返回错误')
+//   }
 
-  loadHexagramPage(data.index, data.hexagram)
-}
+//   loadHexagramPage(data.index, data.hexagram)
+// }
 
 async function loadHexagramPage(index, name) {
   // 向服务器发送请求获取feigong_str
@@ -713,6 +717,7 @@ function generateFeigongString() {
   const liunianSelector = document.getElementById('liunianSelector')
   const palaces = document.querySelectorAll('.palace') // 所有宫位元素
   const birthPlace = document.getElementById('birthPlace') // 获取出生地元素
+  const hexagramTrigger = document.querySelector('.hexagram-trigger') // 获取八卦触发元素
   // 2. 提取大运信息（若选中）
   let dayunInfo = '未选'
   if (dayunSelector.value) {
@@ -761,6 +766,7 @@ function generateFeigongString() {
 
   fullContent += `起卦场：东京\n`
   fullContent += `事件场：${birthPlace.value.trim()}\n`
+  fullContent += `六十四卦：${hexagramTrigger.dataset.hexagram}\n`
   fullContent += `命盘信息：\n`
   return fullContent
 }

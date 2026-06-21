@@ -4,7 +4,7 @@ import datetime
 
 class CalendarUtils:
     """历法工具类（改进版）"""
-    
+
     def __init__(self, config=None):
         """
         构造函数
@@ -16,10 +16,10 @@ class CalendarUtils:
         self.Zhi = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
         self.ShX = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
         self.jqmc = ["冬至", "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏",
-                    "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", 
+                    "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
                     "立冬", "小雪", "大雪"]
         self.WeekCn = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-    
+
     def get_lunar_info(self, year, month, day, hour=None, minute=None):
         """
         获取农历和干支信息（主要对外接口）
@@ -32,13 +32,13 @@ class CalendarUtils:
         """
         # 使用 sxtwl 获取公历对应的农历日
         day_obj = sxtwl.fromSolar(year, month, day)
-        
+
         # 基本信息
         lunar_year = day_obj.getLunarYear()
         lunar_month = day_obj.getLunarMonth()
         lunar_day = day_obj.getLunarDay()
         is_leap = day_obj.isLunarLeap()
-        
+
         # 获取干支
         # year_gan, year_zhi = self._calculate_year_gan_zhi(year)
         # month_gan, month_zhi = self._calculate_month_gan_zhi(year, month)
@@ -49,27 +49,27 @@ class CalendarUtils:
         #     hour_gan, hour_zhi = self._calculate_hour_gan_zhi(day_gan, hour)
 
         # 获取干支
-        # 以春节为界的天干地支 
+        # 以春节为界的天干地支
         # yTG = day.getYearGZ(True)
         # 以立春为界的天干地支
         yTG = day_obj.getYearGZ()
         year_gan, year_zhi = self.Gan[yTG.tg], self.Zhi[yTG.dz]
         shx = self.ShX[yTG.dz]
         #月干支
-        mTG = day_obj.getMonthGZ()        
+        mTG = day_obj.getMonthGZ()
         month_gan, month_zhi = self.Gan[mTG.tg], self.Zhi[mTG.dz]
         #日干支
-        dTG  = day_obj.getDayGZ()        
+        dTG  = day_obj.getDayGZ()
         day_gan, day_zhi = self.Gan[dTG.tg], self.Zhi[dTG.dz]
         #时干支,传24小时制的时间，分早晚子时
-        sTG = day_obj.getHourGZ(hour)      
-        hour_gan, hour_zhi  = self.Gan[sTG.tg], self.Zhi[sTG.dz] 
+        sTG = day_obj.getHourGZ(hour)
+        hour_gan, hour_zhi  = self.Gan[sTG.tg], self.Zhi[sTG.dz]
 
         # 计算八卦（如果提供小时）
         bagua = None
         if hour is not None:
-            bagua = self._calculate_bagua(year_gan, year_zhi, month_gan, month_zhi, day_gan, day_zhi, hour_gan, hour_zhi)   
-                 
+            bagua = self._calculate_bagua(year_gan, year_zhi, month_gan, month_zhi, day_gan, day_zhi, hour_gan, hour_zhi)
+
         return {
             'solar_date': f"{year}/{month}/{day} {hour}:{minute}",
             'year': year,
@@ -103,7 +103,7 @@ class CalendarUtils:
         #         flow_years.append(current_age)
         #     current_age += 12
         # return flow_years
-        DIZHI_ORDER_ZI = [ "子", "丑","寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]  
+        DIZHI_ORDER_ZI = [ "子", "丑","寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
         zhi_nian={}
         for i,zhi in enumerate(DIZHI_ORDER_ZI):
             zhi_nian[zhi] = 2020+i
@@ -111,14 +111,14 @@ class CalendarUtils:
         # 计算流年列表
         flow_years = []
         current_age = (zhi_nian[dizhi]-birth_year+1) % 12
-        
+
         while current_age <= 84:
             if current_age >0 :
                 flow_years.append(current_age)
             current_age += 12  # 每12年一个周期
-        
-        return flow_years    
-    
+
+        return flow_years
+
     def _calculate_bagua(self, year_gan, year_zhi, month_gan, month_zhi, day_gan, day_zhi, hour_gan, hour_zhi):
         """
         计算八卦（内部方法）
@@ -129,23 +129,23 @@ class CalendarUtils:
             "甲": 1, "乙": 2, "丙": 3, "丁": 4, "戊": 5, "己": 6, "庚": 7, "辛": 8, "壬": 9, "癸": 10,
             "子": 1, "丑": 2, "寅": 3, "卯": 4, "辰": 5, "巳": 6, "午": 7, "未": 8, "申": 9, "酉": 10, "戌": 11, "亥": 12
         }
-        
-        upper_num = (gan_zhi_to_num[year_gan] + gan_zhi_to_num[year_zhi] + 
+
+        upper_num = (gan_zhi_to_num[year_gan] + gan_zhi_to_num[year_zhi] +
                     gan_zhi_to_num[month_gan] + gan_zhi_to_num[month_zhi])
         upper_num = (upper_num % 8) or 8
-        
-        lower_num = (gan_zhi_to_num[day_gan] + gan_zhi_to_num[day_zhi] + 
+
+        lower_num = (gan_zhi_to_num[day_gan] + gan_zhi_to_num[day_zhi] +
                     gan_zhi_to_num[hour_gan] + gan_zhi_to_num[hour_zhi])
         lower_num = (lower_num % 8) or 8
-        
-        return BA_GUA[upper_num - 1] + BA_GUA[lower_num - 1]    
-    
+
+        return BA_GUA[upper_num - 1] + BA_GUA[lower_num - 1]
+
     @staticmethod
     # 根据地支 取得 宫干 🆗比如寅宫戊干 ：输入 寅 ，输出 戊
     def get_palace_gan(nian_gan, gong_zhi):
         """根据地支取得宫干"""
         from constants import WUHU_DUN, DIZHI_ORDER
-        # 五虎遁规则表（年干 -> 寅宫天干）      
+        # 五虎遁规则表（年干 -> 寅宫天干）
         # 获取年干对应的起始天干
         start_gan = WUHU_DUN[nian_gan]
         # 生成十天干循环序列
@@ -155,12 +155,12 @@ class CalendarUtils:
         # print("十天干循环序列 : " , gan_cycle)
         # 构建地支-天干映射表
         dizhi_gan_map = {
-            DIZHI_ORDER[i]: gan_cycle[i] 
+            DIZHI_ORDER[i]: gan_cycle[i]
             for i in range(12)
         }
-        
-        return dizhi_gan_map.get(gong_zhi, "")    
-    
+
+        return dizhi_gan_map.get(gong_zhi, "")
+
     # 计算三层卦象定位
     # @staticmethod
     def calculate_three_level_hexagram(self,ziwei_chart):
@@ -171,7 +171,7 @@ class CalendarUtils:
         """
         # ziwei_chart.true_solar_time = f'{year}年{month}月{day}日 {hour}:{minute}'
         (true_sun_hour, true_sun_minute)=ziwei_chart.true_solar_time.split(" ")[1].split(":")
-        
+
         if (ziwei_chart.yin_yang == "阳" and ziwei_chart.gender == "male") \
             or (ziwei_chart.yin_yang == "阴" and ziwei_chart.gender == "female"):
             yun_direction = '顺'
@@ -188,38 +188,38 @@ class CalendarUtils:
                 return (start_index + steps) % 12
             else:  # 逆时针
                 return (start_index - steps) % 12
-        
+
         # 1. 主卦（来因宫） - 年干对应的宫位
         main_index = laiyin_palace_index
-        
+
         # 2. 二层卦（10分钟卦）
         step_2 = int(true_sun_minute) // 10  # 每10分钟移动一宫
-        
+
         # 判断单双数时辰
         if int(true_sun_hour) % 2 == 1:  # 单数时辰
             start_index_2 = main_index
         else:  # 双数时辰
             start_index_2 = (main_index + 6) % 12  # 对宫
-        
+
         second_index = move_step(start_index_2, step_2, yun_direction)
-        
+
         # 3. 三层卦（分钟卦）
         step_3 = int(true_sun_minute) % 12  # 分钟数除以12的余数
         third_index = move_step(main_index, step_3, yun_direction)
 
         return {
-            'main_index':main_index, 
-            'second_index':second_index, 
+            'main_index':main_index,
+            'second_index':second_index,
             'third_index':third_index,
-            'main_hexagram':ziwei_chart.palaces[main_index].palace_name ,     
-            'second_hexagram':ziwei_chart.palaces[second_index].palace_name, 
-            'third_hexagram':ziwei_chart.palaces[third_index].palace_name            
-            }    
-    
+            'main_hexagram':ziwei_chart.palaces[main_index].palace_name ,
+            'second_hexagram':ziwei_chart.palaces[second_index].palace_name,
+            'third_hexagram':ziwei_chart.palaces[third_index].palace_name
+            }
+
     def generate_mmdd_password(self, specific_date=None):
             """
             生成当天日期的MMDD格式动态密码
-            
+
             :param specific_date: 可选，指定日期（datetime对象），默认为当前日期
             :return: 4位数字字符串，格式为MMDD（例如：5月20日返回"0520"）
             """
@@ -229,18 +229,18 @@ class CalendarUtils:
             else:
                 # 使用当前日期
                 date_obj = datetime.datetime.now()
-            
+
             # 格式化为MMDD：月份和日期各两位，不足补零
             mmdd_password = date_obj.strftime('%m%d')
             return mmdd_password
-    
-   
+
+
     def verify_password(self, password):
         EXPORT_PASSWORD = '5shu'
         # 验证密码
-        print(password,f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}')       
+        print(password,f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}')
         return password != f'{EXPORT_PASSWORD}{self.generate_mmdd_password()}'
-    
+
 
    # =========================
     # 宫位标准化
@@ -284,4 +284,45 @@ class CalendarUtils:
             if name.endswith(k):
                 return mapping[k]
 
-        return name    
+        return name
+
+    def clac_hexagram(self,year_gz,month_gz,day_gz,hour_gz):
+      from constants import GAN_NUM,ZHI_NUM,BAGUA_NUM,HEXAGRAM_MAP
+      yg,yz = year_gz[0], year_gz[1]
+      mg,mz = month_gz[0], month_gz[1]
+      dg,dz = day_gz[0], day_gz[1]
+      hg,hz = hour_gz[0], hour_gz[1]
+
+      upper_total = (
+          GAN_NUM[yg] + ZHI_NUM[yz] +
+          GAN_NUM[mg] + ZHI_NUM[mz] +
+          GAN_NUM[dg] + ZHI_NUM[dz]
+      )
+
+      lower_total = (
+          upper_total +
+          GAN_NUM[hg] + ZHI_NUM[hz]
+      )
+
+      upper = upper_total % 8
+      upper = 8 if upper == 0 else upper
+
+      lower = lower_total % 8
+      lower = 8 if lower == 0 else lower
+
+      moving = lower_total % 6
+      moving = 6 if moving == 0 else moving
+
+      upper_name = BAGUA_NUM[upper]
+      lower_name = BAGUA_NUM[lower]
+
+      hexagram_name, index = HEXAGRAM_MAP[
+          (upper_name, lower_name)
+      ]
+      return {
+          "hexagram": hexagram_name,
+          "upper": upper_name,
+          "lower": lower_name,
+          "moving": moving,
+          "index": index,
+          }

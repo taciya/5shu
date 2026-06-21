@@ -32,6 +32,7 @@ class ZiweiChart:
         self.sizhu_bagua=None # 四柱八卦
         self.lunar_info=None #
         self.qimen_runtime = None  # 奇门遁甲运行时数据
+        self.hexagrams = None  # 六十四卦信息
         # 初始化命盘
         self._initialize_chart()
 
@@ -55,8 +56,13 @@ class ZiweiChart:
             "八卦": f"{self.lunar_info['bagua']}",
             "真太阳时": f"{self.lunar_info['solar_date']}",
         }
-
         # print(self.sizhu_bagua)   #<<<<<<<<<
+        self.hexagrams = utils.clac_hexagram(
+            self.sizhu_bagua['年柱'],
+            self.sizhu_bagua['月柱'],
+            self.sizhu_bagua['日柱'],
+            self.sizhu_bagua['时柱'])
+
         # 安星计算
         star_placement = StarPlacement(self)
 

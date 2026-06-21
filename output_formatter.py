@@ -350,7 +350,6 @@ class OutputFormatter:
               }
             palaces_json.append(palace_dict)
 
-
         # 构建完整的数据字典
         data_dict = {
             "birth_info": {
@@ -371,7 +370,8 @@ class OutputFormatter:
             "yin_yang": self.ziwei_chart.yin_yang,
             # "feigong_str":self.print_all_palaces(),
             "three_level_hexagram": self.utils.calculate_three_level_hexagram(self.ziwei_chart),
-            "feigong_map": self.ziwei_chart.feigong_map  # 追加的飞四化映射
+            "feigong_map": self.ziwei_chart.feigong_map,  # 追加的飞四化映射
+            "hexagrams": self.ziwei_chart.hexagrams
 
         }
 
