@@ -685,7 +685,9 @@ async function loadHexagramPage(index, name) {
   tooltip.style.display = 'block'
 
   tooltip.innerHTML = `
-        ${data.image_url}
+        <div class="center-info center"
+        ${data.content}
+        </div>
         <img
             src="${data.image_url}"
             style="
