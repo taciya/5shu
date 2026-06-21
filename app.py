@@ -1149,7 +1149,6 @@ def hexagram_image(name):
         "火水未济": "064.png",
     }
 
-    print(f"请求的卦象名称: {name}")
     return jsonify({'success': True,
         "image_url":f"/static/hexagrams/pages/{HEXAGRAM_IMAGE[name]}"
     })
