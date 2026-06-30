@@ -3341,8 +3341,8 @@ function updatePalaceDayunName(data, dayunData) {
 
     // 4.2 计算大运名称（天地偏移逻辑）
     const offset = (sortedIndex - selectedIndex + 12) % 12 // 环形偏移（确保正数）
-    const dayunName = dayunNames[offset] // 选中宫位→offset=0→“大命”，其他按偏移取名称
-    palaceEl.dayunName = dayunNames2[offset] // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
+    const dayunName = dayunNames[(12 - offset) % 12] // 选中宫位→offset=0→“大命”，其他按偏移取名称
+    palaceEl.dayunName = dayunNames2[(12 - offset) % 12] // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
 
     // 4.3 设置大运名称与样式（星曜显化规则）
     dayunEl.textContent = '[' + dayunName + ']'
