@@ -69,6 +69,7 @@ FILE_LIST = [
 INPUT_DIR = ""
 OUTPUT_FILE = "./协议/紫占.md"
 FILE_LIST = [
+    "协议/00_总原则.md",
     "协议/01_定义层.md",
     "协议/02_裁断层.md",
     "协议/03_专项协议层.md",
