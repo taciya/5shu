@@ -1874,7 +1874,11 @@ const showStarMeaning = async (starName, element) => {
   const parent = element.parentElement
   const grandParent = parent?.parentElement
 
-  if (parent?.classList.contains('star-unit') && grandParent) {
+  const match = parent.id.match(/[子丑寅卯辰巳午未申酉戌亥]/)
+
+  if (match) {
+    dizhi = match[0]
+  } else {
     const match = grandParent.id.match(/[子丑寅卯辰巳午未申酉戌亥]/)
 
     if (match) {
