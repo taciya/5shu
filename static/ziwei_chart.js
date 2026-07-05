@@ -993,6 +993,8 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   // 小星 - 使用原来minor_stars的样式
   const xiaoxingStarsContainer = document.createElement('div')
   xiaoxingStarsContainer.className = 'xiaoxing-stars-container'
+  xiaoxingStarsContainer.id = palace.dizhi + 'xiaoxingStars'
+
   if (palace.xiaoxing_stars && Array.isArray(palace.xiaoxing_stars)) {
     palace.xiaoxing_stars.forEach((star) => {
       const xiaoxingStar = document.createElement('div')
@@ -1007,6 +1009,7 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   // 神煞星
   const shenshaContainer = document.createElement('div')
   shenshaContainer.className = 'shensha-container'
+  shenshaContainer.id = palace.dizhi + 'shenshaStars'
   if (palace.shensha_stars && Array.isArray(palace.shensha_stars)) {
     palace.shensha_stars.forEach((star) => {
       const shenshaStar = document.createElement('div')
@@ -1021,6 +1024,7 @@ function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   // 长生十二神
   const changshengContainer = document.createElement('div')
   changshengContainer.className = 'changsheng-container'
+  changshengContainer.id = palace.dizhi + 'changshengStars'
   if (palace.changsheng_stars && Array.isArray(palace.changsheng_stars)) {
     palace.changsheng_stars.forEach((star) => {
       const changshengStar = document.createElement('div')
