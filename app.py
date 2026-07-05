@@ -451,12 +451,17 @@ def get_all_stars():
         conn = get_db_connection()
         stars = conn.execute('SELECT * FROM star_meanings').fetchall()
         conn.close()
-
+        # 打印第一个星曜名
+        # if stars:
+        #     print(f"获取所有星曜数据: {len(stars)} 条记录")  # <<<<<<<<
+        #     print(f"第一个星曜名: {stars[0]['star_name']}")  # <<<<<<<<
+        # stars.sort(key=lambda x: x['id'])  # 按 id 排序
         # 转换为前端需要的格式
         result = {}
         for star in stars:
             result[star['star_name']] = {
-                'starName': star['star_name'],
+                'id': star['id'],
+                'starName': star['star_name'] ,
                 'basic': star['basic'] or '',
                 'combination': star['combination'] or '',
                 'extended': star['extended'] or '',

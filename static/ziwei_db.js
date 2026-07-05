@@ -293,7 +293,8 @@ function openTab(src, tabName) {
 async function loadStarsList(filter = '') {
   const starsList = document.getElementById('starsList')
   const meanings = await starDB.getAllMeanings()
-
+  // 按id排序
+  meanings.sort((a, b) => a.id - b.id)
   let html = ''
   meanings.forEach((meaning) => {
     if (!filter || meaning.starName.includes(filter)) {
