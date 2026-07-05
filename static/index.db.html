@@ -29,9 +29,20 @@
             导入/导出
           </button>
 
-          <button type="button" onclick="saveMeaning(event)">保存</button>
-          <button type="button" onclick="clearForm()">清空</button>
-          <button type="button" onclick="deleteCurrentMeaning()">删除</button>
+          <button type="button" class="tab-btn" onclick="saveMeaning(event)">
+            保存
+          </button>
+          <button type="button" class="tab-btn" onclick="clearForm()">
+            清空
+          </button>
+          <button
+            type="button"
+            class="tab-btn"
+            onclick="deleteCurrentMeaning()"
+          >
+            删除
+          </button>
+          <span id="statusBar"></span>
         </div>
 
         <!-- 星曜列表标签页 -->

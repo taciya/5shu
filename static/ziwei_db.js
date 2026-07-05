@@ -366,7 +366,13 @@ async function saveMeaning(event) {
 
   try {
     await starDB.saveMeaning(formData)
-    alert('保存成功！')
+
+    document.getElementById('statusBar').textContent =
+      `已保存: ${formData.starName}`
+    //2秒钟以后，清空statusBar
+    setTimeout(() => {
+      document.getElementById('statusBar').textContent = ''
+    }, 1000)
 
     // 刷新列表
     await loadStarsList()
