@@ -311,15 +311,11 @@ async function loadStarsList(filter = '') {
   starsList.innerHTML = html || '<div>未找到匹配的星曜</div>'
 }
 
-// 搜索星曜
-function searchStars() {
-  const searchTerm = document.getElementById('searchInput').value
-  loadStarsList(searchTerm)
-}
-
 // 刷新列表
 function refreshList() {
-  loadStarsList()
+  const searchTerm = document.getElementById('searchInput').value
+
+  loadStarsList(searchTerm)
 }
 
 // 加载星曜含义到编辑表单

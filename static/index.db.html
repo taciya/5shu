@@ -52,7 +52,7 @@
               type="text"
               id="searchInput"
               placeholder="搜索星曜名称..."
-              onkeyup="searchStars()"
+              onblur="refreshList()"
             />
             <button onclick="refreshList()">刷新</button>
           </div>
