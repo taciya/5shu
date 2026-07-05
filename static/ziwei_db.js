@@ -372,7 +372,7 @@ async function saveMeaning(event) {
     await loadStarsList()
 
     // 清空表单
-    clearForm()
+    // clearForm()
   } catch (error) {
     alert('保存失败: ' + error.message)
   }
