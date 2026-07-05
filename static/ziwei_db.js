@@ -369,7 +369,7 @@ async function saveMeaning(event) {
 
     document.getElementById('statusBar').textContent =
       `已保存: ${formData.starName}`
-    //2秒钟以后，清空statusBar
+    //1秒钟以后，清空statusBar
     setTimeout(() => {
       document.getElementById('statusBar').textContent = ''
     }, 1000)
