@@ -3282,8 +3282,17 @@ function showPasswordModalWithMemory(options = {}) {
   })
 }
 
+function getReversePalaceIndex(selectedIndex, currentIndex) {
+  return (selectedIndex - currentIndex + 12) % 12
+}
+function getPalaceOffset(data, mingData, palace) {
+  const mingIndex = data.palaces.findIndex((p) => p.dizhi === mingData.dizhi)
+
+  const palaceIndex = data.palaces.findIndex((p) => p.dizhi === palace.dizhi)
+
+  return (mingIndex - palaceIndex + 12) % 12
+}
 // >>>>>>>>>>>>>>>>>大运 + 流年
-// 更新宫位大运名称显示
 function updatePalaceDayunName(data, dayunData) {
   const palaceContainer = document.querySelector('.chart-grid')
   if (!palaceContainer || !dayunData) return
@@ -3334,11 +3343,8 @@ function updatePalaceDayunName(data, dayunData) {
 
   // 4. 遍历排序后宫位，生成大运名称（双宫同卦合并显示）
   sortedPalaces.forEach((palace, sortedIndex) => {
-    // console.log(`Processing palace: ${palace.name}, dizhi: ${palace.dizhi}, sortedIndex: ${sortedIndex} , selectedIndex: ${selectedIndex}`);
     const palaceEl = document.getElementById(`${palace.dizhi}宫`)
     if (!palaceEl) return
-
-    // 4.1 创建/获取大运名称元素（天地卦象标记）
     const palaceNameEl = palaceEl.querySelector('.palace-name')
     let dayunEl = palaceEl.querySelector('.palace-name-dayun')
     if (!dayunEl) {
@@ -3347,17 +3353,13 @@ function updatePalaceDayunName(data, dayunData) {
       palaceNameEl.parentNode.insertBefore(dayunEl, palaceNameEl) // 插入到宫位名称正上方
     }
 
-    // 4.2 计算大运名称（天地偏移逻辑）
-    const offset = (sortedIndex - selectedIndex + 12) % 12 // 环形偏移（确保正数）
-    const dayunName = dayunNames[(12 - offset) % 12] // 选中宫位→offset=0→“大命”，其他按偏移取名称
-    palaceEl.dayunName = dayunNames2[(12 - offset) % 12] // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
-
-    // 4.3 设置大运名称与样式（星曜显化规则）
+    const offset = getPalaceOffset(data, dayunData, palace)
+    const dayunName = dayunNames[offset]
+    palaceEl.dayunName = dayunNames2[offset] // 选中宫位→offset=0→“大运命宫”，其他按偏移取名称
     dayunEl.textContent = '[' + dayunName + ']'
     dayunEl.className = 'palace-name-dayun' // 重置样式类
   })
 }
-
 // 生成大运四化（根据宫位天干）
 function generateDayunSihua(data, dayunPalace) {
   /**
@@ -3528,6 +3530,7 @@ function calculateLiunianPalace(data, selectedYear) {
 }
 
 // 更新宫位流年名称显示
+
 function updatePalaceLiunianName(data, liunianData) {
   /**
    * 改进说明：
@@ -3603,17 +3606,14 @@ function updatePalaceLiunianName(data, liunianData) {
       }
     }
 
-    // 4.2 计算流年名称（天地偏移逻辑，同大运的`offset`）
-    const offset = (sortedIndex - selectedIndex + 12) % 12 // 环形偏移（确保正数）
-    const liunianName = liunianNames[offset] // 选中宫位→offset=0→“流命”，其他按偏移取名称
+    const offset = getPalaceOffset(data, liunianData, palace)
+    const liunianName = liunianNames[offset]
     palaceEl.liunianName = liunianNames2[offset] // 存储流年全称（如“流年命宫”）
 
-    // 4.3 设置流年名称与样式（同大运的样式逻辑，用红色系区分）
     liunianEl.textContent = `[${liunianName}]`
     liunianEl.className = 'palace-name-liunian'
   })
 }
-
 function generateLiunianSihua(data, selectedYear, liunianPalace) {
   /**
    * 改进说明：流年四化逻辑修正为“流年天干→四化星曜→飞宫落点”
