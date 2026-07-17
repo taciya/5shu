@@ -557,6 +557,7 @@ function renderChart(mixData, formData) {
       if (palaceElement) {
         chartGrid.appendChild(palaceElement)
       }
+      renderSpecialMarks(data.palaces)
     })
     // data.palaces.forEach(palace => {
     //     findSihuaTracking(palace);
@@ -888,7 +889,38 @@ function findStarByName(palaces, starName) {
   }
   return null
 }
+// =============================
+// 创建跨宫位特殊标记
+// =============================
+function renderSpecialMarks(palaces) {
+  if (!Array.isArray(palaces)) return
 
+  palaces.forEach((palace, index) => {
+    const stars = [
+      ...(palace.main_stars || []),
+      ...(palace.minor_stars || []),
+      ...(palace.xiaoxing_stars || []),
+      ...(palace.shensha_stars || []),
+    ]
+
+    if (!stars.includes('天刑')) return
+
+    // 逆时针第五宫
+    const targetIndex = (index + 8) % 12
+    const targetPalace = palaces[targetIndex]
+
+    if (!targetPalace) return
+
+    const palaceElement = document.getElementById(targetPalace.dizhi + '宫')
+    if (!palaceElement) return
+
+    const mark = document.createElement('div')
+    mark.className = 'special-mark special-mark-poti'
+    mark.textContent = '💥'
+
+    palaceElement.appendChild(mark)
+  })
+}
 // 创建宫位元素
 function createPalaceElement(palace, three_level_hexagram, natalPalaces) {
   if (!palace) return null

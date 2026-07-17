@@ -2363,3 +2363,17 @@ dl {
   background: rgba(139, 69, 19, 0.08);
   border-radius: 4px;
 }
+/* 破体位 */
+.special-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-10px, -25px);
+  pointer-events: none;
+  z-index: 30;
+}
+
+.special-mark-poti {
+  top: 10px;
+  font-size: 22px;
+}
