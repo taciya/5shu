@@ -18,6 +18,9 @@
 3 不要往prompt.md中增加,而是追加到紫占.md中
 
 
+
+git config --global user.email "taciya@163.com"
+git config --global user.name "taciya"
 `
 
 
