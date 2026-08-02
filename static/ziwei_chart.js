@@ -540,6 +540,10 @@ function renderChart(mixData, formData) {
                 <select id="liunianSelector" class="control-select" disabled></select>
             </div>
 
+            <div class="control-group liuyue-group" style="position: absolute; bottom: 10px; right: 105px;">
+                <label for="liuyueSelector">流月</label>
+                <select id="liuyueSelector" class="control-select" disabled></select>
+            </div>
         </div>
 
     `
@@ -571,7 +575,7 @@ function renderChart(mixData, formData) {
   // 添加大运/流年选择器
   const dayunSelector = document.getElementById('dayunSelector')
   const liunianSelector = document.getElementById('liunianSelector')
-
+  const liuyueSelector = document.getElementById('liuyueSelector')
   // 收集所有age_range（去重排序）
   const ageRanges = [...new Set(data.palaces.map((p) => p.age_range))]
     .filter(Boolean)
@@ -591,11 +595,14 @@ function renderChart(mixData, formData) {
     const selectedRange = this.value
     // 核心改进：选中默认选项（value=""）时，清空所有大运信息与显示
     if (!selectedRange) {
-      clearDayunDisplays() // 清空大运名称与四化星曜
-      clearLiunianDisplays() // 清空流年选项与名称
+      clearDayunDisplays()
+      clearLiunianDisplays()
+      clearLiuyueDisplays()
       return
     }
-    clearLiunianDisplays() // 清空流年选项与名称
+
+    clearLiunianDisplays()
+    clearLiuyueDisplays()
     // 1. 找到对应大运宫位
     const dayunPalace = data.palaces.find((p) => p.age_range === selectedRange)
     if (!dayunPalace) return
@@ -611,21 +618,78 @@ function renderChart(mixData, formData) {
   })
 
   // 流年选择事件
+  // 流年选择事件
   liunianSelector.addEventListener('change', function () {
     const selectedYear = parseInt(this.value)
 
-    // 核心改进：选中空白时清空流年所有信息
+    // 清除旧流月
+    clearLiuyueDisplays()
+
+    // 未选择流年
     if (!selectedYear) {
-      clearLiunianDisplays() // 调用清空函数（见下文）
+      clearLiunianDisplays()
       return
     }
 
-    // 原有逻辑：选中有效流年时生成流年信息
+    // ------------------------------------------------------
+    // 1. 计算流年命宫
+    // ------------------------------------------------------
     const liunianPalace = calculateLiunianPalace(data, selectedYear)
+
     if (!liunianPalace) return
 
-    updatePalaceLiunianName(data, liunianPalace) // 更新流年名称
-    generateLiunianSihua(data, selectedYear, liunianPalace) // 生成流年四化（新增selectedYear参数）
+    // ------------------------------------------------------
+    // 2. 显示流年十二宫
+    // ------------------------------------------------------
+    updatePalaceLiunianName(data, liunianPalace)
+
+    // ------------------------------------------------------
+    // 3. 流年四化
+    // ------------------------------------------------------
+    generateLiunianSihua(data, selectedYear, liunianPalace)
+
+    // ------------------------------------------------------
+    // 4. 生成流月选择器
+    // ------------------------------------------------------
+    generateLiuyueOptions()
+  })
+
+  // ============================================================
+  // 流月选择事件
+  // ============================================================
+
+  liuyueSelector.addEventListener('change', function () {
+    const selectedMonth = parseInt(this.value)
+
+    // 未选择流月
+    if (!selectedMonth) {
+      clearLiuyueDisplays()
+      return
+    }
+
+    const selectedYear = parseInt(liunianSelector.value)
+
+    // 没有流年，就不能有流月
+    if (!selectedYear) {
+      clearLiuyueDisplays()
+      return
+    }
+
+    // --------------------------------------------------------
+    // 计算流月命宫
+    // --------------------------------------------------------
+    const liuyuePalace = calculateLiuyuePalace(
+      data,
+      selectedYear,
+      selectedMonth,
+    )
+
+    if (!liuyuePalace) return
+
+    // --------------------------------------------------------
+    // 显示流月十二宫
+    // --------------------------------------------------------
+    updatePalaceLiuyueName(data, liuyuePalace)
   })
 
   const exportBtn = document.getElementById('exportBtn')
@@ -3535,6 +3599,30 @@ function generateLiunianOptions(dayunPalace, birthYear) {
   liunianSelector.disabled = false
 }
 
+/**
+ * 生成流月选项
+ *
+ * 依附于已经选择的流年。
+ */
+function generateLiuyueOptions() {
+  const liuyueSelector = document.getElementById('liuyueSelector')
+
+  if (!liuyueSelector) return
+
+  liuyueSelector.innerHTML = '<option value="">流月</option>'
+
+  for (let month = 1; month <= 12; month++) {
+    const option = document.createElement('option')
+
+    option.value = month
+
+    option.textContent = monthMap.numberToHanzi[month]
+
+    liuyueSelector.appendChild(option)
+  }
+
+  liuyueSelector.disabled = false
+}
 // 计算流年宫位
 function calculateLiunianPalace(data, selectedYear) {
   /**
@@ -3559,6 +3647,337 @@ function calculateLiunianPalace(data, selectedYear) {
     data.palaces.find((p) => p.name === '命宫') ||
     data.palaces[0]
   )
+}
+
+/**
+ * 根据出生时间 HH:mm 取得时辰地支
+ *
+ * 子时：23:00 - 00:59
+ * 丑时：01:00 - 02:59
+ * 寅时：03:00 - 04:59
+ * 卯时：05:00 - 06:59
+ * 辰时：07:00 - 08:59
+ * 巳时：09:00 - 10:59
+ * 午时：11:00 - 12:59
+ * 未时：13:00 - 14:59
+ * 申时：15:00 - 16:59
+ * 酉时：17:00 - 18:59
+ * 戌时：19:00 - 20:59
+ * 亥时：21:00 - 22:59
+ */
+function getBirthHourZhi(data) {
+  if (!data) return null
+
+  const shichen = data.shichen || data.birth_info?.shichen || ''
+
+  // 如果以后数据已经直接提供地支，也兼容
+  const zhiList = [
+    '子',
+    '丑',
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥',
+  ]
+
+  if (typeof shichen !== 'string') {
+    return null
+  }
+
+  // ----------------------------------------------------------
+  // 1. 已经是地支，例如 "午时"
+  // ----------------------------------------------------------
+  const directZhi = zhiList.find((zhi) => shichen.includes(zhi))
+
+  if (directZhi) {
+    return directZhi
+  }
+
+  // ----------------------------------------------------------
+  // 2. HH:mm，例如 "12:09"
+  // ----------------------------------------------------------
+  const match = shichen.match(/^(\d{1,2}):(\d{2})$/)
+
+  if (!match) {
+    console.warn('无法解析出生时辰:', shichen)
+    return null
+  }
+
+  const hour = Number(match[1])
+  const minute = Number(match[2])
+
+  if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+    console.warn('出生时间超出范围:', shichen)
+    return null
+  }
+
+  const totalMinutes = hour * 60 + minute
+
+  // ----------------------------------------------------------
+  // 子时特殊处理：
+  //
+  // 23:00 ~ 23:59 → 子
+  // 00:00 ~ 00:59 → 子
+  //
+  // 所以不能简单用 hour / 2。
+  // ----------------------------------------------------------
+
+  if (totalMinutes >= 23 * 60 || totalMinutes < 1 * 60) {
+    return '子'
+  }
+
+  // 01:00开始，每两个小时一个时辰
+  const zhiIndex = Math.floor((totalMinutes - 60) / 120) + 1
+
+  return zhiList[zhiIndex] || null
+}
+
+/**
+ * 取得流年太岁宫
+ *
+ * selectedYear:
+ *   例如 2026
+ *
+ * 返回：
+ *   命盘中地支为流年太岁地支的宫位
+ */
+function calculateLiuyueDoujun(data, selectedYear) {
+  if (!data || !selectedYear) return null
+
+  // ----------------------------------------------------------
+  // 1. 流年干支
+  // ----------------------------------------------------------
+  const liunianGZ = getLiunianGZ(selectedYear)
+  if (!liunianGZ || !liunianGZ.zhi) return null
+
+  const yearZhi = liunianGZ.zhi
+
+  // ----------------------------------------------------------
+  // 2. 流年太岁宫
+  // ----------------------------------------------------------
+  const taiSuiPalace = data.palaces.find((p) => p.dizhi === yearZhi)
+
+  if (!taiSuiPalace) return null
+
+  // ----------------------------------------------------------
+  // 3. 出生农历月份
+  //
+  // 当前代码的 birth.month 就是命盘显示所使用的农历月份。
+  // ----------------------------------------------------------
+  const birthMonth = Number(data.birth_info?.month)
+
+  if (!birthMonth || birthMonth < 1 || birthMonth > 12) {
+    console.warn('无法取得出生农历月份:', data.birth_info)
+    return null
+  }
+
+  // ----------------------------------------------------------
+  // 4. 出生时辰
+  // ----------------------------------------------------------
+  const birthHourZhi = getBirthHourZhi(data)
+
+  if (!birthHourZhi) {
+    console.warn('无法取得出生时辰:', data.shichen)
+    return null
+  }
+
+  // ----------------------------------------------------------
+  // 5. 斗君
+  //
+  // 流年太岁起寅
+  // → 逆数出生农历月
+  // → 再从该宫起子时
+  // → 顺数出生时辰
+  //
+  // 这里的 palaceOrder：
+  //
+  // 寅 卯 辰 巳 午 未 申 酉 戌 亥 子 丑
+  //
+  // 正好是顺时针十二地支顺序。
+  // ----------------------------------------------------------
+
+  const taiSuiIndex = palaceOrder.indexOf(yearZhi)
+
+  if (taiSuiIndex === -1) return null
+
+  // 逆数出生月份：
+  // 正月 = 0
+  // 二月 = -1
+  // 三月 = -2
+  // ...
+  const monthStartIndex = (taiSuiIndex - (birthMonth - 1) + 12) % 12
+
+  // 子时 = 0
+  // 丑时 = 1
+  // 寅时 = 2
+  // ...
+  const hourIndex = [
+    '子',
+    '丑',
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥',
+  ].indexOf(birthHourZhi)
+
+  if (hourIndex === -1) return null
+
+  // 从出生月份所在宫起子时，顺数出生时辰
+  const doujunIndex = (monthStartIndex + hourIndex) % 12
+
+  const doujunDizhi = palaceOrder[doujunIndex]
+
+  return data.palaces.find((p) => p.dizhi === doujunDizhi) || null
+}
+
+/**
+ * 计算指定流月的流月命宫
+ *
+ * 流月：
+ *   正月从斗君开始
+ *   二月顺行一宫
+ *   三月再顺行一宫
+ *   ...
+ */
+function calculateLiuyuePalace(data, selectedYear, selectedMonth) {
+  if (!data || !selectedYear || !selectedMonth) {
+    return null
+  }
+
+  const doujunPalace = calculateLiuyueDoujun(data, selectedYear)
+
+  if (!doujunPalace) return null
+
+  const doujunIndex = palaceOrder.indexOf(doujunPalace.dizhi)
+
+  if (doujunIndex === -1) return null
+
+  // 正月 = 斗君
+  // 二月 = 斗君 + 1
+  // ...
+  const liuyueIndex = (doujunIndex + (selectedMonth - 1)) % 12
+
+  const liuyueDizhi = palaceOrder[liuyueIndex]
+
+  return data.palaces.find((p) => p.dizhi === liuyueDizhi) || null
+}
+
+/**
+ * 更新宫位流月名称显示
+ *
+ * 显示：
+ *   [流月命]
+ *   [流月兄]
+ *   [流月夫]
+ *   ...
+ *
+ * 位置：
+ *   流月
+ *   流年
+ *   大运
+ *   原局
+ */
+function updatePalaceLiuyueName(data, liuyueData) {
+  const palaceContainer = document.querySelector('.chart-grid')
+
+  if (!palaceContainer || !liuyueData) return
+
+  // 清除旧的流月
+  document.querySelectorAll('.palace-name-liuyue').forEach((el) => el.remove())
+
+  // 与流年/大运保持完全相同的宫位顺序逻辑
+  const sortedPalaces = [...data.palaces]
+    .filter((p) => p.age_range)
+    .sort((a, b) => {
+      const aStart = parseInt(a.age_range.split('-')[0])
+      const bStart = parseInt(b.age_range.split('-')[0])
+
+      return aStart - bStart
+    })
+
+  const liuyueNames = [
+    '☯',
+    '兄',
+    '夫',
+    '子',
+    '财',
+    '疾',
+    '迁',
+    '友',
+    '官',
+    '田',
+    '福',
+    '父',
+  ]
+
+  const liuyueNames2 = [
+    '流月命宫',
+    '流月兄弟宫',
+    '流月夫妻宫',
+    '流月子女宫',
+    '流月财帛宫',
+    '流月疾厄宫',
+    '流月迁移宫',
+    '流月交友宫',
+    '流月官禄宫',
+    '流月田宅宫',
+    '流月福德宫',
+    '流月父母宫',
+  ]
+
+  const selectedIndex = sortedPalaces.findIndex(
+    (p) => p.dizhi === liuyueData.dizhi,
+  )
+
+  if (selectedIndex === -1) return
+
+  sortedPalaces.forEach((palace) => {
+    const palaceEl = document.getElementById(`${palace.dizhi}宫`)
+
+    if (!palaceEl) return
+
+    const palaceNameEl = palaceEl.querySelector('.palace-name')
+
+    if (!palaceNameEl) return
+
+    // 已存在则删除
+    const oldEl = palaceEl.querySelector('.palace-name-liuyue')
+
+    if (oldEl) oldEl.remove()
+
+    // --------------------------------------------------------
+    // 注意：
+    //
+    // 这里直接按照“流月命宫所在宫位”计算十二宫，
+    // 与当前流年、大运显示保持一致。
+    // --------------------------------------------------------
+    const offset = (selectedIndex - sortedPalaces.indexOf(palace) + 12) % 12
+
+    const liuyueName = liuyueNames[offset]
+
+    palaceEl.liuyueName = liuyueNames2[offset]
+
+    const liuyueEl = document.createElement('div')
+
+    liuyueEl.className = 'palace-name-liuyue'
+
+    liuyueEl.textContent = `[${liuyueName}]`
+
+    // 插入到宫位名称上方
+    palaceNameEl.parentNode.insertBefore(liuyueEl, palaceNameEl)
+  })
 }
 
 // 更新宫位流年名称显示
@@ -3744,6 +4163,25 @@ function clearLiunianDisplays() {
   }
 }
 
+// 清空流月显示
+function clearLiuyueDisplays() {
+  // 删除所有流月名称
+  document.querySelectorAll('.palace-name-liuyue').forEach((el) => el.remove())
+
+  // 清空流月选择器
+  const liuyueSelector = document.getElementById('liuyueSelector')
+
+  if (liuyueSelector) {
+    liuyueSelector.innerHTML = '<option value="">流月</option>'
+
+    liuyueSelector.disabled = true
+  }
+
+  // 清除宫位上的流月属性
+  document.querySelectorAll('.palace').forEach((palaceEl) => {
+    delete palaceEl.liuyueName
+  })
+}
 /**
  * 通过天干定位宫位地支（通用推演法）
  * @param {Object} data - 命盘完整数据（包含 palaces 数组）
