@@ -530,18 +530,18 @@ function renderChart(mixData, formData) {
                 本宫自化 <span class="lixin-sihua-arrow"></span>
             </div>
 
-            <div class="control-group dayun-group" style="position: absolute; bottom: 10px; left: 5px;">
-                <label for="dayunSelector">大运</label>
+            <div class="control-group dayun-group" >
+                <label for="dayunSelector"></label>
                 <select id="dayunSelector" class="control-select"></select>
             </div>
 
-            <div class="control-group liunian-group" style="position: absolute; bottom: 10px; right: 5px;">
-                <label for="liunianSelector">流年</label>
+            <div class="control-group liunian-group" >
+                <label for="liunianSelector"></label>
                 <select id="liunianSelector" class="control-select" disabled></select>
             </div>
 
-            <div class="control-group liuyue-group" style="position: absolute; bottom: 10px; right: 105px;">
-                <label for="liuyueSelector">流月</label>
+            <div class="control-group liuyue-group" >
+                <label for="liuyueSelector"></label>
                 <select id="liuyueSelector" class="control-select" disabled></select>
             </div>
         </div>
