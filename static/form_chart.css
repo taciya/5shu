@@ -810,7 +810,7 @@ FFFFFF
   grid-area: 1 / 1;
 }
 #巳宫 .shensha-container::before {
-  content: '❿南东';
+  content: '❿';
 
   position: absolute;
 
@@ -831,7 +831,7 @@ FFFFFF
   grid-area: 1 / 2;
 }
 #午宫 .shensha-container::before {
-  content: '⓬正南';
+  content: '⓬南';
 
   position: absolute;
 
@@ -869,7 +869,7 @@ FFFFFF
   grid-area: 1 / 3;
 }
 #未宫 .shensha-container::before {
-  content: '⓮南西';
+  content: '⓮';
 
   position: absolute;
 
@@ -890,7 +890,7 @@ FFFFFF
   grid-area: 1 / 4;
 }
 #申宫 .shensha-container::before {
-  content: '⓰西南';
+  content: '⓰';
 
   position: absolute;
 
@@ -928,7 +928,7 @@ FFFFFF
   grid-area: 2 / 1;
 }
 #辰宫 .shensha-container::before {
-  content: '➑东南';
+  content: '➑';
 
   position: absolute;
 
@@ -966,7 +966,7 @@ FFFFFF
   grid-area: 2 / 4;
 }
 #酉宫 .shensha-container::before {
-  content: '⓲正西';
+  content: '⓲西';
 
   position: absolute;
 
@@ -1004,7 +1004,7 @@ FFFFFF
   grid-area: 3 / 1;
 }
 #卯宫 .shensha-container::before {
-  content: '❻正东';
+  content: '❻东';
 
   position: absolute;
 
@@ -1042,7 +1042,7 @@ FFFFFF
   grid-area: 3 / 4;
 }
 #戌宫 .shensha-container::before {
-  content: '⓴北西';
+  content: '⓴';
 
   position: absolute;
 
@@ -1063,7 +1063,7 @@ FFFFFF
   grid-area: 4 / 1;
 }
 #寅宫 .shensha-container::before {
-  content: '❹东北';
+  content: '❹';
 
   position: absolute;
 
@@ -1084,7 +1084,7 @@ FFFFFF
   grid-area: 4 / 2;
 }
 #丑宫 .shensha-container::before {
-  content: '➋北东';
+  content: '➋';
 
   position: absolute;
 
@@ -1122,7 +1122,7 @@ FFFFFF
   grid-area: 4 / 3;
 }
 #子宫 .shensha-container::before {
-  content: '⓪正北';
+  content: '⓪北';
 
   position: absolute;
 
@@ -1160,7 +1160,7 @@ FFFFFF
   grid-area: 4 / 4;
 }
 #亥宫 .shensha-container::before {
-  content: '㉒北西';
+  content: '㉒';
 
   position: absolute;
 
