@@ -810,8 +810,6 @@ FFFFFF
   grid-area: 1 / 1;
 }
 #巳宫 .shensha-container::before {
-  content: '❿';
-
   position: absolute;
 
   left: -5px;
@@ -831,8 +829,6 @@ FFFFFF
   grid-area: 1 / 2;
 }
 #午宫 .shensha-container::before {
-  content: '⓬南';
-
   position: absolute;
 
   left: -5px;
@@ -869,8 +865,6 @@ FFFFFF
   grid-area: 1 / 3;
 }
 #未宫 .shensha-container::before {
-  content: '⓮';
-
   position: absolute;
 
   left: -5px;
@@ -890,8 +884,6 @@ FFFFFF
   grid-area: 1 / 4;
 }
 #申宫 .shensha-container::before {
-  content: '⓰';
-
   position: absolute;
 
   left: -5px;
@@ -928,8 +920,6 @@ FFFFFF
   grid-area: 2 / 1;
 }
 #辰宫 .shensha-container::before {
-  content: '➑';
-
   position: absolute;
 
   left: -5px;
@@ -966,8 +956,6 @@ FFFFFF
   grid-area: 2 / 4;
 }
 #酉宫 .shensha-container::before {
-  content: '⓲西';
-
   position: absolute;
 
   left: -5px;
@@ -1004,8 +992,6 @@ FFFFFF
   grid-area: 3 / 1;
 }
 #卯宫 .shensha-container::before {
-  content: '❻东';
-
   position: absolute;
 
   left: -5px;
@@ -1042,8 +1028,6 @@ FFFFFF
   grid-area: 3 / 4;
 }
 #戌宫 .shensha-container::before {
-  content: '⓴';
-
   position: absolute;
 
   left: -5px;
@@ -1063,8 +1047,6 @@ FFFFFF
   grid-area: 4 / 1;
 }
 #寅宫 .shensha-container::before {
-  content: '❹';
-
   position: absolute;
 
   left: -5px;
@@ -1084,8 +1066,6 @@ FFFFFF
   grid-area: 4 / 2;
 }
 #丑宫 .shensha-container::before {
-  content: '➋';
-
   position: absolute;
 
   left: -5px;
@@ -1122,8 +1102,6 @@ FFFFFF
   grid-area: 4 / 3;
 }
 #子宫 .shensha-container::before {
-  content: '⓪北';
-
   position: absolute;
 
   left: -5px;
@@ -1140,7 +1118,6 @@ FFFFFF
   z-index: 1;
 }
 #子宫::before {
-  content: '坎';
   position: absolute;
 
   left: 50%;
@@ -1160,8 +1137,6 @@ FFFFFF
   grid-area: 4 / 4;
 }
 #亥宫 .shensha-container::before {
-  content: '㉒';
-
   position: absolute;
 
   left: -5px;
@@ -1193,6 +1168,54 @@ FFFFFF
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
+}
+
+#巳宫 .shensha-container::before {
+  content: '⑩';
+}
+
+#午宫 .shensha-container::before {
+  content: '⑫南';
+}
+
+#未宫 .shensha-container::before {
+  content: '⑭';
+}
+
+#申宫 .shensha-container::before {
+  content: '⑯';
+}
+
+#辰宫 .shensha-container::before {
+  content: '⑧';
+}
+
+#酉宫 .shensha-container::before {
+  content: '⑱西';
+}
+
+#卯宫 .shensha-container::before {
+  content: '⑥东';
+}
+
+#戌宫 .shensha-container::before {
+  content: '⑳';
+}
+
+#寅宫 .shensha-container::before {
+  content: '④';
+}
+
+#丑宫 .shensha-container::before {
+  content: '②';
+}
+
+#子宫 .shensha-container::before {
+  content: '⓪北';
+}
+
+#亥宫 .shensha-container::before {
+  content: '㉒';
 }
 /* 改进后的四化容器样式 */
 .sihua-container {
