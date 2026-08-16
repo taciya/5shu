@@ -838,7 +838,7 @@ FFFFFF
 
   font-size: 12px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(254, 6, 6);
 
   white-space: pre;
   pointer-events: none;
@@ -965,7 +965,7 @@ FFFFFF
 
   font-size: 12px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(251, 255, 2);
 
   white-space: pre;
   pointer-events: none;
@@ -1001,7 +1001,7 @@ FFFFFF
 
   font-size: 12px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(1, 255, 44);
 
   white-space: pre;
   pointer-events: none;
@@ -1111,7 +1111,7 @@ FFFFFF
 
   font-size: 12px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(3, 24, 255);
 
   white-space: pre;
   pointer-events: none;
@@ -1174,10 +1174,6 @@ FFFFFF
   content: '⑩';
 }
 
-#午宫 .shensha-container::before {
-  content: '⑫南';
-}
-
 #未宫 .shensha-container::before {
   content: '⑭';
 }
@@ -1188,14 +1184,6 @@ FFFFFF
 
 #辰宫 .shensha-container::before {
   content: '⑧';
-}
-
-#酉宫 .shensha-container::before {
-  content: '⑱西';
-}
-
-#卯宫 .shensha-container::before {
-  content: '⑥东';
 }
 
 #戌宫 .shensha-container::before {
@@ -1210,12 +1198,55 @@ FFFFFF
   content: '②';
 }
 
-#子宫 .shensha-container::before {
-  content: '⓪北';
-}
-
 #亥宫 .shensha-container::before {
   content: '㉒';
+}
+
+#午宫 .shensha-container::before {
+  content: '⓬';
+  color: #d32f2f; /* 南＝火 */
+  border: 1px solid #d32f2f;
+  text-shadow: 0 0 1px #d32f2f;
+}
+
+#酉宫 .shensha-container::before {
+  content: '⓲';
+  color: #b8860b; /* 西＝金 */
+  border: 1px solid #b8860b;
+  text-shadow: 0 0 1px #b8860b;
+}
+
+#卯宫 .shensha-container::before {
+  content: '➏';
+  color: #2e7d32; /* 东＝木 */
+  border: 1px solid #2e7d32;
+  text-shadow: 0 0 1px #2e7d32;
+}
+
+#子宫 .shensha-container::before {
+  content: '◉';
+  color: #1565c0; /* 北＝水 */
+  border: 1px solid #1565c0;
+  text-shadow: 0 0 1px #1565c0;
+}
+#午宫 .shensha-container::before {
+  background-color: rgba(211, 47, 47, 0.08);
+  border-radius: 3px;
+}
+
+#酉宫 .shensha-container::before {
+  background-color: rgba(184, 134, 11, 0.1);
+  border-radius: 3px;
+}
+
+#卯宫 .shensha-container::before {
+  background-color: rgba(46, 125, 50, 0.08);
+  border-radius: 3px;
+}
+
+#子宫 .shensha-container::before {
+  background-color: rgba(21, 101, 192, 0.08);
+  border-radius: 50%;
 }
 /* 改进后的四化容器样式 */
 .sihua-container {
