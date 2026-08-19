@@ -529,13 +529,120 @@ def get_star(star_name, dizhi):
         return jsonify({'error': str(e)}), 500
 
 from app_rule_db import ZiWeiEngine, Edge
+
+# -------------------------------------------------------------------------
+# 576.json：方外人十二宫 × 四化 × 十二宫表象
+# 只读取原文严格摘录的数据；空表象绝不自行补写。
+_576_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '576.json')
+_576_FACE_MAP = {}
+
+def _load_576_face_map():
+    """加载 576.json，建立 (飞出宫, 四化, 飞入宫) -> 记录 的索引。"""
+    global _576_FACE_MAP
+
+    if _576_FACE_MAP:
+        return
+
+    try:
+        with open(_576_PATH, 'r', encoding='utf-8') as f:
+            raw = json.load(f)
+
+        rows = raw.get('rows', raw) if isinstance(raw, dict) else raw
+
+        for row in rows:
+            source = row.get('飞出宫')
+            hua = row.get('四化')
+            target = row.get('飞入宫')
+
+            if not source or not hua or not target:
+                continue
+
+            _576_FACE_MAP[(source, hua, target)] = {
+                '表象': row.get('表象', ''),
+                '原文段落号': row.get('原文段落号', ''),
+                '状态': row.get('状态', '')
+            }
+
+    except Exception as e:
+        app.logger.error(f'加载576.json失败: {e}')
+        _576_FACE_MAP = {}
+
+
+def _normalize_576_palace(palace):
+    """
+    将前端可能传入的宫位名称统一为 576.json 使用的标准名称。
+    576.json 使用“奴仆宫”，而现有系统有时使用“交友宫”。
+    """
+    if not palace:
+        return ''
+
+    palace = str(palace).strip()
+
+    aliases = {
+        '命': '命宫',
+        '兄': '兄弟宫',
+        '夫妻': '夫妻宫',
+        '偶': '夫妻宫',
+        '子': '子女宫',
+        '财': '财帛宫',
+        '疾': '疾厄宫',
+        '迁': '迁移宫',
+        '交友': '奴仆宫',
+        '交友宫': '奴仆宫',
+        '奴': '奴仆宫',
+        '官': '官禄宫',
+        '田': '田宅宫',
+        '福': '福德宫',
+        '父': '父母宫',
+    }
+
+    if palace in aliases:
+        return aliases[palace]
+
+    # 已经是“××宫”则直接使用。
+    if palace.endswith('宫'):
+        return palace
+
+    return palace + '宫'
+
+
+def _get_576_face(source_palace, sihua_type, target_palace):
+    """
+    从576.json取得指定：
+        飞出宫 + 四化 + 飞入宫
+    的原文表象。
+
+    注意：
+    - 返回的是 576.json 中已经严格摘录的原文；
+    - 如果该格在576.json中没有表象，则返回空字符串；
+    - 不进行任何推演、拼接或脑补。
+    """
+    _load_576_face_map()
+
+    key = (
+        _normalize_576_palace(source_palace),
+        sihua_type,
+        _normalize_576_palace(target_palace)
+    )
+
+    return _576_FACE_MAP.get(key, {})
+
 @app.route('/api/sihuas/<gan>', methods=['GET'])
 # @login_required  # 如果你的系统需要登录才能查看，可以把注释解开
 def get_sihua(gan):
     """
-    根据宫干获取飞出四化的星曜及解读（按需获取，防止业务核心字典外泄）
+    根据宫干获取飞出四化的星曜及解读，并返回 576.json 中
+    “飞出宫 + 四化 + 飞入宫”对应的严格原文表象。
+
     请求参数:
       - gan: 宫干 (例如 '甲', '乙')
+      - source: 飞出的 A 宫
+      - targets: 飞入的 B 宫及星曜参数 JSON 串
+
+    新增返回字段:
+      - sihua_face: 576.json 中对应格的原文表象
+      - sihua_face_source_paragraph: 对应原文段落号
+      - sihua_face_status: 576.json 中的状态
     """
     try:
         if not gan:
@@ -572,6 +679,17 @@ def get_sihua(gan):
             target_palace = target_info.get('palace')
             brightness = target_info.get('brightness', 'mid')
 
+            # 0. 从 576.json 严格取得“飞出宫 → 四化 → 飞入宫”的原文表象
+            #    不使用星曜解释推导，不做任何脑补。
+            face576 = _get_576_face(
+                source_palace,
+                sihua_type,
+                target_palace
+            )
+            sihua_face = face576.get('表象', '')
+            sihua_source_paragraph = face576.get('原文段落号', '')
+            sihua_face_status = face576.get('状态', '')
+
             # 1. 亮度映射（获取 high/mid/low）
             level = BRIGHTNESS_LEVEL_MAP.get(brightness, 'mid')
 
@@ -606,7 +724,6 @@ def get_sihua(gan):
 
             logic_sihua4=f"<br/>&emsp;{result["final"]}"
 
-
             sihua_data[sihua_type] = {
                 'star': star_name,
                 'target_palace': target_palace,
@@ -618,6 +735,12 @@ def get_sihua(gan):
                 'logic_sihua2': action,
                 'logic_target': result_face,
                 'logic_sihua3': logic_sihua3,
+
+                # 576.json 严格原文表象
+                'sihua_face': sihua_face,
+                'sihua_face_source_paragraph': sihua_source_paragraph,
+                'sihua_face_status': sihua_face_status,
+
                 # 'logic_sihua4': logic_sihua4,
             }
 

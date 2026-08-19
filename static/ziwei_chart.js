@@ -2849,7 +2849,17 @@ async function showPalaceMeaning(palaceName, palaceGan, sihuaData, element) {
                                     卐【${sihuaType}】${info.star}(${info.brightness})  > ${info.logic_sihua2} < ${info.logic_sihua1}
                                     ${info.logic_sihua3} <br/>
                                 </span>
+                            ${
+                              info.sihua_face
+                                ? `
+                                <span class="sihua-${sihuaMap[sihuaType] || sihuaType}" >
+                                    表象：${escapeHtml(info.sihua_face)}
+                                </span>
+                            `
+                                : ''
+                            }
                             </div>
+
                         </li>
                     `
         }

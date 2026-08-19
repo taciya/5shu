@@ -812,7 +812,7 @@ FFFFFF
 #巳宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -831,7 +831,7 @@ FFFFFF
 #午宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -867,7 +867,7 @@ FFFFFF
 #未宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -886,7 +886,7 @@ FFFFFF
 #申宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -922,7 +922,7 @@ FFFFFF
 #辰宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -958,7 +958,7 @@ FFFFFF
 #酉宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -994,7 +994,7 @@ FFFFFF
 #卯宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1030,7 +1030,7 @@ FFFFFF
 #戌宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1049,7 +1049,7 @@ FFFFFF
 #寅宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1068,7 +1068,7 @@ FFFFFF
 #丑宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1104,7 +1104,7 @@ FFFFFF
 #子宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1139,7 +1139,7 @@ FFFFFF
 #亥宫 .shensha-container::before {
   position: absolute;
 
-  left: -5px;
+  left: 0px;
   top: 0;
 
   transform: translate(0, -100%) rotate(0);
@@ -1203,28 +1203,28 @@ FFFFFF
 }
 
 #午宫 .shensha-container::before {
-  content: '⓬';
+  content: '⑫';
   color: #d32f2f; /* 南＝火 */
   border: 1px solid #d32f2f;
   text-shadow: 0 0 1px #d32f2f;
 }
 
 #酉宫 .shensha-container::before {
-  content: '⓲';
+  content: '⑱';
   color: #b8860b; /* 西＝金 */
   border: 1px solid #b8860b;
   text-shadow: 0 0 1px #b8860b;
 }
 
 #卯宫 .shensha-container::before {
-  content: '➏';
+  content: '⑥';
   color: #2e7d32; /* 东＝木 */
   border: 1px solid #2e7d32;
   text-shadow: 0 0 1px #2e7d32;
 }
 
 #子宫 .shensha-container::before {
-  content: '◉';
+  content: '⓪';
   color: #1565c0; /* 北＝水 */
   border: 1px solid #1565c0;
   text-shadow: 0 0 1px #1565c0;
@@ -1246,7 +1246,7 @@ FFFFFF
 
 #子宫 .shensha-container::before {
   background-color: rgba(21, 101, 192, 0.08);
-  border-radius: 50%;
+  border-radius: 3px;
 }
 /* 改进后的四化容器样式 */
 .sihua-container {
