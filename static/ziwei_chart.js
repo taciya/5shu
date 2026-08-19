@@ -3045,11 +3045,75 @@ const SIHUA_START_MAP = {
   武曲: '武',
   贪狼: '贪',
 }
+
+// 根据当前分析层级，取得四化落点宫位名称
+function getSihuaTargetPalaceName(targetInfo, layer) {
+  if (!targetInfo) return ''
+
+  // 原局
+  if (layer === 'natal') {
+    return targetInfo.name || ''
+  }
+
+  // 根据地支找到实际物理宫位
+  const targetPalaceEl = document.getElementById(`${targetInfo.zhi}宫`)
+
+  if (!targetPalaceEl) {
+    console.warn('四化落点宫位 DOM 未找到:', targetInfo.zhi, targetInfo.name)
+    return targetInfo.name || ''
+  }
+
+  // 大运 / 流年
+  // 注意：后台映射需要标准宫名
+  // 「大运夫妻宫」→「夫妻宫」
+  // 「流年命宫」→「命宫」
+  if (layer === 'dayun') {
+    return (targetPalaceEl.dayunName || targetInfo.name || '').replace(
+      /^大运/,
+      '',
+    )
+  }
+
+  if (layer === 'liunian') {
+    return (targetPalaceEl.liunianName || targetInfo.name || '').replace(
+      /^流年/,
+      '',
+    )
+  }
+
+  return targetInfo.name || ''
+}
+function buildSihuaData(palaceGan, layer = 'natal') {
+  const sihuaData = {}
+
+  const flyStars = TIANGAN_SIHUA[palaceGan]
+
+  if (!flyStars) {
+    return sihuaData
+  }
+
+  for (const [sihuaType, starName] of Object.entries(flyStars)) {
+    const targetInfo = findPalaceByStar(starName)
+
+    if (!targetInfo) continue
+
+    sihuaData[sihuaType] = {
+      star: starName,
+
+      palace: getSihuaTargetPalaceName(targetInfo, layer),
+
+      brightness: targetInfo.stars[0].brightness,
+    }
+  }
+
+  return sihuaData
+}
 // 绑定宫位名称点击事件
 function bindPalaceNameEvents() {
   // 获取所有宫位名称元素
-  const palaceNameElements = document.querySelectorAll('.palace-name')
-
+  const palaceNameElements = document.querySelectorAll(
+    '.palace-name, .palace-name-dayun, .palace-name-liunian',
+  )
   palaceNameElements.forEach((element) => {
     // 移除旧的事件监听器
     element.replaceWith(element.cloneNode(true))
@@ -3077,22 +3141,7 @@ function bindPalaceNameEvents() {
         : ''
 
       // 2. 锁定并组装 B宫（飞入宫位）的数据映射包
-      const sihuaData = {}
-      // 确保配置已经正确注入到前端
-      const flyStars = TIANGAN_SIHUA[palaceGan]
-
-      // 遍历当前宫干触发的 禄、权、科、忌
-      for (const [sihuaType, starName] of Object.entries(flyStars)) {
-        // 利用“DOM爬虫”函数直接从页面上找这颗星
-        const targetInfo = findPalaceByStar(starName)
-        if (targetInfo) {
-          sihuaData[sihuaType] = {
-            star: starName,
-            palace: targetInfo.name, // 飞入的B宫
-            brightness: targetInfo.stars[0].brightness, // 星情亮度
-          }
-        }
-      }
+      const sihuaData = buildSihuaData(palaceGan, 'natal')
 
       showPalaceMeaning(palaceName, palaceGan, sihuaData, element)
     })
@@ -3111,9 +3160,136 @@ function bindPalaceNameEvents() {
     element.title = `点击查看${palaceName}宫详细说明`
   })
 
+  // ============================================================
+  // 绑定大运宫位名称点击事件
+  // ============================================================
+  const newDayunNameElements = document.querySelectorAll('.palace-name-dayun')
+
+  newDayunNameElements.forEach((element) => {
+    // 当前物理宫位
+    const palaceEl = element.closest('.palace')
+    if (!palaceEl) return
+
+    // 大运宫位名称，例如：
+    // 大运命宫、大运兄弟宫、大运夫妻宫……
+    const dayunFullName = palaceEl.dayunName || ''
+    if (!dayunFullName) return
+
+    // 转换成 palaceMeaningMap 使用的名称：
+    // 大运命宫   → 命
+    // 大运夫妻宫 → 夫妻
+    // 大运财帛宫 → 财帛
+    const palaceName = dayunFullName
+      .replace(/^大运/, '')
+      .replace(/宫$/, '')
+      .trim()
+
+    // 获取当前物理宫位的宫干
+    const ganzhiElement =
+      palaceEl.querySelector('.ganzhi') ||
+      palaceEl.querySelector('.palace-footer .ganzhi')
+
+    const palaceGan = ganzhiElement
+      ? ganzhiElement.textContent.trim().charAt(0)
+      : ''
+
+    // 点击事件
+    element.addEventListener('click', (e) => {
+      e.stopPropagation()
+
+      // 大运宫位使用独立的 currentDisplayedStar 标识
+      if (currentDisplayedStar === `dayun_${palaceName}`) {
+        return
+      }
+
+      // 组装当前宫干所对应的四化数据
+      const sihuaData = buildSihuaData(palaceGan, 'dayun')
+
+      // 调用与原局宫位完全相同的说明窗口
+      showPalaceMeaning(palaceName, palaceGan, sihuaData, element)
+    })
+
+    // 触摸事件
+    element.addEventListener(
+      'touchstart',
+      (e) => {
+        e.stopPropagation()
+      },
+      { passive: true },
+    )
+
+    // 鼠标样式
+    element.style.cursor = 'pointer'
+
+    // 提示文字
+    element.title = `点击查看${dayunFullName}详细说明`
+  })
+
+  // ============================================================
+  // 绑定流年宫位名称点击事件
+  // ============================================================
+  const newLiunianNameElements = document.querySelectorAll(
+    '.palace-name-liunian',
+  )
+
+  newLiunianNameElements.forEach((element) => {
+    const palaceEl = element.closest('.palace')
+    if (!palaceEl) return
+
+    // 流年宫位名称，例如：
+    // 流年命宫、流年夫妻宫、流年财帛宫……
+    const liunianFullName = palaceEl.liunianName || ''
+    if (!liunianFullName) return
+
+    // 转换成 palaceMeaningMap 使用的名称
+    // 流年命宫   → 命
+    // 流年夫妻宫 → 夫妻
+    const palaceName = liunianFullName
+      .replace(/^流年/, '')
+      .replace(/宫$/, '')
+      .trim()
+
+    // 获取当前物理宫位的宫干
+    const ganzhiElement =
+      palaceEl.querySelector('.ganzhi') ||
+      palaceEl.querySelector('.palace-footer .ganzhi')
+
+    const palaceGan = ganzhiElement
+      ? ganzhiElement.textContent.trim().charAt(0)
+      : ''
+
+    element.addEventListener('click', (e) => {
+      e.stopPropagation()
+
+      if (currentDisplayedStar === `liunian_${palaceName}`) {
+        return
+      }
+
+      // 根据当前宫干计算四化
+      const sihuaData = buildSihuaData(palaceGan, 'liunian')
+
+      showPalaceMeaning(palaceName, palaceGan, sihuaData, element)
+    })
+
+    element.addEventListener(
+      'touchstart',
+      (e) => {
+        e.stopPropagation()
+      },
+      { passive: true },
+    )
+
+    element.style.cursor = 'pointer'
+
+    element.title = `点击查看${liunianFullName}详细说明`
+  })
+
   // 页面点击事件（隐藏宫位信息）
   document.addEventListener('click', (e) => {
-    const isPalaceName = e.target.closest('.palace-name')
+    const isPalaceName =
+      e.target.closest('.palace-name') ||
+      e.target.closest('.palace-name-dayun') ||
+      e.target.closest('.palace-name-liunian')
     if (!isPalaceName) {
       hidePalaceMeaning()
     }
@@ -3122,7 +3298,10 @@ function bindPalaceNameEvents() {
   document.addEventListener(
     'touchstart',
     (e) => {
-      const isPalaceName = e.target.closest('.palace-name')
+      const isPalaceName =
+        e.target.closest('.palace-name') ||
+        e.target.closest('.palace-name-dayun') ||
+        e.target.closest('.palace-name-liunian')
       if (!isPalaceName) {
         hidePalaceMeaning()
       }
@@ -3465,6 +3644,8 @@ function updatePalaceDayunName(data, dayunData) {
     dayunEl.textContent = '[' + dayunName + ']'
     dayunEl.className = 'palace-name-dayun' // 重置样式类
   })
+  // 大运宫位名称是动态创建的，生成完成后重新绑定点击事件
+  bindPalaceNameEvents()
 }
 // 生成大运四化（根据宫位天干）
 function generateDayunSihua(data, dayunPalace) {
@@ -4074,6 +4255,8 @@ function updatePalaceLiunianName(data, liunianData) {
     liunianEl.textContent = `[${liunianName}]`
     liunianEl.className = 'palace-name-liunian'
   })
+  // 流年宫位名称是动态创建的，生成完成后重新绑定点击事件
+  bindPalaceNameEvents()
 }
 function generateLiunianSihua(data, selectedYear, liunianPalace) {
   /**
