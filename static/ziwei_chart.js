@@ -2854,7 +2854,7 @@ async function showPalaceMeaning(palaceName, palaceGan, sihuaData, element) {
                                 ? `
                                 <span style="height: 1px;width: 100%;display: block;"></span>
                                 <span class="sihua-${sihuaMap[sihuaType] || sihuaType}" >
-                                    表象：${escapeHtml(info.sihua_face)}
+                                    卐【象】${escapeHtml(info.sihua_face)}
                                 </span>
                             `
                                 : ''
