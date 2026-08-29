@@ -1514,6 +1514,9 @@ function initFlySihua(feigong_map) {
       // 获取点击宫位的地支
       const dizhi = this.id.replace('宫', '')
 
+      // 绘制立太极后的外围宫位对角线
+      drawTaijiDiagonalLines(dizhi)
+
       // 更新宫位名称
       // updatePalaceNames(dizhi);
 
@@ -2852,8 +2855,9 @@ async function showPalaceMeaning(palaceName, palaceGan, sihuaData, element) {
                             ${
                               info.sihua_face
                                 ? `
+                                <span style="height: 1px;width: 100%;display: block;"></span>
                                 <span class="sihua-${sihuaMap[sihuaType] || sihuaType}" >
-                                    表象：${escapeHtml(info.sihua_face)}
+                                    卐【象】${escapeHtml(info.sihua_face)}
                                 </span>
                             `
                                 : ''
@@ -4619,4 +4623,289 @@ function getNatalPalaceFromDIzhi(natalPalaces, dizhi) {
 
   // 3. 返回结果
   return foundPalace !== undefined ? foundPalace : null
+}
+
+// ============================================================
+// 立太极后的外围宫位对角线
+//
+// 逻辑：
+// 1. 点击某宫 = 新命宫（太极点）
+// 2. 按当前 updatePalaceNames() 的规则，逆时针重新计算12宫
+// 3. 找到“立太极后的 兄、友、疾、父”所对应的实际宫位
+// 4. 分别连接：
+//      兄 ←→ 友
+//      父 ←→ 疾
+// ============================================================
+// ============================================================
+// 立太极后的兄友 / 父疾关系
+//
+// 不画实体线。
+// 只在 center-cell 内缘显示四个端点：
+//
+//       兄          父
+//
+//       友          疾
+//
+// 实际位置根据“立太极后的宫位”所在方向计算。
+// ============================================================
+function drawTaijiDiagonalLines(startDizhi) {
+  const svg = document.getElementById('connection-lines')
+  const container = document.querySelector('.container')
+  const centerCell = document.querySelector('.center-cell')
+
+  if (!svg || !container || !centerCell || !startDizhi) return
+
+  // ------------------------------------------------------------
+  // 1. 找到点击宫位在原盘的位置
+  // ------------------------------------------------------------
+  const startIndex = palaceOrder.indexOf(startDizhi)
+
+  if (startIndex === -1) return
+
+  // ------------------------------------------------------------
+  // 2. 建立“立太极十二宫”
+  //
+  // 与 updatePalaceNames() 完全使用同一套规则：
+  //
+  // newIndex = (startIndex - index + 12) % 12
+  // ------------------------------------------------------------
+  const taijiMap = {}
+
+  palaceOrder.forEach((dizhi, index) => {
+    const newIndex = (startIndex - index + 12) % 12
+    const newName = newPalaceNames[newIndex]
+
+    taijiMap[newName] = dizhi
+  })
+
+  // ------------------------------------------------------------
+  // 3. 四个立太极后的宫位
+  // ------------------------------------------------------------
+  const targets = [
+    {
+      name: '兄',
+      dizhi: taijiMap['疾'],
+    },
+    {
+      name: '友',
+      dizhi: taijiMap['父'],
+    },
+    {
+      name: '父',
+      dizhi: taijiMap['子'],
+    },
+    {
+      name: '疾',
+      dizhi: taijiMap['田'],
+    },
+  ]
+
+  // ------------------------------------------------------------
+  // 4. center-cell 与 container 的坐标转换
+  // ------------------------------------------------------------
+  const containerRect = container.getBoundingClientRect()
+  const centerRect = centerCell.getBoundingClientRect()
+
+  // center-cell 中心
+  const centerX = centerRect.left + centerRect.width / 2 - containerRect.left
+
+  const centerY = centerRect.top + centerRect.height / 2 - containerRect.top
+
+  // center-cell 四条边
+  const left = centerRect.left - containerRect.left
+
+  const right = centerRect.right - containerRect.left
+
+  const top = centerRect.top - containerRect.top
+
+  const bottom = centerRect.bottom - containerRect.top
+
+  // ------------------------------------------------------------
+  // 5. 找到某个宫位中心
+  // ------------------------------------------------------------
+  function getPalaceCenter(dizhi) {
+    if (!dizhi) return null
+
+    const palace = document.getElementById(`${dizhi}宫`)
+
+    if (!palace) return null
+
+    const rect = palace.getBoundingClientRect()
+
+    return {
+      x: rect.left + rect.width / 2 - containerRect.left,
+
+      y: rect.top + rect.height / 2 - containerRect.top,
+    }
+  }
+
+  // ------------------------------------------------------------
+  // 6. 求：
+  //
+  // center-cell 中心
+  //        ↓
+  // 指向目标宫位中心的射线
+  //        ↓
+  // 与 center-cell 边框的交点
+  //
+  // 这样标签永远落在 center-cell 的边缘，
+  // 不会进入外围宫位。
+  // ------------------------------------------------------------
+  function getBorderPoint(target) {
+    const point = getPalaceCenter(target.dizhi)
+
+    if (!point) return null
+
+    const dx = point.x - centerX
+    const dy = point.y - centerY
+
+    if (dx === 0 && dy === 0) return null
+
+    const candidates = []
+
+    // 左边
+    if (dx < 0) {
+      const t = (left - centerX) / dx
+      if (t > 0) {
+        const y = centerY + dy * t
+
+        if (y >= top && y <= bottom) {
+          candidates.push({
+            t,
+            x: left,
+            y,
+            side: 'left',
+          })
+        }
+      }
+    }
+
+    // 右边
+    if (dx > 0) {
+      const t = (right - centerX) / dx
+      if (t > 0) {
+        const y = centerY + dy * t
+
+        if (y >= top && y <= bottom) {
+          candidates.push({
+            t,
+            x: right,
+            y,
+            side: 'right',
+          })
+        }
+      }
+    }
+
+    // 上边
+    if (dy < 0) {
+      const t = (top - centerY) / dy
+      if (t > 0) {
+        const x = centerX + dx * t
+
+        if (x >= left && x <= right) {
+          candidates.push({
+            t,
+            x,
+            y: top,
+            side: 'top',
+          })
+        }
+      }
+    }
+
+    // 下边
+    if (dy > 0) {
+      const t = (bottom - centerY) / dy
+      if (t > 0) {
+        const x = centerX + dx * t
+
+        if (x >= left && x <= right) {
+          candidates.push({
+            t,
+            x,
+            y: bottom,
+            side: 'bottom',
+          })
+        }
+      }
+    }
+
+    if (!candidates.length) return null
+
+    // 取最近的边界交点
+    candidates.sort((a, b) => a.t - b.t)
+
+    const result = candidates[0]
+
+    // ----------------------------------------------------------
+    // 向 center-cell 内部缩进一点
+    //
+    // 防止文字压在 border 上。
+    // ----------------------------------------------------------
+    const padding = 7
+
+    if (result.side === 'left') {
+      result.x += padding
+    } else if (result.side === 'right') {
+      result.x -= padding
+    } else if (result.side === 'top') {
+      result.y += padding
+    } else if (result.side === 'bottom') {
+      result.y -= padding
+    }
+
+    return result
+  }
+
+  // ------------------------------------------------------------
+  // 7. 添加标签
+  // ------------------------------------------------------------
+  targets.forEach(({ name, dizhi }) => {
+    const point = getBorderPoint({ name, dizhi })
+
+    if (!point) return
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+
+    text.textContent = name
+
+    let labelClass = 'taiji-relation-label'
+
+    if (name === '兄' || name === '友') {
+      labelClass += ' taiji-relation-xiongyou'
+    } else if (name === '父' || name === '疾') {
+      labelClass += ' taiji-relation-fuji'
+    }
+
+    text.setAttribute('class', labelClass)
+
+    let x = point.x
+
+    if (name === '兄' || name === '父') {
+      x -= 5
+    } else if (name === '友' || name === '疾') {
+      x -= 5
+    }
+
+    text.setAttribute('x', x)
+
+    text.setAttribute('y', point.y)
+
+    text.setAttribute('dominant-baseline', 'middle')
+
+    // ----------------------------------------------------------
+    // 根据所在边决定文字方向，
+    // 确保文字始终朝 center-cell 内部。
+    // ----------------------------------------------------------
+    if (point.side === 'left') {
+      text.setAttribute('text-anchor', 'start')
+    } else if (point.side === 'right') {
+      text.setAttribute('text-anchor', 'end')
+    } else {
+      text.setAttribute('text-anchor', 'middle')
+    }
+
+    svg.appendChild(text)
+  })
 }

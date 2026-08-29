@@ -2498,3 +2498,31 @@ dl {
   top: 10px;
   font-size: 22px;
 }
+/* ============================================================
+   立太极关系标签
+   只显示“兄 / 友 / 父 / 疾”，不显示实体连接线
+   ============================================================ */
+.taiji-relation-label {
+  font-size: 12px;
+  font-weight: bold;
+  fill: #8b4513;
+
+  pointer-events: none;
+
+  dominant-baseline: middle;
+
+  /* 防止文字被四化线视觉干扰 */
+  paint-order: stroke;
+  stroke: #f9f3e9;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+/* 兄友线：金色 */
+.taiji-relation-xiongyou {
+  fill: #c9a227;
+}
+
+/* 父疾线：光明色 */
+.taiji-relation-fuji {
+  fill: #f4c95d;
+}
