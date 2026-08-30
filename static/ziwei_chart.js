@@ -4092,15 +4092,26 @@ function updatePalaceLiuyueName(data, liuyueData) {
   // 清除旧的流月
   document.querySelectorAll('.palace-name-liuyue').forEach((el) => el.remove())
 
-  // 与流年/大运保持完全相同的宫位顺序逻辑
-  const sortedPalaces = [...data.palaces]
-    .filter((p) => p.age_range)
-    .sort((a, b) => {
-      const aStart = parseInt(a.age_range.split('-')[0])
-      const bStart = parseInt(b.age_range.split('-')[0])
+  // 流月十二宫固定按照地支顺序排布
+  // 不再参考 age_range，因此不受阴阳男女影响
+  const dizhiOrder = [
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥',
+    '子',
+    '丑',
+  ]
 
-      return aStart - bStart
-    })
+  const sortedPalaces = dizhiOrder
+    .map((dizhi) => data.palaces.find((p) => p.dizhi === dizhi))
+    .filter(Boolean)
 
   const liuyueNames = [
     '☯',
