@@ -2359,7 +2359,7 @@ dl {
 
 .palace-name-dayun {
   position: absolute;
-  top: -15px;
+  top: -5px;
   left: 50%;
   transform: translateX(-50%);
   color: #430450; /*${dayunName === '大命' ? '#8b4513' : '#430450'};  大命用深棕，其他用紫 */
@@ -2373,7 +2373,7 @@ dl {
 }
 .palace-name-liunian {
   position: absolute;
-  top: -30px; /* 在palace-name-dayun上方（大运在-15px） */
+  top: -20px; /* 在palace-name-dayun上方（大运在-15px） */
   left: 50%;
   transform: translateX(-50%);
   color: #ff6666; /*${liunianName === '流命' ? '#ff0000' : '#ff6666'};  流命用深红，其他用浅红 */
@@ -2387,7 +2387,7 @@ dl {
 }
 .palace-name-liuyue {
   position: absolute;
-  top: -45px;
+  top: -35px;
   left: 50%;
   transform: translateX(-50%);
 
