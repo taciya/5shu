@@ -2807,6 +2807,268 @@ const palaceMeaningMap = {
     },
   },
 }
+
+// ============================================================
+// 宫位点击：宫位 + 地支 + 星曜 + 四化 → 四化组合卦象综合
+// 依据《斗數-四化.docx》：
+// 1. 单象只解象义；
+// 2. 双化共有禄权、禄科、禄忌、权科、权忌、科忌六组；
+// 3. 自化与本宫化入分别处理；
+// 4. 用户要求“只要宫位出现某四化，就直接列出所有可能组合”，
+//    因此这里故意不再判断第二个四化是否实际存在。
+// ============================================================
+function normalizePalaceGuaSihuaType(value) {
+  if (!value) return ''
+  const match = String(value).match(/(禄|权|科|忌)/)
+  return match ? match[1] : ''
+}
+
+function parsePalaceGuaSihuaEntry(entry) {
+  if (!entry) return null
+  const raw = String(entry).trim()
+
+  // 普通四化：例如“天机禄”“天机化禄”
+  let match = raw.match(/^(.*?)化?(禄|权|科|忌)$/)
+  if (match) {
+    return { star: match[1].trim(), type: match[2], mode: '本宫四化' }
+  }
+
+  // 向心/离心四化：例如“天机<禄...%>”
+  match = raw.match(/^(.*?)<(禄|权|科|忌).+%>/)
+  if (match) {
+    return { star: match[1].trim(), type: match[2], mode: '四化箭头' }
+  }
+
+  return null
+}
+
+function collectPalaceGuaStars(palaceEl) {
+  const starNames = [
+    ...(palaceEl.main_stars || []),
+    ...(palaceEl.minor_stars || []),
+    ...(palaceEl.xiaoxing_stars || []),
+    ...(palaceEl.shensha_stars || []),
+  ]
+    .map((s) =>
+      String(s)
+        .replace(/\(.*?\)/g, '')
+        .trim(),
+    )
+    .filter(Boolean)
+
+  const map = new Map()
+  starNames.forEach((star) => {
+    if (!map.has(star)) map.set(star, { name: star, sihua: [] })
+  })
+
+  const sources = [
+    { list: palaceEl.sihua, mode: '本宫四化' },
+    { list: palaceEl.xiangxin_sihua, mode: '向心四化' },
+    { list: palaceEl.lixin_sihua, mode: '离心四化' },
+  ]
+
+  sources.forEach(({ list, mode }) => {
+    if (!Array.isArray(list)) return
+    list.forEach((entry) => {
+      const parsed = parsePalaceGuaSihuaEntry(entry)
+      if (!parsed) return
+      const star = parsed.star || '未知星曜'
+      if (!map.has(star)) map.set(star, { name: star, sihua: [] })
+      map.get(star).sihua.push({ type: parsed.type, mode })
+    })
+  })
+
+  return [...map.values()]
+}
+
+function getPalaceGuaPossibleCombinations(activeTypes, config = {}) {
+  const order = config.PALACE_GUA_SIHUA_ORDER || ['禄', '权', '科', '忌']
+  const selfMeanings = config.PALACE_GUA_SELF_MEANINGS || {}
+  const doubleMeanings = config.PALACE_GUA_DOUBLE_MEANINGS || {}
+  const doubleSelfMeanings = config.PALACE_GUA_DOUBLE_SELF_MEANINGS || {}
+  const tripleMeanings = config.PALACE_GUA_MEDIATOR_TRIPLES || {}
+  const quadMeaning = config.PALACE_GUA_QUAD_MEANING || {}
+
+  const active = new Set(activeTypes)
+  const result = []
+  const push = (name, level, meaning) => {
+    if (!result.some((item) => item.name === name && item.level === level)) {
+      result.push({ name, level, meaning: meaning || '' })
+    }
+  }
+
+  // 只要出现一个四化，直接展开该四化的全部自化可能性。
+  order.forEach((type) => {
+    if (!active.has(type)) return
+    order.forEach((selfType) => {
+      const name = `${type}+自化${selfType}`
+      push(name, '自化', selfMeanings[name])
+    })
+  })
+
+  // 双象：只要两个成员至少有一个实际出现，就展开该双象。
+  for (let i = 0; i < order.length; i++) {
+    for (let j = i + 1; j < order.length; j++) {
+      const a = order[i],
+        b = order[j]
+      if (!active.has(a) && !active.has(b)) continue
+      const name = `${a}+${b}`
+      push(name, '双象', doubleMeanings[name])
+
+      // 资料同时列出“双化 + 自化”的全部四种可能。
+      const addOns = doubleSelfMeanings[name] || {}
+      order.forEach((selfType) => {
+        if (addOns[selfType] !== undefined) {
+          push(`${name}+自化${selfType}`, '双化+自化', addOns[selfType])
+        }
+      })
+    }
+  }
+
+  // 三象媒介：资料明确列出六种，且第三个四化必须含化忌。
+  Object.entries(tripleMeanings).forEach(([name, meaning]) => {
+    const parts = name.split('+')
+    if (!parts.some((type) => active.has(type))) return
+    push(name, '三象媒介', meaning)
+  })
+
+  if (active.size > 0) {
+    const meaning =
+      typeof quadMeaning === 'object' ? quadMeaning['禄+权+科+忌'] : quadMeaning
+    push('禄+权+科+忌', '四象', meaning)
+  }
+
+  const levelOrder = { 自化: 1, 双象: 2, '双化+自化': 3, 三象媒介: 4, 四象: 5 }
+  return result.sort((a, b) => levelOrder[a.level] - levelOrder[b.level])
+}
+
+function escapePalaceGuaHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+function buildPalaceGuaHTML(element, config = {}) {
+  const palaceEl = element?.closest?.('.palace')
+  if (!palaceEl) return ''
+
+  const palaceName = (
+    palaceEl.palaceName ||
+    palaceEl.querySelector('.palace-name')?.textContent ||
+    ''
+  )
+    .replace(/宫$/, '')
+    .trim()
+  const gan = palaceEl.gan || ''
+  const zhi = palaceEl.zhi || palaceEl.id.replace('宫', '')
+  const ganzhi = palaceEl.ganzhi || `${gan}${zhi}`
+  const stars = collectPalaceGuaStars(palaceEl)
+  const palaceKey = palaceName.endsWith('宫') ? palaceName : `${palaceName}宫`
+  const palaceTransformations =
+    (config.PALACE_GUA_PALACE_TRANSFORMATIONS || {})[palaceKey] || {}
+  const selfRules = (config.PALACE_GUA_SELF_RULES || {})[palaceKey] || []
+  const crossRules = (config.PALACE_GUA_CROSS_RULES || {})[palaceKey] || []
+
+  const activeTypes = [
+    ...new Set(stars.flatMap((item) => item.sihua.map((s) => s.type))),
+  ]
+  const combinations = getPalaceGuaPossibleCombinations(activeTypes, config)
+  const dizhiGroups = config.PALACE_GUA_DIZHI_GROUP || {}
+  const dizhiMeanings = config.PALACE_GUA_DIZHI_MEANING || {}
+  const dizhiGroup = dizhiGroups[zhi] || '未分类'
+
+  const starRows = stars.length
+    ? stars
+        .filter((item) => item.sihua.length > 0)
+        .map((item) => {
+          const tags = item.sihua
+            .map((s) => {
+              const transform = palaceTransformations[s.type] || {}
+              const starRules = transform.star_rules || {}
+              const matched = []
+              Object.entries(starRules).forEach(([starKey, texts]) => {
+                const keys = starKey
+                  .split(/[、，,]/)
+                  .map((x) => x.trim())
+                  .filter(Boolean)
+                if (keys.includes(item.name) || starKey === item.name) {
+                  matched.push(...(Array.isArray(texts) ? texts : [texts]))
+                }
+              })
+              const base = Array.isArray(transform.base)
+                ? transform.base.filter(Boolean)
+                : []
+              const meaningParts = [...matched]
+              if (!meaningParts.length && base.length)
+                meaningParts.push(...base.slice(0, 3))
+              const meaningHtml = meaningParts.length
+                ? `<div style="margin:2px 0 5px 10px;color:#555;">${meaningParts.map((x) => escapePalaceGuaHTML(x)).join('<br>')}</div>`
+                : ''
+              return `<div style="margin-bottom:5px;"><span style="display:inline-block;margin:1px 3px 1px 0;padding:1px 4px;border-radius:3px;background:${s.type === '禄' ? '#e8f5e9' : s.type === '权' ? '#f3e5f5' : s.type === '科' ? '#e3f2fd' : '#ffebee'};color:#333;">${escapePalaceGuaHTML(s.type)} · ${escapePalaceGuaHTML(s.mode)}</span>${meaningHtml}</div>`
+            })
+            .join('')
+          return `<div style="margin-bottom:7px;"><b>${escapePalaceGuaHTML(item.name)}</b>${tags}</div>`
+        })
+        .join('')
+    : '<span style="color:#999;">本宫没有可识别的四化标记</span>'
+
+  const comboRows = combinations.length
+    ? combinations
+        .map((item) => {
+          const levelStyle =
+            item.level === '自化'
+              ? 'background:#f6f6f6;'
+              : item.level === '双象'
+                ? 'background:#fff8e1;'
+                : item.level === '三象'
+                  ? 'background:#e8f5e9;'
+                  : 'background:#fce4ec;'
+          return `
+            <div style="display:flex;gap:8px;align-items:flex-start;margin:4px 0;padding:5px 6px;border-radius:4px;${levelStyle}">
+              <span style="min-width:42px;font-weight:bold;">${escapePalaceGuaHTML(item.level)}</span>
+              <span style="min-width:120px;font-weight:bold;">${escapePalaceGuaHTML(item.name)}</span>
+              <span style="flex:1;">${escapePalaceGuaHTML(item.meaning)}</span>
+            </div>`
+        })
+        .join('')
+    : '<span style="color:#999;">没有可展开的四化组合</span>'
+
+  return `
+    <div style="margin-bottom:10px;padding:8px 9px;border:1px solid #d8c9aa;border-radius:6px;background:#fffdf7;">
+      <div style="font-weight:bold;color:#7a4b00;margin-bottom:6px;">🧭 宫位综合卦象</div>
+      <div style="font-size:12px;line-height:1.5;margin-bottom:7px;">
+        <b>宫位：</b>${escapePalaceGuaHTML(palaceName)}宫　
+        <b>干支：</b>${escapePalaceGuaHTML(ganzhi)}　
+        <b>地支：</b>${escapePalaceGuaHTML(zhi)}（${escapePalaceGuaHTML(dizhiGroup)}）
+      </div>
+      <div style="font-size:12px;line-height:1.5;margin-bottom:7px;">
+        <b>地支象：</b>${escapePalaceGuaHTML((dizhiMeanings[dizhiGroup] && (dizhiMeanings[dizhiGroup].禄 || dizhiMeanings[dizhiGroup].忌)) || dizhiMeanings[dizhiGroup]?.general || '暂无该地支分类说明。')}
+      </div>
+      <div style="font-size:12px;line-height:1.5;margin-bottom:8px;">
+        <b>星曜 × 四化：</b><br>${starRows}
+      </div>
+      <div style="font-size:12px;line-height:1.45;margin-bottom:8px;">
+        <b>本宫自化规则：</b><br>${selfRules.length ? selfRules.map((x) => escapePalaceGuaHTML(x)).join('<br>') : '<span style="color:#999;">资料未单列本宫自化章节。</span>'}
+      </div>
+      <div style="font-size:12px;line-height:1.45;margin-bottom:8px;">
+        <b>本宫四化飞入其他宫位：</b><br>${crossRules.length ? crossRules.map((x) => `<div style="margin:2px 0;"><b>${escapePalaceGuaHTML(x.target)} ${escapePalaceGuaHTML(x.sihua)}</b>：${escapePalaceGuaHTML(x.text)}</div>`).join('') : '<span style="color:#999;">资料未单列该宫的飞入规则。</span>'}
+      </div>
+      <details style="font-size:12px;line-height:1.45;">
+        <summary style="cursor:pointer;font-weight:bold;">
+          四化组合卦象
+        </summary>
+        <div style="margin-top:5px;">${comboRows}</div>
+      </details>
+      <div style="margin-top:7px;font-size:10px;color:#888;">
+        组合层级依据《斗數-四化》中的“科、权、禄、忌+自化”“双化+自化”整理；三象、四象作为组合层展示，不把未实际出现的四化误标为本宫真实四化。
+      </div>
+    </div>
+  `
+}
+
 let palaceMeaningRequestController = null // 用于追踪当前的请求控制器
 // 显示宫位详细信息
 async function showPalaceMeaning(palaceName, palaceGan, sihuaData, element) {
@@ -2936,7 +3198,11 @@ async function showPalaceMeaning(palaceName, palaceGan, sihuaData, element) {
                     `
         }
         html += `</ul>`
-
+        // /api/sihuas 已经完成本次请求的验证，并在同一响应中返回 palaceGuaConfig。
+        // 不再单独请求 /api/palace_gua_config。
+        if (result.palaceGuaConfig) {
+          html += buildPalaceGuaHTML(element, result.palaceGuaConfig)
+        }
         // 将加载中的文案替换为真实的四化数据
         sihua.innerHTML = html
       } else {

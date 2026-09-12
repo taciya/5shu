@@ -17,6 +17,22 @@ import hashlib
 import secrets
 from utils import CalendarUtils
 
+# 宫位综合卦象规则：定义全部放在后端，不下沉到前端 JS。
+from palace_gua_constants import (
+    PALACE_GUA_SIHUA_ORDER,
+    PALACE_GUA_SELF_MEANINGS,
+    PALACE_GUA_DOUBLE_MEANINGS,
+    PALACE_GUA_DOUBLE_SELF_MEANINGS,
+    PALACE_GUA_MEDIATOR_TRIPLES,
+    PALACE_GUA_QUAD_MEANING,
+    PALACE_GUA_DIZHI_GROUP,
+    PALACE_GUA_DIZHI_MEANING,
+    PALACE_GUA_PALACE_TRANSFORMATIONS,
+    PALACE_GUA_SELF_RULES,
+    PALACE_GUA_CROSS_RULES,
+    PALACE_GUA_SOURCE_INFO,
+)
+
 app = Flask(__name__)
 CORS(app)  # 允许所有域的跨域请求
 utils = CalendarUtils()
@@ -627,6 +643,39 @@ def _get_576_face(source_palace, sihua_type, target_palace):
 
     return _576_FACE_MAP.get(key, {})
 
+
+
+def _build_palace_gua_config(palace):
+    """
+    根据当前 /api/sihuas 的 source 宫位，组装宫位综合卦象配置。
+    只在 /api/sihuas 通过现有密码检查后返回，避免再发起独立的配置请求。
+    """
+    palace = (palace or '').strip()
+    if palace and not palace.endswith('宫'):
+        palace += '宫'
+
+    return {
+        'PALACE_GUA_SIHUA_ORDER': PALACE_GUA_SIHUA_ORDER,
+        'PALACE_GUA_SELF_MEANINGS': PALACE_GUA_SELF_MEANINGS,
+        'PALACE_GUA_DOUBLE_MEANINGS': PALACE_GUA_DOUBLE_MEANINGS,
+        'PALACE_GUA_DOUBLE_SELF_MEANINGS': PALACE_GUA_DOUBLE_SELF_MEANINGS,
+        'PALACE_GUA_MEDIATOR_TRIPLES': PALACE_GUA_MEDIATOR_TRIPLES,
+        'PALACE_GUA_QUAD_MEANING': PALACE_GUA_QUAD_MEANING,
+        'PALACE_GUA_DIZHI_GROUP': PALACE_GUA_DIZHI_GROUP,
+        'PALACE_GUA_DIZHI_MEANING': PALACE_GUA_DIZHI_MEANING,
+        'PALACE_GUA_PALACE_TRANSFORMATIONS': {
+            palace: PALACE_GUA_PALACE_TRANSFORMATIONS.get(palace, {})
+        } if palace else {},
+        'PALACE_GUA_SELF_RULES': {
+            palace: PALACE_GUA_SELF_RULES.get(palace, [])
+        } if palace else {},
+        'PALACE_GUA_CROSS_RULES': {
+            palace: PALACE_GUA_CROSS_RULES.get(palace, [])
+        } if palace else {},
+        'PALACE_GUA_SOURCE_INFO': PALACE_GUA_SOURCE_INFO,
+    }
+
+
 @app.route('/api/sihuas/<gan>', methods=['GET'])
 # @login_required  # 如果你的系统需要登录才能查看，可以把注释解开
 def get_sihua(gan):
@@ -759,10 +808,15 @@ def get_sihua(gan):
         #         'explanations': star_explanations
         #     }
 
+        # 宫位综合卦象配置与本次 /api/sihuas 请求合并返回。
+        # 这样前端只需走一次已经具备“今日验证”逻辑的请求，不再单独请求 /api/palace_gua_config。
+        palace_gua_config = _build_palace_gua_config(source_palace)
+
         return jsonify({
             'success': True,
             'gan': gan,
-            'data': sihua_data
+            'data': sihua_data,
+            'palaceGuaConfig': palace_gua_config,
         })
 
     except Exception as e:
