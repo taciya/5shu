@@ -661,7 +661,6 @@ function renderChart(mixData, formData) {
   liuyueSelector.addEventListener('change', function () {
     const selectedMonth = parseInt(this.value)
 
-    // 未选择流月
     if (!selectedMonth) {
       clearLiuyueDisplays()
       return
@@ -669,27 +668,34 @@ function renderChart(mixData, formData) {
 
     const selectedYear = parseInt(liunianSelector.value)
 
-    // 没有流年，就不能有流月
     if (!selectedYear) {
       clearLiuyueDisplays()
       return
     }
 
-    // --------------------------------------------------------
+    // ----------------------------------------------------------
     // 计算流月命宫
-    // --------------------------------------------------------
+    // ----------------------------------------------------------
     const liuyuePalace = calculateLiuyuePalace(
       data,
       selectedYear,
       selectedMonth,
     )
 
-    if (!liuyuePalace) return
+    if (!liuyuePalace) {
+      clearLiuyueDisplays()
+      return
+    }
 
-    // --------------------------------------------------------
-    // 显示流月十二宫
-    // --------------------------------------------------------
+    // ----------------------------------------------------------
+    // 流月十二宫
+    // ----------------------------------------------------------
     updatePalaceLiuyueName(data, liuyuePalace)
+
+    // ----------------------------------------------------------
+    // 流月四化
+    // ----------------------------------------------------------
+    generateLiuyueSihua(data, selectedYear, selectedMonth)
   })
 
   const exportBtn = document.getElementById('exportBtn')
@@ -920,6 +926,68 @@ function getLiunianGZ(targetYear) {
     gan: gans[ganIdx],
     zhi: zhis[zhiIdx],
     gz: gans[ganIdx] + zhis[zhiIdx],
+  }
+}
+
+// ============================================================
+// 流月干支
+// 根据流年天干，以“五虎遁”推算流月干支
+// ============================================================
+function getLiuyueGZ(selectedYear, selectedMonth) {
+  if (
+    !selectedYear ||
+    !selectedMonth ||
+    selectedMonth < 1 ||
+    selectedMonth > 12
+  ) {
+    return null
+  }
+
+  const gans = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+
+  const zhis = [
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥',
+    '子',
+    '丑',
+  ]
+
+  const liunianGZ = getLiunianGZ(selectedYear)
+
+  if (!liunianGZ || !liunianGZ.gan) {
+    return null
+  }
+
+  const yearGanIndex = gans.indexOf(liunianGZ.gan)
+
+  if (yearGanIndex === -1) {
+    return null
+  }
+
+  // 五虎遁：
+  // 甲己年：丙寅起
+  // 乙庚年：戊寅起
+  // 丙辛年：庚寅起
+  // 丁壬年：壬寅起
+  // 戊癸年：甲寅起
+  const yinMonthGanIndex = ((yearGanIndex % 5) * 2 + 2) % 10
+
+  const monthGanIndex = (yinMonthGanIndex + selectedMonth - 1) % 10
+
+  const monthZhiIndex = (selectedMonth - 1) % 12
+
+  return {
+    gan: gans[monthGanIndex],
+    zhi: zhis[monthZhiIndex],
+    gz: gans[monthGanIndex] + zhis[monthZhiIndex],
   }
 }
 // 查找星曜
@@ -1513,6 +1581,9 @@ function initFlySihua(feigong_map) {
       // ////////////////////////////////////////////// 增加 立太极 以后的12宫相对位置
       // 获取点击宫位的地支
       const dizhi = this.id.replace('宫', '')
+
+      // 绘制立太极后的外围宫位对角线
+      drawTaijiDiagonalLines(dizhi)
 
       // 更新宫位名称
       // updatePalaceNames(dizhi);
@@ -4089,15 +4160,26 @@ function updatePalaceLiuyueName(data, liuyueData) {
   // 清除旧的流月
   document.querySelectorAll('.palace-name-liuyue').forEach((el) => el.remove())
 
-  // 与流年/大运保持完全相同的宫位顺序逻辑
-  const sortedPalaces = [...data.palaces]
-    .filter((p) => p.age_range)
-    .sort((a, b) => {
-      const aStart = parseInt(a.age_range.split('-')[0])
-      const bStart = parseInt(b.age_range.split('-')[0])
+  // 流月十二宫固定按照地支顺序排布
+  // 不再参考 age_range，因此不受阴阳男女影响
+  const dizhiOrder = [
+    '寅',
+    '卯',
+    '辰',
+    '巳',
+    '午',
+    '未',
+    '申',
+    '酉',
+    '戌',
+    '亥',
+    '子',
+    '丑',
+  ]
 
-      return aStart - bStart
-    })
+  const sortedPalaces = dizhiOrder
+    .map((dizhi) => data.palaces.find((p) => p.dizhi === dizhi))
+    .filter(Boolean)
 
   const liuyueNames = [
     '☯',
@@ -4341,6 +4423,179 @@ function generateLiunianSihua(data, selectedYear, liunianPalace) {
   })
 }
 
+// ============================================================
+// 生成流月四化
+// ============================================================
+// ============================================================
+// 生成流月四化
+// ============================================================
+function generateLiuyueSihua(data, selectedYear, selectedMonth) {
+  // ----------------------------------------------------------
+  // 1. 取得流月干支
+  // ----------------------------------------------------------
+  const liuyueGZ = getLiuyueGZ(selectedYear, selectedMonth)
+
+  if (!liuyueGZ || !liuyueGZ.gan) {
+    return
+  }
+
+  const liuyueGan = liuyueGZ.gan
+
+  // ----------------------------------------------------------
+  // 2. 根据流月天干取得飞宫四化
+  //    与流年四化保持完全相同的逻辑
+  // ----------------------------------------------------------
+  const feigongMap = data.feigong_map
+
+  if (!feigongMap) {
+    return
+  }
+
+  const sourceDizhi = getDizhiByGan(data, liuyueGan)
+
+  if (!sourceDizhi) {
+    return
+  }
+
+  const flySihua = feigongMap[sourceDizhi]
+
+  if (!flySihua) {
+    return
+  }
+
+  // ----------------------------------------------------------
+  // 3. 收集流月四化落点
+  //
+  // flySihua 的实际结构与流年相同：
+  //
+  // {
+  //   禄: {
+  //     target: 'xxx',
+  //     star: 'xxx'
+  //   },
+  //   权: {
+  //     target: 'xxx',
+  //     star: 'xxx'
+  //   },
+  //   科: {
+  //     target: 'xxx',
+  //     star: 'xxx'
+  //   },
+  //   忌: {
+  //     target: 'xxx',
+  //     star: 'xxx'
+  //   }
+  // }
+  // ----------------------------------------------------------
+  const targetPalaceMap = {}
+
+  Object.entries(flySihua).forEach(([sihuaType, sihuaInfo]) => {
+    // 与流年四化完全一致
+    if (!sihuaInfo || !sihuaInfo.target || !sihuaInfo.star) {
+      return
+    }
+
+    const targetDizhi = sihuaInfo.target
+
+    const targetStar = sihuaInfo.star
+
+    if (!targetPalaceMap[targetDizhi]) {
+      targetPalaceMap[targetDizhi] = []
+    }
+
+    targetPalaceMap[targetDizhi].push({
+      star: targetStar,
+      sihuaType: sihuaType,
+    })
+  })
+
+  // ----------------------------------------------------------
+  // 4. 在流月落宫显示四化
+  // ----------------------------------------------------------
+  Object.entries(targetPalaceMap).forEach(([targetDizhi, stars]) => {
+    // 与流年四化保持一致
+    const palaceEl = document.getElementById(`${targetDizhi}宫`)
+
+    if (!palaceEl) {
+      return
+    }
+
+    // ------------------------------------------------------
+    // 找流月十二宫名称
+    // ------------------------------------------------------
+    const liuyueEl = palaceEl.querySelector('.palace-name-liuyue')
+
+    // 如果当前没有流月十二宫名称，
+    // 就不显示流月四化
+    if (!liuyueEl) {
+      return
+    }
+
+    // ------------------------------------------------------
+    // 防止重复显示
+    // ------------------------------------------------------
+    liuyueEl
+      .querySelectorAll('.liuyue-sihua-star, .liuyue-sihua-separator')
+      .forEach((el) => el.remove())
+
+    // ------------------------------------------------------
+    // 创建四化星曜
+    // ------------------------------------------------------
+    stars.forEach((starInfo, index) => {
+      const span = document.createElement('span')
+
+      span.className = 'liuyue-sihua-star'
+
+      span.dataset.sihuaType = starInfo.sihuaType
+
+      span.textContent = SIHUA_START_MAP[starInfo.star] || starInfo.star
+
+      // --------------------------------------------------
+      // 四化颜色
+      // --------------------------------------------------
+      switch (starInfo.sihuaType) {
+        case '禄':
+          span.style.color = '#035a24'
+          break
+
+        case '权':
+          span.style.color = '#430450'
+          break
+
+        case '科':
+          span.style.color = '#4169e1'
+          break
+
+        case '忌':
+          span.style.color = '#ff0a0a'
+          break
+
+        default:
+          span.style.color = '#8b4513'
+      }
+
+      span.style.fontWeight = 'normal'
+
+      span.title = `流月${starInfo.sihuaType}：${starInfo.star}`
+
+      // --------------------------------------------------
+      // 如果前面已经有四化，加分隔符
+      // --------------------------------------------------
+      if (index > 0) {
+        const separator = document.createElement('span')
+
+        separator.className = 'liuyue-sihua-separator'
+
+        separator.textContent = '|'
+
+        liuyueEl.appendChild(separator)
+      }
+
+      liuyueEl.appendChild(span)
+    })
+  })
+}
+
 // 清空流年显示（天地归墟逻辑）
 function clearLiunianDisplays() {
   /**
@@ -4375,6 +4630,13 @@ function clearLiuyueDisplays() {
   document.querySelectorAll('.palace').forEach((palaceEl) => {
     delete palaceEl.liuyueName
   })
+
+  // 清除流月四化
+  document
+    .querySelectorAll('.liuyue-sihua-star, .liuyue-sihua-separator')
+    .forEach((el) => {
+      el.remove()
+    })
 }
 /**
  * 通过天干定位宫位地支（通用推演法）
@@ -4620,4 +4882,289 @@ function getNatalPalaceFromDIzhi(natalPalaces, dizhi) {
 
   // 3. 返回结果
   return foundPalace !== undefined ? foundPalace : null
+}
+
+// ============================================================
+// 立太极后的外围宫位对角线
+//
+// 逻辑：
+// 1. 点击某宫 = 新命宫（太极点）
+// 2. 按当前 updatePalaceNames() 的规则，逆时针重新计算12宫
+// 3. 找到“立太极后的 兄、友、疾、父”所对应的实际宫位
+// 4. 分别连接：
+//      兄 ←→ 友
+//      父 ←→ 疾
+// ============================================================
+// ============================================================
+// 立太极后的兄友 / 父疾关系
+//
+// 不画实体线。
+// 只在 center-cell 内缘显示四个端点：
+//
+//       兄          父
+//
+//       友          疾
+//
+// 实际位置根据“立太极后的宫位”所在方向计算。
+// ============================================================
+function drawTaijiDiagonalLines(startDizhi) {
+  const svg = document.getElementById('connection-lines')
+  const container = document.querySelector('.container')
+  const centerCell = document.querySelector('.center-cell')
+
+  if (!svg || !container || !centerCell || !startDizhi) return
+
+  // ------------------------------------------------------------
+  // 1. 找到点击宫位在原盘的位置
+  // ------------------------------------------------------------
+  const startIndex = palaceOrder.indexOf(startDizhi)
+
+  if (startIndex === -1) return
+
+  // ------------------------------------------------------------
+  // 2. 建立“立太极十二宫”
+  //
+  // 与 updatePalaceNames() 完全使用同一套规则：
+  //
+  // newIndex = (startIndex - index + 12) % 12
+  // ------------------------------------------------------------
+  const taijiMap = {}
+
+  palaceOrder.forEach((dizhi, index) => {
+    const newIndex = (startIndex - index + 12) % 12
+    const newName = newPalaceNames[newIndex]
+
+    taijiMap[newName] = dizhi
+  })
+
+  // ------------------------------------------------------------
+  // 3. 四个立太极后的宫位
+  // ------------------------------------------------------------
+  const targets = [
+    {
+      name: '兄',
+      dizhi: taijiMap['疾'],
+    },
+    {
+      name: '友',
+      dizhi: taijiMap['父'],
+    },
+    {
+      name: '父',
+      dizhi: taijiMap['子'],
+    },
+    {
+      name: '疾',
+      dizhi: taijiMap['田'],
+    },
+  ]
+
+  // ------------------------------------------------------------
+  // 4. center-cell 与 container 的坐标转换
+  // ------------------------------------------------------------
+  const containerRect = container.getBoundingClientRect()
+  const centerRect = centerCell.getBoundingClientRect()
+
+  // center-cell 中心
+  const centerX = centerRect.left + centerRect.width / 2 - containerRect.left
+
+  const centerY = centerRect.top + centerRect.height / 2 - containerRect.top
+
+  // center-cell 四条边
+  const left = centerRect.left - containerRect.left
+
+  const right = centerRect.right - containerRect.left
+
+  const top = centerRect.top - containerRect.top
+
+  const bottom = centerRect.bottom - containerRect.top
+
+  // ------------------------------------------------------------
+  // 5. 找到某个宫位中心
+  // ------------------------------------------------------------
+  function getPalaceCenter(dizhi) {
+    if (!dizhi) return null
+
+    const palace = document.getElementById(`${dizhi}宫`)
+
+    if (!palace) return null
+
+    const rect = palace.getBoundingClientRect()
+
+    return {
+      x: rect.left + rect.width / 2 - containerRect.left,
+
+      y: rect.top + rect.height / 2 - containerRect.top,
+    }
+  }
+
+  // ------------------------------------------------------------
+  // 6. 求：
+  //
+  // center-cell 中心
+  //        ↓
+  // 指向目标宫位中心的射线
+  //        ↓
+  // 与 center-cell 边框的交点
+  //
+  // 这样标签永远落在 center-cell 的边缘，
+  // 不会进入外围宫位。
+  // ------------------------------------------------------------
+  function getBorderPoint(target) {
+    const point = getPalaceCenter(target.dizhi)
+
+    if (!point) return null
+
+    const dx = point.x - centerX
+    const dy = point.y - centerY
+
+    if (dx === 0 && dy === 0) return null
+
+    const candidates = []
+
+    // 左边
+    if (dx < 0) {
+      const t = (left - centerX) / dx
+      if (t > 0) {
+        const y = centerY + dy * t
+
+        if (y >= top && y <= bottom) {
+          candidates.push({
+            t,
+            x: left,
+            y,
+            side: 'left',
+          })
+        }
+      }
+    }
+
+    // 右边
+    if (dx > 0) {
+      const t = (right - centerX) / dx
+      if (t > 0) {
+        const y = centerY + dy * t
+
+        if (y >= top && y <= bottom) {
+          candidates.push({
+            t,
+            x: right,
+            y,
+            side: 'right',
+          })
+        }
+      }
+    }
+
+    // 上边
+    if (dy < 0) {
+      const t = (top - centerY) / dy
+      if (t > 0) {
+        const x = centerX + dx * t
+
+        if (x >= left && x <= right) {
+          candidates.push({
+            t,
+            x,
+            y: top,
+            side: 'top',
+          })
+        }
+      }
+    }
+
+    // 下边
+    if (dy > 0) {
+      const t = (bottom - centerY) / dy
+      if (t > 0) {
+        const x = centerX + dx * t
+
+        if (x >= left && x <= right) {
+          candidates.push({
+            t,
+            x,
+            y: bottom,
+            side: 'bottom',
+          })
+        }
+      }
+    }
+
+    if (!candidates.length) return null
+
+    // 取最近的边界交点
+    candidates.sort((a, b) => a.t - b.t)
+
+    const result = candidates[0]
+
+    // ----------------------------------------------------------
+    // 向 center-cell 内部缩进一点
+    //
+    // 防止文字压在 border 上。
+    // ----------------------------------------------------------
+    const padding = 7
+
+    if (result.side === 'left') {
+      result.x += padding
+    } else if (result.side === 'right') {
+      result.x -= padding
+    } else if (result.side === 'top') {
+      result.y += padding
+    } else if (result.side === 'bottom') {
+      result.y -= padding
+    }
+
+    return result
+  }
+
+  // ------------------------------------------------------------
+  // 7. 添加标签
+  // ------------------------------------------------------------
+  targets.forEach(({ name, dizhi }) => {
+    const point = getBorderPoint({ name, dizhi })
+
+    if (!point) return
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+
+    text.textContent = name
+
+    let labelClass = 'taiji-relation-label'
+
+    if (name === '兄' || name === '友') {
+      labelClass += ' taiji-relation-xiongyou'
+    } else if (name === '父' || name === '疾') {
+      labelClass += ' taiji-relation-fuji'
+    }
+
+    text.setAttribute('class', labelClass)
+
+    let x = point.x
+
+    if (name === '兄' || name === '父') {
+      x -= 5
+    } else if (name === '友' || name === '疾') {
+      x -= 5
+    }
+
+    text.setAttribute('x', x)
+
+    text.setAttribute('y', point.y)
+
+    text.setAttribute('dominant-baseline', 'middle')
+
+    // ----------------------------------------------------------
+    // 根据所在边决定文字方向，
+    // 确保文字始终朝 center-cell 内部。
+    // ----------------------------------------------------------
+    if (point.side === 'left') {
+      text.setAttribute('text-anchor', 'start')
+    } else if (point.side === 'right') {
+      text.setAttribute('text-anchor', 'end')
+    } else {
+      text.setAttribute('text-anchor', 'middle')
+    }
+
+    svg.appendChild(text)
+  })
 }
