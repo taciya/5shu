@@ -105,6 +105,11 @@ FFFFFF
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   z-index: 90;
 }
+.palace.trine-highlighted {
+  background-color: #f9f3e9;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  z-index: 90;
+}
 
 /* 连接线容器 */
 #connection-lines {

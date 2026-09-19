@@ -1548,12 +1548,21 @@ function initFlySihua(feigong_map) {
   document.querySelectorAll('.palace').forEach((palace) => {
     palace.addEventListener('click', function () {
       // 移除之前的高亮
+      /////////////四化宫位高亮
+      // document
+      //   .querySelectorAll(
+      //     '.palace.source-highlighted, .palace.target-highlighted',
+      //   )
+      //   .forEach((el) => {
+      //     el.classList.remove('source-highlighted', 'target-highlighted')
+      //   })
+      //////////////三合宫位高亮
       document
         .querySelectorAll(
-          '.palace.source-highlighted, .palace.target-highlighted',
+          '.palace.source-highlighted, .palace.trine-highlighted',
         )
         .forEach((el) => {
-          el.classList.remove('source-highlighted', 'target-highlighted')
+          el.classList.remove('source-highlighted', 'trine-highlighted')
         })
       // 清除连接线
       clearConnectionLines()
@@ -1584,6 +1593,9 @@ function initFlySihua(feigong_map) {
 
       // 绘制立太极后的外围宫位对角线
       drawTaijiDiagonalLines(dizhi)
+
+      // 高亮当前宫位的三合宫位
+      highlightTrinePalaces(dizhi)
 
       // 更新宫位名称
       // updatePalaceNames(dizhi);
@@ -1758,7 +1770,7 @@ function drawFlySihuaConnections(sourcePalace, flySihua) {
       svg.appendChild(label)
 
       // 高亮目标宫位（目标高亮样式）
-      targetElement.classList.add('target-highlighted')
+      // targetElement.classList.add('target-highlighted')
     }
   }
 }
@@ -1811,6 +1823,39 @@ function clearConnectionLines() {
   }
 }
 
+/**
+ * 高亮点击宫位的三合宫位
+ *
+ * palaceOrder 为顺时针排列：
+ * 寅 → 卯 → 辰 → 巳 → 午 → 未
+ * → 申 → 酉 → 戌 → 亥 → 子 → 丑
+ *
+ * 当前点击宫位视为第 1 宫：
+ * 第 5 宫 = 当前 + 4
+ * 第 9 宫 = 当前 + 8
+ */
+function highlightTrinePalaces(startDizhi) {
+  const startIndex = palaceOrder.indexOf(startDizhi)
+
+  if (startIndex === -1) return
+
+  // 当前宫位 = 第1宫
+  // 三合宫位 = 第5宫、第9宫
+  const trineIndexes = [
+    startIndex,
+    (startIndex + 4) % 12,
+    (startIndex + 8) % 12,
+  ]
+
+  trineIndexes.forEach((index) => {
+    const dizhi = palaceOrder[index]
+    const palaceElement = document.getElementById(`${dizhi}宫`)
+
+    if (palaceElement) {
+      palaceElement.classList.add('trine-highlighted')
+    }
+  })
+}
 // 命盘信息导出
 document.addEventListener('DOMContentLoaded', function () {
   const exportBtn = document.getElementById('exportBtn')
@@ -5190,9 +5235,7 @@ function drawTaijiDiagonalLines(startDizhi) {
   // ------------------------------------------------------------
   // 2. 建立“立太极十二宫”
   //
-  // 与 updatePalaceNames() 完全使用同一套规则：
-  //
-  // newIndex = (startIndex - index + 12) % 12
+  // 与 updatePalaceNames() 完全一致
   // ------------------------------------------------------------
   const taijiMap = {}
 
@@ -5204,7 +5247,7 @@ function drawTaijiDiagonalLines(startDizhi) {
   })
 
   // ------------------------------------------------------------
-  // 3. 四个立太极后的宫位
+  // 3. 立太极后的兄、友、父、疾
   // ------------------------------------------------------------
   const targets = [
     {
@@ -5226,27 +5269,112 @@ function drawTaijiDiagonalLines(startDizhi) {
   ]
 
   // ------------------------------------------------------------
-  // 4. center-cell 与 container 的坐标转换
+  // 4. 坐标系统
   // ------------------------------------------------------------
   const containerRect = container.getBoundingClientRect()
   const centerRect = centerCell.getBoundingClientRect()
 
-  // center-cell 中心
-  const centerX = centerRect.left + centerRect.width / 2 - containerRect.left
-
-  const centerY = centerRect.top + centerRect.height / 2 - containerRect.top
-
-  // center-cell 四条边
   const left = centerRect.left - containerRect.left
-
   const right = centerRect.right - containerRect.left
-
   const top = centerRect.top - containerRect.top
-
   const bottom = centerRect.bottom - containerRect.top
 
+  const centerX = (left + right) / 2
+  const centerY = (top + bottom) / 2
+
+  const width = right - left
+  const height = bottom - top
+
   // ------------------------------------------------------------
-  // 5. 找到某个宫位中心
+  // 5. center-cell 九宫格的 12 个固定端点
+  //
+  //       ①────②────③────④
+  //       │              │
+  //       ⑫              ⑤
+  //       │              │
+  //       ⑪              ⑥
+  //       │              │
+  //       ⑩────⑨────⑧────⑦
+  //
+  // 其中：
+  // ①④⑦⑩ = 四个角
+  // ②③⑤⑥⑧⑨⑪⑫ = 四条边的分割点
+  //
+  // 这些位置与 center-cell 的实际大小无关，
+  // 始终固定为 1/3、2/3 的位置。
+  // ------------------------------------------------------------
+  const fixedPoints = [
+    // 上边：左上角 → 1/3 → 2/3 → 右上角
+    {
+      x: left,
+      y: top,
+      angle: Math.atan2(top - centerY, left - centerX),
+    },
+    {
+      x: left + width / 3,
+      y: top,
+      angle: Math.atan2(top - centerY, left + width / 3 - centerX),
+    },
+    {
+      x: left + (width * 2) / 3,
+      y: top,
+      angle: Math.atan2(top - centerY, left + (width * 2) / 3 - centerX),
+    },
+    {
+      x: right,
+      y: top,
+      angle: Math.atan2(top - centerY, right - centerX),
+    },
+
+    // 右边：1/3 → 2/3 → 右下角
+    {
+      x: right,
+      y: top + height / 3,
+      angle: Math.atan2(top + height / 3 - centerY, right - centerX),
+    },
+    {
+      x: right,
+      y: top + (height * 2) / 3,
+      angle: Math.atan2(top + (height * 2) / 3 - centerY, right - centerX),
+    },
+    {
+      x: right,
+      y: bottom,
+      angle: Math.atan2(bottom - centerY, right - centerX),
+    },
+
+    // 下边：右下角 → 2/3 → 1/3 → 左下角
+    {
+      x: left + (width * 2) / 3,
+      y: bottom,
+      angle: Math.atan2(bottom - centerY, left + (width * 2) / 3 - centerX),
+    },
+    {
+      x: left + width / 3,
+      y: bottom,
+      angle: Math.atan2(bottom - centerY, left + width / 3 - centerX),
+    },
+    {
+      x: left,
+      y: bottom,
+      angle: Math.atan2(bottom - centerY, left - centerX),
+    },
+
+    // 左边：2/3 → 1/3 → 左上角
+    {
+      x: left,
+      y: top + (height * 2) / 3,
+      angle: Math.atan2(top + (height * 2) / 3 - centerY, left - centerX),
+    },
+    {
+      x: left,
+      y: top + height / 3,
+      angle: Math.atan2(top + height / 3 - centerY, left - centerX),
+    },
+  ]
+
+  // ------------------------------------------------------------
+  // 6. 获取目标宫位中心
   // ------------------------------------------------------------
   function getPalaceCenter(dizhi) {
     if (!dizhi) return null
@@ -5259,24 +5387,27 @@ function drawTaijiDiagonalLines(startDizhi) {
 
     return {
       x: rect.left + rect.width / 2 - containerRect.left,
-
       y: rect.top + rect.height / 2 - containerRect.top,
     }
   }
 
   // ------------------------------------------------------------
-  // 6. 求：
+  // 7. 根据目标宫位方向，匹配到最近的固定端点
   //
-  // center-cell 中心
-  //        ↓
-  // 指向目标宫位中心的射线
-  //        ↓
-  // 与 center-cell 边框的交点
+  // 注意：
+  // 这里不再计算 center-cell 边界的连续交点。
   //
-  // 这样标签永远落在 center-cell 的边缘，
-  // 不会进入外围宫位。
+  // 只做：
+  //
+  //       目标宫位方向
+  //              ↓
+  //       12 个固定端点
+  //              ↓
+  //       选择角度最近的一个
+  //
+  // 所以最终位置永远只有 12 种。
   // ------------------------------------------------------------
-  function getBorderPoint(target) {
+  function getFixedBorderPoint(target) {
     const point = getPalaceCenter(target.dizhi)
 
     if (!point) return null
@@ -5286,108 +5417,40 @@ function drawTaijiDiagonalLines(startDizhi) {
 
     if (dx === 0 && dy === 0) return null
 
-    const candidates = []
+    const targetAngle = Math.atan2(dy, dx)
 
-    // 左边
-    if (dx < 0) {
-      const t = (left - centerX) / dx
-      if (t > 0) {
-        const y = centerY + dy * t
+    let bestPoint = null
+    let minAngleDiff = Infinity
 
-        if (y >= top && y <= bottom) {
-          candidates.push({
-            t,
-            x: left,
-            y,
-            side: 'left',
-          })
-        }
+    fixedPoints.forEach((candidate) => {
+      let diff = Math.abs(targetAngle - candidate.angle)
+
+      // 处理 -π / π 的跨界
+      if (diff > Math.PI) {
+        diff = 2 * Math.PI - diff
       }
-    }
 
-    // 右边
-    if (dx > 0) {
-      const t = (right - centerX) / dx
-      if (t > 0) {
-        const y = centerY + dy * t
-
-        if (y >= top && y <= bottom) {
-          candidates.push({
-            t,
-            x: right,
-            y,
-            side: 'right',
-          })
-        }
+      if (diff < minAngleDiff) {
+        minAngleDiff = diff
+        bestPoint = candidate
       }
-    }
+    })
 
-    // 上边
-    if (dy < 0) {
-      const t = (top - centerY) / dy
-      if (t > 0) {
-        const x = centerX + dx * t
-
-        if (x >= left && x <= right) {
-          candidates.push({
-            t,
-            x,
-            y: top,
-            side: 'top',
-          })
-        }
-      }
-    }
-
-    // 下边
-    if (dy > 0) {
-      const t = (bottom - centerY) / dy
-      if (t > 0) {
-        const x = centerX + dx * t
-
-        if (x >= left && x <= right) {
-          candidates.push({
-            t,
-            x,
-            y: bottom,
-            side: 'bottom',
-          })
-        }
-      }
-    }
-
-    if (!candidates.length) return null
-
-    // 取最近的边界交点
-    candidates.sort((a, b) => a.t - b.t)
-
-    const result = candidates[0]
-
-    // ----------------------------------------------------------
-    // 向 center-cell 内部缩进一点
-    //
-    // 防止文字压在 border 上。
-    // ----------------------------------------------------------
-    const padding = 7
-
-    if (result.side === 'left') {
-      result.x += padding
-    } else if (result.side === 'right') {
-      result.x -= padding
-    } else if (result.side === 'top') {
-      result.y += padding
-    } else if (result.side === 'bottom') {
-      result.y -= padding
-    }
-
-    return result
+    return bestPoint
   }
 
   // ------------------------------------------------------------
-  // 7. 添加标签
+  // 8. 清除之前的父疾 / 兄友标签
+  //
+  // 防止重复点击时不断叠加
+  // ------------------------------------------------------------
+  svg.querySelectorAll('.taiji-relation-label').forEach((el) => el.remove())
+
+  // ------------------------------------------------------------
+  // 9. 绘制四个固定位置标签
   // ------------------------------------------------------------
   targets.forEach(({ name, dizhi }) => {
-    const point = getBorderPoint({ name, dizhi })
+    const point = getFixedBorderPoint({ name, dizhi })
 
     if (!point) return
 
@@ -5405,27 +5468,31 @@ function drawTaijiDiagonalLines(startDizhi) {
 
     text.setAttribute('class', labelClass)
 
+    // ----------------------------------------------------------
+    // 原来的微调逻辑
+    //
+    // 兄、父：左移 5px
+    // 友、疾：右移 5px
+    // ----------------------------------------------------------
     let x = point.x
 
-    if (name === '兄' || name === '父') {
-      x -= 5
-    } else if (name === '友' || name === '疾') {
-      x -= 5
-    }
+    // if (name === '兄' || name === '父') {
+    //   x -= 5
+    // } else if (name === '友' || name === '疾') {
+    //   x += 5
+    // }
 
     text.setAttribute('x', x)
-
     text.setAttribute('y', point.y)
 
     text.setAttribute('dominant-baseline', 'middle')
 
     // ----------------------------------------------------------
-    // 根据所在边决定文字方向，
-    // 确保文字始终朝 center-cell 内部。
+    // 文字方向
     // ----------------------------------------------------------
-    if (point.side === 'left') {
+    if (point.x < centerX) {
       text.setAttribute('text-anchor', 'start')
-    } else if (point.side === 'right') {
+    } else if (point.x > centerX) {
       text.setAttribute('text-anchor', 'end')
     } else {
       text.setAttribute('text-anchor', 'middle')
