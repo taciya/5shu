@@ -1,0 +1,4 @@
+/* 可选：让点击反馈清晰，不覆盖已有宫位布局 */
+.palace { cursor: pointer; }
+.palace:hover { outline: 2px solid #a78654; outline-offset: -2px; }
+.palace.sanhe-selected { outline: 2px solid #7b5a34; outline-offset: -3px; }

@@ -15,6 +15,7 @@ import sqlite3
 from functools import wraps
 import hashlib
 import secrets
+import sanhe_api
 from utils import CalendarUtils
 
 # 宫位综合卦象规则：定义全部放在后端，不下沉到前端 JS。
@@ -36,6 +37,8 @@ from palace_gua_constants import (
 app = Flask(__name__)
 CORS(app)  # 允许所有域的跨域请求
 utils = CalendarUtils()
+from sanhe_api import register_sanhe_routes
+register_sanhe_routes(app)
 
 @app.route('/')
 def home():

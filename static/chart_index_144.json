@@ -1,0 +1,1792 @@
+{
+  "metadata": {
+    "title": "144命盘复合索引",
+    "key_fields": [
+      "ziwei_dizhi",
+      "minggong_dizhi"
+    ],
+    "source_matrix": "144格命盘主星排列表；以紫微所在宫位与命宫地支构成复合键。",
+    "record_count": 144,
+    "note": "索引矩阵用于确定命宫十四主星组合；具体象义仍以斗數-三合命盘.docx知识库记录为准。未映射条目明确标记，不跨盘借用。"
+  },
+  "branches": [
+    "子",
+    "丑",
+    "寅",
+    "卯",
+    "辰",
+    "巳",
+    "午",
+    "未",
+    "申",
+    "酉",
+    "戌",
+    "亥"
+  ],
+  "entries": [
+    {
+      "key": "紫微在子|命宫在子",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "紫微"
+      ],
+      "record": {
+        "id": "sanhe-0199",
+        "title": "紫微在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在丑",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在子|命宫在寅",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0002",
+        "title": "破军在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在卯",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在子|命宫在辰",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "廉贞天府"
+      ],
+      "record": {
+        "id": "sanhe-0050",
+        "title": "廉府在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在巳",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0030",
+        "title": "太阴在巳入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在午",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0027",
+        "title": "贪狼在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在未",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "天同",
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0081",
+        "title": "同巨在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在申",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "武曲",
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0092",
+        "title": "武相在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在酉",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "太阳",
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0128",
+        "title": "阳梁在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在戌",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0004",
+        "title": "七杀在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在子|命宫在亥",
+      "ziwei_dizhi": "子",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0151",
+        "title": "天机在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在子",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0188",
+        "title": "天机在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在丑",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "紫微",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0198",
+        "title": "紫破在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在寅",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在丑|命宫在卯",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0044",
+        "title": "天府在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在辰",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0035",
+        "title": "太阴在辰入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在巳",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "廉贞",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0048",
+        "title": "廉贪在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在午",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0020",
+        "title": "巨门在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在未",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在丑|命宫在申",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "天同",
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0077",
+        "title": "同梁在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在酉",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "武曲",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0091",
+        "title": "武杀在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在戌",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0117",
+        "title": "太阳在戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在丑|命宫在亥",
+      "ziwei_dizhi": "丑",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在寅|命宫在子",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0003",
+        "title": "破军在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在丑",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0184",
+        "title": "天机在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在寅",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "紫微",
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0196",
+        "title": "紫府在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在卯",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0040",
+        "title": "太阴在卯入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在辰",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在寅|命宫在巳",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0017",
+        "title": "巨门在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在午",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "廉贞",
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0065",
+        "title": "廉相在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在未",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0012",
+        "title": "天梁在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在申",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0005",
+        "title": "七杀在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在酉",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0073",
+        "title": "天同在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在戌",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "武曲"
+      ],
+      "record": {
+        "id": "sanhe-0090",
+        "title": "武曲在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在寅|命宫在亥",
+      "ziwei_dizhi": "寅",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0104",
+        "title": "太阳在亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在子",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0149",
+        "title": "太阳在子入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在丑",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0046",
+        "title": "天府在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在寅",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "天机",
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0178",
+        "title": "机月在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在卯",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "紫微",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0195",
+        "title": "紫贪在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在辰",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0019",
+        "title": "巨门在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在巳",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0014",
+        "title": "天相在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在午",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0013",
+        "title": "天梁在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在未",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "廉贞",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0061",
+        "title": "廉杀在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在申",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在卯|命宫在酉",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在卯|命宫在戌",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0071",
+        "title": "天同在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在卯|命宫在亥",
+      "ziwei_dizhi": "卯",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "武曲",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0088",
+        "title": "武破在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在子",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "武曲天府"
+      ],
+      "record": {
+        "id": "sanhe-0102",
+        "title": "武府在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在丑",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "太阳",
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0141",
+        "title": "日月在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在寅",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0025",
+        "title": "贪狼在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在卯",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "天机",
+        "巨门"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在辰|命宫在辰",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "紫微",
+        "天相"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在辰|命宫在巳",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0008",
+        "title": "天梁在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在午",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0006",
+        "title": "七杀在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在未",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在辰|命宫在申",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "廉贞"
+      ],
+      "record": {
+        "id": "sanhe-0055",
+        "title": "廉贞在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在酉",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在辰|命宫在戌",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0001",
+        "title": "破军在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在辰|命宫在亥",
+      "ziwei_dizhi": "辰",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0069",
+        "title": "天同在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在子",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "天同太阴"
+      ],
+      "record": {
+        "id": "sanhe-0084",
+        "title": "同阴在子入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在丑",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "武曲",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0098",
+        "title": "武贪在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在寅",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "太阳",
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0137",
+        "title": "日巨在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在卯",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0015",
+        "title": "天相在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在辰",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "天机",
+        "天梁"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在巳|命宫在巳",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "紫微",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0192",
+        "title": "紫杀在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在午",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在巳|命宫在未",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在巳|命宫在申",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在巳|命宫在酉",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "廉贞",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0052",
+        "title": "廉破在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在巳|命宫在戌",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在巳|命宫在亥",
+      "ziwei_dizhi": "巳",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0042",
+        "title": "天府在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在子",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0027",
+        "title": "贪狼在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在丑",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "天同",
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0081",
+        "title": "同巨在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在寅",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "武曲",
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0092",
+        "title": "武相在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在卯",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "太阳",
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0128",
+        "title": "阳梁在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在辰",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0004",
+        "title": "七杀在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在巳",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0151",
+        "title": "天机在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在午",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "紫微"
+      ],
+      "record": {
+        "id": "sanhe-0199",
+        "title": "紫微在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在未",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在午|命宫在申",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0002",
+        "title": "破军在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在酉",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在午|命宫在戌",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "廉贞天府"
+      ],
+      "record": {
+        "id": "sanhe-0050",
+        "title": "廉府在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在午|命宫在亥",
+      "ziwei_dizhi": "午",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0028",
+        "title": "太阴在亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在子",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0020",
+        "title": "巨门在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在丑",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在未|命宫在寅",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "天同",
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0077",
+        "title": "同梁在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在卯",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "武曲",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0091",
+        "title": "武杀在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在辰",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0121",
+        "title": "太阳在辰入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在巳",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在未|命宫在午",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0188",
+        "title": "天机在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在未",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "紫微",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0198",
+        "title": "紫破在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在申",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在未|命宫在酉",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0044",
+        "title": "天府在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在戌",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0031",
+        "title": "太阴在戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在未|命宫在亥",
+      "ziwei_dizhi": "未",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "廉贞",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0048",
+        "title": "廉贪在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在子",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "廉贞",
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0065",
+        "title": "廉相在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在丑",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0012",
+        "title": "天梁在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在寅",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0005",
+        "title": "七杀在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在卯",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0073",
+        "title": "天同在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在辰",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "武曲"
+      ],
+      "record": {
+        "id": "sanhe-0090",
+        "title": "武曲在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在巳",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0111",
+        "title": "太阳在巳入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在午",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0003",
+        "title": "破军在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在未",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "天机"
+      ],
+      "record": {
+        "id": "sanhe-0184",
+        "title": "天机在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在申",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "紫微",
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0196",
+        "title": "紫府在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在酉",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0037",
+        "title": "太阴在酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在申|命宫在戌",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在申|命宫在亥",
+      "ziwei_dizhi": "申",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0017",
+        "title": "巨门在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在子",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0013",
+        "title": "天梁在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在丑",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [
+        "廉贞",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0061",
+        "title": "廉杀在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在寅",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在酉|命宫在卯",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在酉|命宫在辰",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0071",
+        "title": "天同在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在巳",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "武曲",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0088",
+        "title": "武破在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在午",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "太阳"
+      ],
+      "record": {
+        "id": "sanhe-0145",
+        "title": "太阳在午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在未",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0046",
+        "title": "天府在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在申",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "天机",
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0178",
+        "title": "机月在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在酉",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "紫微",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0195",
+        "title": "紫贪在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在戌",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0019",
+        "title": "巨门在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在酉|命宫在亥",
+      "ziwei_dizhi": "酉",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0014",
+        "title": "天相在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在子",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0006",
+        "title": "七杀在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在丑",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在戌|命宫在寅",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [
+        "廉贞"
+      ],
+      "record": {
+        "id": "sanhe-0055",
+        "title": "廉贞在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在卯",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在戌|命宫在辰",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0001",
+        "title": "破军在辰戌入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在巳",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "天同"
+      ],
+      "record": {
+        "id": "sanhe-0069",
+        "title": "天同在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在午",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "武曲天府"
+      ],
+      "record": {
+        "id": "sanhe-0102",
+        "title": "武府在子午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在未",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "太阳",
+        "太阴"
+      ],
+      "record": {
+        "id": "sanhe-0141",
+        "title": "日月在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在申",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0025",
+        "title": "贪狼在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在戌|命宫在酉",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "天机",
+        "巨门"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在戌|命宫在戌",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "紫微",
+        "天相"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在戌|命宫在亥",
+      "ziwei_dizhi": "戌",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "天梁"
+      ],
+      "record": {
+        "id": "sanhe-0008",
+        "title": "天梁在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在子",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "子",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在亥|命宫在丑",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "丑",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在亥|命宫在寅",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "寅",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在亥|命宫在卯",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "卯",
+      "minggong_main_stars": [
+        "廉贞",
+        "破军"
+      ],
+      "record": {
+        "id": "sanhe-0052",
+        "title": "廉破在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在辰",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "辰",
+      "minggong_main_stars": [],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在亥|命宫在巳",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "巳",
+      "minggong_main_stars": [
+        "天府"
+      ],
+      "record": {
+        "id": "sanhe-0042",
+        "title": "天府在巳亥入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在午",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "午",
+      "minggong_main_stars": [
+        "天同太阴"
+      ],
+      "record": {
+        "id": "sanhe-0083",
+        "title": "同阴在午入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在未",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "未",
+      "minggong_main_stars": [
+        "武曲",
+        "贪狼"
+      ],
+      "record": {
+        "id": "sanhe-0098",
+        "title": "武贪在丑未入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在申",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "申",
+      "minggong_main_stars": [
+        "太阳",
+        "巨门"
+      ],
+      "record": {
+        "id": "sanhe-0137",
+        "title": "日巨在寅申入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在酉",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "酉",
+      "minggong_main_stars": [
+        "天相"
+      ],
+      "record": {
+        "id": "sanhe-0015",
+        "title": "天相在卯酉入命"
+      },
+      "status": "mapped"
+    },
+    {
+      "key": "紫微在亥|命宫在戌",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "戌",
+      "minggong_main_stars": [
+        "天机",
+        "天梁"
+      ],
+      "record": null,
+      "status": "missing_knowledge_record"
+    },
+    {
+      "key": "紫微在亥|命宫在亥",
+      "ziwei_dizhi": "亥",
+      "minggong_dizhi": "亥",
+      "minggong_main_stars": [
+        "紫微",
+        "七杀"
+      ],
+      "record": {
+        "id": "sanhe-0192",
+        "title": "紫杀在巳亥入命"
+      },
+      "status": "mapped"
+    }
+  ]
+}

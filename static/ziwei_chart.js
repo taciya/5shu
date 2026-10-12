@@ -483,6 +483,8 @@ function copyToClipboard(text) {
 }
 // 渲染命盘
 function renderChart(mixData, formData) {
+  window.__5shuCurrentChart = mixData
+
   // 清空现有宫位
   const chartGrid = document.getElementById('chartGrid')
   if (!chartGrid) {
