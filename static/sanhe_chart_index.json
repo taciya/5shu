@@ -1,0 +1,1845 @@
+{
+  "metadata": {
+    "title": "三合命盘 Excel 标记优先索引（纠正版）",
+    "source": "斗数-三合命盘.xlsx",
+    "family_count": 77,
+    "priority": [
+      "□ 命宫双主星",
+      "○ 命宫单主星",
+      "◇ 命宫无主星时看迁移宫双主星"
+    ],
+    "note": "按标记+十四主星组合索引，候选中再按标题地支核验。一个签名可对应多段原文，需结合命宫或迁移宫地支才能唯一匹配。"
+  },
+  "lookup": {
+    "○|破军": [
+      {
+        "id": "xlsx-family-001",
+        "title": "破军在辰戌入命",
+        "row_start": 1,
+        "row_end": 138
+      },
+      {
+        "id": "xlsx-family-002",
+        "title": "破军在寅申入命",
+        "row_start": 139,
+        "row_end": 282
+      },
+      {
+        "id": "xlsx-family-003",
+        "title": "破军在子午入命",
+        "row_start": 283,
+        "row_end": 405
+      }
+    ],
+    "○|七杀": [
+      {
+        "id": "xlsx-family-004",
+        "title": "七杀在辰戌入命",
+        "row_start": 406,
+        "row_end": 521
+      },
+      {
+        "id": "xlsx-family-005",
+        "title": "七杀在寅申入命",
+        "row_start": 522,
+        "row_end": 650
+      },
+      {
+        "id": "xlsx-family-006",
+        "title": "七杀在子午入命",
+        "row_start": 651,
+        "row_end": 785
+      }
+    ],
+    "○|天梁": [
+      {
+        "id": "xlsx-family-007",
+        "title": "天梁在巳亥入命",
+        "row_start": 786,
+        "row_end": 916
+      },
+      {
+        "id": "xlsx-family-008",
+        "title": "天梁在丑未入命",
+        "row_start": 917,
+        "row_end": 1030
+      },
+      {
+        "id": "xlsx-family-009",
+        "title": "天梁在子午入命",
+        "row_start": 1031,
+        "row_end": 1175
+      }
+    ],
+    "○|天相": [
+      {
+        "id": "xlsx-family-010",
+        "title": "天相在巳亥入命",
+        "row_start": 1176,
+        "row_end": 1293
+      },
+      {
+        "id": "xlsx-family-011",
+        "title": "天相在卯酉入命",
+        "row_start": 1294,
+        "row_end": 1403
+      }
+    ],
+    "○|巨门": [
+      {
+        "id": "xlsx-family-012",
+        "title": "巨门在巳亥入命",
+        "row_start": 1404,
+        "row_end": 1579
+      },
+      {
+        "id": "xlsx-family-013",
+        "title": "巨门在辰戌入命",
+        "row_start": 1580,
+        "row_end": 1707
+      },
+      {
+        "id": "xlsx-family-014",
+        "title": "巨门在子午入命",
+        "row_start": 1708,
+        "row_end": 1862
+      }
+    ],
+    "○|贪狼": [
+      {
+        "id": "xlsx-family-015",
+        "title": "贪狼在辰戌入命",
+        "row_start": 1863,
+        "row_end": 1972
+      },
+      {
+        "id": "xlsx-family-016",
+        "title": "贪狼在寅申入命",
+        "row_start": 1973,
+        "row_end": 2087
+      },
+      {
+        "id": "xlsx-family-017",
+        "title": "贪狼在子午入命",
+        "row_start": 2088,
+        "row_end": 2212
+      }
+    ],
+    "○|太阴": [
+      {
+        "id": "xlsx-family-018",
+        "title": "太阴在亥入命",
+        "row_start": 2213,
+        "row_end": 2326
+      },
+      {
+        "id": "xlsx-family-019",
+        "title": "太阴在巳入命",
+        "row_start": 2327,
+        "row_end": 2434
+      },
+      {
+        "id": "xlsx-family-020",
+        "title": "太阴在戌入命",
+        "row_start": 2435,
+        "row_end": 2533
+      },
+      {
+        "id": "xlsx-family-021",
+        "title": "太阴在辰入命",
+        "row_start": 2534,
+        "row_end": 2643
+      },
+      {
+        "id": "xlsx-family-022",
+        "title": "太阴在酉入命",
+        "row_start": 2644,
+        "row_end": 2741
+      },
+      {
+        "id": "xlsx-family-023",
+        "title": "太阴在卯入命",
+        "row_start": 2742,
+        "row_end": 2861
+      }
+    ],
+    "○|天府": [
+      {
+        "id": "xlsx-family-024",
+        "title": "天府在巳亥入命",
+        "row_start": 2862,
+        "row_end": 2985
+      },
+      {
+        "id": "xlsx-family-025",
+        "title": "天府在卯酉入命",
+        "row_start": 2986,
+        "row_end": 3088
+      },
+      {
+        "id": "xlsx-family-026",
+        "title": "天府在丑未入命",
+        "row_start": 3089,
+        "row_end": 3201
+      }
+    ],
+    "◇|廉贞、贪狼": [
+      {
+        "id": "xlsx-family-027",
+        "title": "命无主星廉贪在巳亥入迁移",
+        "row_start": 3202,
+        "row_end": 3330
+      }
+    ],
+    "□|廉贞、贪狼": [
+      {
+        "id": "xlsx-family-028",
+        "title": "廉贪在巳亥入命",
+        "row_start": 3331,
+        "row_end": 3473
+      }
+    ],
+    "□|天府、廉贞": [
+      {
+        "id": "xlsx-family-029",
+        "title": "廉府在辰戌入命",
+        "row_start": 3474,
+        "row_end": 3609
+      }
+    ],
+    "□|廉贞、破军": [
+      {
+        "id": "xlsx-family-030",
+        "title": "廉破在卯酉入命",
+        "row_start": 3610,
+        "row_end": 3747
+      }
+    ],
+    "○|廉贞": [
+      {
+        "id": "xlsx-family-031",
+        "title": "廉贞在寅申入命",
+        "row_start": 3748,
+        "row_end": 3907
+      }
+    ],
+    "□|七杀、廉贞": [
+      {
+        "id": "xlsx-family-032",
+        "title": "廉杀在丑未入命",
+        "row_start": 3908,
+        "row_end": 4046
+      }
+    ],
+    "□|天相、廉贞": [
+      {
+        "id": "xlsx-family-033",
+        "title": "廉相在子午入命",
+        "row_start": 4047,
+        "row_end": 4206
+      }
+    ],
+    "○|天同": [
+      {
+        "id": "xlsx-family-034",
+        "title": "天同在巳亥入命",
+        "row_start": 4207,
+        "row_end": 4334
+      },
+      {
+        "id": "xlsx-family-035",
+        "title": "天同在辰戌入命",
+        "row_start": 4335,
+        "row_end": 4424
+      },
+      {
+        "id": "xlsx-family-036",
+        "title": "天同在卯酉入命",
+        "row_start": 4425,
+        "row_end": 4542
+      }
+    ],
+    "◇|天同、天梁": [
+      {
+        "id": "xlsx-family-037",
+        "title": "命无主星同梁在寅申入迁移",
+        "row_start": 4543,
+        "row_end": 4646
+      }
+    ],
+    "□|天同、天梁": [
+      {
+        "id": "xlsx-family-038",
+        "title": "同梁在寅申入命",
+        "row_start": 4647,
+        "row_end": 4789
+      }
+    ],
+    "◇|天同、巨门": [
+      {
+        "id": "xlsx-family-039",
+        "title": "命无主星同巨在丑入迁移",
+        "row_start": 4790,
+        "row_end": 4879
+      }
+    ],
+    "□|天同、巨门": [
+      {
+        "id": "xlsx-family-040",
+        "title": "同巨在丑未入命",
+        "row_start": 4880,
+        "row_end": 5026
+      }
+    ],
+    "◇|天同、太阴": [
+      {
+        "id": "xlsx-family-041",
+        "title": "命无主星同阴在子午入迁移",
+        "row_start": 5027,
+        "row_end": 5140
+      }
+    ],
+    "□|天同、太阴": [
+      {
+        "id": "xlsx-family-042",
+        "title": "同阴在午入命",
+        "row_start": 5141,
+        "row_end": 5241
+      },
+      {
+        "id": "xlsx-family-043",
+        "title": "同阴在子入命",
+        "row_start": 5242,
+        "row_end": 5348
+      }
+    ],
+    "□|武曲、破军": [
+      {
+        "id": "xlsx-family-044",
+        "title": "武破在巳亥入命",
+        "row_start": 5349,
+        "row_end": 5496
+      }
+    ],
+    "○|武曲": [
+      {
+        "id": "xlsx-family-045",
+        "title": "武曲在辰戌入命",
+        "row_start": 5497,
+        "row_end": 5617
+      }
+    ],
+    "□|七杀、武曲": [
+      {
+        "id": "xlsx-family-046",
+        "title": "武杀在卯酉入命",
+        "row_start": 5618,
+        "row_end": 5751
+      }
+    ],
+    "□|天相、武曲": [
+      {
+        "id": "xlsx-family-047",
+        "title": "武相在寅申入命",
+        "row_start": 5752,
+        "row_end": 5942
+      }
+    ],
+    "◇|武曲、贪狼": [
+      {
+        "id": "xlsx-family-048",
+        "title": "命无主星武贪在丑未入迁移",
+        "row_start": 5943,
+        "row_end": 6048
+      }
+    ],
+    "□|武曲、贪狼": [
+      {
+        "id": "xlsx-family-049",
+        "title": "武贪在丑未入命",
+        "row_start": 6049,
+        "row_end": 6224
+      }
+    ],
+    "□|天府、武曲": [
+      {
+        "id": "xlsx-family-050",
+        "title": "武府在子午入命",
+        "row_start": 6225,
+        "row_end": 6354
+      }
+    ],
+    "○|太阳": [
+      {
+        "id": "xlsx-family-051",
+        "title": "太阳在亥入命",
+        "row_start": 6355,
+        "row_end": 6453
+      },
+      {
+        "id": "xlsx-family-052",
+        "title": "太阳在巳入命",
+        "row_start": 6454,
+        "row_end": 6559
+      },
+      {
+        "id": "xlsx-family-053",
+        "title": "太阳在戌入命",
+        "row_start": 6560,
+        "row_end": 6670
+      },
+      {
+        "id": "xlsx-family-054",
+        "title": "太阳在辰入命",
+        "row_start": 6671,
+        "row_end": 6760
+      },
+      {
+        "id": "xlsx-family-061",
+        "title": "太阳在午入命",
+        "row_start": 7520,
+        "row_end": 7643
+      },
+      {
+        "id": "xlsx-family-062",
+        "title": "太阳在子入命",
+        "row_start": 7644,
+        "row_end": 7749
+      }
+    ],
+    "◇|天梁、太阳": [
+      {
+        "id": "xlsx-family-055",
+        "title": "命无主星阳梁在卯酉入迁移",
+        "row_start": 6761,
+        "row_end": 6872
+      }
+    ],
+    "□|天梁、太阳": [
+      {
+        "id": "xlsx-family-056",
+        "title": "阳梁在卯酉入命",
+        "row_start": 6873,
+        "row_end": 7010
+      }
+    ],
+    "◇|太阳、巨门": [
+      {
+        "id": "xlsx-family-057",
+        "title": "命无主星日巨在寅申入迁移",
+        "row_start": 7011,
+        "row_end": 7126
+      }
+    ],
+    "□|太阳、巨门": [
+      {
+        "id": "xlsx-family-058",
+        "title": "日巨在寅申入命",
+        "row_start": 7127,
+        "row_end": 7292
+      }
+    ],
+    "◇|太阳、太阴": [
+      {
+        "id": "xlsx-family-059",
+        "title": "命无主星日月在丑未入迁移",
+        "row_start": 7293,
+        "row_end": 7381
+      }
+    ],
+    "□|太阳、太阴": [
+      {
+        "id": "xlsx-family-060",
+        "title": "日月在丑未入命",
+        "row_start": 7382,
+        "row_end": 7519
+      }
+    ],
+    "○|天机": [
+      {
+        "id": "xlsx-family-063",
+        "title": "天机在巳亥入命",
+        "row_start": 7750,
+        "row_end": 7901
+      },
+      {
+        "id": "xlsx-family-070",
+        "title": "天机在丑未入命",
+        "row_start": 8757,
+        "row_end": 8894
+      },
+      {
+        "id": "xlsx-family-071",
+        "title": "天机在子午入命",
+        "row_start": 8895,
+        "row_end": 9036
+      }
+    ],
+    "◇|天机、天梁": [
+      {
+        "id": "xlsx-family-064",
+        "title": "命无主星机梁在辰戌入迁移",
+        "row_start": 7902,
+        "row_end": 8027
+      }
+    ],
+    "□|天机、天梁": [
+      {
+        "id": "xlsx-family-065",
+        "title": "机梁在辰戌入命",
+        "row_start": 8028,
+        "row_end": 8187
+      }
+    ],
+    "◇|天机、巨门": [
+      {
+        "id": "xlsx-family-066",
+        "title": "命无主星机巨在卯酉入迁移",
+        "row_start": 8188,
+        "row_end": 8301
+      }
+    ],
+    "□|天机、巨门": [
+      {
+        "id": "xlsx-family-067",
+        "title": "机巨在卯酉入命",
+        "row_start": 8302,
+        "row_end": 8474
+      }
+    ],
+    "◇|天机、太阴": [
+      {
+        "id": "xlsx-family-068",
+        "title": "命无主星机月在寅申入迁移",
+        "row_start": 8475,
+        "row_end": 8601
+      }
+    ],
+    "□|天机、太阴": [
+      {
+        "id": "xlsx-family-069",
+        "title": "机月在寅申入命",
+        "row_start": 8602,
+        "row_end": 8756
+      }
+    ],
+    "□|七杀、紫微": [
+      {
+        "id": "xlsx-family-072",
+        "title": "紫杀在巳亥入命",
+        "row_start": 9037,
+        "row_end": 9195
+      }
+    ],
+    "◇|紫微、贪狼": [
+      {
+        "id": "xlsx-family-073",
+        "title": "命无主星紫贪在卯酉入迁移",
+        "row_start": 9196,
+        "row_end": 9306
+      }
+    ],
+    "□|紫微、贪狼": [
+      {
+        "id": "xlsx-family-074",
+        "title": "紫贪在卯酉入命",
+        "row_start": 9307,
+        "row_end": 9453
+      }
+    ],
+    "□|天府、紫微": [
+      {
+        "id": "xlsx-family-075",
+        "title": "紫府在寅申入命",
+        "row_start": 9454,
+        "row_end": 9624
+      }
+    ],
+    "□|破军、紫微": [
+      {
+        "id": "xlsx-family-076",
+        "title": "紫破在丑未入命",
+        "row_start": 9625,
+        "row_end": 9800
+      }
+    ],
+    "○|紫微": [
+      {
+        "id": "xlsx-family-077",
+        "title": "紫微在子午入命",
+        "row_start": 9801,
+        "row_end": 9991
+      }
+    ]
+  },
+  "families": [
+    {
+      "id": "xlsx-family-001",
+      "title": "破军在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1,
+        "row_end": 138
+      }
+    },
+    {
+      "id": "xlsx-family-002",
+      "title": "破军在寅申入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 139,
+        "row_end": 282
+      }
+    },
+    {
+      "id": "xlsx-family-003",
+      "title": "破军在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 283,
+        "row_end": 405
+      }
+    },
+    {
+      "id": "xlsx-family-004",
+      "title": "七杀在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 406,
+        "row_end": 521
+      }
+    },
+    {
+      "id": "xlsx-family-005",
+      "title": "七杀在寅申入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 522,
+        "row_end": 650
+      }
+    },
+    {
+      "id": "xlsx-family-006",
+      "title": "七杀在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 651,
+        "row_end": 785
+      }
+    },
+    {
+      "id": "xlsx-family-007",
+      "title": "天梁在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 786,
+        "row_end": 916
+      }
+    },
+    {
+      "id": "xlsx-family-008",
+      "title": "天梁在丑未入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 917,
+        "row_end": 1030
+      }
+    },
+    {
+      "id": "xlsx-family-009",
+      "title": "天梁在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1031,
+        "row_end": 1175
+      }
+    },
+    {
+      "id": "xlsx-family-010",
+      "title": "天相在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天相"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1176,
+        "row_end": 1293
+      }
+    },
+    {
+      "id": "xlsx-family-011",
+      "title": "天相在卯酉入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天相"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1294,
+        "row_end": 1403
+      }
+    },
+    {
+      "id": "xlsx-family-012",
+      "title": "巨门在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1404,
+        "row_end": 1579
+      }
+    },
+    {
+      "id": "xlsx-family-013",
+      "title": "巨门在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1580,
+        "row_end": 1707
+      }
+    },
+    {
+      "id": "xlsx-family-014",
+      "title": "巨门在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1708,
+        "row_end": 1862
+      }
+    },
+    {
+      "id": "xlsx-family-015",
+      "title": "贪狼在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1863,
+        "row_end": 1972
+      }
+    },
+    {
+      "id": "xlsx-family-016",
+      "title": "贪狼在寅申入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 1973,
+        "row_end": 2087
+      }
+    },
+    {
+      "id": "xlsx-family-017",
+      "title": "贪狼在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2088,
+        "row_end": 2212
+      }
+    },
+    {
+      "id": "xlsx-family-018",
+      "title": "太阴在亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2213,
+        "row_end": 2326
+      }
+    },
+    {
+      "id": "xlsx-family-019",
+      "title": "太阴在巳入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2327,
+        "row_end": 2434
+      }
+    },
+    {
+      "id": "xlsx-family-020",
+      "title": "太阴在戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2435,
+        "row_end": 2533
+      }
+    },
+    {
+      "id": "xlsx-family-021",
+      "title": "太阴在辰入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2534,
+        "row_end": 2643
+      }
+    },
+    {
+      "id": "xlsx-family-022",
+      "title": "太阴在酉入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2644,
+        "row_end": 2741
+      }
+    },
+    {
+      "id": "xlsx-family-023",
+      "title": "太阴在卯入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2742,
+        "row_end": 2861
+      }
+    },
+    {
+      "id": "xlsx-family-024",
+      "title": "天府在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天府"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2862,
+        "row_end": 2985
+      }
+    },
+    {
+      "id": "xlsx-family-025",
+      "title": "天府在卯酉入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天府"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 2986,
+        "row_end": 3088
+      }
+    },
+    {
+      "id": "xlsx-family-026",
+      "title": "天府在丑未入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天府"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3089,
+        "row_end": 3201
+      }
+    },
+    {
+      "id": "xlsx-family-027",
+      "title": "命无主星廉贪在巳亥入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "廉贞",
+        "贪狼"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3202,
+        "row_end": 3330
+      }
+    },
+    {
+      "id": "xlsx-family-028",
+      "title": "廉贪在巳亥入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "廉贞",
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3331,
+        "row_end": 3473
+      }
+    },
+    {
+      "id": "xlsx-family-029",
+      "title": "廉府在辰戌入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "廉贞",
+        "天府"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3474,
+        "row_end": 3609
+      }
+    },
+    {
+      "id": "xlsx-family-030",
+      "title": "廉破在卯酉入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "廉贞",
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3610,
+        "row_end": 3747
+      }
+    },
+    {
+      "id": "xlsx-family-031",
+      "title": "廉贞在寅申入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "廉贞"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3748,
+        "row_end": 3907
+      }
+    },
+    {
+      "id": "xlsx-family-032",
+      "title": "廉杀在丑未入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "廉贞",
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 3908,
+        "row_end": 4046
+      }
+    },
+    {
+      "id": "xlsx-family-033",
+      "title": "廉相在子午入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "廉贞",
+        "天相"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4047,
+        "row_end": 4206
+      }
+    },
+    {
+      "id": "xlsx-family-034",
+      "title": "天同在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天同"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4207,
+        "row_end": 4334
+      }
+    },
+    {
+      "id": "xlsx-family-035",
+      "title": "天同在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天同"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4335,
+        "row_end": 4424
+      }
+    },
+    {
+      "id": "xlsx-family-036",
+      "title": "天同在卯酉入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天同"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4425,
+        "row_end": 4542
+      }
+    },
+    {
+      "id": "xlsx-family-037",
+      "title": "命无主星同梁在寅申入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天同",
+        "天梁"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4543,
+        "row_end": 4646
+      }
+    },
+    {
+      "id": "xlsx-family-038",
+      "title": "同梁在寅申入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天同",
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4647,
+        "row_end": 4789
+      }
+    },
+    {
+      "id": "xlsx-family-039",
+      "title": "命无主星同巨在丑入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天同",
+        "巨门"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4790,
+        "row_end": 4879
+      }
+    },
+    {
+      "id": "xlsx-family-040",
+      "title": "同巨在丑未入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天同",
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 4880,
+        "row_end": 5026
+      }
+    },
+    {
+      "id": "xlsx-family-041",
+      "title": "命无主星同阴在子午入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天同",
+        "太阴"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5027,
+        "row_end": 5140
+      }
+    },
+    {
+      "id": "xlsx-family-042",
+      "title": "同阴在午入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天同",
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5141,
+        "row_end": 5241
+      }
+    },
+    {
+      "id": "xlsx-family-043",
+      "title": "同阴在子入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天同",
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5242,
+        "row_end": 5348
+      }
+    },
+    {
+      "id": "xlsx-family-044",
+      "title": "武破在巳亥入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "武曲",
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5349,
+        "row_end": 5496
+      }
+    },
+    {
+      "id": "xlsx-family-045",
+      "title": "武曲在辰戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "武曲"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5497,
+        "row_end": 5617
+      }
+    },
+    {
+      "id": "xlsx-family-046",
+      "title": "武杀在卯酉入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "武曲",
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5618,
+        "row_end": 5751
+      }
+    },
+    {
+      "id": "xlsx-family-047",
+      "title": "武相在寅申入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "武曲",
+        "天相"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5752,
+        "row_end": 5942
+      }
+    },
+    {
+      "id": "xlsx-family-048",
+      "title": "命无主星武贪在丑未入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "武曲",
+        "贪狼"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 5943,
+        "row_end": 6048
+      }
+    },
+    {
+      "id": "xlsx-family-049",
+      "title": "武贪在丑未入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "武曲",
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6049,
+        "row_end": 6224
+      }
+    },
+    {
+      "id": "xlsx-family-050",
+      "title": "武府在子午入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天府",
+        "武曲"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6225,
+        "row_end": 6354
+      }
+    },
+    {
+      "id": "xlsx-family-051",
+      "title": "太阳在亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6355,
+        "row_end": 6453
+      }
+    },
+    {
+      "id": "xlsx-family-052",
+      "title": "太阳在巳入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6454,
+        "row_end": 6559
+      }
+    },
+    {
+      "id": "xlsx-family-053",
+      "title": "太阳在戌入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6560,
+        "row_end": 6670
+      }
+    },
+    {
+      "id": "xlsx-family-054",
+      "title": "太阳在辰入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6671,
+        "row_end": 6760
+      }
+    },
+    {
+      "id": "xlsx-family-055",
+      "title": "命无主星阳梁在卯酉入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "太阳",
+        "天梁"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6761,
+        "row_end": 6872
+      }
+    },
+    {
+      "id": "xlsx-family-056",
+      "title": "阳梁在卯酉入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "太阳",
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 6873,
+        "row_end": 7010
+      }
+    },
+    {
+      "id": "xlsx-family-057",
+      "title": "命无主星日巨在寅申入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "太阳",
+        "巨门"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7011,
+        "row_end": 7126
+      }
+    },
+    {
+      "id": "xlsx-family-058",
+      "title": "日巨在寅申入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "太阳",
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7127,
+        "row_end": 7292
+      }
+    },
+    {
+      "id": "xlsx-family-059",
+      "title": "命无主星日月在丑未入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "太阳",
+        "太阴"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7293,
+        "row_end": 7381
+      }
+    },
+    {
+      "id": "xlsx-family-060",
+      "title": "日月在丑未入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "太阳",
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7382,
+        "row_end": 7519
+      }
+    },
+    {
+      "id": "xlsx-family-061",
+      "title": "太阳在午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7520,
+        "row_end": 7643
+      }
+    },
+    {
+      "id": "xlsx-family-062",
+      "title": "太阳在子入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "太阳"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7644,
+        "row_end": 7749
+      }
+    },
+    {
+      "id": "xlsx-family-063",
+      "title": "天机在巳亥入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天机"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7750,
+        "row_end": 7901
+      }
+    },
+    {
+      "id": "xlsx-family-064",
+      "title": "命无主星机梁在辰戌入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天机",
+        "天梁"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 7902,
+        "row_end": 8027
+      }
+    },
+    {
+      "id": "xlsx-family-065",
+      "title": "机梁在辰戌入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天机",
+        "天梁"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8028,
+        "row_end": 8187
+      }
+    },
+    {
+      "id": "xlsx-family-066",
+      "title": "命无主星机巨在卯酉入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天机",
+        "巨门"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8188,
+        "row_end": 8301
+      }
+    },
+    {
+      "id": "xlsx-family-067",
+      "title": "机巨在卯酉入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天机",
+        "巨门"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8302,
+        "row_end": 8474
+      }
+    },
+    {
+      "id": "xlsx-family-068",
+      "title": "命无主星机月在寅申入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "天机",
+        "太阴"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8475,
+        "row_end": 8601
+      }
+    },
+    {
+      "id": "xlsx-family-069",
+      "title": "机月在寅申入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "天机",
+        "太阴"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8602,
+        "row_end": 8756
+      }
+    },
+    {
+      "id": "xlsx-family-070",
+      "title": "天机在丑未入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天机"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8757,
+        "row_end": 8894
+      }
+    },
+    {
+      "id": "xlsx-family-071",
+      "title": "天机在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "天机"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 8895,
+        "row_end": 9036
+      }
+    },
+    {
+      "id": "xlsx-family-072",
+      "title": "紫杀在巳亥入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "紫微",
+        "七杀"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9037,
+        "row_end": 9195
+      }
+    },
+    {
+      "id": "xlsx-family-073",
+      "title": "命无主星紫贪在卯酉入迁移",
+      "chart_marker": "◇",
+      "match_type": "qianyi_double_star",
+      "main_stars": [],
+      "migration_main_stars": [
+        "紫微",
+        "贪狼"
+      ],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9196,
+        "row_end": 9306
+      }
+    },
+    {
+      "id": "xlsx-family-074",
+      "title": "紫贪在卯酉入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "紫微",
+        "贪狼"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9307,
+        "row_end": 9453
+      }
+    },
+    {
+      "id": "xlsx-family-075",
+      "title": "紫府在寅申入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "紫微",
+        "天府"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9454,
+        "row_end": 9624
+      }
+    },
+    {
+      "id": "xlsx-family-076",
+      "title": "紫破在丑未入命",
+      "chart_marker": "□",
+      "match_type": "minggong_double_star",
+      "main_stars": [
+        "紫微",
+        "破军"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9625,
+        "row_end": 9800
+      }
+    },
+    {
+      "id": "xlsx-family-077",
+      "title": "紫微在子午入命",
+      "chart_marker": "○",
+      "match_type": "minggong_single_star",
+      "main_stars": [
+        "紫微"
+      ],
+      "migration_main_stars": [],
+      "source": {
+        "file": "斗数-三合命盘.xlsx",
+        "sheet": "Sheet2",
+        "row_start": 9801,
+        "row_end": 9991
+      }
+    }
+  ]
+}
