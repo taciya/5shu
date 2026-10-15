@@ -428,7 +428,7 @@
       window.__5shuCurrentChart || window.mixData || window.lastMixData || null
     )
   }
-  document.addEventListener('click', function (ev) {
+  document.addEventListener('dblclick', function (ev) {
     const cell = ev.target.closest('.palace')
     if (!cell) return
     const chart = findChartData()
