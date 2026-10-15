@@ -73,29 +73,49 @@
     let panel=document.getElementById('sanheAnalysisPanel');
     if(panel) return panel;
     panel=h('aside','sanhe-analysis-panel'); panel.id='sanheAnalysisPanel'; panel.setAttribute('aria-live','polite');
-    const style=h('style',''); style.textContent=`.sanhe-analysis-panel{position:fixed;z-index:9999;left:50%;top:50%;transform:translate(-50%,-50%);width:min(440px,calc(100vw - 32px));max-height:80vh;overflow:auto;box-sizing:border-box;background:#fffdf8;border:1px solid #d8cdb7;border-radius:12px;box-shadow:0 12px 38px #0002;padding:18px;color:#2a2927;font:14px/1.65 system-ui,sans-serif}.sanhe-analysis-panel[hidden]{display:none}.sanhe-analysis-panel h3{margin:0 0 8px;font-size:20px}.sanhe-analysis-panel h4{margin:14px 0 5px;color:#6d5231;font-size:15px}.sanhe-analysis-panel ul{padding-left:20px;margin:4px 0}.sanhe-analysis-panel li{margin:4px 0}.sanhe-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.sanhe-panel-close{border:0;background:#eee5d7;border-radius:7px;padding:5px 10px;cursor:pointer}.sanhe-panel-meta{color:#777;font-size:12px;margin:4px 0 12px}.sanhe-source{color:#777;font-size:12px;border-top:1px solid #e4dccc;padding-top:10px;margin-top:12px}.sanhe-pending{color:#8a673c}.sanhe-tags{display:flex;flex-wrap:wrap;gap:5px}.sanhe-tag{background:#eee5d7;border-radius:5px;padding:2px 6px;font-size:12px}`;
+    const style=h('style',''); style.textContent=`.sanhe-analysis-panel{position:fixed;z-index:9999;left:0;top:0;width:min(440px,calc(100vw - 32px));height:auto;max-height:100vh;overflow:auto;box-sizing:border-box;background:#fffdf8;border:1px solid #d8cdb7;border-radius:7px;box-shadow:0 6px 22px #0002;padding:7px;color:#2a2927;font:13px/1.45 system-ui,sans-serif}.sanhe-analysis-panel[hidden]{display:none}.sanhe-analysis-panel h3{margin:0;font-size:15px;line-height:1.25;font-weight:700}.sanhe-analysis-panel h4{margin:10px 0 4px;color:#6d5231;font-size:13px}.sanhe-analysis-panel ul{padding-left:18px;margin:3px 0}.sanhe-analysis-panel li{margin:3px 0}.sanhe-palace-header{position:sticky;top:-7px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-7px -7px 6px;padding:7px;background:#fffdf8;border-bottom:1px solid #e4dccc}.sanhe-palace-name{min-width:0;overflow-wrap:anywhere}.sanhe-panel-close{flex:0 0 auto;border:0;background:#eee5d7;border-radius:5px;padding:3px 8px;font:inherit;line-height:1.4;cursor:pointer}.sanhe-panel-meta{color:#777;font-size:11px;margin:3px 0 7px}.sanhe-source{color:#777;font-size:10px;border-top:1px solid #e4dccc;padding-top:6px;margin-top:8px}.sanhe-pending{color:#8a673c}.sanhe-tags{display:flex;flex-wrap:wrap;gap:4px}.sanhe-tag{background:#eee5d7;border-radius:4px;padding:1px 5px;font-size:11px}`;
     document.head.appendChild(style);
-    const head=h('div','sanhe-panel-head'); head.appendChild(h('h3','','宫位象义解说')); const close=h('button','sanhe-panel-close','关闭'); close.type='button'; close.onclick=()=>panel.hidden=true; head.appendChild(close); panel.appendChild(head);
-    const content=h('div','','点击命盘任意宫位，查看该宫的星曜组合与原文象义。'); content.id='sanheAnalysisContent'; panel.appendChild(content); document.body.appendChild(panel); return panel;
+    const content=h('div','',''); content.id='sanheAnalysisContent'; panel.appendChild(content);
+    document.body.appendChild(panel); return panel;
   }
   function alignPanelToCenterCell(panel) {
     const target=document.querySelector('.center-cell');
-    if (!target) return;
+    if(!target) return false;
     const rect=target.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
+    if(!rect.width || !rect.height) return false;
+    const computed=window.getComputedStyle(target);
+    const borderLeft=parseFloat(computed.borderLeftWidth)||0;
+    const borderRight=parseFloat(computed.borderRightWidth)||0;
+    const borderTop=parseFloat(computed.borderTopWidth)||0;
+    const borderBottom=parseFloat(computed.borderBottomWidth)||0;
+    // 紧贴 center-cell 内缘，同时保留 2px 缝隙，不覆盖中心格边框。
+    const inset=2;
     Object.assign(panel.style,{
-      left:`${rect.left}px`, top:`${rect.top}px`,
-      width:`${rect.width}px`, height:`${rect.height}px`,
+      left:`${rect.left+borderLeft+inset}px`,
+      top:`${rect.top+borderTop+inset}px`,
+      width:`${Math.max(0,rect.width-borderLeft-borderRight-inset*2)}px`,
+      height:`${Math.max(0,rect.height-borderTop-borderBottom-inset*2)}px`,
       maxHeight:'none', transform:'none', boxSizing:'border-box'
     });
+    return true;
+  }
+  function appendPalaceHeader(content, titleText, panel) {
+    const row=h('div','sanhe-palace-header');
+    row.appendChild(h('h3','sanhe-palace-name',titleText||'宫位'));
+    const close=h('button','sanhe-panel-close','关闭');
+    close.type='button'; close.setAttribute('aria-label','关闭宫位说明');
+    close.onclick=()=>{panel.hidden=true;};
+    row.appendChild(close);
+    content.appendChild(row);
   }
   async function analyzePalace(palace, chart) {
     const panel=ensurePanel(), content=document.getElementById('sanheAnalysisContent'); panel.hidden=false;
     alignPanelToCenterCell(panel);
     content.replaceChildren();
     const ctx=getPalaceContext(palace,chart);
-    if(!ctx){content.textContent='尚未读取到对应宫位数据，请先生成命盘。';return;}
-    const title=h('h3','',ctx.name); content.appendChild(title);
+    appendPalaceHeader(content,ctx?.name||'宫位',panel);
+    alignPanelToCenterCell(panel);
+    if(!ctx){content.appendChild(h('p','','尚未读取到对应宫位数据，请先生成命盘。'));return;}
     content.appendChild(h('div','sanhe-panel-meta',`地支：${ctx.dizhi||'未识别'} · 宫干：${ctx.gan||'未识别'}`));
     const tags=h('div','sanhe-tags',''); ctx.stars.forEach(star=>tags.appendChild(h('span','sanhe-tag',star))); content.appendChild(tags);
     if(ctx.opposite){content.appendChild(h('div','sanhe-panel-meta',`对宫：${ctx.opposite.name}（${ctx.opposite.dizhi||''}）｜${ctx.opposite.stars.join('、')||'无明显星曜'}`));}
@@ -152,9 +172,11 @@
   document.addEventListener('click', function(ev){
     const cell=ev.target.closest('.palace'); if(!cell)return;
     const chart=findChartData(); const data=chart?.ziwei_chart || chart?.chart || chart;
-    if(!data?.palaces){ const panel=ensurePanel();panel.hidden=false;const c=document.getElementById('sanheAnalysisContent');c.replaceChildren(h('p','','已点击宫位，但页面尚未暴露当前命盘数据。请在 renderChart(mixData, formData) 开头加入 window.__5shuCurrentChart = mixData; 后刷新。'));return; }
+    if(!data?.palaces){ const panel=ensurePanel();panel.hidden=false;const c=document.getElementById('sanheAnalysisContent');c.replaceChildren();appendPalaceHeader(c,'宫位',panel);alignPanelToCenterCell(panel);c.appendChild(h('p','','已点击宫位，但页面尚未暴露当前命盘数据。请在 renderChart(mixData, formData) 开头加入 window.__5shuCurrentChart = mixData; 后刷新。'));return; }
     const palace=data.palaces.find(p=>p.dizhi===cell.id.replace(/宫$/,''));
     analyzePalace(palace, data);
   });
+  window.addEventListener('resize',function(){const panel=document.getElementById('sanheAnalysisPanel');if(panel&&!panel.hidden)alignPanelToCenterCell(panel);});
+  window.addEventListener('scroll',function(){const panel=document.getElementById('sanheAnalysisPanel');if(panel&&!panel.hidden)alignPanelToCenterCell(panel);},true);
   window.SanhePalaceAnalyzer={analyzePalace,loadKnowledge,getPalaceContext};
 })();
