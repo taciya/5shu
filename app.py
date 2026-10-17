@@ -37,8 +37,11 @@ from palace_gua_constants import (
 app = Flask(__name__)
 CORS(app)  # 允许所有域的跨域请求
 utils = CalendarUtils()
+
 from sanhe_api import register_sanhe_routes
+from mingzhu_shenzhu_knowledge import register_mingzhu_shenzhu_routes
 register_sanhe_routes(app)
+register_mingzhu_shenzhu_routes(app)
 
 @app.route('/')
 def home():
@@ -1265,12 +1268,177 @@ def update_profile():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
+import re
+import html
+
+@app.route('/api/hexagram/by_trigrams/<upper>/<lower>', methods=['GET'])
+def get_hexagram_by_trigrams(upper, lower):
+    """
+    根据上卦、下卦查询六十四卦及原有释义。
+    upper: 上卦（乾、兑、离、震、巽、坎、艮、坤）
+    lower: 下卦（乾、兑、离、震、巽、坎、艮、坤）
+    """
+    from constants import HEXAGRAM_IMAGE
+
+    try:
+        # 八卦对应的卦名首字
+        trigram_chars = {
+            '乾': '天',
+            '兑': '泽',
+            '离': '火',
+            '震': '雷',
+            '巽': '风',
+            '坎': '水',
+            '艮': '山',
+            '坤': '地'
+        }
+
+        if upper not in trigram_chars or lower not in trigram_chars:
+            return jsonify({
+                'success': False,
+                'message': '无效的八卦参数'
+            }), 400
+
+        # 八个纯卦的特殊名称
+        pure_hexagrams = {
+            '乾': '乾为天',
+            '兑': '兑为泽',
+            '离': '离为火',
+            '震': '震为雷',
+            '巽': '巽为风',
+            '坎': '坎为水',
+            '艮': '艮为山',
+            '坤': '坤为地'
+        }
+
+        # 确定六十四卦名称
+        if upper == lower:
+            hexagram_name = pure_hexagrams[upper]
+        else:
+            hexagram_name = (
+                trigram_chars[upper] +
+                trigram_chars[lower]
+            )
+        # 先尝试精确匹配
+        hexagram_data = HEXAGRAM_IMAGE.get(hexagram_name)
+
+        # 精确匹配失败时，再进行前缀模糊匹配
+        if not hexagram_data:
+            candidates = [
+                name for name in HEXAGRAM_IMAGE.keys()
+                if name.startswith(hexagram_name)
+            ]
+
+            # 只有唯一匹配时才采用，避免匹配到错误卦象
+            if len(candidates) == 1:
+                hexagram_name = candidates[0]
+                hexagram_data = HEXAGRAM_IMAGE[hexagram_name]
+            elif len(candidates) > 1:
+                return jsonify({
+                    'success': False,
+                    'message': f'卦名匹配不唯一：{hexagram_name}',
+                    'candidates': candidates
+                }), 409
+
+        if not hexagram_data:
+            return jsonify({
+                'success': False,
+                'message': f'未找到卦象：{hexagram_name}'
+            }), 404
+        if not hexagram_data:
+            return jsonify({
+                'success': False,
+                'message': f'未找到卦象：{hexagram_name}'
+            }), 404
+
+        # 提取 original-meaning
+        content = hexagram_data.get('content', '')
+
+        match = re.search(
+            r'<div class="original-meaning">(.*?)</div>',
+            content,
+            re.S
+        )
+
+        if match:
+            meaning = match.group(1)
+
+            # HTML 转换为纯文本
+            meaning = re.sub(
+                r'<br\s*/?>',
+                '\n',
+                meaning,
+                flags=re.I
+            )
+
+            meaning = re.sub(
+                r'<[^>]+>',
+                '',
+                meaning
+            )
+
+            meaning = html.unescape(meaning).strip()
+        else:
+            meaning = ''
+
+        divination = hexagram_data.get('divination', '')
+        divination_html = ''
+        if divination:
+            divination_html = (
+                '<section class="hexagram-divination">'
+                '<h3>占卜断语</h3><div>'
+                + html.escape(divination).replace('\n', '<br/>')
+                + '</div></section>'
+            )
+
+        return jsonify({
+            'success': True,
+            'upper': upper,
+            'lower': lower,
+            'hexagram': hexagram_name,
+            'meaning': meaning,
+            'content': hexagram_data.get('content', '') + divination_html,
+            'image_url': (
+                f"/static/hexagrams/pages/"
+                f"{hexagram_data.get('page', '')}"
+            )
+        })
+
+    except Exception as e:
+        app.logger.error(
+            f'六十四卦查询失败: {str(e)}'
+        )
+
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
 @app.route("/api/hexagram/image/<name>", methods=['GET'])
 def hexagram_image(name):
     from constants import HEXAGRAM_IMAGE
-    return jsonify({'success': True,
-        "image_url":f"/static/hexagrams/pages/{HEXAGRAM_IMAGE[name]['page']}",
-        "content":HEXAGRAM_IMAGE[name]['content']
+
+    hexagram_data = HEXAGRAM_IMAGE.get(name)
+    if not hexagram_data:
+        return jsonify({
+            'success': False,
+            'message': f'未找到卦象：{name}'
+        }), 404
+
+    divination = hexagram_data.get('divination', '')
+    divination_html = ''
+    if divination:
+        divination_html = (
+            '<section class="hexagram-divination">'
+            '<h3>占卜断语</h3><div>'
+            + html.escape(divination).replace('\n', '<br/>')
+            + '</div></section>'
+        )
+
+    return jsonify({
+        'success': True,
+        'image_url': f"/static/hexagrams/pages/{hexagram_data.get('page', '')}",
+        'content': hexagram_data.get('content', '') + divination_html
     })
 
 @app.route("/api/hexagram/<year_gz>/<month_gz>/<day_gz>/<hour_gz>", methods=['GET'])

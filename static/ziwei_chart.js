@@ -522,6 +522,7 @@ function renderChart(mixData, formData) {
                 <span class="sizhu">${data.sizhu_bagua['日柱']}</span>
                 <span class="sizhu">${data.sizhu_bagua['时柱']}</span>
                 <span class="sizhu">${data.sizhu_bagua['八卦']}</span>
+                <span class="sizhu sizhu-hexagram" title="六十四卦">${data.hexagrams['upper']}${data.hexagrams['lower']}</span>
 
             </div>
             <div class="center-info center">
@@ -542,15 +543,22 @@ function renderChart(mixData, formData) {
                 <select id="liunianSelector" class="control-select" disabled></select>
             </div>
 
-            <div class="control-group liuyue-group" >
+            <div class="control-group liuyue-group">
                 <label for="liuyueSelector"></label>
                 <select id="liuyueSelector" class="control-select" disabled></select>
             </div>
         </div>
 
+        <!-- 六十四卦选择器：放在 center-content 正下方 -->
+        ${buildHexagramPickerHTML()}
+
     `
 
   chartGrid.appendChild(centerCell)
+
+  // 绑定中心区域的六十四卦选择器
+  bindHexagramPicker(centerCell)
+
   const natalData = mixData.natal_chart // 原局命盘数据（如果需要使用）
   // 创建十二宫
   if (data.palaces && Array.isArray(data.palaces)) {
@@ -705,15 +713,15 @@ function renderChart(mixData, formData) {
   clearDayunDisplays() // 初始化时清空大运显示
 
   document.querySelectorAll('.hexagram-trigger').forEach((el) => {
+    el.style.cursor = 'pointer'
     el.addEventListener('click', async () => {
-      // const year = el.dataset.year
-      // const month = el.dataset.month
-      // const day = el.dataset.day
-      // const hour = el.dataset.hour
-
-      // await showHexagramImage(year, month, day, hour)
-
-      loadHexagramPage(el.dataset.index, el.dataset.hexagram)
+      // 点击中心四柱/卦象区域时，直接打开 star-tooltip
+      if (!document.getElementById('star-tooltip')) createStarTooltip()
+      try {
+        await loadHexagramPage(el.dataset.index, el.dataset.hexagram)
+      } catch (error) {
+        console.error('加载中心卦象失败:', error)
+      }
     })
   })
 }
@@ -739,8 +747,35 @@ function renderChart(mixData, formData) {
 //   loadHexagramPage(data.index, data.hexagram)
 // }
 
+function showHexagramTooltip(data) {
+  // 卦象入口也应能独立创建并显示提示框，不依赖先点击星曜
+  const tooltip = document.getElementById('star-tooltip') || createStarTooltip()
+  if (!tooltip) return
+
+  tooltip.style.display = 'block'
+  tooltip.innerHTML = `
+    <div style="
+      font-size:13px;
+      width:100%;
+      max-width:800px;
+      text-align:left;
+      display:block;
+      margin:0 auto;">
+      ${data.content || ''}
+    </div>
+    <img
+      src="${data.image_url || ''}"
+      alt="卦象图"
+      style="
+        width:100%;
+        max-width:800px;
+        display:block;
+        margin:0 auto;"
+    >
+  `
+}
+
 async function loadHexagramPage(index, name) {
-  // 向服务器发送请求获取feigong_str
   const response = await fetch(
     getApiBaseUrl() + `/api/hexagram/image/${encodeURIComponent(name)}`,
     {
@@ -753,34 +788,11 @@ async function loadHexagramPage(index, name) {
 
   const data = await response.json()
 
-  if (!data.success) {
+  if (!response.ok || !data.success) {
     throw new Error(data.message || '服务器返回错误')
   }
 
-  const tooltip = document.getElementById('star-tooltip')
-
-  tooltip.style.display = 'block'
-
-  tooltip.innerHTML = `
-        <div style="
-              font-size: 13px;
-              width:100%;
-              max-width:800px;
-              text-align:center;
-              display:block;
-              margin:0 auto;">
-          ${data.content}
-        </div>
-        <img
-            src="${data.image_url}"
-            style="
-                width:100%;
-                max-width:800px;
-                display:block;
-                margin:0 auto;
-            "
-        >
-    `
+  showHexagramTooltip(data)
 }
 
 function generateFeigongString() {
@@ -2130,6 +2142,7 @@ const showStarMeaning = async (starName, element) => {
 
     // 构建详细的星曜含义显示
     tooltip.innerHTML = buildStarMeaningHTML(starName, starData)
+
     element.style.cursor = 'pointer'
   } catch (error) {
     if (error.name === 'AbortError') {
@@ -2159,7 +2172,94 @@ const showStarMeaning = async (starName, element) => {
     element.style.cursor = 'pointer'
   }
 }
+// 六十四卦：八卦定义
+const TRIGRAM_OPTIONS = [
+  { name: '乾', symbol: '☰' },
+  { name: '兑', symbol: '☱' },
+  { name: '离', symbol: '☲' },
+  { name: '震', symbol: '☳' },
+  { name: '巽', symbol: '☴' },
+  { name: '坎', symbol: '☵' },
+  { name: '艮', symbol: '☶' },
+  { name: '坤', symbol: '☷' },
+]
 
+// 生成下拉框选项
+function buildTrigramOptions(selected) {
+  return TRIGRAM_OPTIONS.map(
+    (item) => `
+    <option value="${item.name}"
+      ${item.name === selected ? 'selected' : ''}>
+      ${item.name} ${item.symbol}
+    </option>
+  `,
+  ).join('')
+}
+// 六十四卦选择区域
+// 六十四卦选择区域
+function buildHexagramPickerHTML() {
+  return `
+    <div class="meaning-section hexagram-picker-section">
+      <div class="hexagram-picker-grid">
+        <div class="hexagram-picker-item">
+          <label class="hexagram-picker-label" for="hexagram-upper"></label>
+          <select id="hexagram-upper" class="hexagram-select">
+            ${buildTrigramOptions('乾')}
+          </select>
+        </div>
+
+        <div class="hexagram-picker-item">
+          <label class="hexagram-picker-label" for="hexagram-lower"></label>
+          <select id="hexagram-lower" class="hexagram-select">
+            ${buildTrigramOptions('乾')}
+          </select>
+        </div>
+      </div>
+    </div>
+  `
+}
+// 绑定六十四卦下拉框
+function bindHexagramPicker(tooltip) {
+  const upperSelect = tooltip.querySelector('#hexagram-upper')
+  const lowerSelect = tooltip.querySelector('#hexagram-lower')
+
+  if (!upperSelect || !lowerSelect) return
+
+  // 防止快速切换导致旧请求覆盖新结果
+  let requestId = 0
+
+  async function updateHexagram() {
+    const upper = upperSelect.value
+    const lower = lowerSelect.value
+    const currentRequest = ++requestId
+
+    try {
+      const url =
+        getApiBaseUrl() +
+        `/api/hexagram/by_trigrams/` +
+        `${encodeURIComponent(upper)}/${encodeURIComponent(lower)}`
+
+      const response = await fetch(url)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+
+      const data = await response.json()
+      if (currentRequest !== requestId) return
+      if (!data.success) throw new Error(data.message || '卦象查询失败')
+
+      // 选择器只负责选择；卦名、卦义和图片统一显示在 star-tooltip
+      showHexagramTooltip(data)
+    } catch (error) {
+      if (currentRequest !== requestId) return
+      console.error('六十四卦查询失败:', error)
+    }
+  }
+
+  // 点击选择器时也打开/刷新卦象提示；更改选项后再按新组合查询
+  upperSelect.addEventListener('click', updateHexagram)
+  lowerSelect.addEventListener('click', updateHexagram)
+  upperSelect.addEventListener('change', updateHexagram)
+  lowerSelect.addEventListener('change', updateHexagram)
+}
 // 构建星曜含义显示的HTML内容
 function buildStarMeaningHTML(starName, starData) {
   const sections = []

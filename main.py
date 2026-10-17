@@ -62,7 +62,7 @@ class ZiweiChart:
             self.sizhu_bagua['月柱'],
             self.sizhu_bagua['日柱'],
             self.sizhu_bagua['时柱'])
-
+        # print(self.hexagrams)  # <<<<<<<<<
         # 安星计算
         star_placement = StarPlacement(self)
 

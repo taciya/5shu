@@ -1,0 +1,1992 @@
+{
+  "title": "紫微斗数-命主身主.xlsx（Sheet1）知识库",
+  "source": {
+    "file": "紫微斗数-命主身主.xlsx",
+    "sheet": "Sheet1",
+    "branch_row": 18,
+    "gongzhu_row": 20,
+    "shenzhu_row": 25,
+    "gongzhu_interpretation_rows": "90-603",
+    "shenzhu_verse_rows": [661, 662, 669, 671, 672, 673, 674, 675, 676]
+  },
+  "branch_order": [
+    "子",
+    "丑",
+    "寅",
+    "卯",
+    "辰",
+    "巳",
+    "午",
+    "未",
+    "申",
+    "酉",
+    "戌",
+    "亥"
+  ],
+  "palace_order": [
+    "命宫",
+    "兄弟宫",
+    "夫妻宫",
+    "子女宫",
+    "财帛宫",
+    "疾厄宫",
+    "迁移宫",
+    "交友宫",
+    "官禄宫",
+    "田宅宫",
+    "福德宫",
+    "父母宫"
+  ],
+  "dizhi_to_rulers": {
+    "子": {
+      "gongzhu": "贪狼",
+      "shenzhu": "铃星",
+      "gua": "坎水",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "丑": {
+      "gongzhu": "巨门",
+      "shenzhu": "天相",
+      "gua": "艮土",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "寅": {
+      "gongzhu": "禄存",
+      "shenzhu": "天梁",
+      "gua": "艮土",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "卯": {
+      "gongzhu": "文曲",
+      "shenzhu": "天同",
+      "gua": "震木",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "辰": {
+      "gongzhu": "廉贞",
+      "shenzhu": "文昌",
+      "gua": "巽木",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "巳": {
+      "gongzhu": "武曲",
+      "shenzhu": "天机",
+      "gua": "巽木",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "午": {
+      "gongzhu": "破军",
+      "shenzhu": "火星",
+      "gua": "离火",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "未": {
+      "gongzhu": "武曲",
+      "shenzhu": "天相",
+      "gua": "坤土",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "申": {
+      "gongzhu": "廉贞",
+      "shenzhu": "天梁",
+      "gua": "坤土",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "酉": {
+      "gongzhu": "文曲",
+      "shenzhu": "天同",
+      "gua": "兑金",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "戌": {
+      "gongzhu": "禄存",
+      "shenzhu": "文昌",
+      "gua": "乾金",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    },
+    "亥": {
+      "gongzhu": "巨门",
+      "shenzhu": "天机",
+      "gua": "乾金",
+      "source_rows": {
+        "dizhi": [18, 23],
+        "gongzhu": [20],
+        "shenzhu": [25],
+        "gua": [19, 24]
+      }
+    }
+  },
+  "gongzhu_into_palaces": {
+    "命宫": {
+      "命宫": {
+        "heading": "1.命宫主 在 命宫：(代表自己稳定性程度)",
+        "items": [
+          "自我(我追求我自己)、自闭(当我自己)，一切以自己为出发点，会刑煞多会自残",
+          "贪狼在子位、破军在午位或文曲在卯、酉位→其星曜之个性表现特别强烈明显",
+          "巨门坐（亥）命时→自我、但有福德照（福德宫主亦入命），即使得罪他人，别人也无可奈何，继续帮忙"
+        ],
+        "source_rows": {
+          "start": 90,
+          "end": 93
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "3.命宫主 在 兄弟宫：（我去找兄弟，代表交际能力，重手足亲情）",
+        "items": [
+          "初运、人际关系、喜交朋友、串门子",
+          "劫财、出卖与黏他",
+          "喜欢交朋友(眉毛好→交到好朋友；眉毛不好→交到坏朋友，眉毛为兄弟交友宫)",
+          "自己较依赖兄弟，可靠别人赚钱(如公司中的股东)"
+        ],
+        "source_rows": {
+          "start": 98,
+          "end": 102
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "4.命宫主 在 夫妻宫：(代表家庭，也为经营能力)",
+        "items": [
+          "注重家庭生活",
+          "可自行开店，经营自营事业，若上班领人薪水，较懒",
+          "命+福→夫：对家庭忠程度高(把家庭视为党派→忠于其党派)"
+        ],
+        "source_rows": {
+          "start": 103,
+          "end": 106
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "5.命宫主 在 子女宫：(代表领导统御能力，属人力资源管理)",
+        "items": [
+          "会煞时，本身较懒散，像子女一般需要被照顾，养育。或会打骂子女",
+          "会吉星，重视及照顾小孩、部属、员工",
+          "化科：不会桃花星时→代表功名、文书、科举→子女优秀很会读书",
+          "：会桃花星时→表子女数多或旁出",
+          "化忌：有子难、流产或与子女关系不佳，不得下属尊重",
+          "(五弱宫)→开创性不足",
+          "男命在子，贪狼入子女在酉，喜欢幼齿，逢桃花星更明显；遇煞，会侵犯年幼少女；女命同论"
+        ],
+        "source_rows": {
+          "start": 107,
+          "end": 114
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "6.命宫主 在 财帛宫：(代表物质享受程度)",
+        "items": [
+          "喜欢追求物质或享受，没钱也会装阔",
+          "会天府→吉、主富，享受气派",
+          "会文曲→偏财运(曲者：弯曲，不依正途)"
+        ],
+        "source_rows": {
+          "start": 115,
+          "end": 118
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "7.命宫主 在 疾厄宫：(代表冒险犯难及投机程度；掌权)",
+        "items": [
+          "命+福→疾：一夜致富",
+          "[疾→命]&[命→疾]=钻牛角尖，想不开。",
+          "禄存入疾→吃药吃不完",
+          "常做出一些很奇怪的事"
+        ],
+        "source_rows": {
+          "start": 119,
+          "end": 123
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "8.命宫主 在 迁移宫：(离乡背井、出外、驿动)",
+        "items": [
+          "同时“父→奴”，幼时会送人养或吃人奶水或入赘，格局不好就是弃婴",
+          "喜欢往外求发展",
+          "若命宫又无主星→要交给别人养"
+        ],
+        "source_rows": {
+          "start": 124,
+          "end": 127
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "9.命宫主 在 奴仆宫：(服务别人，如：服务业、管家、侍从官或当义工)",
+        "items": [
+          "最好不要当老板，员工轻松，老板辛苦",
+          "“命→奴”&“夫→官”(或化科)→有妇之夫或有夫之妇",
+          "命→奴→财、田：偷盗鼠窃之辈（会凶煞）",
+          "命→奴→子：会伤害别人家的小孩(会凶煞)"
+        ],
+        "source_rows": {
+          "start": 128,
+          "end": 132
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "10.命宫主 在 官禄宫：(工作态度、工作表现与收入能力)",
+        "items": [
+          "事业心重、工作狂",
+          "官禄空宫且田宅好，不用上班也有收入，如租屋等",
+          "若“命+财”→官：财官双美(好格局)"
+        ],
+        "source_rows": {
+          "start": 133,
+          "end": 136
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "11.命宫主 在 田宅宫：(田宅管理与布置经营能力)",
+        "items": [
+          "喜欢待在家里→重享受，因下一宫为福德",
+          "有住院之现象(观察是否[疾→命→田])",
+          "“命→田→财”：常将不动产投资于动产，吉凶如何，要看星曜而定",
+          "会“地劫”：当农夫最好，劫乃施力之象",
+          "会“地空”：最好当建商，空乃开挖之象"
+        ],
+        "source_rows": {
+          "start": 137,
+          "end": 142
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "12.命宫主 在 福德宫：(追求精神层面之态度)",
+        "items": [
+          "追求心灵上及形而上的东西，若在坎宫则→学无止境",
+          "若是隐性的星，较会相信一些奇闻异事",
+          "宗教信仰，相信因果循环，命理等。",
+          "若会天刑、擎羊→精神苦闷",
+          "若会天虚、旬空→心灵空虚、茫然懵懂",
+          "若会吉星→常有福报",
+          "福德：破军＋红鸾→看破红尘，有可能出家或喜欢清修"
+        ],
+        "source_rows": {
+          "start": 143,
+          "end": 151
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "2.命宫主 在 父母宫：(我去当父母、负养育照顾之责)",
+        "items": [
+          "父母：养育、辛劳、驿马、掌权(当老板)、名声、官印、文书、官非、争讼、法律(会煞时)",
+          "会煞又会太阴→因女色之因而有官非、官司",
+          "个性老成持重，尤其在乾艮位"
+        ],
+        "source_rows": {
+          "start": 94,
+          "end": 97
+        },
+        "availability": "explicit"
+      }
+    },
+    "兄弟宫": {
+      "命宫": {
+        "heading": "1.兄弟宫主 在 命宫：",
+        "items": [
+          "手足朋友对我的影响，若带煞则伤害我或手足疏离；会吉对我好，有助力，并依所会星曜吉凶，论其吉凶"
+        ],
+        "source_rows": {
+          "start": 157,
+          "end": 158
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "夫妻宫": {
+        "heading": "2.兄弟宫主 在 夫妻宫：",
+        "items": [
+          "婚姻大多是交往多年的对象，已婚者不宜大限再遇兄、奴入夫，若丧夫丧妻者不忌"
+        ],
+        "source_rows": {
+          "start": 159,
+          "end": 160
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "3.兄弟宫主 在 子女宫：",
+        "items": ["手足行为影响子女", "手足重家庭生活"],
+        "source_rows": {
+          "start": 161,
+          "end": 163
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "4.兄弟宫主 在 财帛宫：",
+        "items": [
+          "兄弟较会玩乐，以劫财论",
+          "若再见财→兄，星吉可与亲朋合伙投资"
+        ],
+        "source_rows": {
+          "start": 164,
+          "end": 166
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "5.兄弟宫主 在 疾厄宫：",
+        "items": ["兄弟是头疼人物", "因为手足影响自己身体状况"],
+        "source_rows": {
+          "start": 167,
+          "end": 169
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "6.兄弟宫主 在 迁移宫：",
+        "items": [
+          "手足无靠，亲情疏离",
+          "因为手足关系，造成离散",
+          "遇凶煞，易失手足"
+        ],
+        "source_rows": {
+          "start": 170,
+          "end": 173
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "7.兄弟宫主 在 奴仆宫：",
+        "items": ["爱玩，不顾家", "宫主星飞入且化忌→不老实"],
+        "source_rows": {
+          "start": 174,
+          "end": 176
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.兄弟宫主 在 官禄宫：",
+        "items": [
+          "手足影响自己工作",
+          "若兄弟宫主星会破耗星(破军、天刑、擎羊、破碎、陀罗)：常换工作，向人借贷"
+        ],
+        "source_rows": {
+          "start": 177,
+          "end": 179
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.兄弟宫主 在 田宅宫：",
+        "items": ["手足影响自己田产家园", "手足成就高，家产丰(会吉)"],
+        "source_rows": {
+          "start": 180,
+          "end": 182
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.兄弟宫主 在 福德宫：",
+        "items": ["手足影响自己福报", "手足有福报(会吉)"],
+        "source_rows": {
+          "start": 183,
+          "end": 185
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.兄弟宫主 在 父母宫：",
+        "items": ["手足影响父母", "手足较得父母疼爱"],
+        "source_rows": {
+          "start": 186,
+          "end": 189
+        },
+        "availability": "explicit"
+      }
+    },
+    "夫妻宫": {
+      "命宫": {
+        "heading": "1.夫妻宫主 在 命宫：",
+        "items": [
+          "夫妻关系影响自己",
+          "将家庭经营视为最重要的，夫妻较恩爱，或黏自己",
+          "带刑煞多飞入的话→结婚后带来精神压力或灾难"
+        ],
+        "source_rows": {
+          "start": 196,
+          "end": 199
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.夫妻宫主 在 兄弟宫：",
+        "items": [
+          "夫妻影响手足关系",
+          "与岳父母公婆等姻亲间的对待关系，看星曜吉凶而定"
+        ],
+        "source_rows": {
+          "start": 200,
+          "end": 202
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "子女宫": {
+        "heading": "3.夫妻宫主 在 子女宫：",
+        "items": [
+          "夫妻影响子女，包括教养、亲情",
+          "会吉，对小孩较好；会煞，打骂小孩"
+        ],
+        "source_rows": {
+          "start": 203,
+          "end": 205
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "4.夫妻宫主 在 财帛宫：",
+        "items": [
+          "夫妻影响物质享受",
+          "会吉，结婚后会有钱财",
+          "会空、劫，婚后贫穷"
+        ],
+        "source_rows": {
+          "start": 206,
+          "end": 209
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "5.夫妻宫主 在 疾厄宫：",
+        "items": [
+          "夫妻关系影响健康",
+          "会煞逢空，不想生小孩，或有生育上的问题",
+          "另一半为头疼人物",
+          "会溺爱小孩，或花费时间处理小孩问题"
+        ],
+        "source_rows": {
+          "start": 210,
+          "end": 214
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "6.夫妻宫主 在 迁移宫：",
+        "items": [
+          "配偶主动出去",
+          "由夫妻间（内）之关系产生迁移",
+          "在外经营家庭",
+          "聚少离多或生离死别"
+        ],
+        "source_rows": {
+          "start": 215,
+          "end": 219
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "7.夫妻宫主 在 奴仆宫：",
+        "items": [
+          "喜欢往外跑(奴仆前一宫为迁移)，在外吃得开",
+          "会文曲、咸池→在外偷吃",
+          "会桃花或煞星→配偶变别人；改嫁或另娶",
+          "去帮助别人、服侍别人、去当义工"
+        ],
+        "source_rows": {
+          "start": 220,
+          "end": 224
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.夫妻宫主 在 官禄宫：",
+        "items": [
+          "夫妻重心在事业",
+          "另一半常往外跑，易不在家(官禄乃夫妻迁移)",
+          "若娶嫁本国人，另一半容易落跑",
+          "可娶嫁外国人（来破解），或移居国外"
+        ],
+        "source_rows": {
+          "start": 225,
+          "end": 229
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.夫妻宫主 在 田宅宫：",
+        "items": [
+          "顾家理财",
+          "若会一堆桃花→去别人家服侍他人；住在别人家；或出去外面乱搞。(将“夫妻宫”当“命宫”，则“田宅宫”为其“奴仆宫”，形成“命→奴”)"
+        ],
+        "source_rows": {
+          "start": 230,
+          "end": 232
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.夫妻宫主 在 福德宫：",
+        "items": [
+          "夫妻关系影响精神状况或福报",
+          "夫唱妇随(会吉)，反之对我压力大"
+        ],
+        "source_rows": {
+          "start": 233,
+          "end": 235
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.夫妻宫主 在 父母宫：",
+        "items": [
+          "夫妻关系影父母",
+          "会吉，夫妻会孝顺父母；反之，刻薄虐待",
+          "若夫有擎羊→父有天刑：家有斗殴，诉诸法律、官司"
+        ],
+        "source_rows": {
+          "start": 236,
+          "end": 239
+        },
+        "availability": "explicit"
+      }
+    },
+    "子女宫": {
+      "命宫": {
+        "heading": "1.子女宫主 在 命宫：",
+        "items": [
+          "子女、员工、学生来影响自己",
+          "会吉，子女孝顺；反之，则有刑害"
+        ],
+        "source_rows": {
+          "start": 249,
+          "end": 251
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.子女宫主 在 兄弟宫：",
+        "items": ["子女影响手足", "子女视手足为心仪或尊崇的对象"],
+        "source_rows": {
+          "start": 252,
+          "end": 254
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.子女宫主 在 夫妻宫：",
+        "items": ["子女影响家庭", "有可能嫁娶年纪比你小的当你配偶→老少配"],
+        "source_rows": {
+          "start": 255,
+          "end": 257
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "财帛宫": {
+        "heading": "4.子女宫主 在 财帛宫：",
+        "items": ["子女追求物质享受"],
+        "source_rows": {
+          "start": 258,
+          "end": 259
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "5.子女宫主 在 疾厄宫：",
+        "items": ["子女较为独立，追求自己想要的人事物", "子女是问题人物"],
+        "source_rows": {
+          "start": 260,
+          "end": 262
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "6.子女宫主 在 迁移宫：",
+        "items": ["子女往外跑", "在晚年时，子女会离去"],
+        "source_rows": {
+          "start": 263,
+          "end": 265
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "7.子女宫主 在 奴仆宫：",
+        "items": ["子女较会关怀别人", "能与他人分享", "子女较会追求时尚流行"],
+        "source_rows": {
+          "start": 266,
+          "end": 269
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.子女宫主 在 官禄宫：",
+        "items": ["子继父业，会培养自己人接替其事业"],
+        "source_rows": {
+          "start": 270,
+          "end": 271
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.子女宫主 在 田宅宫：",
+        "items": [
+          "若田在离卦(分离)且位于“巨门天医”(生病)→拿掉小孩",
+          "若代表员工下属且化忌时→属下或员工中有不好的(养老鼠咬布袋)"
+        ],
+        "source_rows": {
+          "start": 272,
+          "end": 274
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.子女宫主 在 福德宫：",
+        "items": ["子女影响自己福报或精神"],
+        "source_rows": {
+          "start": 275,
+          "end": 276
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.子女宫主 在 父母宫：",
+        "items": ["会吉，子女学业事业有成，光耀门楣", "会煞，家门不幸"],
+        "source_rows": {
+          "start": 277,
+          "end": 280
+        },
+        "availability": "explicit"
+      }
+    },
+    "财帛宫": {
+      "命宫": {
+        "heading": "1.财帛宫主 在 命宫：",
+        "items": [
+          "财帛放在自己身上→节俭、小气",
+          "有财",
+          "财、夫→命：自己开店要靠自己"
+        ],
+        "source_rows": {
+          "start": 282,
+          "end": 285
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.财帛宫主 在 兄弟宫：",
+        "items": ["擅于社交活动，宴客开party，好看面", "较难存钱"],
+        "source_rows": {
+          "start": 286,
+          "end": 288
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.财帛宫主 在 夫妻宫：",
+        "items": [
+          "适合自己开店赚钱",
+          "财+官→夫：结婚后，财、官跟着来",
+          "钱财交给配偶管理、理财"
+        ],
+        "source_rows": {
+          "start": 289,
+          "end": 292
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.财帛宫主 在 子女宫：",
+        "items": ["较着重子女教育、员工训练，理财能力佳"],
+        "source_rows": {
+          "start": 293,
+          "end": 294
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "疾厄宫": {
+        "heading": "5.财帛宫主 在 疾厄宫：",
+        "items": ["喜欢新奇刺激的享受或娱乐", "会花钱买药，有服药习惯"],
+        "source_rows": {
+          "start": 295,
+          "end": 297
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "6.财帛宫主 在 迁移宫：",
+        "items": ["喜欢外出旅游或出国旅行"],
+        "source_rows": {
+          "start": 298,
+          "end": 299
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "7.财帛宫主 在 奴仆宫：",
+        "items": ["常义助或赞助别人"],
+        "source_rows": {
+          "start": 300,
+          "end": 301
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.财帛宫主 在 官禄宫：",
+        "items": ["将钱投资在事业上", "若“命+财”→官：财官双美(好格局)"],
+        "source_rows": {
+          "start": 302,
+          "end": 304
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.财帛宫主 在 田宅宫：",
+        "items": [
+          "喜欢投资不动产",
+          "对于室内较喜装潢，品味高雅格调高，星凶品味怪异"
+        ],
+        "source_rows": {
+          "start": 305,
+          "end": 307
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.财帛宫主 在 福德宫：",
+        "items": ["散财求福报", "会吉星：拿钱去做善事和服务别人"],
+        "source_rows": {
+          "start": 308,
+          "end": 310
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.财帛宫主 在 父母宫：",
+        "items": [
+          "奉养父母",
+          "喜托人办事",
+          "有钱能使鬼推磨，星凶会贿赂，有官非"
+        ],
+        "source_rows": {
+          "start": 311,
+          "end": 315
+        },
+        "availability": "explicit"
+      }
+    },
+    "疾厄宫": {
+      "命宫": {
+        "heading": "1.疾厄宫主 在 命宫：",
+        "items": [
+          "一生带疾，不宜福德带凶煞",
+          "若再见命宫主 在 疾，则因自己莽撞或冒险行为导致疾厄灾难",
+          "若是隐性星→慢性或暗疾",
+          "会“禄存”→要吃药"
+        ],
+        "source_rows": {
+          "start": 322,
+          "end": 326
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.疾厄宫主 在 兄弟宫：",
+        "items": ["常为亲友事务烦心操劳", "兄弟有疾厄"],
+        "source_rows": {
+          "start": 327,
+          "end": 329
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.疾厄宫主 在 夫妻宫：",
+        "items": [
+          "夫妻间有疾病灾厄之影响",
+          "会煞，家庭生活苦不堪言",
+          "会吉，家庭生活惊喜多"
+        ],
+        "source_rows": {
+          "start": 330,
+          "end": 333
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.疾厄宫主 在 子女宫：",
+        "items": [
+          "子在男命可表生殖器，生殖器受伤",
+          "田在女命，表子宫",
+          "晚运不佳，会凶更明显"
+        ],
+        "source_rows": {
+          "start": 334,
+          "end": 337
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.疾厄宫主 在 财帛宫：",
+        "items": [
+          "有偏财",
+          "若遇破军、旬空，横发横破",
+          "出外打拼型，靠劳力赚钱"
+        ],
+        "source_rows": {
+          "start": 338,
+          "end": 341
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "迁移宫": {
+        "heading": "6.疾厄宫主 在 迁移宫：",
+        "items": [
+          "好玩好动，不耐静",
+          "出外易惹麻烦",
+          "不良于行(逢劫、刑)，因疾为迁之前一宫"
+        ],
+        "source_rows": {
+          "start": 342,
+          "end": 345
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "7.疾厄宫主 在 奴仆宫：",
+        "items": [
+          "会煞，易与别人起冲突",
+          "将疾厄转给他人，乱世为枭雄，视人命如草芥"
+        ],
+        "source_rows": {
+          "start": 346,
+          "end": 348
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.疾厄宫主 在 官禄宫：",
+        "items": [
+          "武职(军宪警)较佳，有战功",
+          "工作职场较有意外发生，工作不顺",
+          "易得职业病"
+        ],
+        "source_rows": {
+          "start": 349,
+          "end": 352
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.疾厄宫主 在 田宅宫：",
+        "items": ["家中常发生邪异之事，尤其在巽宫", "可经营医院或疗养院"],
+        "source_rows": {
+          "start": 353,
+          "end": 355
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.疾厄宫主 在 福德宫：",
+        "items": ["前世轮回，有业障或业报", "易患精神疾病"],
+        "source_rows": {
+          "start": 356,
+          "end": 358
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.疾厄宫主 在 父母宫：",
+        "items": ["早年家境清苦，父母有疾", "会煞星：有官司、官非"],
+        "source_rows": {
+          "start": 359,
+          "end": 361
+        },
+        "availability": "explicit"
+      }
+    },
+    "迁移宫": {
+      "命宫": {
+        "heading": "1.迁移宫主 在 命宫：",
+        "items": [
+          "迁移代表波动、变动或离散",
+          "大环境逼的要出外发展",
+          "人生起伏大，不想动却要动"
+        ],
+        "source_rows": {
+          "start": 366,
+          "end": 369
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.迁移宫主 在 兄弟宫：",
+        "items": ["手足离散，亲情较淡", "出外结交朋友", "男女感情较不稳定"],
+        "source_rows": {
+          "start": 370,
+          "end": 373
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.迁移宫主 在 夫妻宫：",
+        "items": [
+          "由外在因素(大环境)而影响家庭，造成夫妻分离(生离死别)",
+          "疾为迁之前一宫，故外在环境因素为“疾病灾厄”之因素较多"
+        ],
+        "source_rows": {
+          "start": 374,
+          "end": 376
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.迁移宫主 在 子女宫：",
+        "items": ["拿掉小孩或早夭", "晚运变动大"],
+        "source_rows": {
+          "start": 377,
+          "end": 379
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.迁移宫主 在 财帛宫：",
+        "items": ["常花钱出去玩(出国玩)"],
+        "source_rows": {
+          "start": 380,
+          "end": 381
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.迁移宫主 在 疾厄宫：",
+        "items": ["出外易惹麻烦或官非，会煞更明显"],
+        "source_rows": {
+          "start": 382,
+          "end": 383
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "交友宫": {
+        "heading": "7.迁移宫主 在 奴仆宫：",
+        "items": ["适合业务型工作", "有史怀哲医生或传教士，于异国服务他人精神"],
+        "source_rows": {
+          "start": 384,
+          "end": 386
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "8.迁移宫主 在 官禄宫：",
+        "items": ["升迁快", "会煞→需从事激烈竞争的工作与事业", "常换工作"],
+        "source_rows": {
+          "start": 387,
+          "end": 390
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.迁移宫主 在 田宅宫：",
+        "items": ["要离乡背井，常搬迁", "适合从事建筑业，将田宅迁来迁去"],
+        "source_rows": {
+          "start": 391,
+          "end": 393
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.迁移宫主 在 福德宫：",
+        "items": ["不宜常居家中不外出", "常参加进香团或入深山求道"],
+        "source_rows": {
+          "start": 394,
+          "end": 396
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.迁移宫主 在 父母宫：",
+        "items": [
+          "父母早离或亲缘疏离",
+          "会吉，喜欢挑战或打破记录；会凶，违反道德、法律"
+        ],
+        "source_rows": {
+          "start": 397,
+          "end": 400
+        },
+        "availability": "explicit"
+      }
+    },
+    "交友宫": {
+      "命宫": {
+        "heading": "1.奴仆宫主 在 命宫：",
+        "items": [
+          "公众人物的基本条件，但若会煞，则会被江湖兄弟追着跑",
+          "若无会煞，都是吉星话，则是好格局→别人来帮你，最好在外发展",
+          "若会煞星(天刑、地劫、武曲、化权)，小心别人伤害你",
+          "会桃花，是野桃花",
+          "奴→命→财：别人偷窃或谋夺我的钱财(会煞明显)"
+        ],
+        "source_rows": {
+          "start": 404,
+          "end": 409
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.奴仆宫主 在 兄弟宫：",
+        "items": ["义兄弟，三教九流"],
+        "source_rows": {
+          "start": 410,
+          "end": 411
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.奴仆宫主 在 夫妻宫：",
+        "items": [
+          "有外人介入，第三者。",
+          "会桃花（例如：文曲化科）→外人来当配偶，再娶或再嫁"
+        ],
+        "source_rows": {
+          "start": 412,
+          "end": 414
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.奴仆宫主 在 子女宫：",
+        "items": ["适宜幼教、托婴工作", "别人会伤害或诱拐子女(会煞、桃花)"],
+        "source_rows": {
+          "start": 415,
+          "end": 417
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.奴仆宫主 在 财帛宫：",
+        "items": [
+          "适宜分析师、基金经理人工作，别人拿钱来给自己",
+          "外人影响自己财力"
+        ],
+        "source_rows": {
+          "start": 418,
+          "end": 420
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.奴仆宫主 在 疾厄宫：",
+        "items": ["受外人影响而致灾难，如：车祸、暗杀", "出外易与人结怨"],
+        "source_rows": {
+          "start": 421,
+          "end": 423
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "7.奴仆宫主 在 迁移宫：",
+        "items": ["受外人影响而出外、离散", "种族迁移，国家受难"],
+        "source_rows": {
+          "start": 424,
+          "end": 426
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "官禄宫": {
+        "heading": "8.奴仆宫主 在 官禄宫：",
+        "items": ["可靠外人关系而得工作", "职场多外人，如外劳、美商公司"],
+        "source_rows": {
+          "start": 427,
+          "end": 429
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "9.奴仆宫主 在 田宅宫：",
+        "items": [
+          "与人分租，或住公寓，非独幢",
+          "开店条件(让外人进入，才有钱赚)，表有顾客喜欢上门",
+          "若代表员工下属且化忌时→属下或员工中有不好的(养老鼠咬布袋)"
+        ],
+        "source_rows": {
+          "start": 430,
+          "end": 433
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.奴仆宫主 在 福德宫：",
+        "items": ["外人影响我的思想、信仰或福报"],
+        "source_rows": {
+          "start": 434,
+          "end": 435
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.奴仆宫主 在 父母宫：",
+        "items": [
+          "外人抚养父母，如佣人或看护",
+          "别人当你父母照顾你，外人扶养，如褓母、收容中心",
+          "会“天府”→多父母，府为库为多"
+        ],
+        "source_rows": {
+          "start": 436,
+          "end": 440
+        },
+        "availability": "explicit"
+      }
+    },
+    "官禄宫": {
+      "命宫": {
+        "heading": "1.官禄宫主 在 命宫：",
+        "items": [
+          "会吉星→事业自己送上来，事业易得，不用自己操心",
+          "会煞星→事业给自己压力",
+          "会天机(脑、肝)→脑神经衰弱(注意事业上的压力，不要形成问题)"
+        ],
+        "source_rows": {
+          "start": 445,
+          "end": 448
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.官禄宫主 在 兄弟宫：",
+        "items": ["把工作交给手足、合伙人或亲信", "手足较自己有成就"],
+        "source_rows": {
+          "start": 449,
+          "end": 451
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.官禄宫主 在 夫妻宫：",
+        "items": [
+          "事业影响家庭",
+          "常把职场工作带回家做",
+          "另一半事业较自己有成就"
+        ],
+        "source_rows": {
+          "start": 452,
+          "end": 455
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.官禄宫主 在 子女宫：",
+        "items": [
+          "可从事与小孩有关之行业，或开店需在学校附近，接近小朋友。",
+          "小孩有成就"
+        ],
+        "source_rows": {
+          "start": 456,
+          "end": 458
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.官禄宫主 在 财帛宫：",
+        "items": ["可从事金融、投资、娱乐等方面事业，可用卦象断"],
+        "source_rows": {
+          "start": 459,
+          "end": 460
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.官禄宫主 在 疾厄宫：",
+        "items": ["事业影响身体健康", "从事较具危险或灾难性的工作"],
+        "source_rows": {
+          "start": 461,
+          "end": 463
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "7.官禄宫主 在 迁移宫：",
+        "items": [
+          "事业造成离散外出",
+          "移动式的事业，或卖不同种类样式的东西",
+          "若逢天姚、红鸾→卖精品、漂亮的东西，",
+          "事业常变动，一下做这，一下做那，非固定性商品或事业"
+        ],
+        "source_rows": {
+          "start": 464,
+          "end": 468
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "8.官禄宫主 在 奴仆宫：",
+        "items": [
+          "事业与大众消费有关(如传媒、电讯网路、日常用品等)",
+          "宜服务业"
+        ],
+        "source_rows": {
+          "start": 469,
+          "end": 471
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "田宅宫": {
+        "heading": "9.官禄宫主 在 田宅宫：(好格局，尤其是文曲：主名)",
+        "items": [
+          "富甲一方",
+          "不宜从事业务型工件，可开公司或工厂，农林渔牧业也行"
+        ],
+        "source_rows": {
+          "start": 472,
+          "end": 474
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "10.官禄宫主 在 福德宫：",
+        "items": [
+          "事业与福报、业障有关",
+          "较具国家意识、遵守社会规范、重视家庭伦理与宗教信仰"
+        ],
+        "source_rows": {
+          "start": 475,
+          "end": 477
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.官禄宫主 在 父母宫：",
+        "items": ["可从事公职(元首、行政首长或有“师”字靠等)，为人褓母"],
+        "source_rows": {
+          "start": 478,
+          "end": 480
+        },
+        "availability": "explicit"
+      }
+    },
+    "田宅宫": {
+      "命宫": {
+        "heading": "1.田宅宫主 在 命宫：",
+        "items": [
+          "可继承不动产",
+          "若会地劫、坐廉贞五鬼→要去拜拜",
+          "若会吉星→大地主"
+        ],
+        "source_rows": {
+          "start": 486,
+          "end": 489
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.田宅宫主 在 兄弟宫：",
+        "items": ["手足较我有田产", "分田产时，手足分得多"],
+        "source_rows": {
+          "start": 490,
+          "end": 492
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.田宅宫主 在 夫妻宫：",
+        "items": ["婚后有田产", "另一半有田产"],
+        "source_rows": {
+          "start": 493,
+          "end": 495
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.田宅宫主 在 子女宫：",
+        "items": ["女命不宜逢刑煞，生产有难", "子女能继承田产"],
+        "source_rows": {
+          "start": 496,
+          "end": 498
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.田宅宫主 在 财帛宫：",
+        "items": [
+          "万贯家财，若会天府更多",
+          "建商或地主，会将土地等不动产，变成屋舍售出转为钱财"
+        ],
+        "source_rows": {
+          "start": 499,
+          "end": 501
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.田宅宫主 在 疾厄宫：",
+        "items": ["买房子后，家中不宁", "屋内杂乱不堪，居住品质差"],
+        "source_rows": {
+          "start": 502,
+          "end": 504
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "7.田宅宫主 在 迁移宫：",
+        "items": ["祖业不守", "出国移民"],
+        "source_rows": {
+          "start": 505,
+          "end": 507
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "8.田宅宫主 在 奴仆宫：",
+        "items": ["租屋收钱", "收容难民，布施大众"],
+        "source_rows": {
+          "start": 508,
+          "end": 510
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "9.田宅宫主 在 官禄宫：",
+        "items": ["守祖业，继承传统", "家庭即工厂", "可捐田宅以获得官职或事业"],
+        "source_rows": {
+          "start": 511,
+          "end": 514
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "福德宫": {
+        "heading": "10.田宅宫主 在 福德宫：",
+        "items": [
+          "可寻得好地理、好风水(会吉)；反之，则是风水涣散，不能藏风聚气"
+        ],
+        "source_rows": {
+          "start": 515,
+          "end": 516
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "11.田宅宫主 在 父母宫：",
+        "items": ["父母有钱"],
+        "source_rows": {
+          "start": 517,
+          "end": 519
+        },
+        "availability": "explicit"
+      }
+    },
+    "福德宫": {
+      "命宫": {
+        "heading": "1.福德宫主 在 命宫：",
+        "items": [
+          "业报→好坏均报",
+          "命+福→夫：对家庭忠程度高(若家庭视为党派→忠于其党派)",
+          "又会天巫入命→可给神明做义子，相信轮回",
+          "会吉星→签乐透会中，精神方面之享受，有好生之德，有福有寿",
+          "会煞星→寿元不长(福德亦为“寿元”)"
+        ],
+        "source_rows": {
+          "start": 525,
+          "end": 530
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.福德宫主 在 兄弟宫：",
+        "items": ["手足有福报", "会吉星→投资上即使插乾股都会赚钱；反之则无"],
+        "source_rows": {
+          "start": 531,
+          "end": 533
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.福德宫主 在 夫妻宫：",
+        "items": ["会吉星→好运，家庭生活美满", "会煞星→对另一半产生精神压力"],
+        "source_rows": {
+          "start": 534,
+          "end": 536
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.福德宫主 在 子女宫：",
+        "items": [
+          "若将子女当命宫，福德转为其奴仆，子女有福报",
+          "会吉星→子女有受到庇佑，获得到好员工",
+          "会煞星→莫名的压力放在子身上，员工四分五裂"
+        ],
+        "source_rows": {
+          "start": 537,
+          "end": 540
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.福德宫主 在 财帛宫：(尚须看财入何宫，因财福为对宫）",
+        "items": [
+          "会吉星→常有意外之财(照财)",
+          "会煞星→买股票话，越买越赔钱套牢(冲福)"
+        ],
+        "source_rows": {
+          "start": 541,
+          "end": 543
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.福德宫主 在 疾厄宫：",
+        "items": [
+          "会吉星→常有惊人之举(疾好冒险、掌权)",
+          "会煞星→阴的病痛缠身，事业方面一败涂地"
+        ],
+        "source_rows": {
+          "start": 544,
+          "end": 546
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "7.福德宫主 在 迁移宫：",
+        "items": [
+          "会吉星→在外得福报，出外人缘好",
+          "会煞星→出外不吉(魂魄离去，早夭。福：寿元)。从小不好养，即使长大成人亦不好过，运途起伏大；逢破军，主离散。"
+        ],
+        "source_rows": {
+          "start": 547,
+          "end": 549
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "8.福德宫主 在 奴仆宫：",
+        "items": [
+          "会吉星→员工伙计很会招揽客户",
+          "会煞星→常帮员工伙计收拾残局(擦屁股)"
+        ],
+        "source_rows": {
+          "start": 550,
+          "end": 552
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "9.福德宫主 在 官禄宫：",
+        "items": [
+          "会煞星→喜逢煞；主掌权，忌空亡。",
+          "福德有擎羊入官禄：办事有魄力，有威严"
+        ],
+        "source_rows": {
+          "start": 553,
+          "end": 555
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "10.福德宫主 在 田宅宫：",
+        "items": [
+          "会吉星→容易买到好房子(阴阳宅都是)",
+          "会煞星→住的房子都有问题(例如：一住就漏水)。",
+          "福德带擎羊(或破军)入田：会卖祖产后，再重新买"
+        ],
+        "source_rows": {
+          "start": 556,
+          "end": 559
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      },
+      "父母宫": {
+        "heading": "11.福德宫主 在 父母宫：",
+        "items": ["会吉星：死后光宗耀组", "会煞星：祖业凋零，无依无靠"],
+        "source_rows": {
+          "start": 560,
+          "end": 563
+        },
+        "availability": "explicit"
+      }
+    },
+    "父母宫": {
+      "命宫": {
+        "heading": "1.父母宫主 在 命宫：",
+        "items": [
+          "会吉星→父母、长辈、师长照顾",
+          "会煞星→有官非、诉讼等事发生。父母或长辈对我压力很大或打骂。"
+        ],
+        "source_rows": {
+          "start": 566,
+          "end": 568
+        },
+        "availability": "explicit"
+      },
+      "兄弟宫": {
+        "heading": "2.父母宫主 在 兄弟宫：",
+        "items": [
+          "父母对手足较好",
+          "会吉星→朋友有通财之义，或对朋友很好",
+          "会煞星→拒绝往来户"
+        ],
+        "source_rows": {
+          "start": 569,
+          "end": 572
+        },
+        "availability": "explicit"
+      },
+      "夫妻宫": {
+        "heading": "3.父母宫主 在 夫妻宫：",
+        "items": [
+          "父母会跟自己住在一起",
+          "会吉星→孝子，将父母接来住，或娶嫁年纪大的另一半",
+          "会煞星→夫妻与父母间关系不好。若父母宫有桃花→夫：有桃花主动来黏，老少配(如莉莉与小郑)"
+        ],
+        "source_rows": {
+          "start": 573,
+          "end": 576
+        },
+        "availability": "explicit"
+      },
+      "子女宫": {
+        "heading": "4.父母宫主 在 子女宫：",
+        "items": [
+          "父母像子女一样需要被奉养及照顾",
+          "父母转为子女来享受，自己要奉养"
+        ],
+        "source_rows": {
+          "start": 577,
+          "end": 579
+        },
+        "availability": "explicit"
+      },
+      "财帛宫": {
+        "heading": "5.父母宫主 在 财帛宫：",
+        "items": [
+          "父母提供钱财等物质需求",
+          "会吉星：",
+          "会煞星，因父母之事破财，并损我名誉(父母：名声)"
+        ],
+        "source_rows": {
+          "start": 580,
+          "end": 583
+        },
+        "availability": "explicit"
+      },
+      "疾厄宫": {
+        "heading": "6.父母宫主 在 疾厄宫：",
+        "items": [
+          "父母为头痛人物",
+          "若父母宫空宫（或化科）：可能父母很早就去世了"
+        ],
+        "source_rows": {
+          "start": 584,
+          "end": 586
+        },
+        "availability": "explicit"
+      },
+      "迁移宫": {
+        "heading": "7.父母宫主 在 迁移宫：",
+        "items": [
+          "一出生，父母就不在身边→送给他人做子",
+          "与父母之情缘不好，比较无恩情，不常在一起",
+          "父母离散或离异"
+        ],
+        "source_rows": {
+          "start": 587,
+          "end": 590
+        },
+        "availability": "explicit"
+      },
+      "交友宫": {
+        "heading": "8.父母宫主 在 奴仆宫：",
+        "items": [
+          "并见生曜化科，父母为偏房或继父",
+          "会吉星→父母当幕僚管家等较高阶级之工作",
+          "会煞星→父母帮人洗盘子等阶级较低之工作"
+        ],
+        "source_rows": {
+          "start": 591,
+          "end": 594
+        },
+        "availability": "explicit"
+      },
+      "官禄宫": {
+        "heading": "9.父母宫主 在 官禄宫：好格局，官印相生(父母：主印)",
+        "items": ["逢化权：掌权；逢煞：更好，但不宜多，多则为官非冲突"],
+        "source_rows": {
+          "start": 595,
+          "end": 596
+        },
+        "availability": "explicit"
+      },
+      "田宅宫": {
+        "heading": "10.父母宫主 在 田宅宫：",
+        "items": [
+          "会吉星→父母将田产给我",
+          "会煞星→从事营建业，买卖房屋会有官司。(父：官非。田：监牢)"
+        ],
+        "source_rows": {
+          "start": 597,
+          "end": 599
+        },
+        "availability": "explicit"
+      },
+      "福德宫": {
+        "heading": "11.父母宫主 在 福德宫：",
+        "items": [
+          "会吉星→天塌下来都有别人顶，父母之名声让我受益良多",
+          "会煞星→父母对我精神压力很大"
+        ],
+        "source_rows": {
+          "start": 600,
+          "end": 603
+        },
+        "availability": "explicit"
+      },
+      "父母宫": {
+        "heading": "",
+        "items": [],
+        "source_rows": null,
+        "availability": "no_dedicated_rule_found_in_excel"
+      }
+    }
+  },
+  "shenzhu_into_palaces": {
+    "命宫": {
+      "items": [],
+      "source_rows": [],
+      "availability": "no_dedicated_rule_found"
+    },
+    "兄弟宫": {
+      "items": [],
+      "source_rows": [],
+      "availability": "no_dedicated_rule_found"
+    },
+    "夫妻宫": {
+      "items": ["身命主入夫妻，资财昌盛福兴隆，若是凶星居此位，克妻克子必为凶"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "子女宫": {
+      "items": ["身命主入子孙，母亲护子岂无情，子主若还来顾母，高官禄厚更荣昌"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "财帛宫": {
+      "items": [],
+      "source_rows": [],
+      "availability": "no_dedicated_rule_found"
+    },
+    "疾厄宫": {
+      "items": ["身命主入疾厄，官禄少年须早发，若还煞星入宫来，疾厄缠身那可脱"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "迁移宫": {
+      "items": ["身命主入迁移过房出祖定无疑，若不赘居并过继，也须奴养庶生儿"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "交友宫": {
+      "items": ["身命主入奴仆，纵有吉星也劳碌，身闲心自不能闲，又被小人多反覆"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "官禄宫": {
+      "items": [],
+      "source_rows": [],
+      "availability": "no_dedicated_rule_found"
+    },
+    "田宅宫": {
+      "items": ["身命主入田宅，千箱万箱多蓄积，田宅飞入命身来，贮积金珠无破克"],
+      "source_rows": [661],
+      "availability": "explicit"
+    },
+    "福德宫": {
+      "items": [],
+      "source_rows": [],
+      "availability": "no_dedicated_rule_found"
+    },
+    "父母宫": {
+      "items": ["身命主入父母，性慈责重有担当，若被煞星兼暗克，官非讼事恶名传"],
+      "source_rows": [661],
+      "availability": "explicit"
+    }
+  },
+  "body_master_framework": [
+    {
+      "text": "2) 身主星─呈放射状",
+      "source_row": 39
+    },
+    {
+      "text": "(1) 身主星有七星，分别为：铃、相、梁、同、昌、机、火",
+      "source_row": 40
+    },
+    {
+      "text": "(2) 身主星乃地盘身宫之主星，两两对立而排，对立才能断其刚柔",
+      "source_row": 41
+    },
+    {
+      "text": "(3) 身主星乃辅助宫主星之论断，必须熟记",
+      "source_row": 42
+    }
+  ],
+  "shenzhu_special_rules": [
+    {
+      "condition_text": "原身主宫位坤土，若入命于坤土宫位",
+      "interpretation": "原身主宫位坤土，若入命于坤土宫位→保守",
+      "source_rows": [848],
+      "availability": "explicit"
+    }
+  ],
+  "general_rules": [
+    {
+      "text": "◎命主入身身入命，互垣须是福来当，管取一生长吉庆；财帛与田宅主，身命二宫喜相遇，若无暗耗与刑囚，当与石崇斗豪富；兄弟主入命宫，居兄弟总成空，白日只想闲袖手，不知衣禄在何从；身命主入田宅，千箱万箱多蓄积，田宅飞入命身来，贮积金珠无破克；身命主入子孙，母亲护子岂无情，子主若还来顾母，高官禄厚更荣昌；身命主入奴仆，纵有吉星也劳碌，身闲心自不能闲，又被小人多反覆；身命主入夫妻，资财昌盛福兴隆，若是凶星居此位，克妻克子必为凶；身命主入疾厄，官禄少年须早发，若还煞星入宫来，疾厄缠身那可脱；身命主入迁移过房出祖定无疑，若不赘居并过继，也须奴养庶生儿；官禄主入命宫，须添福寿永无凶，命主若还居官禄，官职必是拜三公；福德主入命宫来，断然福禄永无灾，命主若还居福德，互垣须是拜三台；身命主入父母，性慈责重有担当，若被煞星兼暗克，官非讼事恶名传。如此口诀细推详，先从身命入为纲，时人不解神仙诀，空把星辰错较量。大凡命好身不好，有寿而无福；身好命不好，有福而无寿，命身主起处逢吉星生之，不富即贵；凶星伤之，不夭即贫。",
+      "source_row": 661
+    },
+    {
+      "text": "◎命身主入奴仆，有吉有凶；奴仆有贵人、禄马、长生、帝旺，身命主居其上，乃大贵之命若奴仆宫原有劫的亡羊陀死绝，而身命主居其宫，皆是奔波劳役，无成之人，方可言奴仆。",
+      "source_row": 662
+    },
+    {
+      "text": "◎身命主居迁移，宜离祖过房；兄弟主居之，兄弟姐妹离祖；男女若见桃花煞居此，婚姻不良，不然娶嫁远方之人。",
+      "source_row": 669
+    },
+    {
+      "text": "◎诀：身命遇煞不逢空，处世有刑凶；身命得助嫌气脱，会煞逢空发。",
+      "source_row": 671
+    },
+    {
+      "text": "◎身命主遇煞星，喜逢空则发，若坐实不逢空，处世则有灾刑之事。得助者，身命受生忌空亡虚脱，遇而不遇，得而复失。会煞者，身命主遇煞星坐实则凶，逢空亡者则发财利。所以空亡一诀，乃天地之玄，常术罕有。凡身命宫遇煞者，或身命主及有用之星遇煞不逢空，皆为凶夭。凶星有党凶尤横，吉曜无生吉不成。凡身命主逢母或身命起处受生，则发福，值空亡，反为无用。",
+      "source_row": 672
+    },
+    {
+      "text": "◎财帛田宅主，身命二宫喜相逢，若无暗曜与刑囚，可与石崇斗豪富。",
+      "source_row": 673
+    },
+    {
+      "text": "◎身命主入迁移，过房出祖定无疑；若不赘居并入舍，也须偏产庶生儿。",
+      "source_row": 674
+    },
+    {
+      "text": "◎主星入迁移宫，主过房，若非入赘，亦庶生儿息。",
+      "source_row": 675
+    },
+    {
+      "text": "◎凡看身命宫，星既吉，更须看左右宫，若值凶星刑囚夹拱，必伤克身；若得吉星夹照，乃为一生富贵之命。诗云：凡看星，看左右，左右吉星欣遇会，若遇田财与官福，一生富兮一生贵。",
+      "source_row": 676
+    },
+    {
+      "text": "原身主宫位坤土，若入命于坤土宫位→保守",
+      "source_row": 848
+    }
+  ],
+  "notes": [
+    "奴仆宫统一规范为现代称谓交友宫，同时保留原文中的奴仆宫字样。",
+    "宫主入宫解释逐条摘录 Excel 对应章节，不补写缺失关系。",
+    "身主入宫条文仅在 Excel 确有明文时填入；未找到独立条文的宫位明确标注，不以通用断语替代。",
+    "Sheet3 是空白模板，不作为映射数据来源。"
+  ],
+  "mapping_spec": {
+    "gongzhu": "dizhi_to_rulers[被双击宫位地支].gongzhu → 在命盘十二宫星曜中查实际落宫 → gongzhu_into_palaces[被双击宫名][实际落宫名]",
+    "shenzhu": "dizhi_to_rulers[被双击宫位地支].shenzhu → 在命盘十二宫星曜中查实际落宫 → shenzhu_into_palaces[实际落宫名]"
+  },
+  "minggong_extra_sections": {
+    "title": "命宫专属补充资料",
+    "ming_zuo_bagua_jiuxing": [
+      {
+        "star": "贪狼",
+        "nine_star": "生气",
+        "meaning": "个性有朝气、活泼",
+        "source_row": 72
+      },
+      {
+        "star": "廉贞",
+        "nine_star": "五鬼",
+        "meaning": "辛苦，须往外发展。做巽宫：常会见到异象",
+        "source_row": 73
+      },
+      {
+        "star": "武曲",
+        "nine_star": "延年",
+        "meaning": "耐操型，逆来顺受，刻苦耐劳，白手起家。",
+        "source_row": 74
+      },
+      {
+        "star": "文曲",
+        "nine_star": "六煞",
+        "meaning": "容易有桃花，酒色财气，口舌是非。若不会桃花星：主智慧、脑筋好；心性不定，城府深。",
+        "source_row": 75
+      },
+      {
+        "star": "禄存",
+        "nine_star": "祸害",
+        "meaning": "保守，节俭，固执；坐疾厄，易有服药吃补等习惯",
+        "source_row": 76
+      },
+      {
+        "star": "巨门",
+        "nine_star": "天医",
+        "meaning": "个性极重安逸，但不宜疾厄宫在巨门天医方，主慢性疾病或隐疾；会天刑、擎羊常有刀厄，血光难免。",
+        "source_row": 77
+      },
+      {
+        "star": "破军",
+        "nine_star": "绝命",
+        "meaning": "个性自我，自恃甚高，任性。若该宫无主星：个性不好，冲动不耐久。",
+        "source_row": 78
+      }
+    ],
+    "minggua_jianjie": [
+      {
+        "gua": "乾金",
+        "meaning": "长子为佳，个性刚强，较有社会地位；女命辛苦，代父养家或顾家，常为家中支柱，任劳任怨。",
+        "source_row": 81
+      },
+      {
+        "gua": "坤土",
+        "meaning": "男命辛苦忙碌，较无主见，有异性缘，吝啬；长女为佳，个性柔和，身材微胖，有人缘，因坤为众人之象。",
+        "source_row": 82
+      },
+      {
+        "gua": "艮土",
+        "meaning": "少男为佳，个性独立，善言语歌唱，虎背熊腰；女命呱噪或不语，遇刑杀主矮胖，不然单薄。",
+        "source_row": 83
+      },
+      {
+        "gua": "兑金",
+        "meaning": "白净，长相斯文，男命较扭捏作态，无男子气概，油腔滑调；",
+        "source_row": 84
+      },
+      {
+        "gua": "坎水",
+        "meaning": "中男吉，男女皮肤较黝黑，做酉：男女酒量都很好。逢桃花淫荡，女：曲线苗条或丰满，善察言观色，投机性强。要常导正。",
+        "source_row": 85
+      },
+      {
+        "gua": "离火",
+        "meaning": "个性不稳定，眼高手低。女命：漂亮或很会打扮；男命帅气，若离坐离：会有突如其来之意外或惊奇。",
+        "source_row": 86
+      },
+      {
+        "gua": "震木",
+        "meaning": "身材高（春天出生之人身材高挑，秋天出生中等：男约170CM），震为动，想法大胆、前卫，比较冒险，性情不稳定，易受惊吓，若表现好一鸣惊人。",
+        "source_row": 87
+      },
+      {
+        "gua": "巽木",
+        "meaning": "善变，喜欢Fashion，有个人品味。因巽为风，个性不稳定（善变），男命异性缘重。遇煞个性阴柔，优柔寡断或洁癖。",
+        "source_row": 88
+      }
+    ],
+    "source_rows": {
+      "命坐八卦九星": [70, 71, 72, 73, 74, 75, 76, 77, 78],
+      "命卦简介": [80, 81, 82, 83, 84, 85, 86, 87, 88]
+    }
+  }
+}

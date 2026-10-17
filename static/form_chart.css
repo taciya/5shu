@@ -2531,3 +2531,102 @@ dl {
 .taiji-relation-fuji {
   fill: #f4c95d;
 }
+/* ============================================================
+   六十四卦选择区域
+   ============================================================ */
+.hexagram-picker-section {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  margin: 8px 0;
+  padding: 10px 10px;
+
+  border-top: 1px solid rgba(180, 140, 80, 0.35);
+  border-bottom: 1px solid rgba(180, 140, 80, 0.35);
+}
+
+.hexagram-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(6px, 1.5vw, 10px);
+  width: 100%;
+  min-width: 0;
+  margin: 8px 0;
+}
+
+.hexagram-picker-item {
+  min-width: 0;
+}
+
+.hexagram-picker-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #888;
+  font-size: 12px;
+}
+
+/* 与 .control-select 保持一致的视觉尺寸 */
+.hexagram-select {
+  display: block;
+  width: 90%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  background: #fff;
+  color: #333;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: normal;
+
+  outline: none;
+  cursor: pointer;
+}
+
+.hexagram-select:focus {
+  border-color: #b8860b;
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.12);
+}
+
+/* 平板及窄屏 */
+@media (max-width: 768px) {
+  .hexagram-picker-section {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .hexagram-picker-grid {
+    gap: 7px;
+  }
+}
+
+/* 手机竖屏 */
+@media (max-width: 480px) {
+  .hexagram-picker-section {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .hexagram-picker-grid {
+    gap: 6px;
+    margin: 6px 0;
+  }
+
+  .hexagram-picker-label {
+    margin-bottom: 4px;
+    font-size: 11px;
+  }
+}
+
+/* 极窄屏幕 */
+@media (max-width: 320px) {
+  .hexagram-picker-grid {
+    gap: 4px;
+  }
+}
