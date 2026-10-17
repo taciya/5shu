@@ -482,6 +482,203 @@ function copyToClipboard(text) {
     })
 }
 // 渲染命盘
+
+/**
+ * 命主／身主裁断：
+ * 遵循《紫微斗数资料.docx》：宫主星为论断依据，身主星辅助宫主星；
+ * 命身主需结合其所入宫位，以及该宫主辅星、强弱与吉煞判断。
+ */
+function analyzeMingzhuShenzhu(chartData) {
+  const data = chartData?.ziwei_chart || chartData?.chart || chartData || {};
+  const palaces = Array.isArray(data.palaces) ? data.palaces : [];
+  const mingzhu = String(data.mingzhu || '').trim();
+  const shenzhu = String(data.shenzhu || '').trim();
+  // 下列摘要取自《紫微斗数资料.docx》第33–39页“星曜”相关笔记；
+  // 保留其传统术语，视为象义提示，不作脱离整盘的确定判断。
+  const STAR_MEANINGS = {
+    贪狼: ['原文归类为“桃花，水木”，强调依环境顺势而流。', '原文提到贪狼在坎水位时欲望与自我表现较强；入命另有好享受、宁滥勿缺等描述。', '贪狼与文曲同见时，原文提示桃花象义；须结合实际星曜组合。'],
+    巨门: ['原文归类为“暗星、癸水”，取口舌、口福、闭合之物等象。', '原文强调口舌是非与沟通议题；在特定宫位又可取口福、形而上信仰等象。'],
+    禄存: ['原文归类为“爵贵、己土”，取钱财储蓄、节俭、忠厚、固执之象。', '原文提到入命时可能表现为固执、小气或吝啬；入福德则偏保守、固执。'],
+    文曲: ['原文归类为“文华、癸水”，取文采、斯文、变化与桃花等象。', '原文描述其策划、规划、脑筋灵活、行销管理等倾向；仍需以落宫和组合细化。'],
+    廉贞: ['原文归类为“囚星、丁火”，同时提到正义感、守正、洁癖、结党及现实与理想冲突等象。', '原文形容其性情有时火爆；廉贞与天相同见时，笔记提示小心谨慎。'],
+    武曲: ['原文归类为“财星、辛金”，强调经营能力与财务主题。', '原文列举生意、金融财政、销售及军宪警等行业象义，并提示驿马意味有利外地发展。'],
+    破军: ['原文归类为“耗星、癸水”，取冲突争执、好大喜功、开创与变动之象。', '原文对入命描述为个性冲动、宁为玉碎不为瓦全；入田宅则提示进出频繁、钱财易留不住。'],
+    火星: ['原文归类为“暴杀、丙火”，笔记提到点子多、个性难定。'],
+    天相: ['原文归类为“印星、壬水”，取辅佐、沟通协调、义工与外交等象。', '原文提到入命可表现为忠厚老实，在官禄可取官印、掌权之象。'],
+    天梁: ['原文归类为“荫星、戊土”，笔记提示所入之宫可取贵人之象。', '原文提到入命老成、喜欢带头；会煞时有魄力，但煞曜不宜过多。'],
+    天同: ['原文归类为“福星、壬水”，与宗族、桃花等象义相关。', '原文提到入命偏好享受、较懒散，入迁移有人缘；具体仍须看宫位与组合。'],
+    文昌: ['原文归类为“文星、辛金”，取执行能力与行动力之象。', '原文提到戌、亥位置可能有日落西山、较不得志的象义。'],
+    天机: ['原文归类为“善星、乙木”，强调思维快、聪明伶俐、机会与变化。', '原文提示其正面可取善心与机敏，负面可表现为善变；“机忌”有聪明反被聪明误的说法。'],
+  };
+  const mainStars = ['紫微','天机','太阳','武曲','天同','廉贞','天府','太阴','贪狼','巨门','天相','天梁','七杀','破军'];
+  const shaStars = ['破碎','劫煞','流霞','擎羊','陀罗','丧门','白虎','空亡','天刑','火星','铃星','地空','地劫'];
+  const cleanStar = (value) => String(value || '').replace(/（.*?）|\(.*?\)/g, '').trim();
+  const starsOf = (p) => ['main_stars','minor_stars','xiaoxing_stars','shensha_stars','changsheng_stars']
+    .flatMap((k) => Array.isArray(p?.[k]) ? p[k].map(cleanStar) : []).filter(Boolean);
+  const nameOf = (p) => String(p?.name || p?.palace_name || '').replace(/\s/g,'').replace(/宫$/,'');
+  const locate = (star) => {
+    if (!star) return null;
+    // 命主／身主本身可能是星曜名，不同排盘口径下可能未以主星入宫，故搜索全部星曜列表。
+    return palaces.find((p) => starsOf(p).includes(star)) || null;
+  };
+  const mingPalace = locate(mingzhu);
+  const shenPalace = locate(shenzhu);
+  const sections = [];
+  const add = (title, items) => sections.push({ title, items: items.filter(Boolean) });
+  add('论断基点', [
+    '命主：' + (mingzhu || '未识别') + '；身主：' + (shenzhu || '未识别') + '。',
+    '资料原则：宫主星是地盘十二宫的论断依据；身主星辅助宫主星论断。以下仅按当前命盘中可识别的星曜与宫位组合组织裁断，不以命主／身主名称单独定吉凶。',
+  ]);
+  const assess = (label, star, palace) => {
+    const items = [];
+    if (!star) {
+      items.push(label + '尚未从当前命盘读取到星曜名称。');
+      return items;
+    }
+    items.push(label + '为' + star + (palace ? '，落在' + nameOf(palace) + '（' + (palace.dizhi || '地支未载') + '）' : '；当前十二宫星曜列表中未找到其落宫') + '。');
+    if (!palace) return items;
+    const stars = starsOf(palace);
+    const fellow = stars.filter((s) => s !== star);
+    const mains = fellow.filter((s) => mainStars.includes(s));
+    const sha = fellow.filter((s) => shaStars.some((x) => s.includes(x)));
+    const brightness = palace.main_stars_brightness || {};
+    const minorBrightness = palace.minor_stars_brightness || {};
+    const b = brightness[star] ?? minorBrightness[star];
+    if (mains.length) items.push('同宫主星：' + mains.join('、') + '；须与' + star + '的星性合参。');
+    else items.push('该宫未读取到其他十四主星；按资料原则，不以单颗星曜替代整个宫位格局。');
+    if (sha.length) items.push('同宫可识别的煞曜／凶曜：' + sha.join('、') + '；资料强调命主、身主起坐遇凶煞时，需提高警觉并结合三方四正复核。');
+    else items.push('在已载入的同宫星曜中，未识别到常见煞曜；仍需检查三方四正，不能据此直接判为吉。');
+    if (b !== undefined && b !== null && b !== '') items.push('当前排盘亮度字段：' + String(b) + '。此字段作辅助参考，须结合整宫星曜与三方四正。');
+    if (STAR_MEANINGS[star]) {
+      items.push('资料中的星曜象义提要：' + STAR_MEANINGS[star].join(' '));
+    }
+    const sanfang = [];
+    const opposite = palaces.length === 12 ? palaces[(palaces.indexOf(palace) + 6) % 12] : null;
+    if (opposite) sanfang.push('对宫' + nameOf(opposite) + '：' + starsOf(opposite).join('、'));
+    if (palaces.length === 12) {
+      for (const offset of [-4,4]) {
+        const q = palaces[(palaces.indexOf(palace) + offset + 12) % 12];
+        if (q) sanfang.push(nameOf(q) + '：' + starsOf(q).join('、'));
+      }
+    }
+    if (sanfang.length) items.push('三方四正核验：' + sanfang.join('；') + '。');
+    return items;
+  };
+  add('命主星落宫', assess('命主', mingzhu, mingPalace));
+  add('身主星落宫', assess('身主', shenzhu, shenPalace));
+  // 《紫微斗数资料.docx》第28页“命身主入十二宫”古诀。
+  // 仅当当前盘实际检索到命主／身主落宫时才展示，并始终标明为传统古诀提示。
+  const mingNamed = nameOf(mingPalace || {});
+  const shenNamed = nameOf(shenPalace || {});
+  const palaceAlias = (name) => name === '奴仆' ? '交友' : name;
+  const palaceVerdicts = {
+    田宅: '原文古诀：“身命主入田宅，千箱万箱多蓄积；田宅飞入命身来，贮积金珠无破克。”传统上取积蓄、不动产之象；仍须核查田宅宫吉煞和三方四正。',
+    子女: '原文古诀：“身命主入子孙，母亲护子岂无情；子主若还来顾母，高官禄厚更荣昌。”传统上取照顾子女、晚辈、部属及其回馈之象；须结合实际宫位与星曜。',
+    奴仆: '原文古诀：“身命主入奴仆，纵有吉星也劳碌；身闲心自不能闲，又被小人多反覆。”同段又说明奴仆宫有贵人、禄马、长生、帝旺，与劫煞、羊陀、死绝同临时断法不同，故不能只凭宫名定凶。',
+    交友: '原文以“奴仆”称此宫，古诀提示此处既可能有贵人、禄马等助力，也可能主劳碌与反覆；应按本盘交友宫实际星曜复核。',
+    夫妻: '原文古诀：“身命主入夫妻，资财昌盛福兴隆；若是凶星居此位，克妻克子必为凶。”该笔记本身强调吉凶星曜有别，应结合夫妻宫星曜与三方四正，不可仅据此断婚姻结果。',
+    疾厄: '原文古诀：“身命主入疾厄，官禄少年须早发；若还煞星入宫来，疾厄缠身那可脱。”这是传统象义记录，不是医学判断；涉及健康须以专业医疗评估为准，并核对本盘星曜组合。',
+    迁移: '原文古诀把“身命主入迁移”与出外、离祖、过房等传统象义相连。此类说法应结合家庭背景、时代语境与全盘核验，不作为现实事实断言。',
+    父母: '原文古诀：“身命主入父母，性慈责重有担当；若被煞星兼暗克，官非讼事恶名传。”需结合父母宫中的实际星曜、吉煞与三方四正。',
+  };
+  [['命主', mingNamed], ['身主', shenNamed]].forEach(([label, palaceName]) => {
+    if (!palaceName) return;
+    const key = palaceAlias(palaceName);
+    if (palaceVerdicts[key]) {
+      sections.push({
+        title: label + '落' + palaceName + '宫的古诀提示',
+        items: [palaceVerdicts[key]],
+      });
+    }
+  });
+  if (mingNamed === '官禄') {
+    sections.push({ title: '命主入官禄的古诀提示', items: ['《紫微斗数资料.docx》第28页载有“命主若还居官禄，官职必是拜三公”。这是古诀的传统表述，实际判断仍须核对主星强弱、三方四正及煞曜，不据此承诺具体官职。'] });
+  }
+  if (mingNamed === '福德') {
+    sections.push({ title: '命主入福德的古诀提示', items: ['《紫微斗数资料.docx》第28页载有“命主若还居福德，互垣须是拜三台”。应按传统古诀提示理解，仍须结合整盘格局核验。'] });
+  }
+  if (mingPalace && shenPalace && mingPalace === shenPalace) {
+    sections.push({ title: '命主与身主同宫', items: ['命主与身主同落' + mingNamed + '，可视作同一宫位信息互相加强的观察点；仍需看该宫强弱、吉煞及三方四正，不能只因同宫便定吉凶。'] });
+  }
+  if (mingPalace?.shengong_flg && shenNamed === '命') {
+    sections.push({ title: '命身互垣古诀', items: ['原文古诀：“命主入身身入命，互垣须是福来当，管取一生长吉庆。”当前盘呈现命主落身宫、身主落命宫，可按“互垣”条文提示再检查双方宫位的吉曜、煞曜与三方四正；不可脱离整盘定吉凶。'] });
+  }
+  add('全盘复核', [
+    '《紫微斗数资料.docx》第26页提出：命宫、命宫主、身宫主皆遇凶煞星时，不宜直接作长寿有福的判断；第28页又强调“命好不如限好”，且命好身不好、身好命不好需分别看待。',
+    '本面板根据原局当前十二宫数据做静态裁断；如要断具体事件或应期，还应另行核对大限、流年及四化引动。',
+  ]);
+  return { title: '命主／身主裁断', mingzhu, shenzhu, sections };
+}
+function ensureMingzhuShenzhuPanel() {
+  let panel = document.getElementById('mingzhuShenzhuPanel');
+  if (panel) return panel;
+  panel = document.createElement('aside');
+  panel.id = 'mingzhuShenzhuPanel';
+  panel.className = 'mingzhu-shenzhu-panel';
+  panel.setAttribute('aria-live', 'polite');
+  const style = document.createElement('style');
+  style.textContent = `.mingzhu-shenzhu-panel{position:fixed;z-index:10001;top:18px;right:18px;width:min(520px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;box-sizing:border-box;background:#fffdf8;color:#2a2927;border:1px solid #d8cdb7;border-radius:10px;box-shadow:0 10px 36px rgba(25,20,12,.18);padding:14px 16px;font:14px/1.65 system-ui,sans-serif}.mingzhu-shenzhu-panel[hidden]{display:none}.mingzhu-shenzhu-panel h3{margin:0;font-size:17px}.mingzhu-shenzhu-panel h4{margin:12px 0 5px;color:#6d5231;font-size:14px}.mingzhu-shenzhu-panel ul{margin:5px 0;padding-left:20px}.mingzhu-shenzhu-panel li{margin:4px 0}.mingzhu-shenzhu-close{float:right;border:0;border-radius:6px;background:#eee5d7;padding:4px 9px;cursor:pointer;font:inherit}.mingzhu-shenzhu-muted{color:#777;font-size:12px}.mingzhu-shenzhu-trigger{cursor:pointer;border-radius:4px}.mingzhu-shenzhu-trigger:hover{outline:1px dashed #a78654;outline-offset:2px}`;
+  document.head.appendChild(style);
+  const content = document.createElement('div');
+  content.id = 'mingzhuShenzhuContent';
+  panel.appendChild(content);
+  document.body.appendChild(panel);
+  panel.addEventListener('click', (ev) => {
+    if (ev.target.closest('.mingzhu-shenzhu-close')) panel.hidden = true;
+  });
+  return panel;
+}
+function showMingzhuShenzhuJudgment(chartData) {
+  const panel = ensureMingzhuShenzhuPanel();
+  const content = document.getElementById('mingzhuShenzhuContent');
+  const result = analyzeMingzhuShenzhu(chartData || window.__5shuCurrentChart);
+  panel.hidden = false;
+  content.replaceChildren();
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'mingzhu-shenzhu-close';
+  close.textContent = '关闭';
+  content.appendChild(close);
+  const title = document.createElement('h3');
+  title.textContent = result.title;
+  content.appendChild(title);
+  const meta = document.createElement('div');
+  meta.className = 'mingzhu-shenzhu-muted';
+  meta.textContent = '命主：' + (result.mingzhu || '未识别') + ' ｜ 身主：' + (result.shenzhu || '未识别');
+  content.appendChild(meta);
+  result.sections.forEach((section) => {
+    const heading = document.createElement('h4');
+    heading.textContent = section.title;
+    content.appendChild(heading);
+    const list = document.createElement('ul');
+    section.items.forEach((text) => {
+      const item = document.createElement('li');
+      item.textContent = text;
+      list.appendChild(item);
+    });
+    content.appendChild(list);
+  });
+}
+function initMingzhuShenzhuClick() {
+  const trigger = document.querySelector('.mingzhu-shenzhu-trigger');
+  if (!trigger || trigger.dataset.mingzhuBound === '1') return;
+  trigger.dataset.mingzhuBound = '1';
+  trigger.setAttribute('role', 'button');
+  trigger.setAttribute('tabindex', '0');
+  trigger.setAttribute('title', '点击查看命主／身主裁断');
+  trigger.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    showMingzhuShenzhuJudgment(window.__5shuCurrentChart);
+  });
+  trigger.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      ev.preventDefault();
+      ev.stopPropagation();
+      showMingzhuShenzhuJudgment(window.__5shuCurrentChart);
+    }
+  });
+}
+
 function renderChart(mixData, formData) {
   window.__5shuCurrentChart = mixData
 
@@ -524,7 +721,7 @@ function renderChart(mixData, formData) {
                 <span class="sizhu">${data.sizhu_bagua['八卦']}</span>
 
             </div>
-            <div class="center-info center">
+            <div class="center-info center mingzhu-shenzhu-trigger">
                 命    主：${data.mingzhu} 身    主：${data.shenzhu}
             </div>
             <div class="center-info center">
@@ -551,6 +748,7 @@ function renderChart(mixData, formData) {
     `
 
   chartGrid.appendChild(centerCell)
+  initMingzhuShenzhuClick()
   const natalData = mixData.natal_chart // 原局命盘数据（如果需要使用）
   // 创建十二宫
   if (data.palaces && Array.isArray(data.palaces)) {
