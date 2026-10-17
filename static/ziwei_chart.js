@@ -504,7 +504,6 @@ function analyzeMingzhuShenzhu(chartData) {
     // 命主／身主本身可能是星曜名，不同排盘口径下可能未以主星入宫，故搜索全部星曜列表。
     return palaces.find((p) => starsOf(p).includes(star)) || null;
   };
-  const locateNamed = (name) => palaces.find((p) => nameOf(p) === name) || null;
   const mingPalace = locate(mingzhu);
   const shenPalace = locate(shenzhu);
   const sections = [];
@@ -557,8 +556,7 @@ function analyzeMingzhuShenzhu(chartData) {
     if (shenNamed === '奴仆' || shenNamed === '交友') sections.push({ title: '身主入交友的古诀提示', items: ['《紫微斗数资料.docx》第28页提示“身命主入奴仆”需辨吉凶：吉曜、禄马与长生帝旺同临，与劫煞、羊陀、死绝同临，断法不同。当前排盘应结合此宫实际星曜复核。'] });
     if (shenNamed === '迁移') sections.push({ title: '身主入迁移的古诀提示', items: ['《紫微斗数资料.docx》第28–29页把身命主入迁移与出外、离祖、过房等传统象义相联系。此类说法依门派语境而异，应结合家庭背景与全盘核验，不作为现实事实断言。'] });
     if (shenNamed === '父母') sections.push({ title: '身主入父母的古诀提示', items: ['《紫微斗数资料.docx》第28页提示身命主入父母可取责任、担当之象；若同宫见煞，又有不同断法，须合参。'] });
-    const shared = starsOf(mingPalace).some((s) => starsOf(shenPalace).includes(s));
-    if (mingPalace === shenPalace) sections.push({ title: '命主与身主同宫', items: ['命主与身主同落' + mingNamed + '，可视作同一宫位信息互相加强的观察点；仍需看该宫强弱、吉煞及三方四正，不能只因同宫便定吉凶。'] });
+    if (mingPalace && shenPalace && mingPalace === shenPalace) sections.push({ title: '命主与身主同宫', items: ['命主与身主同落' + mingNamed + '，可视作同一宫位信息互相加强的观察点；仍需看该宫强弱、吉煞及三方四正，不能只因同宫便定吉凶。'] });
   }
   add('全盘复核', [
     '《紫微斗数资料.docx》第26页提出：命宫、命宫主、身宫主皆遇凶煞星时，不宜直接作长寿有福的判断；第28页又强调“命好不如限好”，且命好身不好、身好命不好需分别看待。',
