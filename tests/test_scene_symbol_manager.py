@@ -62,5 +62,39 @@ class SceneSymbolManagerTests(unittest.TestCase):
         self.assertFalse(reloaded.delete("missing"))
 
 
+    def test_case_feedback_promotes_only_to_draft(self):
+        self.manager.add_case({
+            "id": "case-1",
+            "scene": "automotive_sales",
+            "palace": "子女宫",
+            "star": "巨门",
+            "question": "今天能签单吗？",
+            "prediction": "订单通道存在竞争阻碍",
+            "actual_result": "客户成交，但订单被同事先行录入",
+            "verdict": "partial",
+            "proposed_meaning": "订单成果通道可能被他人切入"
+        })
+        entry = self.manager.promote_case_to_draft("case-1")
+        self.assertEqual(entry["status"], "draft")
+        self.assertEqual(entry["palace"], "子女宫")
+        self.assertEqual(entry["star"], "巨门")
+        saved_case = self.manager.cases[0]
+        self.assertEqual(saved_case["status"], "organized_as_draft")
+        self.assertEqual(saved_case["related_entry_id"], entry["id"])
+
+    def test_incorrect_case_cannot_be_promoted(self):
+        self.manager.add_case({
+            "id": "case-2",
+            "scene": "automotive_sales",
+            "question": "是否签单？",
+            "prediction": "会签单",
+            "actual_result": "未成交",
+            "verdict": "incorrect",
+            "proposed_meaning": "错误示例"
+        })
+        with self.assertRaises(ValueError):
+            self.manager.promote_case_to_draft("case-2")
+
+
 if __name__ == "__main__":
     unittest.main()
