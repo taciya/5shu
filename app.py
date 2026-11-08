@@ -1292,6 +1292,84 @@ def admin_page():
     """后台管理页面"""
     return render_template('index.admin.html')
 
+
+# -------------------------------------------------------------------------------
+# 场景化宫位×星曜象意管理 API（管理员）
+from scene_symbol_manager import SceneSymbolManager
+
+def _scene_symbol_manager():
+    return SceneSymbolManager()
+
+@app.route('/api/scene-symbols', methods=['GET'])
+@admin_required
+def list_scene_symbols():
+    manager = _scene_symbol_manager()
+    return jsonify({
+        'success': True,
+        'scenes': manager.list_scenes(),
+        'entries': manager.entries
+    })
+
+@app.route('/api/scene-symbols', methods=['POST'])
+@admin_required
+def save_scene_symbol():
+    try:
+        entry = request.get_json(silent=True) or {}
+        saved = _scene_symbol_manager().upsert(entry)
+        return jsonify({'success': True, 'entry': saved})
+    except Exception as exc:
+        return jsonify({'success': False, 'message': str(exc)}), 400
+
+@app.route('/api/scene-symbols/<entry_id>', methods=['DELETE'])
+@admin_required
+def remove_scene_symbol(entry_id):
+    if not _scene_symbol_manager().delete(entry_id):
+        return jsonify({'success': False, 'message': '象意条目不存在'}), 404
+    return jsonify({'success': True})
+
+@app.route('/api/scene-cases', methods=['GET'])
+@admin_required
+def list_scene_cases():
+    return jsonify({'success': True, 'cases': _scene_symbol_manager().cases})
+
+@app.route('/api/scene-cases', methods=['POST'])
+@admin_required
+def save_scene_case():
+    try:
+        data = request.get_json(silent=True) or {}
+        data.setdefault('id', secrets.token_hex(6))
+        data.setdefault('created_at', datetime.now().isoformat(timespec='seconds'))
+        saved = _scene_symbol_manager().add_case(data)
+        return jsonify({'success': True, 'case': saved})
+    except Exception as exc:
+        return jsonify({'success': False, 'message': str(exc)}), 400
+
+@app.route('/api/scene-cases/<case_id>', methods=['PUT'])
+@admin_required
+def update_scene_case(case_id):
+    data = request.get_json(silent=True) or {}
+    updated = _scene_symbol_manager().update_case(case_id, data)
+    if not updated:
+        return jsonify({'success': False, 'message': '案例不存在'}), 404
+    return jsonify({'success': True, 'case': updated})
+
+@app.route('/api/scene-cases/<case_id>', methods=['DELETE'])
+@admin_required
+def remove_scene_case(case_id):
+    if not _scene_symbol_manager().delete_case(case_id):
+        return jsonify({'success': False, 'message': '案例不存在'}), 404
+    return jsonify({'success': True})
+
+@app.route('/api/scene-cases/<case_id>/promote', methods=['POST'])
+@admin_required
+def promote_scene_case(case_id):
+    try:
+        entry = _scene_symbol_manager().promote_case_to_draft(case_id)
+        return jsonify({'success': True, 'entry': entry})
+    except Exception as exc:
+        return jsonify({'success': False, 'message': str(exc)}), 400
+
+
 if __name__ == '__main__':
     init_db()
     init_user_db()  # 新增用户表初始化
