@@ -129,7 +129,7 @@ class SceneSymbolManager:
 
     def add_case(self, case: dict[str, Any]) -> dict[str, Any]:
         """保存一次占卜反馈；反馈只作为案例证据，不自动升级象意状态。"""
-        required = ("id", "scene", "question", "prediction", "actual_result", "verdict")
+        required = ("id", "scene", "question", "prediction", "actual_result", "manifestation_verdict", "verdict")
         missing = [key for key in required if not case.get(key)]
         if missing:
             raise ValueError("缺少必填字段：" + ", ".join(missing))
@@ -173,8 +173,8 @@ class SceneSymbolManager:
         case = next((item for item in self._document["cases"] if item.get("id") == case_id), None)
         if not case:
             raise KeyError(case_id)
-        if case.get("verdict") not in ("correct", "partial"):
-            raise ValueError("只有判定为正确或部分正确的案例可以整理")
+        if case.get("manifestation_verdict", case.get("verdict")) not in ("correct", "partial"):
+            raise ValueError("只有显象命中判定为正确或部分正确的案例可以整理")
         meaning = str(case.get("proposed_meaning") or "").strip()
         if not meaning:
             raise ValueError("请先填写拟整理的象意")
