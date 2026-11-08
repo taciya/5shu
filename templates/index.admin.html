@@ -156,6 +156,28 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        .scene-admin-grid{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:16px;margin-top:16px}
+        .scene-card{background:#fff;border:1px solid #e5e0d8;border-radius:8px;padding:16px}
+        .scene-card h4{color:#75451f;margin-bottom:12px;font-size:16px}
+        .scene-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+        .scene-card label{display:block;font-size:13px;color:#555;margin-bottom:10px}
+        .scene-card input,.scene-card select,.scene-card textarea{display:block;width:100%;margin-top:5px;border:1px solid #d8d4ce;border-radius:5px;padding:8px;font:inherit;background:#fff}
+        .scene-block-label{display:block;font-size:13px;color:#555;margin:10px 0 4px}
+        .scene-actions{display:flex;gap:8px;margin-top:12px}
+        .scene-filter-row{display:flex;gap:8px;margin-bottom:10px}
+        .scene-filter-row input{flex:1}
+        .scene-entry-list,.scene-case-list{display:grid;gap:10px;margin-top:12px}
+        .scene-entry,.scene-case{border:1px solid #e7e2da;border-radius:6px;padding:12px;background:#fff}
+        .scene-entry-title{font-weight:600;color:#573a20}
+        .scene-meta,.scene-hint{font-size:12px;color:#777;margin:4px 0 8px}
+        .scene-entry p,.scene-case p{font-size:13px;white-space:pre-wrap;margin:5px 0}
+        .scene-pill{display:inline-block;border-radius:20px;padding:2px 8px;font-size:11px;background:#eee8df;margin-left:6px}
+        .scene-pill.verified{background:#e1f1e5;color:#25623b}.scene-pill.deprecated{background:#eee;color:#777}
+        .scene-item-actions{display:flex;gap:7px;margin-top:8px}
+        .scene-item-actions button{padding:4px 9px}
+        @media(max-width:800px){.scene-admin-grid{grid-template-columns:1fr}.scene-form-grid{grid-template-columns:1fr}.scene-filter-row{flex-direction:column}}
+
     </style>
 </head>
 <body>
@@ -173,6 +195,7 @@
             <ul class="nav-tabs">
                 <li class="nav-tab active" data-tab="users">用户管理</li>
                 <li class="nav-tab" data-tab="system">系统设置</li>
+                <li class="nav-tab" data-tab="scene-symbols">场景象意管理</li>
             </ul>
         </div>
         
@@ -210,6 +233,59 @@
             </div>
         </div>
     </div>
+
+    
+        <div id="scene-symbols-tab" class="tab-content">
+            <h3>场景象意管理</h3>
+            <p class="scene-hint">手动维护组合象意；占卜反馈进入案例库。显象命中与最终裁断命中分开记录，正确的显象可以在结论错误时保留下来。</p>
+            <div id="sceneSymbolAlert"></div>
+            <div class="scene-admin-grid">
+                <section class="scene-card">
+                    <h4>象意条目编辑</h4>
+                    <form id="sceneEntryForm">
+                        <input type="hidden" id="sceneEntryId">
+                        <div class="scene-form-grid">
+                            <label>宫位<select id="sceneEntryPalace"><option value="*">通用</option><option>命宫</option><option>兄弟宫</option><option>夫妻宫</option><option>子女宫</option><option>财帛宫</option><option>疾厄宫</option><option>迁移宫</option><option>交友宫</option><option>官禄宫</option><option>田宅宫</option><option>福德宫</option><option>父母宫</option></select></label>
+                            <label>星曜<input id="sceneEntryStar" required placeholder="例如：巨门"></label>
+                            <label>场景<input id="sceneEntryScene" list="sceneOptions" required placeholder="automotive_sales"></label>
+                            <label>状态<select id="sceneEntryStatus"><option value="draft">待验证</option><option value="verified">已验证</option><option value="deprecated">已弃用</option></select></label>
+                        </div>
+                        <datalist id="sceneOptions"><option value="automotive_sales"></option><option value="relationship"></option><option value="enterprise_operations"></option><option value="space_housing"></option><option value="medical"></option><option value="study_exam"></option></datalist>
+                        <label class="scene-block-label">组合象意（每行：维度|象意）</label>
+                        <textarea id="sceneEntryInterpretations" rows="5" required placeholder="事|订单成果端的交易入口、流转通道或交付接口"></textarea>
+                        <label class="scene-block-label">适用边界（每行一条）</label><textarea id="sceneEntryConstraints" rows="3"></textarea>
+                        <label class="scene-block-label">来源 / 依据</label><input id="sceneEntrySource">
+                        <label class="scene-block-label">备注</label><textarea id="sceneEntryNote" rows="2"></textarea>
+                        <div class="scene-actions"><button class="btn btn-primary" type="submit">保存象意</button><button class="btn" type="button" id="sceneEntryReset">新建 / 清空</button></div>
+                    </form>
+                </section>
+                <section class="scene-card">
+                    <h4>象意库</h4>
+                    <div class="scene-filter-row"><input id="sceneSearch" placeholder="搜索宫位、星曜、场景或象意"><select id="sceneStatusFilter"><option value="">全部状态</option><option value="draft">待验证</option><option value="verified">已验证</option><option value="deprecated">已弃用</option></select></div>
+                    <div id="sceneEntryList" class="scene-entry-list"></div>
+                </section>
+            </div>
+            <section class="scene-card" style="margin-top:18px;">
+                <h4>占卜结果反馈 / 案例复核</h4>
+                <p class="scene-hint">保存原始预测与真实结果。显象命中和最终裁断命中独立评分；象意整理只依据显象是否命中，不以最终结论是否正确替代显象判断。</p>
+                <form id="sceneCaseForm">
+                    <div class="scene-form-grid">
+                        <label>场景<input id="caseScene" list="sceneOptions" required placeholder="automotive_sales"></label>
+                        <label>宫位<input id="casePalace" placeholder="例如：子女宫"></label>
+                        <label>星曜<input id="caseStar" placeholder="例如：巨门"></label>
+                        <label>显象是否命中<select id="caseManifestationVerdict"><option value="pending">待复核</option><option value="correct">正确</option><option value="partial">部分正确</option><option value="incorrect">错误</option></select></label>
+                        <label>最终裁断是否命中<select id="caseVerdict"><option value="pending">待复核</option><option value="correct">正确</option><option value="partial">部分正确</option><option value="incorrect">错误</option></select></label>
+                    </div>
+                    <label class="scene-block-label">原始问题 / 问卦内容</label><textarea id="caseQuestion" rows="2" required></textarea>
+                    <label class="scene-block-label">当时预测（显象与裁断）</label><textarea id="casePrediction" rows="3" required></textarea>
+                    <label class="scene-block-label">实际结果 / 反馈</label><textarea id="caseActual" rows="3" required></textarea>
+                    <label class="scene-block-label">拟整理的正确象义（先作为草稿）</label><textarea id="caseMeaning" rows="2" placeholder="从实际结果中抽取可复用的宫位×星曜×场景显象"></textarea>
+                    <label class="scene-block-label">复盘说明 / 误差点</label><textarea id="caseNotes" rows="2"></textarea>
+                    <div class="scene-actions"><button class="btn btn-primary" type="submit">保存案例反馈</button><button class="btn" type="reset">清空</button></div>
+                </form>
+                <div id="sceneCaseList" class="scene-case-list"></div>
+            </section>
+        </div>
 
     <script>
         // 检查登录状态
@@ -326,10 +402,136 @@
             window.location.href = '/';
         });
         
+
+        // 场景象意管理：API 仅对管理员开放
+        let sceneEntries = [];
+        let sceneCases = [];
+        const sceneStatusLabels = {draft:'待验证', verified:'已验证', deprecated:'已弃用'};
+        function sceneEsc(value) {
+            return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        }
+        function sceneAlert(message, isError=false) {
+            const el=document.getElementById('sceneSymbolAlert');
+            el.innerHTML='<div class="alert '+(isError?'alert-error':'alert-success')+'">'+sceneEsc(message)+'</div>';
+            setTimeout(()=>{el.innerHTML='';},3500);
+        }
+        async function sceneApi(url, options={}) {
+            const response=await fetch(url,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});
+            const data=await response.json();
+            if(!response.ok || data.success===false) throw new Error(data.message||'请求失败');
+            return data;
+        }
+        async function loadSceneSymbols() {
+            try {
+                const data=await sceneApi('/api/scene-symbols');
+                sceneEntries=data.entries||[];
+                renderSceneEntries();
+            } catch(error) { sceneAlert('加载象意库失败：'+error.message,true); }
+        }
+        function renderSceneEntries() {
+            const q=(document.getElementById('sceneSearch').value||'').trim().toLowerCase();
+            const status=document.getElementById('sceneStatusFilter').value;
+            const rows=sceneEntries.filter(e=>(!status||e.status===status)&&JSON.stringify(e).toLowerCase().includes(q));
+            const root=document.getElementById('sceneEntryList');
+            root.innerHTML=rows.map(e=>{
+                const meanings=(e.interpretations||[]).map(x=>(x.facet||'')+'｜'+(x.meaning||'')).join('\n');
+                return '<article class="scene-entry"><div class="scene-entry-title">'+sceneEsc(e.palace)+' × '+sceneEsc(e.star)+' × '+sceneEsc(e.scene)+'<span class="scene-pill '+sceneEsc(e.status)+'">'+sceneEsc(sceneStatusLabels[e.status]||e.status)+'</span></div><p>'+sceneEsc(meanings)+'</p><p class="scene-meta">来源：'+sceneEsc(e.source||'未注明')+'</p><div class="scene-item-actions"><button class="btn btn-primary" onclick="editSceneEntry(\''+sceneEsc(e.id)+'\')">编辑</button><button class="btn btn-danger" onclick="deleteSceneEntry(\''+sceneEsc(e.id)+'\')">删除</button></div></article>';
+            }).join('') || '<p class="scene-hint">没有匹配的象意条目。</p>';
+        }
+        function editSceneEntry(id) {
+            const e=sceneEntries.find(x=>x.id===id); if(!e)return;
+            document.getElementById('sceneEntryId').value=e.id;
+            document.getElementById('sceneEntryPalace').value=e.palace||'*';
+            document.getElementById('sceneEntryStar').value=e.star||'';
+            document.getElementById('sceneEntryScene').value=e.scene||'';
+            document.getElementById('sceneEntryStatus').value=e.status||'draft';
+            document.getElementById('sceneEntryInterpretations').value=(e.interpretations||[]).map(x=>(x.facet||'')+'|'+(x.meaning||'')).join('\n');
+            document.getElementById('sceneEntryConstraints').value=(e.constraints||[]).join('\n');
+            document.getElementById('sceneEntrySource').value=e.source||'';
+            document.getElementById('sceneEntryNote').value=e.note||'';
+            document.getElementById('sceneEntryForm').scrollIntoView({behavior:'smooth',block:'start'});
+        }
+        function resetSceneEntry() { document.getElementById('sceneEntryForm').reset(); document.getElementById('sceneEntryId').value=''; }
+        async function deleteSceneEntry(id) {
+            if(!confirm('确定删除这条象意吗？'))return;
+            try { await sceneApi('/api/scene-symbols/'+encodeURIComponent(id),{method:'DELETE'}); await loadSceneSymbols(); sceneAlert('象意已删除'); }
+            catch(error){sceneAlert(error.message,true);}
+        }
+        document.getElementById('sceneEntryForm').addEventListener('submit',async e=>{
+            e.preventDefault();
+            const interpretations=document.getElementById('sceneEntryInterpretations').value.split('\n').map(line=>line.trim()).filter(Boolean).map(line=>{
+                const index=line.indexOf('|'); return {facet:index>=0?line.slice(0,index).trim():'显象',meaning:index>=0?line.slice(index+1).trim():line};
+            });
+            const payload={
+                id:document.getElementById('sceneEntryId').value||('manual_'+Date.now()),
+                palace:document.getElementById('sceneEntryPalace').value,
+                star:document.getElementById('sceneEntryStar').value.trim(),
+                scene:document.getElementById('sceneEntryScene').value.trim(),
+                status:document.getElementById('sceneEntryStatus').value,
+                interpretations,
+                constraints:document.getElementById('sceneEntryConstraints').value.split('\n').map(x=>x.trim()).filter(Boolean),
+                source:document.getElementById('sceneEntrySource').value.trim(),
+                note:document.getElementById('sceneEntryNote').value.trim()
+            };
+            try { await sceneApi('/api/scene-symbols',{method:'POST',body:JSON.stringify(payload)}); resetSceneEntry(); await loadSceneSymbols(); sceneAlert('象意保存成功'); }
+            catch(error){sceneAlert(error.message,true);}
+        });
+        document.getElementById('sceneEntryReset').addEventListener('click',resetSceneEntry);
+        document.getElementById('sceneSearch').addEventListener('input',renderSceneEntries);
+        document.getElementById('sceneStatusFilter').addEventListener('change',renderSceneEntries);
+
+        async function loadSceneCases() {
+            try { const data=await sceneApi('/api/scene-cases'); sceneCases=data.cases||[]; renderSceneCases(); }
+            catch(error){sceneAlert('加载案例失败：'+error.message,true);}
+        }
+        function renderSceneCases() {
+            const labels={pending:'待复核',correct:'正确',partial:'部分正确',incorrect:'错误'};
+            const root=document.getElementById('sceneCaseList');
+            root.innerHTML=sceneCases.slice().reverse().map(c=>{
+                const canPromote=['correct','partial'].includes(c.manifestation_verdict||c.verdict)&&c.proposed_meaning&&!c.related_entry_id;
+                return '<article class="scene-case"><div class="scene-entry-title">'+sceneEsc(c.palace||'未指定宫位')+' × '+sceneEsc(c.star||'未指定星曜')+' × '+sceneEsc(c.scene)+'<span class="scene-pill">显象：'+sceneEsc(labels[c.manifestation_verdict]||'未记录')+'</span><span class="scene-pill">裁断：'+sceneEsc(labels[c.verdict]||c.verdict)+'</span></div><p><b>问题：</b>'+sceneEsc(c.question)+'</p><p><b>预测：</b>'+sceneEsc(c.prediction)+'</p><p><b>实际：</b>'+sceneEsc(c.actual_result)+'</p><p><b>拟整理象意：</b>'+sceneEsc(c.proposed_meaning||'未填写')+'</p><p class="scene-meta">复盘：'+sceneEsc(c.notes||'无')+' ｜ '+sceneEsc(c.created_at||'')+'</p><div class="scene-item-actions"><select id="manifestation_'+sceneEsc(c.id)+'"><option value="pending" '+(c.manifestation_verdict==='pending'?'selected':'')+'>显象待复核</option><option value="correct" '+(c.manifestation_verdict==='correct'?'selected':'')+'>显象正确</option><option value="partial" '+(c.manifestation_verdict==='partial'?'selected':'')+'>显象部分正确</option><option value="incorrect" '+(c.manifestation_verdict==='incorrect'?'selected':'')+'>显象错误</option></select><select id="verdict_'+sceneEsc(c.id)+'"><option value="pending" '+(c.verdict==='pending'?'selected':'')+'>待复核</option><option value="correct" '+(c.verdict==='correct'?'selected':'')+'>正确</option><option value="partial" '+(c.verdict==='partial'?'selected':'')+'>部分正确</option><option value="incorrect" '+(c.verdict==='incorrect'?'selected':'')+'>错误</option></select><button class="btn btn-primary" onclick="updateSceneCaseVerdict(\''+sceneEsc(c.id)+'\')">更新复核</button>'+(canPromote?'<button class="btn btn-primary" onclick="promoteSceneCase(\''+sceneEsc(c.id)+'\')">整理为待验证象意</button>':'')+'<button class="btn btn-danger" onclick="deleteSceneCase(\''+sceneEsc(c.id)+'\')">删除</button></div>'+(c.related_entry_id?'<p class="scene-meta">已整理为草稿：'+sceneEsc(c.related_entry_id)+'</p>':'')+'</article>';
+            }).join('')||'<p class="scene-hint">暂无案例反馈。</p>';
+        }
+        document.getElementById('sceneCaseForm').addEventListener('submit',async e=>{
+            e.preventDefault();
+            const payload={
+                scene:document.getElementById('caseScene').value.trim(),
+                palace:document.getElementById('casePalace').value.trim(),
+                star:document.getElementById('caseStar').value.trim(),
+                manifestation_verdict:document.getElementById('caseManifestationVerdict').value,
+                verdict:document.getElementById('caseVerdict').value,
+                question:document.getElementById('caseQuestion').value.trim(),
+                prediction:document.getElementById('casePrediction').value.trim(),
+                actual_result:document.getElementById('caseActual').value.trim(),
+                proposed_meaning:document.getElementById('caseMeaning').value.trim(),
+                notes:document.getElementById('caseNotes').value.trim()
+            };
+            try { await sceneApi('/api/scene-cases',{method:'POST',body:JSON.stringify(payload)}); e.target.reset(); await loadSceneCases(); sceneAlert('案例反馈已保存'); }
+            catch(error){sceneAlert(error.message,true);}
+        });
+        async function updateSceneCaseVerdict(id) {
+            const verdict=document.getElementById('verdict_'+id).value;
+            const manifestation_verdict=document.getElementById('manifestation_'+id).value;
+            try { await sceneApi('/api/scene-cases/'+encodeURIComponent(id),{method:'PUT',body:JSON.stringify({verdict,manifestation_verdict})}); await loadSceneCases(); sceneAlert('复核结论已更新'); }
+            catch(error){sceneAlert(error.message,true);}
+        }
+        async function promoteSceneCase(id) {
+            if(!confirm('将此案例整理为“待验证”象意草稿？不会自动标记为已验证。'))return;
+            try { await sceneApi('/api/scene-cases/'+encodeURIComponent(id)+'/promote',{method:'POST',body:'{}'}); await loadSceneSymbols(); await loadSceneCases(); sceneAlert('已整理为待验证象意，请在象意库中继续审核'); }
+            catch(error){sceneAlert(error.message,true);}
+        }
+        async function deleteSceneCase(id) {
+            if(!confirm('确定删除这条案例反馈吗？'))return;
+            try { await sceneApi('/api/scene-cases/'+encodeURIComponent(id),{method:'DELETE'}); await loadSceneCases(); sceneAlert('案例已删除'); }
+            catch(error){sceneAlert(error.message,true);}
+        }
+
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
             checkAdminAuth();
             loadUsers();
+            loadSceneSymbols();
+            loadSceneCases();
         });
     </script>
 </body>

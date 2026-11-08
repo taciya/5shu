@@ -143,3 +143,28 @@ class ZiweiChart:
         """将命盘数据转换为JSON格式"""
         formatter = OutputFormatter(self)
         return formatter.print_all_palaces(stars)
+
+    def get_scene_interpretations(self, scene, include_minor_stars=False, include_draft=True):
+        """按指定场景检索本命盘的宫位×星曜组合象意。
+
+        本方法只提供场景映射，不参与安星、四化计算或吉凶裁断。
+        """
+        from scene_symbol_manager import SceneSymbolManager
+
+        manager = SceneSymbolManager()
+        results = []
+        for palace in self.palaces:
+            stars = list(palace.main_stars)
+            if include_minor_stars:
+                stars.extend(palace.minor_stars)
+            for star in stars:
+                for item in manager.lookup(
+                    palace.palace_name, star, scene, include_draft=include_draft
+                ):
+                    results.append({
+                        "palace": palace.palace_name,
+                        "star": star,
+                        "scene": scene,
+                        "interpretation": item,
+                    })
+        return results
