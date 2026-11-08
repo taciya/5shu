@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "description": "场景化宫位×星曜象意映射。根定义不在此重复定义；条目需经案例验证后方可将 status 改为 verified。",
+  "scenes": [
+    {
+      "id": "automotive_sales",
+      "name": "汽车销售",
+      "domain": "交易/销售"
+    },
+    {
+      "id": "relationship",
+      "name": "感情关系",
+      "domain": "关系"
+    },
+    {
+      "id": "enterprise_operations",
+      "name": "企业经营",
+      "domain": "组织/经营"
+    },
+    {
+      "id": "space_housing",
+      "name": "空间/房屋",
+      "domain": "空间/物质"
+    },
+    {
+      "id": "medical",
+      "name": "医疗健康",
+      "domain": "身体/医疗"
+    },
+    {
+      "id": "study_exam",
+      "name": "学习考试",
+      "domain": "学习/信息"
+    }
+  ],
+  "entries": [
+    {
+      "id": "child_巨门_automotive_sales",
+      "palace": "子女宫",
+      "star": "巨门",
+      "scene": "automotive_sales",
+      "status": "draft",
+      "interpretations": [
+        {
+          "facet": "事",
+          "meaning": "订单成果端的交易入口、订单流转通道或交付接口"
+        },
+        {
+          "facet": "物",
+          "meaning": "订单、合同流转记录、销售系统中的订单入口"
+        },
+        {
+          "facet": "信息",
+          "meaning": "订单信息的进入、传递、遮挡或权限开关"
+        }
+      ],
+      "constraints": [
+        "只描述订单/成果通道，不直接判断成交成功或失败",
+        "需结合四化判断通道如何变化，并结合小星继续过滤"
+      ],
+      "source": "宫位根定义（子女宫：输出物/成果/订单）× 巨门根定义（门/通道/开关/信息）的场景映射",
+      "note": "初始工作条目，待真实销售案例校验"
+    },
+    {
+      "id": "spouse_巨门_automotive_sales",
+      "palace": "夫妻宫",
+      "star": "巨门",
+      "scene": "automotive_sales",
+      "status": "draft",
+      "interpretations": [
+        {
+          "facet": "人",
+          "meaning": "一对一交易中的客户或交易对手的信息表达与沟通入口"
+        },
+        {
+          "facet": "事",
+          "meaning": "客户沟通、谈判表达、交易条件的开启或阻隔"
+        },
+        {
+          "facet": "信息",
+          "meaning": "客户需求、报价、异议及交易信息的传递"
+        }
+      ],
+      "constraints": [
+        "夫妻宫表示一对一对待/契约关系，不应脱离立太极和问事对象固定指代客户",
+        "沟通存在不等于客户必然成交"
+      ],
+      "source": "宫位根定义（夫妻宫：绑定关系/对待/契约接口）× 巨门根定义的场景映射",
+      "note": "初始工作条目，待真实销售案例校验"
+    },
+    {
+      "id": "friends_巨门_automotive_sales",
+      "palace": "交友宫",
+      "star": "巨门",
+      "scene": "automotive_sales",
+      "status": "draft",
+      "interpretations": [
+        {
+          "facet": "人",
+          "meaning": "客户群体、市场关系网中的信息节点或渠道联系人"
+        },
+        {
+          "facet": "事",
+          "meaning": "获客渠道、客户信息流、外围关系的连接与阻隔"
+        },
+        {
+          "facet": "信息",
+          "meaning": "市场消息、客户来源、转介绍信息的传播通道"
+        }
+      ],
+      "constraints": [
+        "交友宫优先描述群体/外围关系网，不直接等同某一个客户",
+        "须与夫妻宫的一对一交易关系区分"
+      ],
+      "source": "宫位根定义（交友宫：外部群体/市场接口）× 巨门根定义的场景映射",
+      "note": "初始工作条目，待真实销售案例校验"
+    },
+    {
+      "id": "spouse_巨门_relationship",
+      "palace": "夫妻宫",
+      "star": "巨门",
+      "scene": "relationship",
+      "status": "draft",
+      "interpretations": [
+        {
+          "facet": "事",
+          "meaning": "关系双方的沟通入口、表达方式、信息隐瞒或沟通阻隔"
+        },
+        {
+          "facet": "信息",
+          "meaning": "关系中的话语、未表达内容、信息可见性"
+        }
+      ],
+      "constraints": [
+        "不单凭巨门断争吵、分手或复合",
+        "需结合关系目标态及四化链判断变化方向"
+      ],
+      "source": "宫位根定义（夫妻宫：一对一关系）× 巨门根定义（口/通道/信息）的场景映射",
+      "note": "初始工作条目，待真实关系案例校验"
+    },
+    {
+      "id": "career_破军_enterprise_operations",
+      "palace": "官禄宫",
+      "star": "破军",
+      "scene": "enterprise_operations",
+      "status": "draft",
+      "interpretations": [
+        {
+          "facet": "事",
+          "meaning": "工作流程、业务结构或组织单元的强力调整、拆解与重组"
+        },
+        {
+          "facet": "物",
+          "meaning": "生产线、部门结构、业务模块的拆除或改造"
+        }
+      ],
+      "constraints": [
+        "破军描述有力度的动作，不自动等于失败或破产",
+        "需由其他显象区分优化重组、业务中止或破坏性损失"
+      ],
+      "source": "宫位根定义（官禄宫：行为/规则运行/流程推进）× 破军根定义（突破/破坏/拆除/翻新）的场景映射",
+      "note": "初始工作条目，待真实经营案例校验"
+    }
+  ]
+}
