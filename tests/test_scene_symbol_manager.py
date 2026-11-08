@@ -71,7 +71,8 @@ class SceneSymbolManagerTests(unittest.TestCase):
             "question": "今天能签单吗？",
             "prediction": "订单通道存在竞争阻碍",
             "actual_result": "客户成交，但订单被同事先行录入",
-            "verdict": "partial",
+            "manifestation_verdict": "correct",
+            "verdict": "incorrect",
             "proposed_meaning": "订单成果通道可能被他人切入"
         })
         entry = self.manager.promote_case_to_draft("case-1")
@@ -89,6 +90,7 @@ class SceneSymbolManagerTests(unittest.TestCase):
             "question": "是否签单？",
             "prediction": "会签单",
             "actual_result": "未成交",
+            "manifestation_verdict": "incorrect",
             "verdict": "incorrect",
             "proposed_meaning": "错误示例"
         })
