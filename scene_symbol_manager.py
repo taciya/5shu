@@ -34,6 +34,7 @@ class SceneSymbolManager:
         document.setdefault("schema_version", 1)
         document.setdefault("scenes", [])
         document.setdefault("entries", [])
+        document.setdefault("cases", [])
         return document
 
     @property
@@ -120,6 +121,77 @@ class SceneSymbolManager:
             return False
         self.save()
         return True
+
+
+    @property
+    def cases(self) -> list[dict[str, Any]]:
+        return list(self._document.get("cases", []))
+
+    def add_case(self, case: dict[str, Any]) -> dict[str, Any]:
+        """保存一次占卜反馈；反馈只作为案例证据，不自动升级象意状态。"""
+        required = ("id", "scene", "question", "prediction", "actual_result", "verdict")
+        missing = [key for key in required if not case.get(key)]
+        if missing:
+            raise ValueError("缺少必填字段：" + ", ".join(missing))
+        normalized = dict(case)
+        normalized.setdefault("status", "unreviewed")
+        normalized.setdefault("created_at", "")
+        normalized.setdefault("notes", "")
+        normalized.setdefault("proposed_meaning", "")
+        for index, current in enumerate(self._document["cases"]):
+            if current.get("id") == normalized["id"]:
+                self._document["cases"][index] = normalized
+                self.save()
+                return dict(normalized)
+        self._document["cases"].append(normalized)
+        self.save()
+        return dict(normalized)
+
+    def update_case(self, case_id: str, updates: dict[str, Any]) -> Optional[dict[str, Any]]:
+        for index, current in enumerate(self._document["cases"]):
+            if current.get("id") == case_id:
+                updated = dict(current)
+                updated.update(updates)
+                updated["id"] = case_id
+                self._document["cases"][index] = updated
+                self.save()
+                return dict(updated)
+        return None
+
+    def delete_case(self, case_id: str) -> bool:
+        before = len(self._document["cases"])
+        self._document["cases"] = [
+            item for item in self._document["cases"] if item.get("id") != case_id
+        ]
+        if len(self._document["cases"]) == before:
+            return False
+        self.save()
+        return True
+
+    def promote_case_to_draft(self, case_id: str) -> dict[str, Any]:
+        """把已复核为正确/部分正确的案例整理成 draft 象意，仍需人工审核。"""
+        case = next((item for item in self._document["cases"] if item.get("id") == case_id), None)
+        if not case:
+            raise KeyError(case_id)
+        if case.get("verdict") not in ("correct", "partial"):
+            raise ValueError("只有判定为正确或部分正确的案例可以整理")
+        meaning = str(case.get("proposed_meaning") or "").strip()
+        if not meaning:
+            raise ValueError("请先填写拟整理的象意")
+        entry = {
+            "id": "case_" + case_id,
+            "palace": case.get("palace") or "*",
+            "star": case.get("star") or "*",
+            "scene": case["scene"],
+            "status": "draft",
+            "interpretations": [{"facet": "场景显象", "meaning": meaning}],
+            "constraints": ["由案例反馈整理，尚未完成独立验证；不得自动作为确定裁断规则"],
+            "source": "案例反馈：" + case_id,
+            "note": "原问：" + case.get("question", "") + "；实际结果：" + case.get("actual_result", "")
+        }
+        self.upsert(entry)
+        self.update_case(case_id, {"status": "organized_as_draft", "related_entry_id": entry["id"]})
+        return entry
 
     def save(self) -> None:
         """原子写入 JSON，避免写入中断造成数据文件损坏。"""
