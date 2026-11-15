@@ -22,13 +22,13 @@
 <script>
 (()=> {
  const $=id=>document.getElementById(id);
- let items=[], activeCategory='all', selected=new Set(), dialogAction=null;
+ let items=[], savedCategories=[], activeCategory='all', selected=new Set(), dialogAction=null;
  const deviceId='mingpan-db-admin';
  const todayPassword=()=>{const d=new Date();return '5shu'+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')};
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const password=()=> $('password').value.trim() || todayPassword();
  const status=(s,bad=false)=>{$('status').textContent=s;$('status').style.color=bad?'#ffb4ab':'#b7e4c7'};
- const categories=()=>[...new Set(items.map(x=>x.category||'未分类'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+ const categories=()=>[...new Set([...savedCategories,...items.map(x=>x.category||'未分类')])].sort((a,b)=>a.localeCompare(b,'zh-CN'));
  const visible=()=>{const q=$('search').value.trim().toLowerCase();return items.filter(x=>(activeCategory==='all'||(x.category||'未分类')===activeCategory)&&(!q||[x.name,x.data?.birthPlace,x.id,x.data?.birthTime].some(v=>String(v??'').toLowerCase().includes(q))))};
  function render(){
   const cats=categories();$('summary').textContent='共 '+items.length+' 条命盘 · '+cats.length+' 个分组';
@@ -43,7 +43,7 @@
  }
  function updateSelection(){const n=selected.size;$('selectedCount').textContent='已选 '+n+' 条';$('moveSelected').disabled=!n;$('deleteSelected').disabled=!n}
  async function connect(){
-  try{status('正在读取…');const url='/get_mingpan?category=all&device_id='+encodeURIComponent(deviceId)+'&password='+encodeURIComponent(password());const r=await fetch(url);const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'读取失败');items=j.data||[];selected.clear();render();status('已连接 · '+items.length+' 条');}
+  try{status('正在读取…');const url='/get_mingpan?category=all&device_id='+encodeURIComponent(deviceId)+'&password='+encodeURIComponent(password());const r=await fetch(url);const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'读取失败');items=j.data||[];savedCategories=j.categories||[];selected.clear();render();status('已连接 · '+items.length+' 条');}
   catch(e){status('连接失败：'+e.message,true);alert('读取失败：'+e.message)}
  }
  async function mutate(payload){
@@ -66,7 +66,7 @@
  $('selectAll').onchange=()=>{visible().forEach(x=>$('selectAll').checked?selected.add(x.id):selected.delete(x.id));render()};
  $('moveSelected').onclick=()=>{const category=$('targetCategory').value;if(!category)return alert('请先选择目标分组');mutate({action:'move',ids:[...selected],category})};
  $('deleteSelected').onclick=()=>{if(confirm('确定永久删除选中的 '+selected.size+' 条命盘？'))mutate({action:'delete',ids:[...selected]})};
- $('newCategory').onclick=()=>ask('创建分组','分组名称','',v=>mutate({action:'move',ids:[],category:v}));
+ $('newCategory').onclick=()=>ask('创建分组','分组名称','',v=>mutate({action:'create_category',category:v}));
  $('export').onclick=()=>{const blob=new Blob([JSON.stringify({items},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mingpanData-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)};
  // 分组管理菜单：右键分组可重命名或合并/清空
  $('categories').addEventListener('contextmenu',e=>{const b=e.target.closest('[data-cat]');if(!b||b.dataset.cat==='all')return;e.preventDefault();const c=b.dataset.cat;ask('分组操作：'+c,'输入新分组名称（同名即合并）',c, v=>mutate({action:'rename_category',category:c,new_category:v}))});
