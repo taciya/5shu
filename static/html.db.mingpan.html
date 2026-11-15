@@ -67,7 +67,7 @@
  $('moveSelected').onclick=()=>{const category=$('targetCategory').value;if(!category)return alert('请先选择目标分组');mutate({action:'move',ids:[...selected],category})};
  $('deleteSelected').onclick=()=>{if(confirm('确定永久删除选中的 '+selected.size+' 条命盘？'))mutate({action:'delete',ids:[...selected]})};
  $('newCategory').onclick=()=>ask('创建分组','分组名称','',v=>mutate({action:'create_category',category:v}));
- $('export').onclick=()=>{const blob=new Blob([JSON.stringify({items},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mingpanData-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)};
+ $('export').onclick=()=>{const blob=new Blob([JSON.stringify({items,categories:categories()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mingpanData-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)};
  // 分组管理菜单：右键分组可重命名或合并/清空
  $('categories').addEventListener('contextmenu',e=>{const b=e.target.closest('[data-cat]');if(!b||b.dataset.cat==='all')return;e.preventDefault();const c=b.dataset.cat;ask('分组操作：'+c,'输入新分组名称（同名即合并）',c, v=>mutate({action:'rename_category',category:c,new_category:v}))});
  $('categories').addEventListener('dblclick',e=>{const b=e.target.closest('[data-cat]');if(!b||b.dataset.cat==='all')return;const c=b.dataset.cat;ask('删除分组：'+c,'将组内命盘移动到', '未分类',v=>mutate({action:'delete_category',category:c,target_category:v}))});
