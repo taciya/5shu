@@ -1,6 +1,7 @@
 let currentDeletingId = null // 当前要删除的命盘ID
 let lastSelectedCategory = 'all' // 上一次选中的分类
 let allCategories = new Set(['家人', '朋友', '客户']) // 所有分类集合
+let mingpanSortMode = 'time' // 当前列表排序：time 或 name（仅当前页面有效）
 
 // DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 绑定保存按钮事件
   document.getElementById('saveBtn').addEventListener('click', saveMingpan)
+
+  // 绑定命盘排序切换（不写入服务器，刷新页面后恢复默认）
+  const sortSelect = document.getElementById('mingpanSortSelect')
+  if (sortSelect) {
+    mingpanSortMode = sortSelect.value || 'time'
+    sortSelect.addEventListener('change', function () {
+      mingpanSortMode = this.value === 'name' ? 'name' : 'time'
+      loadSavedMingpanList(document.getElementById('categorySelect').value)
+    })
+  }
 
   // 绑定分类选择变化事件
   categorySelect.addEventListener('change', function () {
@@ -235,7 +246,24 @@ function renderMingpanList(mingpanList, isVerified) {
   const listContainer = document.getElementById('savedList')
   listContainer.innerHTML = ''
 
-  mingpanList.forEach((item) => {
+  const sortedList = [...mingpanList].sort((a, b) => {
+    if (mingpanSortMode === 'name') {
+      const collator = new Intl.Collator('zh-CN', { numeric: true, sensitivity: 'base' })
+      const nameA = String(a.name || a.data?.name || '未命名').trim()
+      const nameB = String(b.name || b.data?.name || '未命名').trim()
+      return collator.compare(nameA, nameB) || Number(b.id || 0) - Number(a.id || 0)
+    }
+
+    const getSaveTime = (item) => {
+      const rawTime = item.data?.saveTime || item.device_info?.save_time || item.timestamp || ''
+      const normalizedTime = typeof rawTime === 'string' ? rawTime.replace(' ', 'T') : rawTime
+      const parsedTime = Date.parse(normalizedTime)
+      return Number.isNaN(parsedTime) ? 0 : parsedTime
+    }
+    return getSaveTime(b) - getSaveTime(a) || Number(b.id || 0) - Number(a.id || 0)
+  })
+
+  sortedList.forEach((item) => {
     const itemElement = createMingpanItem(item, isVerified)
     listContainer.appendChild(itemElement)
   })
