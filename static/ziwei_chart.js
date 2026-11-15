@@ -2255,8 +2255,8 @@ function bindHexagramPicker(tooltip) {
   }
 
   // 点击选择器时也打开/刷新卦象提示；更改选项后再按新组合查询
-  upperSelect.addEventListener('click', updateHexagram)
-  lowerSelect.addEventListener('click', updateHexagram)
+  // upperSelect.addEventListener('click', updateHexagram)
+  // lowerSelect.addEventListener('click', updateHexagram)
   upperSelect.addEventListener('change', updateHexagram)
   lowerSelect.addEventListener('change', updateHexagram)
 }
