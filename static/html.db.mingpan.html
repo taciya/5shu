@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>命盘数据库管理</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#243044;background:#f4f6fa}*{box-sizing:border-box}body{margin:0}.top{background:#202d42;color:#fff;padding:18px 24px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}.top h1{font-size:20px;margin:0}.wrap{max-width:1440px;margin:20px auto;padding:0 16px}.panel{background:#fff;border:1px solid #e1e6ef;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px #1b2b4410}.toolbar,.actions,.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}input,select,button{font:inherit;border:1px solid #ccd4e0;border-radius:7px;padding:8px 10px}input[type=checkbox]{width:17px;height:17px}button{cursor:pointer;background:#f8fafc}button.primary{background:#2458a6;color:white;border-color:#2458a6}button.danger{color:#b42318;border-color:#efc4c0}button:disabled{opacity:.45;cursor:not-allowed}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px}.side{align-self:start}.cat{display:flex;justify-content:space-between;width:100%;margin:4px 0;text-align:left}.cat.active{background:#eaf1ff;border-color:#9bb9ed;color:#174b99}.muted{color:#6b778a;font-size:13px}.status{margin-left:auto;font-size:13px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:10px 9px;border-bottom:1px solid #edf0f5;text-align:left;font-size:14px}th{background:#f8f9fc;position:sticky;top:0}tr:hover td{background:#fafcff}.name{font-weight:600;max-width:380px;overflow-wrap:anywhere}.tag{display:inline-block;background:#edf2f8;border-radius:20px;padding:2px 8px;font-size:12px}.empty{text-align:center;padding:35px;color:#748096}.hint{font-size:12px;color:#7b8798}.modal{position:fixed;inset:0;background:#10182888;display:none;align-items:center;justify-content:center;padding:16px}.dialog{background:#fff;border-radius:12px;padding:20px;width:min(460px,100%)}.dialog h3{margin-top:0}.dialog .row{margin:12px 0}.dialog input,.dialog select{width:100%}@media(max-width:760px){.layout{grid-template-columns:1fr}.side{order:0}.top{padding:14px}.wrap{padding:0 10px}.panel{padding:12px}}
+</style>
+</head>
+<body>
+<header class="top"><h1>命盘数据库管理</h1><div class="toolbar"><input id="password" type="password" placeholder="管理密码（5shu + MMDD）" autocomplete="current-password"><button class="primary" id="connect">连接 / 刷新</button><span id="status" class="status">未连接</span></div></header>
+<main class="wrap">
+<section class="panel"><div class="toolbar"><strong id="summary">尚未加载数据</strong><span class="muted">数据源：服务器 mingpanData.json</span><span class="status"></span><button id="export">导出当前数据备份</button><label class="hint">搜索 <input id="search" placeholder="名称、出生地、ID"></label></div></section>
+<div class="layout">
+<aside class="panel side"><div class="toolbar" style="justify-content:space-between"><strong>分组管理</strong><button id="newCategory">＋ 新分组</button></div><div id="categories"></div><p class="hint">点击分组筛选。重命名或合并分组不会修改命盘内容。</p></aside>
+<section class="panel">
+<div class="toolbar" style="justify-content:space-between;margin-bottom:12px"><div class="actions"><label><input type="checkbox" id="selectAll"> 全选当前结果</label><span id="selectedCount" class="muted">已选 0 条</span></div><div class="actions"><select id="targetCategory"><option value="">移动到分组…</option></select><button id="moveSelected" class="primary" disabled>批量移动</button><button id="deleteSelected" class="danger" disabled>批量删除</button></div></div>
+<div class="tablewrap"><table><thead><tr><th></th><th>ID</th><th>命盘名称</th><th>分组</th><th>出生时间</th><th>性别</th><th>出生地</th><th>保存时间</th><th>操作</th></tr></thead><tbody id="items"><tr><td colspan="9" class="empty">请先连接数据库</td></tr></tbody></table></div>
+</section></div>
+</main>
+<div class="modal" id="modal"><div class="dialog"><h3 id="dialogTitle">操作</h3><div id="dialogBody"></div><div class="actions" style="justify-content:flex-end;margin-top:18px"><button id="cancelDialog">取消</button><button class="primary" id="confirmDialog">确定</button></div></div></div>
+<script>
+(()=> {
+ const $=id=>document.getElementById(id);
+ let items=[], activeCategory='all', selected=new Set(), dialogAction=null;
+ const deviceId='mingpan-db-admin';
+ const todayPassword=()=>{const d=new Date();return '5shu'+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')};
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const password=()=> $('password').value.trim() || todayPassword();
+ const status=(s,bad=false)=>{$('status').textContent=s;$('status').style.color=bad?'#ffb4ab':'#b7e4c7'};
+ const categories=()=>[...new Set(items.map(x=>x.category||'未分类'))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
+ const visible=()=>{const q=$('search').value.trim().toLowerCase();return items.filter(x=>(activeCategory==='all'||(x.category||'未分类')===activeCategory)&&(!q||[x.name,x.data?.birthPlace,x.id,x.data?.birthTime].some(v=>String(v??'').toLowerCase().includes(q))))};
+ function render(){
+  const cats=categories();$('summary').textContent='共 '+items.length+' 条命盘 · '+cats.length+' 个分组';
+  $('categories').innerHTML='<button class="cat '+(activeCategory==='all'?'active':'')+'" data-cat="all"><span>全部命盘</span><b>'+items.length+'</b></button>'+cats.map(c=>'<button class="cat '+(activeCategory===c?'active':'')+'" data-cat="'+esc(c)+'"><span>'+esc(c)+'</span><b>'+items.filter(x=>(x.category||'未分类')===c).length+'</b></button>').join('');
+  $('categories').querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{activeCategory=b.dataset.cat;selected.clear();render()});
+  const target=$('targetCategory'),old=target.value;target.innerHTML='<option value="">移动到分组…</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');if(cats.includes(old))target.value=old;
+  const rows=visible();$('items').innerHTML=rows.length?rows.map(x=>'<tr><td><input type="checkbox" data-id="'+x.id+'" '+(selected.has(x.id)?'checked':'')+'></td><td>'+x.id+'</td><td class="name">'+esc(x.name||x.data?.name||'未命名')+'</td><td><span class="tag">'+esc(x.category||'未分类')+'</span></td><td>'+esc(x.data?.birthTime||'')+'</td><td>'+esc(x.data?.gender==='male'?'男':x.data?.gender==='female'?'女':'')+'</td><td>'+esc(x.data?.birthPlace||'')+'</td><td>'+esc(x.timestamp||'')+'</td><td><button data-rename="'+x.id+'">改名</button> <button data-move="'+x.id+'">移动</button></td></tr>').join(''):'<tr><td colspan="9" class="empty">没有符合条件的命盘</td></tr>';
+  $('items').querySelectorAll('[data-id]').forEach(c=>c.onchange=()=>{c.checked?selected.add(Number(c.dataset.id)):selected.delete(Number(c.dataset.id));updateSelection()});
+  $('items').querySelectorAll('[data-rename]').forEach(b=>b.onclick=()=>{const x=items.find(v=>v.id===Number(b.dataset.rename));ask('修改命盘名称','新名称',x.name||'',async v=>mutate({action:'rename',ids:[x.id],name:v}))});
+  $('items').querySelectorAll('[data-move]').forEach(b=>b.onclick=()=>{const x=items.find(v=>v.id===Number(b.dataset.move));ask('移动命盘','目标分组',x.category||'未分类',async v=>mutate({action:'move',ids:[x.id],category:v}))});
+  $('selectAll').checked=rows.length>0&&rows.every(x=>selected.has(x.id));updateSelection();
+ }
+ function updateSelection(){const n=selected.size;$('selectedCount').textContent='已选 '+n+' 条';$('moveSelected').disabled=!n;$('deleteSelected').disabled=!n}
+ async function connect(){
+  try{status('正在读取…');const url='/get_mingpan?category=all&device_id='+encodeURIComponent(deviceId)+'&password='+encodeURIComponent(password());const r=await fetch(url);const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'读取失败');items=j.data||[];selected.clear();render();status('已连接 · '+items.length+' 条');}
+  catch(e){status('连接失败：'+e.message,true);alert('读取失败：'+e.message)}
+ }
+ async function mutate(payload){
+  if(!items.length&&!confirm('当前数据为空，仍然继续？'))return;
+  if(!confirm('即将修改服务器上的 mingpanData.json。系统会先自动备份原文件，是否继续？'))return;
+  try{status('正在保存…');const r=await fetch('/manage_mingpan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,password:password()})});const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'操作失败');status(j.message||'保存成功');await connect();}
+  catch(e){status('保存失败：'+e.message,true);alert('保存失败：'+e.message)}
+ }
+ function ask(title,label,value,callback,selectOptions=null){
+  $('dialogTitle').textContent=title;
+  $('dialogBody').innerHTML='<div class="row"><label>'+esc(label)+'</label>'+(selectOptions?'<select id="dialogValue">'+selectOptions.map(v=>'<option>'+esc(v)+'</option>').join('')+'</select>':'<input id="dialogValue" value="'+esc(value)+'">')+'</div>';
+  if(!selectOptions)$('dialogBody').querySelector('input').value=value;
+  dialogAction=callback;$('modal').style.display='flex';
+ }
+ $('cancelDialog').onclick=()=>{$('modal').style.display='none';dialogAction=null};
+ $('confirmDialog').onclick=async()=>{const v=$('dialogValue').value.trim();if(!v)return alert('请输入内容');const fn=dialogAction;$('modal').style.display='none';dialogAction=null;await fn(v)};
+ $('connect').onclick=connect;
+ $('password').value=todayPassword();
+ $('search').oninput=render;
+ $('selectAll').onchange=()=>{visible().forEach(x=>$('selectAll').checked?selected.add(x.id):selected.delete(x.id));render()};
+ $('moveSelected').onclick=()=>{const category=$('targetCategory').value;if(!category)return alert('请先选择目标分组');mutate({action:'move',ids:[...selected],category})};
+ $('deleteSelected').onclick=()=>{if(confirm('确定永久删除选中的 '+selected.size+' 条命盘？'))mutate({action:'delete',ids:[...selected]})};
+ $('newCategory').onclick=()=>ask('创建分组','分组名称','',v=>mutate({action:'move',ids:[],category:v}));
+ $('export').onclick=()=>{const blob=new Blob([JSON.stringify({items},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mingpanData-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)};
+ // 分组管理菜单：右键分组可重命名或合并/清空
+ $('categories').addEventListener('contextmenu',e=>{const b=e.target.closest('[data-cat]');if(!b||b.dataset.cat==='all')return;e.preventDefault();const c=b.dataset.cat;ask('分组操作：'+c,'输入新分组名称（同名即合并）',c, v=>mutate({action:'rename_category',category:c,new_category:v}))});
+ $('categories').addEventListener('dblclick',e=>{const b=e.target.closest('[data-cat]');if(!b||b.dataset.cat==='all')return;const c=b.dataset.cat;ask('删除分组：'+c,'将组内命盘移动到', '未分类',v=>mutate({action:'delete_category',category:c,target_category:v}))});
+ connect();
+})();
+</script>
+</body></html>
