@@ -1463,6 +1463,12 @@ def admin_page():
 
 
 
+# 命盘数据库管理页面：浏览器 GET 访问页面，页面内 POST 调用同路径管理 API。
+@app.route('/manage_mingpan', methods=['GET'])
+def manage_mingpan_page():
+    return app.send_static_file('html.db.mingpan.html')
+
+
 # 命盘数据库管理接口
 # 所有路由必须定义在 app.run() 之前，避免直接运行 app.py 时路由未注册。
 @app.route('/manage_mingpan', methods=['POST'])
