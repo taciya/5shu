@@ -246,6 +246,7 @@ function renderMingpanList(mingpanList, isVerified) {
   const listContainer = document.getElementById('savedList')
   listContainer.innerHTML = ''
 
+<<<<<<< HEAD
   const sortedList = [...mingpanList].sort((a, b) => {
     if (mingpanSortMode === 'name') {
       const collator = new Intl.Collator('zh-CN', { numeric: true, sensitivity: 'base' })
@@ -264,6 +265,25 @@ function renderMingpanList(mingpanList, isVerified) {
   })
 
   sortedList.forEach((item) => {
+=======
+  // 按命盘生成时间倒序排列，最新生成的命盘显示在最上方。
+  // 优先使用后端生成记录时写入的 timestamp，兼容旧数据再回退到 save_time。
+  const sortedMingpanList = [...mingpanList].sort((a, b) => {
+    const getGeneratedTime = (item) => {
+      const value =
+        item.timestamp || item.device_info?.save_time || item.data?.saveTime || ''
+      const normalizedValue =
+        typeof value === 'string' ? value.trim().replace(' ', 'T') : value
+      const parsedTime = Date.parse(normalizedValue)
+      return Number.isNaN(parsedTime) ? 0 : parsedTime
+    }
+
+    return getGeneratedTime(b) - getGeneratedTime(a) ||
+      (Number(b.id) || 0) - (Number(a.id) || 0)
+  })
+
+  sortedMingpanList.forEach((item) => {
+>>>>>>> 9f5f4dac88510599597f94375adfcd27c37e2354
     const itemElement = createMingpanItem(item, isVerified)
     listContainer.appendChild(itemElement)
   })
@@ -402,8 +422,11 @@ function updateCategorySelect() {
                 <option value="new">新分类</option>
             `
 
-  // 添加所有分类选项
-  allCategories.forEach((category) => {
+  // 添加所有分类选项，按分类名称排序（中文环境）。
+  const sortedCategories = Array.from(allCategories).sort((a, b) =>
+    a.localeCompare(b, 'zh-CN', { numeric: true, sensitivity: 'base' }),
+  )
+  sortedCategories.forEach((category) => {
     const option = document.createElement('option')
     option.value = category
     option.textContent = category
