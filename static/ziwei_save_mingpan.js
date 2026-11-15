@@ -1,7 +1,6 @@
 let currentDeletingId = null // 当前要删除的命盘ID
 let lastSelectedCategory = 'all' // 上一次选中的分类
 let allCategories = new Set(['家人', '朋友', '客户']) // 所有分类集合
-let mingpanSortMode = 'time' // 当前列表排序：time 或 name（仅当前页面有效）
 
 // DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function () {
@@ -17,16 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 绑定保存按钮事件
   document.getElementById('saveBtn').addEventListener('click', saveMingpan)
-
-  // 绑定命盘排序切换（不写入服务器，刷新页面后恢复默认）
-  const sortSelect = document.getElementById('mingpanSortSelect')
-  if (sortSelect) {
-    mingpanSortMode = sortSelect.value || 'time'
-    sortSelect.addEventListener('change', function () {
-      mingpanSortMode = this.value === 'name' ? 'name' : 'time'
-      loadSavedMingpanList(document.getElementById('categorySelect').value)
-    })
-  }
 
   // 绑定分类选择变化事件
   categorySelect.addEventListener('change', function () {
@@ -246,44 +235,25 @@ function renderMingpanList(mingpanList, isVerified) {
   const listContainer = document.getElementById('savedList')
   listContainer.innerHTML = ''
 
-<<<<<<< HEAD
-  const sortedList = [...mingpanList].sort((a, b) => {
-    if (mingpanSortMode === 'name') {
-      const collator = new Intl.Collator('zh-CN', { numeric: true, sensitivity: 'base' })
-      const nameA = String(a.name || a.data?.name || '未命名').trim()
-      const nameB = String(b.name || b.data?.name || '未命名').trim()
-      return collator.compare(nameA, nameB) || Number(b.id || 0) - Number(a.id || 0)
-    }
-
-    const getSaveTime = (item) => {
-      const rawTime = item.data?.saveTime || item.device_info?.save_time || item.timestamp || ''
-      const normalizedTime = typeof rawTime === 'string' ? rawTime.replace(' ', 'T') : rawTime
-      const parsedTime = Date.parse(normalizedTime)
-      return Number.isNaN(parsedTime) ? 0 : parsedTime
-    }
-    return getSaveTime(b) - getSaveTime(a) || Number(b.id || 0) - Number(a.id || 0)
-  })
-
-  sortedList.forEach((item) => {
-=======
   // 按命盘生成时间倒序排列，最新生成的命盘显示在最上方。
-  // 优先使用后端生成记录时写入的 timestamp，兼容旧数据再回退到 save_time。
-  const sortedMingpanList = [...mingpanList].sort((a, b) => {
-    const getGeneratedTime = (item) => {
-      const value =
-        item.timestamp || item.device_info?.save_time || item.data?.saveTime || ''
-      const normalizedValue =
-        typeof value === 'string' ? value.trim().replace(' ', 'T') : value
-      const parsedTime = Date.parse(normalizedValue)
-      return Number.isNaN(parsedTime) ? 0 : parsedTime
-    }
+  // timestamp 是后端保存记录时生成的时间；旧数据兼容 save_time / data.saveTime。
+  const getGeneratedTime = (item) => {
+    const value =
+      item.timestamp || item.device_info?.save_time || item.data?.saveTime || ''
+    const normalizedValue =
+      typeof value === 'string' ? value.trim().replace(' ', 'T') : value
+    const parsedTime = Date.parse(normalizedValue)
+    return Number.isNaN(parsedTime) ? 0 : parsedTime
+  }
 
-    return getGeneratedTime(b) - getGeneratedTime(a) ||
+  const sortedMingpanList = [...mingpanList].sort((a, b) => {
+    return (
+      getGeneratedTime(b) - getGeneratedTime(a) ||
       (Number(b.id) || 0) - (Number(a.id) || 0)
+    )
   })
 
   sortedMingpanList.forEach((item) => {
->>>>>>> 9f5f4dac88510599597f94375adfcd27c37e2354
     const itemElement = createMingpanItem(item, isVerified)
     listContainer.appendChild(itemElement)
   })
@@ -422,7 +392,7 @@ function updateCategorySelect() {
                 <option value="new">新分类</option>
             `
 
-  // 添加所有分类选项，按分类名称排序（中文环境）。
+  // 分类名称按中文排序规则排列。
   const sortedCategories = Array.from(allCategories).sort((a, b) =>
     a.localeCompare(b, 'zh-CN', { numeric: true, sensitivity: 'base' }),
   )
