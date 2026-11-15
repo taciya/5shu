@@ -1454,6 +1454,8 @@ def hexagram(year_gz,month_gz,day_gz,hour_gz):
         })
 
 
+
+
 @app.route('/admin')
 # @login_required
 # @admin_required
