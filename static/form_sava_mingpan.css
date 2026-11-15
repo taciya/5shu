@@ -359,3 +359,16 @@
   flex-shrink: 0;
   margin-left: 0; /* 移除原来的margin-left */
 }
+
+
+/* 命盘列表排序选择器 */
+.mingpan-sort-select {
+  padding: 8px 6px;
+  border: 1px solid #d2b48c;
+  border-radius: 4px;
+  background: #fff;
+  color: #5b3a1a;
+  font-family: 'Noto Sans SC', sans-serif;
+  white-space: nowrap;
+  max-width: 118px;
+}
