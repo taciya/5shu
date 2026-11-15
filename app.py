@@ -306,6 +306,7 @@ def get_mingpan():
             "success": True,
             "data": filtered_items,
             "is_verified": is_verified,
+            "categories": data.get("categories", []),
         })
         # # 如果请求的是全部，则返回所有
         # if category == 'all':
@@ -1299,3 +1300,107 @@ if __name__ == '__main__':
     # 设置session密钥
 
     app.run(debug=True, port=5001)
+
+
+# 命盘数据库管理接口：仅允许使用每日管理密码执行写操作
+@app.route('/manage_mingpan', methods=['POST'])
+def manage_mingpan():
+    try:
+        payload = request.get_json(silent=True) or {}
+        password = str(payload.get('password', '')).strip()
+        if utils.verify_password(password):
+            return jsonify({"success": False, "message": "管理密码错误或已过期"}), 403
+
+        action = str(payload.get('action', '')).strip()
+        data = read_data()
+        items = data.get('items', [])
+        ids = payload.get('ids', [])
+        if not isinstance(ids, list):
+            return jsonify({"success": False, "message": "ids 必须为数组"}), 400
+        try:
+            id_set = {int(value) for value in ids}
+        except (TypeError, ValueError):
+            return jsonify({"success": False, "message": "命盘 ID 格式错误"}), 400
+
+        # 在任何写入前保留带时间戳的原始文件副本，便于回滚。
+        import shutil
+        if os.path.exists(DATA_FILE):
+            backup_path = DATA_FILE + '.bak.' + datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+            shutil.copy2(DATA_FILE, backup_path)
+
+        changed = 0
+        if action == 'move':
+            category = str(payload.get('category', '')).strip()
+            if not category:
+                return jsonify({"success": False, "message": "目标分组不能为空"}), 400
+            for item in items:
+                if item.get('id') in id_set:
+                    item['category'] = category
+                    changed += 1
+            if id_set and changed != len(id_set):
+                return jsonify({"success": False, "message": "部分命盘 ID 不存在，未保存任何修改"}), 404
+            data.setdefault('categories', [])
+            if category not in data['categories']:
+                data['categories'].append(category)
+        elif action == 'rename':
+            name = str(payload.get('name', '')).strip()
+            if not name or len(name) > 300 or not id_set:
+                return jsonify({"success": False, "message": "命盘名称不能为空，且必须指定 ID"}), 400
+            for item in items:
+                if item.get('id') in id_set:
+                    item['name'] = name
+                    if isinstance(item.get('data'), dict):
+                        item['data']['name'] = name
+                    changed += 1
+            if changed != len(id_set):
+                return jsonify({"success": False, "message": "命盘 ID 不存在"}), 404
+        elif action == 'delete':
+            before = len(items)
+            items = [item for item in items if item.get('id') not in id_set]
+            changed = before - len(items)
+            if changed != len(id_set):
+                return jsonify({"success": False, "message": "部分命盘 ID 不存在，未保存任何修改"}), 404
+            data['items'] = items
+        elif action == 'create_category':
+            category = str(payload.get('category', '')).strip()
+            if not category or len(category) > 80:
+                return jsonify({"success": False, "message": "分组名称不能为空且不能超过 80 字"}), 400
+            data.setdefault('categories', [])
+            if category not in data['categories']:
+                data['categories'].append(category)
+            changed = 1
+        elif action == 'rename_category':
+            old_name = str(payload.get('category', '')).strip()
+            new_name = str(payload.get('new_category', '')).strip()
+            if not old_name or not new_name or len(new_name) > 80:
+                return jsonify({"success": False, "message": "原分组和新分组名称不能为空"}), 400
+            for item in items:
+                if item.get('category', '未分类') == old_name:
+                    item['category'] = new_name
+                    changed += 1
+            data['categories'] = [new_name if c == old_name else c for c in data.get('categories', [])]
+            if new_name not in data['categories']:
+                data['categories'].append(new_name)
+        elif action == 'delete_category':
+            old_name = str(payload.get('category', '')).strip()
+            target = str(payload.get('target_category', '未分类')).strip() or '未分类'
+            if not old_name:
+                return jsonify({"success": False, "message": "分组名称不能为空"}), 400
+            for item in items:
+                if item.get('category', '未分类') == old_name:
+                    item['category'] = target
+                    changed += 1
+            data['categories'] = [c for c in data.get('categories', []) if c != old_name]
+            if target not in data['categories']:
+                data['categories'].append(target)
+        else:
+            return jsonify({"success": False, "message": "不支持的操作类型"}), 400
+
+        data['items'] = items
+        if not save_data(data):
+            return jsonify({"success": False, "message": "保存 mingpanData.json 失败"}), 500
+        return jsonify({"success": True, "message": f"操作成功，影响 {changed} 条记录", "changed": changed})
+    except Exception as e:
+        app.logger.error(f"命盘数据库管理失败: {str(e)}")
+        app.logger.error(traceback.format_exc())
+        return jsonify({"success": False, "message": "命盘数据库管理失败", "error": str(e)}), 500
