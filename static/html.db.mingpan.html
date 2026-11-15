@@ -12,7 +12,7 @@
 <main class="wrap">
 <section class="panel"><div class="toolbar"><strong id="summary">尚未加载数据</strong><span class="muted">数据源：服务器 mingpanData.json</span><span class="status"></span><button id="export">导出当前数据备份</button><label class="hint">搜索 <input id="search" placeholder="名称、出生地、ID"></label></div></section>
 <div class="layout">
-<aside class="panel side"><div class="toolbar" style="justify-content:space-between"><strong>分组管理</strong><button id="newCategory">＋ 新分组</button></div><div id="categories"></div><p class="hint">点击分组筛选。重命名或合并分组不会修改命盘内容。</p></aside>
+<aside class="panel side"><div class="toolbar" style="justify-content:space-between"><strong>分组管理</strong><button id="newCategory">＋ 新分组</button></div><div id="categories"></div><p class="hint">点击分组筛选；右键分组可重命名/合并，双击分组可删除（组内命盘会移动到指定分组）。</p></aside>
 <section class="panel">
 <div class="toolbar" style="justify-content:space-between;margin-bottom:12px"><div class="actions"><label><input type="checkbox" id="selectAll"> 全选当前结果</label><span id="selectedCount" class="muted">已选 0 条</span></div><div class="actions"><select id="targetCategory"><option value="">移动到分组…</option></select><button id="moveSelected" class="primary" disabled>批量移动</button><button id="deleteSelected" class="danger" disabled>批量删除</button></div></div>
 <div class="tablewrap"><table><thead><tr><th></th><th>ID</th><th>命盘名称</th><th>分组</th><th>出生时间</th><th>性别</th><th>出生地</th><th>保存时间</th><th>操作</th></tr></thead><tbody id="items"><tr><td colspan="9" class="empty">请先连接数据库</td></tr></tbody></table></div>
